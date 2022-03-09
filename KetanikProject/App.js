@@ -11,6 +11,9 @@ import EpisodesList from '@screens/EpisodesList/EpisodesList';
 import EachSelectedNews from '@screens/SelectedNews/EachSelectedNews';
 import Cart from '@screens/Cart/Cart';
 import Category from '@screens/Category/Category';
+import Share from '@screens/Share/Share';
+import AboutUs from '@screens/AboutUs/AboutUs';
+import EditPassword from '@screens/EditPassword/EditPassword';
 const Stack = createNativeStackNavigator();
 export default function App() {
   return (
@@ -27,7 +30,10 @@ export default function App() {
         {/* <Stack.Screen name="EpisodesList" component={EpisodesList} /> */}
         {/* <Stack.Screen name="EachSelectedNews" component={EachSelectedNews} /> */}
         {/* <Stack.Screen name="Cart" component={Cart} /> */}
-        <Stack.Screen name="Category" component={Category} />
+        {/* <Stack.Screen name="Category" component={Category} /> */}
+        {/* <Stack.Screen name="Share" component={Share} /> */}
+        {/* <Stack.Screen name="AboutUs" component={AboutUs} /> */}
+        <Stack.Screen name="EditPassword" component={EditPassword} />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -26,14 +26,7 @@ export const truncate = (str, len) => {
   };
 
  const Cart = ({navigation }) => {
-    const data = [
-        {
-          label: 'data 1'
-         },
-         {
-          label: 'data 2'
-         }
-        ];
+
 return (
     <View style={{backgroundColor:'#fff',flex:1}}>
 

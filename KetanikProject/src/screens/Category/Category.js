@@ -31,7 +31,7 @@ import { myFontStyle } from "@assets/Constance";
 return (
     <View style={{backgroundColor:'#fff',flex:1}}>
 
-{/* 
+
     <View style={styles.topBar}>
 
     <View style={{flex : 2,textAlign:"right"}}>
@@ -45,17 +45,105 @@ return (
           </TouchableOpacity>
           </View>
     </View>
-     */}
+     
   <ScrollView>
  <View style={styles.container}>
      <View style={styles.categoryRow}>
          <View style={styles.categoryBox}>
          <Image source={require('@assets/images/book1.jpg')} style={styles.bookImg}/>
-   
+          <Text style={styles.cateTitle}>
+            کتاب های صوتی
+          </Text>
          </View>
          <View style={styles.categoryBox2}>
-         <Image source={require('@assets/images/book2w.jpg')} style={styles.bookImg}/>
-   
+         <Image source={require('@assets/images/book2.jpg')} style={styles.bookImg}/>
+         <Text style={styles.cateTitle}>
+            کتاب های رایگان
+          </Text>
+         </View>
+     </View>
+     <View style={styles.categoryRow}>
+         <View style={styles.categoryBox3}>
+         <Image source={require('@assets/images/book1.jpg')} style={styles.bookImg}/>
+          <Text style={styles.cateTitle}>
+           داستان و رمان
+          </Text>
+         </View>
+         <View style={styles.categoryBox4}>
+         <Image source={require('@assets/images/book2.jpg')} style={styles.bookImg}/>
+         <Text style={styles.cateTitle}>
+            ادبیات
+          </Text>
+         </View>
+     </View>
+     <View style={styles.categoryRow}>
+         <View style={styles.categoryBox5}>
+         <Image source={require('@assets/images/book1.jpg')} style={styles.bookImg}/>
+          <Text style={styles.cateTitle}>
+            اقتصاد و مدیریت
+          </Text>
+         </View>
+         <View style={styles.categoryBox6}>
+         <Image source={require('@assets/images/book2.jpg')} style={styles.bookImg}/>
+         <Text style={styles.cateTitle}>
+           روانشناسی
+          </Text>
+         </View>
+     </View>
+     <View style={styles.categoryRow}>
+         <View style={styles.categoryBox7}>
+         <Image source={require('@assets/images/book1.jpg')} style={styles.bookImg}/>
+          <Text style={styles.cateTitle}>
+            کودک و نوجوان
+          </Text>
+         </View>
+         <View style={styles.categoryBox8}>
+         <Image source={require('@assets/images/book2.jpg')} style={styles.bookImg}/>
+         <Text style={styles.cateTitle}>
+            تاریخ،فلسفه خودشناسی و هنر
+          </Text>
+         </View>
+     </View>
+     <View style={styles.categoryRow}>
+         <View style={styles.categoryBox9}>
+         <Image source={require('@assets/images/book1.jpg')} style={styles.bookImg}/>
+          <Text style={styles.cateTitle}>
+            سیاسی
+          </Text>
+         </View>
+         <View style={styles.categoryBox10}>
+         <Image source={require('@assets/images/book2.jpg')} style={styles.bookImg}/>
+         <Text style={styles.cateTitle}>
+         تاریخ،فلسفه خودشناسی و هنر
+          </Text>
+         </View>
+     </View>
+     <View style={styles.categoryRow}>
+         <View style={styles.categoryBox11}>
+         <Image source={require('@assets/images/book1.jpg')} style={styles.bookImg}/>
+          <Text style={styles.cateTitle}>
+            استارت اپ
+          </Text>
+         </View>
+         <View style={styles.categoryBox12}>
+         <Image source={require('@assets/images/book2.jpg')} style={styles.bookImg}/>
+         <Text style={styles.cateTitle}>
+            علمی
+          </Text>
+         </View>
+     </View>
+     <View style={styles.categoryRow}>
+         <View style={styles.categoryBox13}>
+         <Image source={require('@assets/images/book1.jpg')} style={styles.bookImg}/>
+          <Text style={styles.cateTitle}>
+           فانتزی
+          </Text>
+         </View>
+         <View style={styles.categoryBox14}>
+         <Image source={require('@assets/images/book2.jpg')} style={styles.bookImg}/>
+         <Text style={styles.cateTitle}>
+           بیوگرافی
+          </Text>
          </View>
      </View>
  </View>
@@ -69,7 +157,8 @@ const styles = StyleSheet.create({
         paddingRight:responsiveWidth(5),
         paddingLeft:responsiveWidth(5),
         paddingBottom:responsiveHeight(2),
-        alignItems:"flex-end"
+        alignItems:"flex-end",
+        marginTop:responsiveHeight(4),
     },
 
     menuTitle:{
@@ -108,19 +197,22 @@ const styles = StyleSheet.create({
   },categoryRow:{
       display:'flex',
       flexDirection:'row-reverse',
-      marginTop:100,
+    marginTop:responsiveHeight(1),
+    marginBottom:responsiveHeight(1),
       flex:1,
   },categoryBox:{
-      height:responsiveHeight(13),
+      height:responsiveHeight(11),
       flex:0.5,
       backgroundColor:'#e43299',
       borderRadius:10,
-      marginLeft:5,
+      marginRight:5,
       overflow:'hidden',
       display:'flex',
       flexDirection:'row-reverse',
+      alignContent:'center',
+      alignItems:'center',
   },categoryBox2:{
-    height:responsiveHeight(13),
+    height:responsiveHeight(11),
       flex:0.5,
     backgroundColor:'#e0ad5c',
     borderRadius:10,
@@ -128,16 +220,166 @@ const styles = StyleSheet.create({
     overflow:'hidden',
     display:'flex',
     flexDirection:'row-reverse',
-  },bookImg:{
+    alignContent:'center',
+    alignItems:'center',
+  },categoryBox3:{
+    height:responsiveHeight(11),
+      flex:0.5,
+    backgroundColor:'#bad259',
+    borderRadius:10,
+    marginRight:5,
+    overflow:'hidden',
+    display:'flex',
+    flexDirection:'row-reverse',
+    alignContent:'center',
+    alignItems:'center',
+  },categoryBox4:{
+    height:responsiveHeight(11),
+      flex:0.5,
+    backgroundColor:'#e35831',
+    borderRadius:10,
+    marginLeft:5,
+    overflow:'hidden',
+    display:'flex',
+    flexDirection:'row-reverse',
+    alignContent:'center',
+    alignItems:'center',
+  },
+  categoryBox5:{
+    height:responsiveHeight(11),
+      flex:0.5,
+    backgroundColor:'#dfab58',
+    borderRadius:10,
+    marginRight:5,
+    overflow:'hidden',
+    display:'flex',
+    flexDirection:'row-reverse',
+    alignContent:'center',
+    alignItems:'center',
+  },
+  categoryBox6:{
+    height:responsiveHeight(11),
+      flex:0.5,
+    backgroundColor:'#6c6263',
+    borderRadius:10,
+    marginLeft:5,
+    overflow:'hidden',
+    display:'flex',
+    flexDirection:'row-reverse',
+    alignContent:'center',
+    alignItems:'center',
+  },
+  categoryBox7:{
+    height:responsiveHeight(11),
+      flex:0.5,
+    backgroundColor:'#262d5b',
+    borderRadius:10,
+    marginRight:5,
+    overflow:'hidden',
+    display:'flex',
+    flexDirection:'row-reverse',
+    alignContent:'center',
+    alignItems:'center',
+  },
+  categoryBox8:{
+    height:responsiveHeight(11),
+      flex:0.5,
+    backgroundColor:'#b1cfad',
+    borderRadius:10,
+    marginLeft:5,
+    overflow:'hidden',
+    display:'flex',
+    flexDirection:'row-reverse',
+    alignContent:'center',
+    alignItems:'center',
+  },
+  categoryBox9:{
+    height:responsiveHeight(11),
+      flex:0.5,
+    backgroundColor:'#95a8b6',
+    borderRadius:10,
+    marginRight:5,
+    overflow:'hidden',
+    display:'flex',
+    flexDirection:'row-reverse',
+    alignContent:'center',
+    alignItems:'center',
+  },
+  categoryBox10:{
+    height:responsiveHeight(11),
+      flex:0.5,
+    backgroundColor:'#a485ae',
+    borderRadius:10,
+    marginLeft:5,
+    overflow:'hidden',
+    display:'flex',
+    flexDirection:'row-reverse',
+    alignContent:'center',
+    alignItems:'center',
+  },
+  categoryBox11:{
+    height:responsiveHeight(11),
+      flex:0.5,
+    backgroundColor:'#6e6365',
+    borderRadius:10,
+    marginRight:5,
+    overflow:'hidden',
+    display:'flex',
+    flexDirection:'row-reverse',
+    alignContent:'center',
+    alignItems:'center',
+  },
+  categoryBox12:{
+    height:responsiveHeight(11),
+      flex:0.5,
+    backgroundColor:'#e48921',
+    borderRadius:10,
+    marginLeft:5,
+    overflow:'hidden',
+    display:'flex',
+    flexDirection:'row-reverse',
+    alignContent:'center',
+    alignItems:'center',
+  },
+  categoryBox13:{
+    height:responsiveHeight(11),
+      flex:0.5,
+    backgroundColor:'#4f86d6',
+    borderRadius:10,
+    marginRight:5,
+    overflow:'hidden',
+    display:'flex',
+    flexDirection:'row-reverse',
+    alignContent:'center',
+    alignItems:'center',
+  },
+  categoryBox14:{
+    height:responsiveHeight(11),
+      flex:0.5,
+    backgroundColor:'#d91c2e',
+    borderRadius:10,
+    marginLeft:5,
+    overflow:'hidden',
+    display:'flex',
+    flexDirection:'row-reverse',
+    alignContent:'center',
+    alignItems:'center',
+  },
+  bookImg:{
       width:50,
       resizeMode:'contain',
       height:responsiveHeight(13),
-      marginTop:responsiveHeight(-3),
-      transform: [{rotate: '30deg'}],
+      marginTop:responsiveHeight(-5),
+      transform: [{rotate: '20deg'}],
     //   shadowColor: '#470000',
     //     shadowOffset: {width: 0, height: 1},
     //     shadowOpacity: 0.2,
     //     elevation: 1,
+  },cateTitle:{
+    color:'#fff',
+    ...myFontStyle.largBold,
+    marginRight:responsiveWidth(5),
+    width:responsiveWidth(30),
   }
   });
 
