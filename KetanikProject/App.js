@@ -14,6 +14,8 @@ import Category from '@screens/Category/Category';
 import Share from '@screens/Share/Share';
 import AboutUs from '@screens/AboutUs/AboutUs';
 import EditPassword from '@screens/EditPassword/EditPassword';
+import Home from '@screens/Home/Home';
+import UserProfile from '@screens/UserProfile/UserProfile';
 const Stack = createNativeStackNavigator();
 export default function App() {
   return (
@@ -33,7 +35,9 @@ export default function App() {
         {/* <Stack.Screen name="Category" component={Category} /> */}
         {/* <Stack.Screen name="Share" component={Share} /> */}
         {/* <Stack.Screen name="AboutUs" component={AboutUs} /> */}
-        <Stack.Screen name="EditPassword" component={EditPassword} />
+        {/* <Stack.Screen name="EditPassword" component={EditPassword} /> */}
+        {/* <Stack.Screen name="Home" component={Home} /> */}
+        <Stack.Screen name="UserProfile" component={UserProfile} />
       </Stack.Navigator>
     </NavigationContainer>
   );
