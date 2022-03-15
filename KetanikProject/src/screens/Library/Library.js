@@ -1,46 +1,138 @@
 import React, { useState,useEffect } from 'react';
 import { myFontStyle } from "@assets/Constance";
-import { View, Text , StyleSheet,Image, TouchableOpacity} from 'react-native';
+import { View, Text , StyleSheet,Image, TouchableOpacity,Button} from 'react-native';
 import { TabView, SceneMap,TabBar } from 'react-native-tab-view';
 import { responsiveFontSize, responsiveHeight, responsiveScreenWidth, responsiveWidth } from 'react-native-responsive-dimensions';
 import { Colors} from "@assets/Colors";
 import {Input} from '@components/Input';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import Modal from "react-native-modal";
 // create a component
+// const [showBox, setShowBox] = useState(false);
+// const onClick = () => setShowBox(true);
+
+ 
 const FirstRoute = () => (
  <></>
 );
 
 const SecondRoute = () => (
+ 
   <View style={{ flex: 1}}>
     
-
+    <View  style={{position:'relative'}}>
+      <TouchableOpacity style={{display:'flex',flexDirection:'row-reverse',marginTop:responsiveHeight(2)}} >
+      <Icon name={"notes"} color={'#707070'} size={30} style={{transform: [{rotateY: '180deg'}]}}/>
+        <Text style={styles.pageTitleText}>
+            در حال مطالعه
+        </Text>
+      </TouchableOpacity>
+     
+      <View style={styles.greenBox}>
+        <TouchableOpacity style={styles.greenBoxBtn}>
+          <Text style={styles.greenBoxText}>
+            در حال مطالعه
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.greenBoxBtn}>
+          <Text style={styles.greenBoxText}>
+            آخرین بازدید شده ها
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.greenBoxBtn}>
+          <Text style={styles.greenBoxText}>
+            خوانده شده ها
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.greenBoxBtn}>
+          <Text style={styles.greenBoxText}>
+           همه کتاب ها
+          </Text>
+        </TouchableOpacity>
+      </View>
+    
+    </View>
     <View style={{display:'flex',flexDirection:'row-reverse'}}>
       <View style={styles.libraryBox}>
-        <View style={styles.littleBtn}>
-          
-        </View>
+        <TouchableOpacity style={styles.littleBtn}>
+        <Icon name={"more-vert"} color={Colors.darkGreen} size={25}/>
+     
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.littleBtn2}>
+        <Icon name={"headset"} color={Colors.darkGreen} size={20}/>
+     
+        </TouchableOpacity>
         <Image source={require('@assets/images/book1.jpg')} style={styles.libraryBook}/>
       </View>
       <View style={styles.libraryBox}>
+      <TouchableOpacity style={styles.littleBtn}>
+        <Icon name={"more-vert"} color={Colors.darkGreen} size={25}/>
+     
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.littleBtn2}>
+        <Icon name={"headset"} color={Colors.darkGreen} size={20}/>
+     
+        </TouchableOpacity>
         <Image source={require('@assets/images/book1.jpg')} style={styles.libraryBook}/>
       </View>
       <View style={styles.libraryBox}>
+      <TouchableOpacity style={styles.littleBtn}>
+        <Icon name={"more-vert"} color={Colors.darkGreen} size={25}/>
+     
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.littleBtn2}>
+        <Icon name={"headset"} color={Colors.darkGreen} size={20}/>
+     
+        </TouchableOpacity>
         <Image source={require('@assets/images/book1.jpg')} style={styles.libraryBook}/>
       </View>
       </View>   
       
     <View style={{display:'flex',flexDirection:'row-reverse'}}>
       <View style={styles.libraryBox}>
+      <TouchableOpacity style={styles.littleBtn}>
+        <Icon name={"more-vert"} color={Colors.darkGreen} size={25}/>
+     
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.littleBtn2}>
+        <Icon name={"headset"} color={Colors.darkGreen} size={20}/>
+     
+        </TouchableOpacity>
         <Image source={require('@assets/images/book1.jpg')} style={styles.libraryBook}/>
       </View>
       <View style={styles.libraryBox}>
+      <TouchableOpacity style={styles.littleBtn}>
+        <Icon name={"more-vert"} color={Colors.darkGreen} size={25}/>
+     
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.littleBtn2}>
+        <Icon name={"headset"} color={Colors.darkGreen} size={20}/>
+     
+        </TouchableOpacity>
         <Image source={require('@assets/images/book1.jpg')} style={styles.libraryBook}/>
       </View>
       <View style={styles.libraryBox}>
+      <TouchableOpacity style={styles.littleBtn}>
+        <Icon name={"more-vert"} color={Colors.darkGreen} size={25}/>
+     
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.littleBtn2}>
+        <Icon name={"headset"} color={Colors.darkGreen} size={20}/>
+     
+        </TouchableOpacity>
         <Image source={require('@assets/images/book1.jpg')} style={styles.libraryBook}/>
       </View>
-      </View>     
+      </View>  
+      <Button title="Show modal" onPress={toggleModal} />
+
+<Modal isVisible={isModalVisible}>
+  <View style={{ flex: 1 }}>
+    <Text>Hello!</Text>
+
+    <Button title="Hide modal" onPress={toggleModal} />
+  </View>
+</Modal>
+     
   </View>
 );
 
@@ -71,13 +163,15 @@ const renderScene = SceneMap({
       }
     />
   );
+  
 return (
+  
     <View style={{ flex: 1,padding:0}}>
           <View style={styles.topBar}>
 
 
 <TouchableOpacity onPress={()=>navigation.goBack()} style={{}}>
-        <Icon name={"refresh"} color={'#111'} size={30}/>
+        <Icon name={"cached"} color={'#111'} size={30}/>
       </TouchableOpacity>
      
 
@@ -181,11 +275,68 @@ indicatorStyle:{
     height:responsiveHeight(18),
     resizeMode:'cover',
     borderRadius:10,
-    marginTop:responsiveHeight(5),
+    
 },libraryBox:{
-  width:responsiveWidth(25),
+  height:responsiveHeight(18),
+  width:responsiveWidth(27),
   marginRight:'auto',
   marginLeft:'auto',
+  position:'relative',
+  
+  marginTop:responsiveHeight(5),
+},pageTitleText:{
+  color:'#343434',
+  ...myFontStyle.largeRegular,
+  marginRight:responsiveWidth(2)
+},littleBtn:{
+  position:'absolute',
+  top:responsiveHeight(1),
+  right:responsiveWidth(1),
+  height:25,
+  width:25,
+  borderRadius:20,
+  textAlign:'center',
+  display:'flex',
+  justifyContent:'center',
+  alignContent:'center',
+  alignItems:'center',
+  alignSelf:'center',
+  zIndex:1000,
+  backgroundColor:'#fff'
+},littleBtn2:{
+  position:'absolute',
+  top:responsiveHeight(1),
+  left:responsiveWidth(1),
+  height:25,
+  width:25,
+  borderRadius:20,
+  textAlign:'center',
+  display:'flex',
+  justifyContent:'center',
+  alignContent:'center',
+  alignItems:'center',
+  alignSelf:'center',
+  zIndex:1000,
+  backgroundColor:'#fff'
+},greenBox:{
+  backgroundColor:Colors.lightGreen,
+  
+  width:responsiveWidth(40),
+  position:'absolute',
+  top:responsiveHeight(7),
+  right:0,
+  zIndex:10000,
+  borderRadius:5,
+  borderRightColor:Colors.darkGreen,
+  borderRightWidth:3,
+},greenBoxBtn:{
+  borderBottomColor:'#e8ebe3',
+  borderBottomWidth:1,
+  padding:10,
+  width:'100%',
+},greenBoxText:{
+  ...myFontStyle.normalRegular,
+  color:'#111',
 }
   });
 

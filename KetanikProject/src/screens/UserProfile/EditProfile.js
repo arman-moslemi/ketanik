@@ -7,9 +7,7 @@ import { Colors} from "@assets/Colors";
 import { View, Text , StyleSheet,Image, TouchableOpacity,ScrollView,TextInput} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
  const EditProfile = ({navigation }) => {
-  
- 
- 
+
 return (
     <View style={{ padding:0,justifyContent:'flex-start',alignContent:'flex-start',alignSelf:'flex-start',backgroundColor:'#fff'}}>
        <Image source={require('@assets/images/userProfileTop.png')} style={styles.topImg}/>
@@ -22,9 +20,11 @@ return (
       
      </View>
      <Image source={require('@assets/images/profile.jpg')} style={styles.profile2}/>
-     <TouchableOpacity style={styles.loginBtn}>
+     <TouchableOpacity style={styles.loginBtn}  >
        <Text style={styles.btnText}>ویرایش تصویر</Text>
      </TouchableOpacity>
+   
+     
      <View style={{padding:15,borderBottomColor:'#E8EAE6',borderBottomWidth:20,}}>
 </View>
 
@@ -73,7 +73,33 @@ return (
     </View>
 </View>
  
-   
+ {/* Modal is here */}
+ <View style={styles.editModal}>
+   <Text style={styles.modalTitle}>
+     ویرایش تصویر پروفایل
+   </Text>
+   <TouchableOpacity style={styles.editProfileBtn}>
+      <View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>
+        <Image source={require('@assets/images/trash.png')} style={styles.btnImg}/>
+        <Text style={styles.btnText3}>حذف تصویر</Text>
+      </View>
+     
+    </TouchableOpacity>
+    <TouchableOpacity style={styles.editProfileBtn}>
+      <View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>
+        <Image source={require('@assets/images/gallery.png')} style={styles.btnImg}/>
+        <Text style={styles.btnText3}>گالری</Text>
+      </View>
+     
+    </TouchableOpacity>
+    <TouchableOpacity style={styles.editProfileBtn}>
+      <View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>
+        <Image source={require('@assets/images/camera.png')} style={styles.btnImg}/>
+        <Text style={styles.btnText3}>دوربین</Text>
+      </View>
+     
+    </TouchableOpacity>
+ </View>
   </ScrollView>
   </View>
 );
@@ -118,8 +144,8 @@ const styles = StyleSheet.create({
       color:'#111',
       textAlign:'center',
     },btnImg:{
-      width:40,
-      height:40,
+      width:30,
+      height:30,
     },editProfileBtn:{
       display:'flex',
       justifyContent:'space-between',
@@ -226,6 +252,36 @@ const styles = StyleSheet.create({
   },btnBox:{
       display:'flex',
       flex:0.5,
+  },editModal:{
+    width:responsiveWidth(80),
+    backgroundColor:Colors.lightGreen,
+    
+    borderRadius:15,
+    marginRight:'auto',
+    marginLeft:'auto',
+    borderRightColor:Colors.darkGreen,
+    borderRightWidth:4,
+    padding:20,
+
+  },modalTitle:{
+    ...myFontStyle.UltraBold,
+    color:'#111',
+    marginTop:responsiveHeight(1),
+
+  },editProfileBtn:{
+    display:'flex',
+    justifyContent:'space-between',
+    alignItems:'center',
+    flexDirection:'row-reverse',
+    marginTop:responsiveHeight(2),
+    paddingTop:responsiveHeight(1),
+    paddingBottom:responsiveHeight(1),
+    borderBottomColor:'#eaeaea',
+    borderBottomWidth:2,
+  },btnText3:{
+    ...myFontStyle.episodeName,
+      color:'#111',
+      marginRight:responsiveWidth(2),
   }
   });
 
