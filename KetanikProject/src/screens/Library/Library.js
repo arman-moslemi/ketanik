@@ -123,7 +123,7 @@ const SecondRoute = () => (
         <Image source={require('@assets/images/book1.jpg')} style={styles.libraryBook}/>
       </View>
       </View>  
-      <Button title="Show modal" onPress={toggleModal} />
+      {/* <Button title="Show modal" onPress={toggleModal} />
 
 <Modal isVisible={isModalVisible}>
   <View style={{ flex: 1 }}>
@@ -131,7 +131,7 @@ const SecondRoute = () => (
 
     <Button title="Hide modal" onPress={toggleModal} />
   </View>
-</Modal>
+</Modal> */}
      
   </View>
 );
