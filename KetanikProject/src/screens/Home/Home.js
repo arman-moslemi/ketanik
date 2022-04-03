@@ -1,5 +1,5 @@
 import React, {useState,useRef} from 'react';
-import {View, TextInput, Text, TouchableOpacity,Image,ScrollView} from 'react-native';
+import {View, TextInput, Text, TouchableOpacity,Image,ScrollView,FlatList} from 'react-native';
 
 
 import { StyleSheet } from 'react-native';
@@ -9,6 +9,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 // import Drawer from 'react-native-drawer'
 // import DrawerContent from './drewerContent/DrawerContent';
 import { myFontStyle } from "@assets/Constance";
+import ViewSlider from 'react-native-view-slider';
 
 // create a component
 
@@ -27,7 +28,32 @@ export const truncate = (str, len) => {
 
  const Home = ({navigation }) => {
   
-
+  const keyExtractor = item => {
+    return item.id;
+  };
+  const data=[1,2,3,4,5]
+  const _render = (item, index) => {
+    console.log(item)
+    return (
+      <View style={styles.cardBox}>
+      <Image source={require('@assets/images/book3.jpg')} style={styles.bookImg}/>
+      <Text style={styles.bookName}>
+      {truncate("به سوی من بازگرد",20)}
+      </Text>
+      <View style={{display:'flex',flexDirection:'row-reverse',justifyContent:'space-between'}}>
+      <Text style={styles.bookName}>
+      29.000ت
+      </Text>
+      <View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>
+      <Text style={styles.bookName}>
+      4.5
+      </Text>
+      <Icon name={'star'} size={15} color={'#ffc93d'} style={{}}/>
+      </View>
+      </View>
+     </View>
+    );
+  };
 return (
     <View style={{backgroundColor:'#fff',flex:1}}>
 
@@ -62,7 +88,30 @@ return (
           </TouchableOpacity>
           </View>
     </View>
-  <ScrollView>
+     <ViewSlider
+        renderSlides = {
+          <>
+            <TouchableOpacity onPress={()=>Linking.openURL(data?.Link1)} style={styles.viewBox}>
+            <Image source={require('@assets/images/book1.jpg')} resizeMode={"stretch"} style={styles.imageSlider}/>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={()=>Linking.openURL(data?.Link2)} style={styles.viewBox}><Image source={require('@assets/images/book1.jpg')}  resizeMode={"stretch"} style={styles.imageSlider}></Image></TouchableOpacity>
+            <TouchableOpacity onPress={()=>Linking.openURL(data?.Link3)} style={styles.viewBox}><Image source={require('@assets/images/book1.jpg')}  resizeMode={"stretch"} style={styles.imageSlider}></Image></TouchableOpacity>
+            <TouchableOpacity onPress={()=>Linking.openURL(data?.Link4)} style={styles.viewBox}><Image source={require('@assets/images/book1.jpg')}  resizeMode={"stretch"} style={styles.imageSlider}></Image></TouchableOpacity>
+
+            </>
+      }
+      style={styles.slider}     //Main slider container style
+      height = {responsiveHeight(25)}    //Height of your slider
+      slideCount = {4}    //How many views you are adding to slide
+      dots = {true}     // Pagination dots visibility true for visibile
+      dotActiveColor = '#FFCC00'     //Pagination dot active color
+      dotInactiveColor = '#fff'    // Pagination do inactive color
+      dotsContainerStyle={styles.dotContainer}     // Container style of the pagination dots
+      autoSlide = {true}    //The views will slide automatically
+      slideInterval = {5000}    //In Miliseconds
+     /> 
+     
+       <ScrollView>
   <View style={styles.container}>
   <View style={{display:'flex',flexDirection:'row-reverse',justifyContent:'space-between',marginBottom:responsiveHeight(5)}}>
      <View style={{flex:1}}>
@@ -78,42 +127,21 @@ return (
       </TouchableOpacity>
       </View>
       </View>
-   <View style={{display:'flex',flexDirection:'row-reverse'}}>
-   <View style={styles.cardBox}>
-    <Image source={require('@assets/images/book1.jpg')} style={styles.bookImg}/>
-    <Text style={styles.bookName}>
-    {truncate("به سوی من بازگرد",20)}
-    </Text>
-    <View style={{display:'flex',flexDirection:'row-reverse',justifyContent:'space-between'}}>
-    <Text style={styles.bookName}>
-    29.000ت
-    </Text>
-    <View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>
-    <Text style={styles.bookName}>
-    4.5
-    </Text>
-    <Icon name={'star'} size={15} color={'#ffc93d'} style={{}}/>
-    </View>
-    </View>
-   </View>
-   <View style={styles.cardBox}>
-    <Image source={require('@assets/images/book3.jpg')} style={styles.bookImg}/>
-    <Text style={styles.bookName}>
-    {truncate("به سوی من بازگرد",20)}
-    </Text>
-    <View style={{display:'flex',flexDirection:'row-reverse',justifyContent:'space-between'}}>
-    <Text style={styles.bookName}>
-    29.000ت
-    </Text>
-    <View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>
-    <Text style={styles.bookName}>
-    4.5
-    </Text>
-    <Icon name={'star'} size={15} color={'#ffc93d'} style={{}}/>
-    </View>
-    </View>
-   </View>
-   </View>
+
+              <FlatList
+       
+          keyExtractor={keyExtractor}
+          data={data}
+          renderItem={_render}
+          horizontal={true}
+          style={{marginTop:responsiveHeight(1),marginBottom:responsiveHeight(1)}}
+          
+        />
+          
+         
+        
+   
+  
    <View style={{display:'flex',flexDirection:'row-reverse',justifyContent:'space-between',marginBottom:responsiveHeight(5),marginTop:responsiveHeight(5)}}>
      <View style={{flex:1}}>
      <Text style={styles.rowTitle}>
@@ -344,6 +372,30 @@ marginRight:4,
 },seeAll:{
     ...myFontStyle.largeRegular,
     color:'#111',
+},
+dotContainer: {
+  backgroundColor: 'transparent',
+  position: 'absolute',
+  bottom: responsiveHeight(2)
+  },slider: {
+    alignSelf: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius:10,
+    paddingRight:responsiveWidth(0),
+    paddingLeft:responsiveWidth(0),
+    marginTop:responsiveHeight(5)
+  },
+  imageSlider:
+  {borderRadius:10,height:responsiveHeight(20),width:responsiveWidth(90)}
+, viewBox: {
+  paddingHorizontal: responsiveWidth(10),
+  justifyContent: 'center',
+  width: responsiveWidth(100),
+  padding: 0,
+  alignItems: 'center',
+  height: "100%",
+
 }
   });
 
