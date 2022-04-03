@@ -2,6 +2,7 @@ import * as React from 'react';
 import { View, Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import Login from '@screens/Login/Login';
 import Splash from '@screens/Splash/Splash';
 import Verify from '@screens/Login/Verify';
@@ -18,7 +19,91 @@ import Home from '@screens/Home/Home';
 import UserProfile from '@screens/UserProfile/UserProfile';
 import EditProfile from '@screens/UserProfile/EditProfile';
 import Library from '@screens/Library/Library';
+import { Colors } from '@assets/Colors';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import { responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
+
+
 const Stack = createNativeStackNavigator();
+const Tab = createMaterialBottomTabNavigator();
+
+const TabStack= () => {
+
+  return (
+
+   <Tab.Navigator
+   barStyle={{ backgroundColor: Colors.white,paddingRight:5 }}
+initialRouteName={"StackNavigatorsHome"}
+shifting={false}
+
+// tabBar={props => <TabBar {...props} />}
+>
+<Tab.Screen
+   name="Search" component={StackNavigatorsProfile}
+   options={{          tabBarLabel: '',    tabBarIcon: ({ color }) => (    <Icon name="person-outline" color={Colors.appColor} style={{height:responsiveHeight(10),width:responsiveWidth(8)}} size={35} />         ),           }}      />
+
+   <Tab.Screen
+   // name="home"
+   name={"StackNavigatorsHome"}
+   component={StackNavigatorsHome}
+   options={{          tabBarLabel: null,  tabBarIcon: ({ color }) => (            <Icon name="home" color={Colors.appColor} style={{height:responsiveHeight(10),width:responsiveWidth(8)}} size={35} />          ),        }}      />
+
+<Tab.Screen
+       // name="home"
+       name={"Category"}
+       component={StackNavigatorsCat}
+
+       options={{          tabBarLabel: '',          tabBarIcon: ({ color }) => (            <Icon name="how-to-vote" color={Colors.appColor} style={{height:responsiveHeight(10),width:responsiveWidth(8)}} size={35} />          ),        }}      />
+
+</Tab.Navigator>
+  );
+}
+const StackNavigatorsHome = () => {
+
+  return (
+ 
+    <Stack.Navigator screenOptions={{
+      headerShown: false
+    }}>
+      <Stack.Screen name="Home" component={Home} />
+    
+     <Stack.Screen name="EpisodesList" component={EpisodesList} />
+        <Stack.Screen name="EachSelectedNews" component={EachSelectedNews} />
+        <Stack.Screen name="Cart" component={Cart} />
+ 
+    </Stack.Navigator>
+  );
+ }
+const StackNavigatorsCat = () => {
+
+  return (
+ 
+    <Stack.Navigator screenOptions={{
+      headerShown: false
+    }}>
+    
+    
+        <Stack.Screen name="Category" component={Category} />
+ 
+    </Stack.Navigator>
+  );
+ }
+const StackNavigatorsProfile = () => {
+
+  return (
+ 
+    <Stack.Navigator screenOptions={{
+      headerShown: false
+    }}>
+              <Stack.Screen name="UserProfile" component={UserProfile} />
+
+         <Stack.Screen name="Verify" component={Verify} />
+        <Stack.Screen name="ForgetPassword" component={ForgetPassword} />
+        <Stack.Screen name="EditProfile" component={EditProfile}/>
+ 
+    </Stack.Navigator>
+  );
+ }
 export default function App() {
   return (
     <NavigationContainer>
@@ -26,22 +111,16 @@ export default function App() {
        headerShown: false,
      
     }} >
+         <Stack.Screen name="TabBar" component={TabStack} />
         {/* <Stack.Screen name="Home" component={Login} />
         {/* <Stack.Screen name="Splash" component={Splash} /> */}
-        {/* <Stack.Screen name="Verify" component={Verify} /> */}
-        {/* <Stack.Screen name="ForgetPassword" component={ForgetPassword} /> */}
+  
         {/* <Stack.Screen name="SelectedNews" component={SelectedNews} /> */}
-        {/* <Stack.Screen name="EpisodesList" component={EpisodesList} /> */}
-        {/* <Stack.Screen name="EachSelectedNews" component={EachSelectedNews} /> */}
-        {/* <Stack.Screen name="Cart" component={Cart} /> */}
-        {/* <Stack.Screen name="Category" component={Category} /> */}
+   
         {/* <Stack.Screen name="Share" component={Share} /> */}
         {/* <Stack.Screen name="AboutUs" component={AboutUs} /> */}
         {/* <Stack.Screen name="EditPassword" component={EditPassword} /> */}
-        <Stack.Screen name="Home" component={Home} />
-        {/* <Stack.Screen name="UserProfile" component={UserProfile} /> */}
          {/* <Stack.Screen name="Library" component={Library} /> */}
-        {/* <Stack.Screen name="EditProfile" component={EditProfile}/> */}
       </Stack.Navigator>
     </NavigationContainer>
   );
