@@ -140,7 +140,7 @@ const renderScene = SceneMap({
   library: SecondRoute,
   status: FirstRoute,
 });
- const Library = ({navigation }) => {
+ const EachBook = ({navigation }) => {
   // const [showSearch, setshowSearch] = useState(false);
   // const onClick = () =>{
   //   setshowSearch(!showSearch);
@@ -169,23 +169,31 @@ const renderScene = SceneMap({
   
 return (
   
-    <View style={{ flex: 1,padding:0}}>
-          <View style={styles.topBar}>
+    <View style={{ flex: 1,padding:0,backgroundColor:'#fff'}}>
+    <View style={styles.greenBack}>
+    <View style={styles.topBar}>
 
 
-<TouchableOpacity onPress={()=>navigation.goBack()} style={{}}>
-        <Icon name={"cached"} color={'#111'} size={30}/>
+    <View style={styles.rightCol}>
+      
+    <TouchableOpacity  style={{}}>
+    <Image source={require('@assets/images/save.png')} style={styles.saveBtn}/>
+      </TouchableOpacity>
+      <TouchableOpacity style={{}}>
+        <Image source={require('@assets/images/share.png')} style={styles.saveBtn}/>
+      </TouchableOpacity>
+    </View>
+    <View style={styles.leftCol}>
+    <TouchableOpacity style={{}}>
+        <Image source={require('@assets/images/back.png')} style={styles.saveBtn}/>
       </TouchableOpacity>
      
-
-    
-    
-      <TouchableOpacity onPress={()=>navigation.goBack()} style={{}}>
-        <Icon name={"arrow-back"} color={'#111'} size={30}/>
-      </TouchableOpacity>
+</View>
       
 </View>
-      <View style={styles.tabViewBox}>
+<Image source={require('@assets/images/book1.jpg')} style={styles.bookImg2}/>
+    </View>
+      {/* <View style={styles.tabViewBox}>
       <TabView
       renderTabBar={renderTabBar}
       navigationState={{ index, routes }}
@@ -193,7 +201,7 @@ return (
       onIndexChange={setIndex}
       initialLayout={{ width:responsiveWidth(90) }}
     />
-      </View>
+      </View> */}
      
   
   </View>
@@ -209,12 +217,12 @@ loginImg:{
 topBar:{
   display:'flex',
   flexDirection:'row-reverse',
-  paddingTop:responsiveHeight(2),
+  paddingTop:responsiveHeight(0),
   paddingRight:responsiveWidth(7),
   paddingLeft:responsiveWidth(7),
   zIndex:1000,
   justifyContent:'space-between',
-  
+  alignItems:'center',
 },
 
 menuTitle:{
@@ -340,9 +348,42 @@ indicatorStyle:{
 },greenBoxText:{
   ...myFontStyle.normalRegular,
   color:'#111',
+},/************** */
+greenBack:{
+  backgroundColor:'#f1f5ec',
+   flexDirection:"row-reverse",
+  justifyContent:'flex-start',
+    position:"absolute",
+    top:responsiveHeight(0),
+    paddingRight:responsiveWidth(5),
+    paddingLeft:responsiveWidth(5),
+    alignItems:'flex-start',
+   
+    height : responsiveHeight(50),
+    width : '100%',
+    transform : [ { scaleX : 1.1 } ],
+    borderBottomStartRadius : 150,
+    borderBottomEndRadius : 150,
+    overflow : 'hidden',
+    
+},rightCol:{
+ display:'flex',
+ flexDirection:'row-reverse',
+ flex:0.5,
+},leftCol:{
+  flex:0.5,
+}
+,saveBtn:{
+  width:25,
+  resizeMode:'contain',
+  marginLeft:responsiveWidth(5),
+},bookImg2:{
+  width:responsiveWidth(8),
+  height:responsiveHeight(50),
+  zIndex:2000,
 }
   });
 
-  export default Library;
+  export default EachBook;
 
 //make this component available to the <app></app>

@@ -18,6 +18,7 @@ import Home from '@screens/Home/Home';
 import UserProfile from '@screens/UserProfile/UserProfile';
 import EditProfile from '@screens/UserProfile/EditProfile';
 import Library from '@screens/Library/Library';
+import EachBook from '@screens/EachBook/EachBook';
 const Stack = createNativeStackNavigator();
 export default function App() {
   return (
@@ -38,10 +39,11 @@ export default function App() {
         {/* <Stack.Screen name="Share" component={Share} /> */}
         {/* <Stack.Screen name="AboutUs" component={AboutUs} /> */}
         {/* <Stack.Screen name="EditPassword" component={EditPassword} /> */}
-        <Stack.Screen name="Home" component={Home} />
+        {/* <Stack.Screen name="Home" component={Home} /> */}
         {/* <Stack.Screen name="UserProfile" component={UserProfile} /> */}
-         {/* <Stack.Screen name="Library" component={Library} /> */}
+          {/* <Stack.Screen name="Library" component={Library} /> */}
         {/* <Stack.Screen name="EditProfile" component={EditProfile}/> */}
+        <Stack.Screen name="EachBook" component={EachBook} />
       </Stack.Navigator>
     </NavigationContainer>
   );
