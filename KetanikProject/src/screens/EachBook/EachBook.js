@@ -1,16 +1,27 @@
 import React, { useState,useEffect } from 'react';
 import { myFontStyle } from "@assets/Constance";
-import { View, Text , StyleSheet,Image, TouchableOpacity,Button,ScrollView} from 'react-native';
+import { View, Text , StyleSheet,Image, TouchableOpacity,Button,ScrollView,FlatList} from 'react-native';
 import { TabView, SceneMap,TabBar } from 'react-native-tab-view';
 import { responsiveFontSize, responsiveHeight, responsiveScreenWidth, responsiveWidth } from 'react-native-responsive-dimensions';
 import { Colors} from "@assets/Colors";
 import {Input} from '@components/Input';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Modal from "react-native-modal";
+import ShowMore from 'react-native-show-more-button';
 // create a component
 // const [showBox, setShowBox] = useState(false);
 // const onClick = () => setShowBox(true);
-
+export const truncate = (str, len) => {
+  // console.log("truncate", str, str.length, len);
+  if (str.length > len && str.length > 0) {
+    let new_str = str + " ";
+    new_str = str.substr(0, len);
+    new_str = str.substr(0, new_str.lastIndexOf(" "));
+    new_str = new_str.length > 0 ? new_str : str.substr(0, len);
+    return new_str + "...";
+  }
+  return str;
+};
 
 const FirstRoute = () => (
  <></>
@@ -18,125 +29,57 @@ const FirstRoute = () => (
 
 const SecondRoute = () => (
  
-  <View style={{ flex: 1}}>
-    
-    <View  style={{position:'relative'}}>
-      <TouchableOpacity style={{display:'flex',flexDirection:'row-reverse',marginTop:responsiveHeight(2)}} onClick={()=>onClick()} >
-      <Icon name={"notes"} color={'#707070'} size={30} style={{transform: [{rotateY: '180deg'}]}}/>
-        <Text style={styles.pageTitleText}>
-            در حال مطالعه
-        </Text>
-      </TouchableOpacity>
-     
-      <View style={styles.greenBox}>
-        <TouchableOpacity style={styles.greenBoxBtn}>
-          <Text style={styles.greenBoxText}>
-            در حال مطالعه
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.greenBoxBtn}>
-          <Text style={styles.greenBoxText}>
-            آخرین بازدید شده ها
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.greenBoxBtn}>
-          <Text style={styles.greenBoxText}>
-            خوانده شده ها
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.greenBoxBtn}>
-          <Text style={styles.greenBoxText}>
-           همه کتاب ها
-          </Text>
-        </TouchableOpacity>
-      </View>
-   
-    </View>
-    <View style={{display:'flex',flexDirection:'row-reverse'}}>
-      <View style={styles.libraryBox}>
-        <TouchableOpacity style={styles.littleBtn}>
-        <Icon name={"more-vert"} color={Colors.darkGreen} size={25}/>
-     
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.littleBtn2}>
-        <Icon name={"headset"} color={Colors.darkGreen} size={20}/>
-     
-        </TouchableOpacity>
-        <Image source={require('@assets/images/book1.jpg')} style={styles.libraryBook}/>
-      </View>
-      <View style={styles.libraryBox}>
-      <TouchableOpacity style={styles.littleBtn}>
-        <Icon name={"more-vert"} color={Colors.darkGreen} size={25}/>
-     
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.littleBtn2}>
-        <Icon name={"headset"} color={Colors.darkGreen} size={20}/>
-     
-        </TouchableOpacity>
-        <Image source={require('@assets/images/book1.jpg')} style={styles.libraryBook}/>
-      </View>
-      <View style={styles.libraryBox}>
-      <TouchableOpacity style={styles.littleBtn}>
-        <Icon name={"more-vert"} color={Colors.darkGreen} size={25}/>
-     
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.littleBtn2}>
-        <Icon name={"headset"} color={Colors.darkGreen} size={20}/>
-     
-        </TouchableOpacity>
-        <Image source={require('@assets/images/book1.jpg')} style={styles.libraryBook}/>
-      </View>
-      </View>   
-      
-    <View style={{display:'flex',flexDirection:'row-reverse'}}>
-      <View style={styles.libraryBox}>
-      <TouchableOpacity style={styles.littleBtn}>
-        <Icon name={"more-vert"} color={Colors.darkGreen} size={25}/>
-     
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.littleBtn2}>
-        <Icon name={"headset"} color={Colors.darkGreen} size={20}/>
-     
-        </TouchableOpacity>
-        <Image source={require('@assets/images/book1.jpg')} style={styles.libraryBook}/>
-      </View>
-      <View style={styles.libraryBox}>
-      <TouchableOpacity style={styles.littleBtn}>
-        <Icon name={"more-vert"} color={Colors.darkGreen} size={25}/>
-     
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.littleBtn2}>
-        <Icon name={"headset"} color={Colors.darkGreen} size={20}/>
-     
-        </TouchableOpacity>
-        <Image source={require('@assets/images/book1.jpg')} style={styles.libraryBook}/>
-      </View>
-      <View style={styles.libraryBox}>
-      <TouchableOpacity style={styles.littleBtn}>
-        <Icon name={"more-vert"} color={Colors.darkGreen} size={25}/>
-     
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.littleBtn2}>
-        <Icon name={"headset"} color={Colors.darkGreen} size={20}/>
-     
-        </TouchableOpacity>
-        <Image source={require('@assets/images/book1.jpg')} style={styles.libraryBook}/>
-      </View>
-      </View>  
-      {/* <Button title="Show modal" onPress={toggleModal} />
+<ScrollView>
+<View style={{ flex: 1}}>
 
-<Modal isVisible={isModalVisible}>
-  <View style={{ flex: 1 }}>
-    <Text>Hello!</Text>
-
-    <Button title="Hide modal" onPress={toggleModal} />
+     <View style={{display:'flex',flexDirection:'row-reverse',marginTop:responsiveHeight(5),justifyContent:"space-between"}}>
+       <View style={{display:'flex',flexDirection:'row-reverse',flex:0.5,alignItems:'center'}}>
+          <Image source={require('@assets/images/book1.jpg')} style={styles.writerImg}/>
+          <View>
+            <Text style={styles.writerName}>
+              لی باردوگو
+            </Text>
+            <Text style={styles.writerName2}>
+         نویسنده
+            </Text>
+          </View>
+       </View>
+       <View style={{display:'flex',flexDirection:'row-reverse',flex:0.5,alignItems:'center'}}>
+          <Image source={require('@assets/images/book2.jpg')} style={styles.writerImg}/>
+          <View>
+            <Text style={styles.writerName}>
+            بهناز عسگری
+            </Text>
+            <Text style={styles.writerName2}>
+مترجم            </Text>
+          </View>
+       </View>
+     </View>
+     <View style={styles.bookDetilTable}>
+       <View style={{display:'flex',flexDirection:'row-reverse'}}>
+         <Icon name={'fiber-manual-record'} color={Colors.darkGreen} size={20}/>
+         <Text style={styles.table1}>
+           نام کتاب
+         </Text>
+       </View>
+     </View>
   </View>
-</Modal> */}
-     
-  </View>
+</ScrollView>
 );
 const ThirdRoute = () => (
-  <></>
+<ScrollView>
+<View style={styles.bookDescriptionBox}>
+  <Text style={styles.bookDescription}>
+  اولین رمان از سهگانه گریشا است که توسط نویسنده آمریکایی لی
+باردوگو نوشته شده است. «ستر» سایه نواری از جنس تاریکی بی
+پایان و پر از هیولاهای خونخوار است که کشور «راوکا» را دربر
+گرفته است. از طرف دیگر راوکا در محاصره دشمنان و در شرف از
+هم فروپاشیدن است. سرنوشت کشور به یک دخترک پناهنده گره
+خورد
+  </Text>
+
+</View>
+</ScrollView>
  );
 const renderScene = SceneMap({
   comment: FirstRoute,
@@ -172,9 +115,33 @@ const renderScene = SceneMap({
       }
     />
   );
-  
+  const keyExtractor = item => {
+    return item.id;
+  };const data=[1,2,3,4,5]
+  const _render = (item, index) => {
+    console.log(item)
+    return (
+      <View style={styles.cardBox}>
+      <Image source={require('@assets/images/book3.jpg')} style={styles.bookImg}/>
+      <Text style={styles.bookName}>
+      {truncate("به سوی من بازگرد",20)}
+      </Text>
+      <View style={{display:'flex',flexDirection:'row-reverse',justifyContent:'space-between'}}>
+      <Text style={styles.bookName}>
+      29.000ت
+      </Text>
+      <View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>
+      <Text style={styles.bookName}>
+      4.5
+      </Text>
+      <Icon name={'star'} size={15} color={'#ffc93d'} style={{}}/>
+      </View>
+      </View>
+     </View>
+    );
+  };
 return (
-  <ScrollView contentContainerStyle={{flexGrow:1,flex:1}}>
+ 
 <View style={{ flex: 1,padding:0,backgroundColor:'#fff'}}>
     <View style={styles.greenBack}>
     <View style={styles.topBar}>
@@ -200,6 +167,7 @@ return (
 
 
     </View>
+    
     <View style={styles.bookDetailBox}>
 <Image source={require('@assets/images/book1.jpg')} style={styles.bookImg2}/>
 <Text style={styles.eachBookName}>کتاب سایه و استخوان</Text>
@@ -232,11 +200,19 @@ return (
       initialLayout={{ width:responsiveWidth(90) }}
     />
       </View> 
-     
-
+{/*      
+      <FlatList
+       
+       keyExtractor={keyExtractor}
+       data={data}
+       renderItem={_render}
+       horizontal={true}
+       style={{marginTop:responsiveHeight(1),marginBottom:responsiveHeight(1)}}
+       
+     /> */}
   
   </View>
-  </ScrollView>
+
     
 );
 };
@@ -373,6 +349,67 @@ marginTop:responsiveHeight(10),
   paddingTop:responsiveHeight(0.8),
   borderRadius:10,
  
+},cardBox:{
+  backgroundColor:'#f1f5ec',
+  height:responsiveHeight(18),
+  width:responsiveWidth(34),
+  borderRadius:10,
+  textAlign:'center',
+  padding:10,
+  marginLeft:10,
+
+},bookImg:{
+  height:responsiveHeight(14),
+  width:responsiveWidth(28),
+  resizeMode:'cover',
+  marginRight:'auto',
+  marginLeft:'auto',
+  marginTop:responsiveHeight(-4),
+  borderRadius:10,
+},bookName:{
+  color:'#111',
+  ...myFontStyle.normalRegular,
+  marginTop:responsiveHeight(0.5),
+},priceRed:{
+  color:'#dc3545',
+  ...myFontStyle.normalRegular,
+  marginTop:responsiveHeight(0.5),
+},priceStroke:{
+...myFontStyle.normalRegular,
+color:'#111',
+textDecorationLine: 'line-through',
+marginTop:responsiveHeight(0.5),
+marginRight:4,
+},rowTitle:{
+  ...myFontStyle.largBold,
+  color:'#111',
+},seeAll:{
+  ...myFontStyle.largeRegular,
+  color:'#111',
+},
+dotContainer: {
+backgroundColor: 'transparent',
+position: 'absolute',
+bottom: responsiveHeight(2)
+},slider: {
+  alignSelf: 'center',
+  justifyContent: 'center',
+  alignItems: 'center',
+  borderRadius:10,
+  paddingRight:responsiveWidth(0),
+  paddingLeft:responsiveWidth(0),
+  marginTop:responsiveHeight(5)
+},
+imageSlider:
+{borderRadius:10,height:responsiveHeight(20),width:responsiveWidth(90)}
+, viewBox: {
+paddingHorizontal: responsiveWidth(10),
+justifyContent: 'center',
+width: responsiveWidth(100),
+padding: 0,
+alignItems: 'center',
+height: "100%",
+
 },btnText:{
   ...myFontStyle.UltraBold,
   color:'#fff',
@@ -402,8 +439,25 @@ marginTop:responsiveHeight(10),
   alignItems:'center',
   paddingTop:responsiveHeight(0.8),
   borderRadius:10,
-}
-  });
+},bookDescription:{
+  color:'#1a1a1a',
+  ...myFontStyle.bookWriter3,
+  marginTop:responsiveHeight(2),
+  
+  },writerName:{
+    color:'#1a1a1a',
+    ...myFontStyle.largBold,
+  },writerName2:{
+    ...myFontStyle.normalRegular,
+    color:'#1a1a1a'
+  },writerImg:{
+    height:60,
+    width:60,
+    borderRadius:200,
+    marginLeft:10,
+  }
+
+});
 
   export default EachBook;
 
