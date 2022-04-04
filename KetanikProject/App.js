@@ -24,6 +24,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import { responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
 
 
+import EachBook from '@screens/EachBook/EachBook';
 const Stack = createNativeStackNavigator();
 const Tab = createMaterialBottomTabNavigator();
 
@@ -120,7 +121,15 @@ export default function App() {
         {/* <Stack.Screen name="Share" component={Share} /> */}
         {/* <Stack.Screen name="AboutUs" component={AboutUs} /> */}
         {/* <Stack.Screen name="EditPassword" component={EditPassword} /> */}
+<<<<<<< HEAD
          {/* <Stack.Screen name="Library" component={Library} /> */}
+=======
+        {/* <Stack.Screen name="Home" component={Home} /> */}
+        {/* <Stack.Screen name="UserProfile" component={UserProfile} /> */}
+          {/* <Stack.Screen name="Library" component={Library} /> */}
+        {/* <Stack.Screen name="EditProfile" component={EditProfile}/> */}
+        <Stack.Screen name="EachBook" component={EachBook} />
+>>>>>>> 7c6b3aec076539b3d4ac0fd1e7fd1f9116c7e97e
       </Stack.Navigator>
     </NavigationContainer>
   );

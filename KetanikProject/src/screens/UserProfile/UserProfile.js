@@ -3,11 +3,14 @@ import { myFontStyle } from "@assets/Constance";
 
 import { responsiveFontSize, responsiveHeight, responsiveScreenWidth, responsiveWidth } from 'react-native-responsive-dimensions';
 import { Colors} from "@assets/Colors";
-
+import { Switch } from 'react-native-paper';
 import { View, Text , StyleSheet,Image, TouchableOpacity,ScrollView} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
  const UserProfile = ({navigation }) => {
-  
+  const [isSwitchOn, setIsSwitchOn] = React.useState(false);
+
+  const onToggleSwitch = () => setIsSwitchOn(!isSwitchOn);
+
  
  
 return (
@@ -79,7 +82,7 @@ return (
         <Text style={styles.btnText}>حالت شب</Text>
       </View>
       <View>
-        <Icon name={'chevron-left'} size={20} color={'#111'}/>
+      <Switch value={isSwitchOn} onValueChange={onToggleSwitch} color={Colors.darkGreen} />
       </View>
     </TouchableOpacity>
     <TouchableOpacity style={styles.editProfileBtn}>

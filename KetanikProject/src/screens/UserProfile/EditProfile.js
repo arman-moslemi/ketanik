@@ -6,8 +6,16 @@ import { Colors} from "@assets/Colors";
 
 import { View, Text , StyleSheet,Image, TouchableOpacity,ScrollView,TextInput} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import Modal from 'react-native-modal';
+import { RadioButton } from 'react-native-paper';
  const EditProfile = ({navigation }) => {
+   
+  const [checked, setChecked] = React.useState('first');
+  const [isModalVisible, setModalVisible] = useState(false);
 
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible);
+  };
 return (
     <View style={{ padding:0,justifyContent:'flex-start',alignContent:'flex-start',alignSelf:'flex-start',backgroundColor:'#fff'}}>
        <Image source={require('@assets/images/userProfileTop.png')} style={styles.topImg}/>
@@ -20,12 +28,12 @@ return (
       
      </View>
      <Image source={require('@assets/images/profile.jpg')} style={styles.profile2}/>
-     <TouchableOpacity style={styles.loginBtn}  >
+     <TouchableOpacity style={styles.loginBtn} onPress={toggleModal} >
        <Text style={styles.btnText}>ویرایش تصویر</Text>
      </TouchableOpacity>
    
      
-     <View style={{padding:15,borderBottomColor:'#E8EAE6',borderBottomWidth:20,}}>
+     <View style={{padding:15,borderBottomColor:'#E8EAE6',borderBottomWidth:10,}}>
 </View>
 
  
@@ -43,15 +51,37 @@ return (
   </Text>
   <TextInput placeholder="ایمیل" style={styles.discountInput} placeholderTextColor={'#111'} />
 </View>
-<View style={{padding:15,borderBottomColor:'#E8EAE6',borderBottomWidth:20,}}>
+<View style={{padding:15,borderBottomColor:'#E8EAE6',borderBottomWidth:10,}}>
 </View>
-<Text style={styles.inputText}>
-رادیو باتن اینجا قرار میگیرد
+<View style={styles.radioRow}>
+  <View style={styles.radioView}>
+  <RadioButton
+        value="first"
+        status={ checked === 'first' ? 'checked' : 'unchecked' }
+        onPress={() => setChecked('first')}
+        color={Colors.darkGreen}
+      />
+  <Text style={styles.radionText}>
+    خانم
   </Text>
+      
+  </View>
+  <View style={styles.radioView}>
+      <RadioButton
+        value="second"
+        status={ checked === 'second' ? 'checked' : 'unchecked' }
+        onPress={() => setChecked('second')}
+        color={Colors.darkGreen}
+      />
+        <Text style={styles.radionText}>
+    آقا
+  </Text>
+    </View>
+    </View>
   
-<View style={{padding:15,borderBottomColor:'#E8EAE6',borderBottomWidth:20,}}>
+<View style={{padding:15,borderBottomColor:'#E8EAE6',borderBottomWidth:10,}}>
 </View>
-<TouchableOpacity style={styles.editProfileBtn}>
+<TouchableOpacity style={styles.editProfileBtn2}>
       <View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>
         
         <Text style={styles.btnText2}>تغییر رمزعبور</Text>
@@ -74,6 +104,7 @@ return (
 </View>
  
  {/* Modal is here */}
+ <Modal isVisible={isModalVisible} onBackdropPress={() => setModalVisible(false)} >
  <View style={styles.editModal}>
    <Text style={styles.modalTitle}>
      ویرایش تصویر پروفایل
@@ -100,6 +131,8 @@ return (
      
     </TouchableOpacity>
  </View>
+ </Modal>
+
   </ScrollView>
   </View>
 );
@@ -157,7 +190,18 @@ const styles = StyleSheet.create({
       paddingBottom:responsiveHeight(1),
       borderBottomColor:'#eaeaea',
       borderBottomWidth:2,
-    },btnText:{
+    },editProfileBtn2:{
+      display:'flex',
+      justifyContent:'space-between',
+      alignItems:'center',
+      flexDirection:'row-reverse',
+      paddingRight:responsiveWidth(5),
+      paddingLeft:responsiveWidth(5),
+      paddingTop:responsiveHeight(1),
+      paddingBottom:responsiveHeight(1),
+     
+    }
+    ,btnText:{
       ...myFontStyle.episodeName,
       color:'#111',
       marginRight:responsiveWidth(2),
@@ -195,7 +239,7 @@ const styles = StyleSheet.create({
   },inputText:{
     color:'#111',
     ...myFontStyle.episodeName,
-    width:responsiveWidth(15),
+    width:responsiveWidth(17),
   },editProfileBtn:{
     display:'flex',
     justifyContent:'space-between',
@@ -282,6 +326,20 @@ const styles = StyleSheet.create({
     ...myFontStyle.episodeName,
       color:'#111',
       marginRight:responsiveWidth(2),
+  } ,viewRadio: {flexDirection:'row',alignItems:'center'},
+  radionText: {
+    color: '#707070',
+    ...myFontStyle.episodeName,
+    // lineHeight:responsiveHeight(3)
+
+  },radioView:{
+    marginTop:responsiveHeight(2),
+    display:'flex',
+    flexDirection:'row-reverse',
+    marginRight:responsiveWidth(10),
+  },radioRow:{
+    display:'flex',
+    flexDirection:'row-reverse',
   }
   });
 

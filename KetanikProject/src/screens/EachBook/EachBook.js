@@ -1,6 +1,6 @@
 import React, { useState,useEffect } from 'react';
 import { myFontStyle } from "@assets/Constance";
-import { View, Text , StyleSheet,Image, TouchableOpacity,Button} from 'react-native';
+import { View, Text , StyleSheet,Image, TouchableOpacity,Button,ScrollView} from 'react-native';
 import { TabView, SceneMap,TabBar } from 'react-native-tab-view';
 import { responsiveFontSize, responsiveHeight, responsiveScreenWidth, responsiveWidth } from 'react-native-responsive-dimensions';
 import { Colors} from "@assets/Colors";
@@ -135,21 +135,27 @@ const SecondRoute = () => (
      
   </View>
 );
-
+const ThirdRoute = () => (
+  <></>
+ );
 const renderScene = SceneMap({
-  library: SecondRoute,
-  status: FirstRoute,
+  comment: FirstRoute,
+  present: ThirdRoute,
+  detail: SecondRoute,
+ 
 });
- const Library = ({navigation }) => {
+ const EachBook = ({navigation }) => {
   // const [showSearch, setshowSearch] = useState(false);
   // const onClick = () =>{
   //   setshowSearch(!showSearch);
   // };
-  const [index, setIndex] = React.useState(0);
+  const [index, setIndex] = React.useState(2);
   const [routes] = React.useState([
-    { key: 'status', title: 'وضعیت' },
-    { key: 'library', title: 'کتابخانه' },
-    
+    { key: 'comment', title: 'نظرات' },
+   
+    { key: 'detail', title: 'جزئیات' },
+    { key: 'present', title: 'معرفی کتاب' },
+   
   ]);
   const renderTabBar = props => (
     <TabBar
@@ -168,23 +174,55 @@ const renderScene = SceneMap({
   );
   
 return (
-  
-    <View style={{ flex: 1,padding:0}}>
-          <View style={styles.topBar}>
+  <ScrollView contentContainerStyle={{flexGrow:1,flex:1}}>
+<View style={{ flex: 1,padding:0,backgroundColor:'#fff'}}>
+    <View style={styles.greenBack}>
+    <View style={styles.topBar}>
 
 
-<TouchableOpacity onPress={()=>navigation.goBack()} style={{}}>
-        <Icon name={"cached"} color={'#111'} size={30}/>
+    <View style={styles.rightCol}>
+      
+    <TouchableOpacity  style={{}}>
+    <Image source={require('@assets/images/save.png')} style={styles.saveBtn}/>
+      </TouchableOpacity>
+      <TouchableOpacity style={{}}>
+        <Image source={require('@assets/images/share.png')} style={styles.saveBtn}/>
+      </TouchableOpacity>
+    </View>
+    <View style={styles.leftCol}>
+    <TouchableOpacity style={{}}>
+        <Image source={require('@assets/images/back.png')} style={styles.saveBtn}/>
       </TouchableOpacity>
      
-
-    
-    
-      <TouchableOpacity onPress={()=>navigation.goBack()} style={{}}>
-        <Icon name={"arrow-back"} color={'#111'} size={30}/>
-      </TouchableOpacity>
+</View>
       
 </View>
+
+
+    </View>
+    <View style={styles.bookDetailBox}>
+<Image source={require('@assets/images/book1.jpg')} style={styles.bookImg2}/>
+<Text style={styles.eachBookName}>کتاب سایه و استخوان</Text>
+<Text style={styles.eachBookDetail}>اثر لی باردوگو</Text>
+<Text style={styles.eachBookDetail}>29.000 تومان</Text>
+<View style={styles.rateRow}>
+<Text style={styles.eachBookDetail2}>4.5</Text>
+<Icon name={'star'} color={'#ffc93d'} size={20}/>
+</View>
+</View>
+<View style={styles.btnRow}>
+<TouchableOpacity style={styles.loginBtn}>
+       <Text style={styles.btnText}>خرید</Text>
+     </TouchableOpacity>
+     <TouchableOpacity style={styles.whiteBtn}>
+       <Text style={styles.btnText2}>نسخه نمونه</Text>
+     </TouchableOpacity>
+     <TouchableOpacity style={styles.greenBtn2}>
+      <Icon name={'keyboard-control'} size={30} color={'#fff'}/>
+     </TouchableOpacity>
+</View>
+
+
       <View style={styles.tabViewBox}>
       <TabView
       renderTabBar={renderTabBar}
@@ -193,10 +231,13 @@ return (
       onIndexChange={setIndex}
       initialLayout={{ width:responsiveWidth(90) }}
     />
-      </View>
+      </View> 
      
+
   
   </View>
+  </ScrollView>
+    
 );
 };
 
@@ -209,12 +250,12 @@ loginImg:{
 topBar:{
   display:'flex',
   flexDirection:'row-reverse',
-  paddingTop:responsiveHeight(2),
+  paddingTop:responsiveHeight(0),
   paddingRight:responsiveWidth(7),
   paddingLeft:responsiveWidth(7),
   zIndex:1000,
   justifyContent:'space-between',
-  
+  alignItems:'center',
 },
 
 menuTitle:{
@@ -247,102 +288,123 @@ indicatorStyle:{
 },tabViewBox:{
   flex:1,
   width:responsiveWidth(80),
-  marginTop:responsiveHeight(0),
+  marginTop:responsiveHeight(3),
   width:responsiveWidth(90),
   marginRight:'auto',
   marginLeft:'auto'
-},loginBtn:{
-  backgroundColor:Colors.darkGreen,
-  width:responsiveWidth(75),
-  marginTop:responsiveHeight(2),
-  height:responsiveHeight(8),
-  alignContent:'center',
-  alignItems:'center',
-  paddingTop:responsiveHeight(2.5),
-  borderRadius:15,
-},btnText:{
-  ...myFontStyle.largBold,
-  color:'#fff',
-},forgetPassBtn:{
-  textAlign:'left',
+},
+greenBack:{
+  backgroundColor:'#f1f5ec',
+   flexDirection:"row-reverse",
+  justifyContent:'flex-start',
+    position:"absolute",
+    top:responsiveHeight(0),
+    paddingRight:responsiveWidth(5),
+    paddingLeft:responsiveWidth(5),
+    alignItems:'flex-start',
+   
+    height : responsiveHeight(54),
+    width : '100%',
+    transform : [ { scaleX : 1.1 } ],
+    borderBottomStartRadius : 150,
+    borderBottomEndRadius : 150,
+    overflow : 'hidden',
+    justifyContent:'center'
+},rightCol:{
+ display:'flex',
+ flexDirection:'row-reverse',
+ flex:0.5,
+},leftCol:{
+  flex:0.5,
+}
+,saveBtn:{
+  width:25,
+  resizeMode:'contain',
+  marginLeft:responsiveWidth(5),
+},bookImg2:{
+  width:responsiveWidth(45),
+  height:responsiveHeight(28),
+  zIndex:2000,
+marginRight:'auto',
+marginLeft:'auto',
+marginTop:responsiveHeight(10),
+  resizeMode:'contain',
+  borderRadius:20,
+},eachBookName:{
+    ...myFontStyle.UltraBold,
+    color:'#000',
+    textAlign:'center',
+    marginTop:responsiveHeight(2),
+},bookDetailBox:{
+ 
+  textAlign:'center',
+},eachBookDetail:{
+  ...myFontStyle.bookWriter3,
+  color:'#000',
+  textAlign:'center',
   
-  alignSelf:'flex-start',
-  paddingLeft:responsiveWidth(3),
-  marginTop:responsiveHeight(2),
-  marginBottom:responsiveHeight(2),
-},forgetPassBtnText:{
-  color:'#3495fe',
-  ...myFontStyle.largBold,
-},libraryBook:{
-    width:"100%",
-    height:responsiveHeight(18),
-    resizeMode:'cover',
-    borderRadius:10,
-    
-},libraryBox:{
-  height:responsiveHeight(18),
-  width:responsiveWidth(27),
+  
+},eachBookDetail2:{
+  ...myFontStyle.UltraBold,
+  color:'#000',
+  textAlign:'center',
+  
+  
+},rateRow:{
+
+  display:'flex',
   marginRight:'auto',
   marginLeft:'auto',
-  position:'relative',
-  
-  marginTop:responsiveHeight(5),
-},pageTitleText:{
-  color:'#343434',
-  ...myFontStyle.largeRegular,
-  marginRight:responsiveWidth(2)
-},littleBtn:{
-  position:'absolute',
-  top:responsiveHeight(1),
-  right:responsiveWidth(1),
-  height:25,
-  width:25,
-  borderRadius:20,
-  textAlign:'center',
+  flexDirection:'row',
+  alignItems:'center',
+},btnRow:{
+  marginRight:'auto',
+  marginLeft:'auto',
+  marginTop:responsiveHeight(0.5),
   display:'flex',
-  justifyContent:'center',
+  flexDirection:'row-reverse',
+},loginBtn:{
+  backgroundColor:Colors.darkGreen,
+  width:responsiveWidth(35),
+  
+  height:responsiveHeight(6),
   alignContent:'center',
   alignItems:'center',
-  alignSelf:'center',
-  zIndex:1000,
-  backgroundColor:'#fff'
-},littleBtn2:{
-  position:'absolute',
-  top:responsiveHeight(1),
-  left:responsiveWidth(1),
-  height:25,
-  width:25,
-  borderRadius:20,
-  textAlign:'center',
-  display:'flex',
-  justifyContent:'center',
+  paddingTop:responsiveHeight(0.8),
+  borderRadius:10,
+ 
+},btnText:{
+  ...myFontStyle.UltraBold,
+  color:'#fff',
+},whiteBtn:{
+  width:responsiveWidth(35),
+  height:responsiveHeight(6),
+  backgroundColor:'#fff',
+  borderColor:Colors.darkGreen,
+  color:Colors.darkGreen,
+  borderWidth:2,
+  borderRadius:10,
   alignContent:'center',
   alignItems:'center',
-  alignSelf:'center',
-  zIndex:1000,
-  backgroundColor:'#fff'
-},greenBox:{
-  backgroundColor:Colors.lightGreen,
+  paddingTop:responsiveHeight(0.8),
+  marginRight:10,
+  marginLeft:10,
+},btnText2:{
+  ...myFontStyle.UltraBold,
+  color:Colors.darkGreen,
   
-  width:responsiveWidth(40),
-  position:'absolute',
-  top:responsiveHeight(7),
-  right:0,
-  zIndex:10000,
-  borderRadius:5,
-  borderRightColor:Colors.darkGreen,
-  borderRightWidth:3,
-},greenBoxBtn:{
-  borderBottomColor:'#e8ebe3',
-  borderBottomWidth:1,
-  padding:10,
-  width:'100%',
-},greenBoxText:{
-  ...myFontStyle.normalRegular,
-  color:'#111',
+},greenBtn2:{
+  backgroundColor:Colors.darkGreen,
+  width:responsiveWidth(12),
+
+  height:responsiveHeight(6),
+  alignContent:'center',
+  alignItems:'center',
+  paddingTop:responsiveHeight(0.8),
+  borderRadius:10,
 }
   });
 
-  export default Library;
+  export default EachBook;
 
 //make this component available to the <app></app>
