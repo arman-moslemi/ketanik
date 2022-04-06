@@ -28,6 +28,7 @@ import EachBook from '@screens/EachBook/EachBook';
 import ListenBook from '@screens/ListenBook/ListenBook';
 import Wallet from '@screens/Wallet/Wallet';
 import Factor from '@screens/Factor/Factor';
+import Search from "@assets/Search/Search";
 const Stack = createNativeStackNavigator();
 const Tab = createMaterialBottomTabNavigator();
 
@@ -131,7 +132,8 @@ export default function App() {
         {/* <Stack.Screen name="EachBook" component={EachBook} /> */}
         {/* <Stack.Screen name="ListenBook" component={ListenBook} /> */}
         {/* <Stack.Screen name="wallet" component={Wallet} /> */}
-        <Stack.Screen name="Factor" component={Factor} />
+        {/* <Stack.Screen name="Factor" component={Factor} /> */}
+        <Stack.Screen name="Search" component={Search} />
       </Stack.Navigator>
     </NavigationContainer>
   );
