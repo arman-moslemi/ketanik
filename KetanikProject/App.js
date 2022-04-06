@@ -25,6 +25,9 @@ import { responsiveHeight, responsiveWidth } from 'react-native-responsive-dimen
 
 
 import EachBook from '@screens/EachBook/EachBook';
+import ListenBook from '@screens/ListenBook/ListenBook';
+import Wallet from '@screens/Wallet/Wallet';
+import Factor from '@screens/Factor/Factor';
 const Stack = createNativeStackNavigator();
 const Tab = createMaterialBottomTabNavigator();
 
@@ -125,7 +128,10 @@ export default function App() {
         {/* <Stack.Screen name="UserProfile" component={UserProfile} /> */}
           {/* <Stack.Screen name="Library" component={Library} /> */}
         {/* <Stack.Screen name="EditProfile" component={EditProfile}/> */}
-        <Stack.Screen name="EachBook" component={EachBook} />
+        {/* <Stack.Screen name="EachBook" component={EachBook} /> */}
+        {/* <Stack.Screen name="ListenBook" component={ListenBook} /> */}
+        {/* <Stack.Screen name="wallet" component={Wallet} /> */}
+        <Stack.Screen name="Factor" component={Factor} />
       </Stack.Navigator>
     </NavigationContainer>
   );

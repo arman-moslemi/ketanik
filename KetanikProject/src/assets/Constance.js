@@ -95,5 +95,8 @@ export const myFontStyle = {
   ,textOnImg:{
     fontFamily:myFontFamily.Bold,
     fontSize:responsiveFontSize(2.5),
+  },rate:{
+    fontFamily:myFontFamily.Bold,
+    fontSize:responsiveFontSize(6),
   }
 }

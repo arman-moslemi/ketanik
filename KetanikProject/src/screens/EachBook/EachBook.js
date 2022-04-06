@@ -24,7 +24,132 @@ export const truncate = (str, len) => {
 };
 
 const FirstRoute = () => (
- <></>
+ <ScrollView>
+   <View style={styles.commentView}>
+  
+  <View style={{width:responsiveWidth(65),marginLeft:responsiveWidth(5)}}>
+    <View style={{display:'flex',flexDirection:'row',alignItems:'center'}}>
+      <Icon name={'star'} color={'#ffc93d'} size={20}/>
+      <View style={styles.lineBack}>
+        <View style={styles.lineFront1}>
+
+        </View>
+      </View>
+    </View>
+    <View style={{display:'flex',flexDirection:'row',alignItems:'center'}}>
+      <Icon name={'star'} color={'#ffc93d'} size={20}/>
+      <View style={styles.lineBack}>
+        <View style={styles.lineFront2}>
+
+        </View>
+      </View>
+    </View>
+    <View style={{display:'flex',flexDirection:'row',alignItems:'center'}}>
+      <Icon name={'star'} color={'#ffc93d'} size={20}/>
+      <View style={styles.lineBack}>
+        <View style={styles.lineFront3}>
+
+        </View>
+      </View>
+    </View>
+    <View style={{display:'flex',flexDirection:'row',alignItems:'center'}}>
+      <Icon name={'star'} color={'#ffc93d'} size={20}/>
+      <View style={styles.lineBack}>
+        <View style={styles.lineFront4}>
+
+        </View>
+      </View>
+    </View>
+    <View style={{display:'flex',flexDirection:'row',alignItems:'center'}}>
+      <Icon name={'star'} color={'#ffc93d'} size={20}/>
+      <View style={styles.lineBack}>
+        <View style={styles.lineFront5}>
+
+        </View>
+      </View>
+    </View>
+    
+  </View>
+  <View style={{width:responsiveWidth(20)}}>
+    <Text style={styles.textRate}>
+      4.5
+    </Text>
+    <View style={{display:'flex',flexDirection:'row-reverse',justifyContent:'flex-end',marginTop:responsiveHeight(-1),marginBottom:responsiveHeight(1)}}>
+      <Icon name={'star'} color={Colors.darkGreen} size={15}/>
+      <Icon name={'star'} color={Colors.darkGreen} size={15}/>
+      <Icon name={'star'} color={Colors.darkGreen} size={15}/>
+      <Icon name={'star'} color={Colors.darkGreen} size={15}/>
+      <Icon name={'star'} color={Colors.darkGreen} size={15}/>
+    </View>
+    <View style={{display:'flex',flexDirection:'row-reverse'}}>
+      <Icon name={'person'} color={'#1a1a1a'} size={25}/>
+      <Text style={styles.eachBookDetail3}>
+        نظر (141)
+      </Text>
+    </View>
+  </View>
+   </View>
+   <View style={styles.commentGreenBox}>
+      <View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>
+        <View>
+        <Image source={require('@assets/images/book3.jpg')} style={styles.writerImg}/>
+        </View>
+        <View>
+          <Text style={styles.eachBookDetail5}>نرگس عامری</Text>
+         <View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>
+         <View style={{display:'flex',flexDirection:'row-reverse',justifyContent:'flex-end',marginTop:responsiveHeight(1),marginBottom:responsiveHeight(1)}}>
+      <Icon name={'star'} color={Colors.darkGreen} size={15}/>
+      <Icon name={'star'} color={Colors.darkGreen} size={15}/>
+      <Icon name={'star'} color={Colors.darkGreen} size={15}/>
+      <Icon name={'star'} color={Colors.darkGreen} size={15}/>
+      <Icon name={'star'} color={Colors.darkGreen} size={15}/>
+    </View>
+    <Text style={styles.eachBookDetail3}>01/01/12</Text>
+         </View>
+        </View>
+      </View>
+      <Text style={styles.bookDescription}>
+      لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از
+صنعت چاپ و با استفاده از طراحان گرافیک است.
+      </Text>
+      <TouchableOpacity style={{display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>
+        
+        <View>
+        <Text style={styles.bookDescription}>14 <Icon name={'favorite-border'} size={20}/></Text>
+        </View>
+      </TouchableOpacity>
+    </View>
+    <View style={styles.commentGreenBox}>
+      <View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>
+        <View>
+        <Image source={require('@assets/images/book3.jpg')} style={styles.writerImg}/>
+        </View>
+        <View>
+          <Text style={styles.eachBookDetail5}>نرگس عامری</Text>
+         <View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>
+         <View style={{display:'flex',flexDirection:'row-reverse',justifyContent:'flex-end',marginTop:responsiveHeight(1),marginBottom:responsiveHeight(1)}}>
+      <Icon name={'star'} color={Colors.darkGreen} size={15}/>
+      <Icon name={'star'} color={Colors.darkGreen} size={15}/>
+      <Icon name={'star'} color={Colors.darkGreen} size={15}/>
+      <Icon name={'star'} color={Colors.darkGreen} size={15}/>
+      <Icon name={'star'} color={Colors.darkGreen} size={15}/>
+    </View>
+    <Text style={styles.eachBookDetail3}>01/01/12</Text>
+         </View>
+        </View>
+      </View>
+      <Text style={styles.bookDescription}>
+      لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از
+صنعت چاپ و با استفاده از طراحان گرافیک است.
+      </Text>
+      <TouchableOpacity style={{display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>
+        
+        <View>
+        <Text style={styles.bookDescription}>14 <Icon name={'favorite-border'} size={20}/></Text>
+        </View>
+      </TouchableOpacity>
+    </View>
+ </ScrollView>
 );
 
 const SecondRoute = () => (
@@ -32,7 +157,7 @@ const SecondRoute = () => (
 <ScrollView>
 <View style={{ flex: 1}}>
 
-     <View style={{display:'flex',flexDirection:'row-reverse',marginTop:responsiveHeight(5),justifyContent:"space-between"}}>
+     <View style={{display:'flex',flexDirection:'row-reverse',marginTop:responsiveHeight(5),justifyContent:"space-between",marginBottom:responsiveHeight(5)}}>
        <View style={{display:'flex',flexDirection:'row-reverse',flex:0.5,alignItems:'center'}}>
           <Image source={require('@assets/images/book1.jpg')} style={styles.writerImg}/>
           <View>
@@ -56,11 +181,146 @@ const SecondRoute = () => (
        </View>
      </View>
      <View style={styles.bookDetilTable}>
-       <View style={{display:'flex',flexDirection:'row-reverse'}}>
-         <Icon name={'fiber-manual-record'} color={Colors.darkGreen} size={20}/>
+       <View style={{display:'flex',flexDirection:'row-reverse',flex:0.5,alignItems:'center'}}>
+         <Icon name={'fiber-manual-record'} color={Colors.darkGreen} size={10}/>
          <Text style={styles.table1}>
            نام کتاب
          </Text>
+       </View>
+       <View style={{flex:0.5}}>
+       <Text style={styles.table2}>
+         سایه و استخوان
+       </Text>
+       </View>
+     </View>
+     <View style={styles.bookDetilTable}>
+       <View style={{display:'flex',flexDirection:'row-reverse',flex:0.5,alignItems:'center'}}>
+         <Icon name={'fiber-manual-record'} color={Colors.darkGreen} size={10}/>
+         <Text style={styles.table1}>
+          نویسنده
+         </Text>
+       </View>
+       <View style={{flex:0.5}}>
+       <Text style={styles.table2}>
+         لی باردوگو
+       </Text>
+       </View>
+     </View>
+     <View style={styles.bookDetilTable}>
+       <View style={{display:'flex',flexDirection:'row-reverse',flex:0.5,alignItems:'center'}}>
+         <Icon name={'fiber-manual-record'} color={Colors.darkGreen} size={10}/>
+         <Text style={styles.table1}>
+          مترجم
+         </Text>
+       </View>
+       <View style={{flex:0.5}}>
+       <Text style={styles.table2}>
+         بهناز عسگری
+       </Text>
+       </View>
+     </View>
+     <View style={styles.bookDetilTable}>
+       <View style={{display:'flex',flexDirection:'row-reverse',flex:0.5,alignItems:'center'}}>
+         <Icon name={'fiber-manual-record'} color={Colors.darkGreen} size={10}/>
+         <Text style={styles.table1}>
+         ناشر
+         </Text>
+       </View>
+       <View style={{flex:0.5}}>
+       <Text style={styles.table2}>
+        نقش و نگار
+       </Text>
+       </View>
+     </View>
+     <View style={styles.bookDetilTable}>
+       <View style={{display:'flex',flexDirection:'row-reverse',flex:0.5,alignItems:'center'}}>
+         <Icon name={'fiber-manual-record'} color={Colors.darkGreen} size={10}/>
+         <Text style={styles.table1}>
+          دسته
+         </Text>
+       </View>
+       <View style={{flex:0.5}}>
+       <Text style={styles.table2}>
+        فانتزی_تخیلی
+       </Text>
+       </View>
+     </View>
+     <View style={styles.bookDetilTable}>
+       <View style={{display:'flex',flexDirection:'row-reverse',flex:0.5,alignItems:'center'}}>
+         <Icon name={'fiber-manual-record'} color={Colors.darkGreen} size={10}/>
+         <Text style={styles.table1}>
+         تعداد صفحات
+         </Text>
+       </View>
+       <View style={{flex:0.5}}>
+       <Text style={styles.table2}>
+         316
+       </Text>
+       </View>
+     </View>
+     <View style={styles.bookDetilTable}>
+       <View style={{display:'flex',flexDirection:'row-reverse',flex:0.5,alignItems:'center'}}>
+         <Icon name={'fiber-manual-record'} color={Colors.darkGreen} size={10}/>
+         <Text style={styles.table1}>
+        زبان
+         </Text>
+       </View>
+       <View style={{flex:0.5}}>
+       <Text style={styles.table2}>
+        فارسی
+       </Text>
+       </View>
+     </View>
+     <View style={styles.bookDetilTable}>
+       <View style={{display:'flex',flexDirection:'row-reverse',flex:0.5,alignItems:'center'}}>
+         <Icon name={'fiber-manual-record'} color={Colors.darkGreen} size={10}/>
+         <Text style={styles.table1}>
+         سایز
+         </Text>
+       </View>
+       <View style={{flex:0.5}}>
+       <Text style={styles.table2}>
+      1.6MB
+       </Text>
+       </View>
+     </View>
+     <View style={styles.bookDetilTable}>
+       <View style={{display:'flex',flexDirection:'row-reverse',flex:0.5,alignItems:'center'}}>
+         <Icon name={'fiber-manual-record'} color={Colors.darkGreen} size={10}/>
+         <Text style={styles.table1}>
+         تاریخ انتشار
+         </Text>
+       </View>
+       <View style={{flex:0.5}}>
+       <Text style={styles.table2}>
+       1398_2021
+       </Text>
+       </View>
+     </View>
+     <View style={styles.bookDetilTable}>
+       <View style={{display:'flex',flexDirection:'row-reverse',flex:0.5,alignItems:'center'}}>
+         <Icon name={'fiber-manual-record'} color={Colors.darkGreen} size={10}/>
+         <Text style={styles.table1}>
+          شابک
+         </Text>
+       </View>
+       <View style={{flex:0.5}}>
+       <Text style={styles.table2}>
+       978-6009553457
+       </Text>
+       </View>
+     </View>
+     <View style={styles.bookDetilTable}>
+       <View style={{display:'flex',flexDirection:'row-reverse',flex:0.5,alignItems:'center'}}>
+         <Icon name={'fiber-manual-record'} color={Colors.darkGreen} size={10}/>
+         <Text style={styles.table1}>
+         راوی
+         </Text>
+       </View>
+       <View style={{flex:0.5}}>
+       <Text style={styles.table2}>
+       سحر جعفری جوزانی
+       </Text>
        </View>
      </View>
   </View>
@@ -140,6 +400,11 @@ const renderScene = SceneMap({
      </View>
     );
   };
+  const [isModalVisible, setModalVisible] = useState(false);
+
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible);
+  };
 return (
  
 <View style={{ flex: 1,padding:0,backgroundColor:'#fff'}}>
@@ -185,11 +450,68 @@ return (
      <TouchableOpacity style={styles.whiteBtn}>
        <Text style={styles.btnText2}>نسخه نمونه</Text>
      </TouchableOpacity>
-     <TouchableOpacity style={styles.greenBtn2}>
+     <TouchableOpacity style={styles.greenBtn2} onPress={toggleModal}>
       <Icon name={'keyboard-control'} size={30} color={'#fff'}/>
      </TouchableOpacity>
 </View>
-
+<Modal isVisible={isModalVisible} onBackdropPress={() => setModalVisible(false)} >
+ <View style={styles.moreModal}>
+ 
+<View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center',marginBottom:responsiveHeight(5)}}>
+  <View>
+  <Image source={require('@assets/images/book1.jpg')} style={styles.modalImg}/>
+  </View>
+  <View>
+    <Text style={styles.eachBookDetail4}>
+      کتاب سایه و استخوان
+    </Text>
+    <Text style={styles.eachBookDetail3}>
+     اثر لی باردوگو
+    </Text>
+  </View>
+</View>
+<TouchableOpacity style={{borderTopWidth:0.5,borderTopColor:'#c1c1c1',display:'flex',justifyContent:'space-between',alignItems:'center',flexDirection:'row-reverse',paddingTop:responsiveHeight(2),paddingBottom:responsiveHeight(2)}}>
+<View>
+<Text style={styles.eachBookDetail3}>
+     فهرست کتاب
+    </Text>
+</View>
+<View>
+  <Image source={require('@assets/images/detail.png')} style={styles.miniIcon}/>
+</View>
+</TouchableOpacity>
+<TouchableOpacity style={{borderTopWidth:0.5,borderTopColor:'#c1c1c1',display:'flex',justifyContent:'space-between',alignItems:'center',flexDirection:'row-reverse',paddingTop:responsiveHeight(2),paddingBottom:responsiveHeight(2)}}>
+<View>
+<Text style={styles.eachBookDetail3}>
+     ارسال هدیه
+    </Text>
+</View>
+<View>
+  <Image source={require('@assets/images/gift.png')} style={styles.miniIcon}/>
+</View>
+</TouchableOpacity>
+<TouchableOpacity style={{borderTopWidth:0.5,borderTopColor:'#c1c1c1',display:'flex',justifyContent:'space-between',alignItems:'center',flexDirection:'row-reverse',paddingTop:responsiveHeight(2),paddingBottom:responsiveHeight(2)}}>
+<View>
+<Text style={styles.eachBookDetail3}>
+    افزودن به کتاب های دلخواه
+    </Text>
+</View>
+<View>
+  <Image source={require('@assets/images/save.png')} style={styles.miniIcon}/>
+</View>
+</TouchableOpacity>
+<TouchableOpacity style={{borderTopWidth:0.5,borderTopColor:'#c1c1c1',display:'flex',justifyContent:'space-between',alignItems:'center',flexDirection:'row-reverse',paddingTop:responsiveHeight(2),paddingBottom:responsiveHeight(2)}}>
+<View>
+<Text style={styles.eachBookDetail3}>
+     اشتراک گذاری
+    </Text>
+</View>
+<View>
+  <Image source={require('@assets/images/share.png')} style={styles.miniIcon}/>
+</View>
+</TouchableOpacity>
+ </View>
+ </Modal>
 
       <View style={styles.tabViewBox}>
       <TabView
@@ -326,6 +648,18 @@ marginTop:responsiveHeight(10),
   textAlign:'center',
   
   
+},eachBookDetail3:{
+  ...myFontStyle.bookWriter3,
+  color:'#000',
+  textAlign:'right',
+  
+  
+},eachBookDetail4:{
+  ...myFontStyle.UltraBold,
+  color:'#000',
+  textAlign:'right',
+  
+  
 },rateRow:{
 
   display:'flex',
@@ -455,8 +789,95 @@ height: "100%",
     width:60,
     borderRadius:200,
     marginLeft:10,
+  },bookDetilTable:{
+    borderBottomColor:'#c1c1c1',
+    borderBottomWidth:1,
+    display:'flex',
+    flexDirection:'row-reverse',
+    marginTop:responsiveHeight(0),
+    paddingTop:responsiveHeight(1),
+    paddingBottom:responsiveHeight(1),
   }
-
+  ,table1:{
+    color:Colors.darkGreen,
+    ...myFontStyle.UltraBold,
+    marginRight:10,
+  }
+  ,table2:{
+    color:'#1a1a1a',
+    ...myFontStyle.largBold,
+    textAlign:'right',
+  },moreModal:{
+    backgroundColor:Colors.lightGreen,
+    bottom:0,
+    borderRightColor:Colors.darkGreen,
+    borderRightWidth:5,
+    borderRadius:10,
+    padding:responsiveHeight(2),
+    display:'flex',
+    justifyContent:'flex-start',
+  },modalImg:{
+    height:100,
+    width:70,
+    resizeMode:'cover',
+    borderRadius:10,
+    marginLeft:responsiveWidth(5),
+  },miniIcon:{
+    width:24,
+    height:28,
+  },commentView:{
+    display:'flex',
+    marginTop:responsiveHeight(2),
+    marginBottom:responsiveHeight(2),
+    flexDirection:'row-reverse',
+    alignItems:'center'
+  },textRate:{
+    ...myFontStyle.rate,
+    color:'#1a1a1a',
+  },lineBack:{
+    width:'85%',
+    height:8,
+    backgroundColor:'#e4e4e4',
+    borderRadius:200,
+    marginLeft:10,
+  }
+  ,lineFront1:{
+    backgroundColor:Colors.darkGreen,
+    height:8,
+    width:'100%',
+    borderRadius:200,
+  },lineFront2:{
+    backgroundColor:Colors.darkGreen,
+    height:8,
+    width:'40%',
+    borderRadius:200,
+  },lineFront3:{
+    backgroundColor:Colors.darkGreen,
+    height:8,
+    width:'30%',
+    borderRadius:200,
+  },lineFront4:{
+    backgroundColor:Colors.darkGreen,
+    height:8,
+    width:'20%',
+    borderRadius:200,
+  },lineFront5:{
+    backgroundColor:Colors.darkGreen,
+    height:8,
+    width:'5%',
+    borderRadius:200,
+  },commentGreenBox:{
+    backgroundColor:Colors.lightGreen,
+    borderRadius:15,
+    width:'100%',
+    height:'auto',
+    padding:responsiveHeight(2),
+    marginTop:responsiveHeight(2),
+    marginBottom:responsiveHeight(2),
+  },eachBookDetail5:{
+    ...myFontStyle.largBold,
+    color:'#1a1a1a',
+  }
 });
 
   export default EachBook;
