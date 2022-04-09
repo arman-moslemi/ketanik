@@ -40,7 +40,7 @@ return (
     <View style={styles.topBar}>
 
     <View style={{flex : 2,textAlign:"right"}}>
-          <Text style={styles.menuTitle}>تراکنش های موفق</Text>
+          <Text style={styles.menuTitle}>جستجو</Text>
           </View>
     
         
@@ -55,147 +55,59 @@ return (
  <View style={styles.container}>
  
   <View style={styles.aboutView}>
-<Image source={require('@assets/images/logo.png')} style={styles.backgroundImg}/>
-    <View style={styles.tableBorder}>
-    <View style={{display:'flex',flexDirection:'row-reverse'}}>
-      <View style={{width:responsiveWidth(20),padding:5,borderLeftColor:'#d3d3d3',borderLeftWidth:0.5}}>
-        <Text style={styles.tableHeader}>
-          تاریخ
+    <View style={styles.lightGreenBack}>
+<View>
+  <Icon name={'search'} size={40} color={'#c1c1c1'}/>
+</View>
+<View>
+  <TextInput placeholder='جستجو کتاب،نویسنده و ناشر...' style={styles.searchInput}/>
+</View>
+    </View>
+    <View style={{display:'flex',justifyContent:'space-between',alignItems:'center',flexDirection:'row-reverse',marginTop:responsiveHeight(3),marginBottom:responsiveHeight(3)}}>
+      <View>
+        <Text style={styles.headText}>
+          تاریخچه
         </Text>
       </View>
-      <View style={{width:responsiveWidth(25),padding:5,borderLeftColor:'#d3d3d3',borderLeftWidth:0.5}}>
-        <Text style={styles.tableHeader}>
-         واریز/برداشت
-        </Text>
-      </View>
-      <View style={{width:responsiveWidth(25),padding:5,borderLeftColor:'#d3d3d3',borderLeftWidth:0.5}}>
-        <Text style={styles.tableHeader}>
-         توضیحات
-        </Text>
-      </View>
-      <View style={{width:responsiveWidth(20),padding:5}}>
-        <Text style={styles.tableHeader}>
-          وضعیت
-        </Text>
+      <View>
+        <TouchableOpacity style={{display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>
+          <Text style={styles.delText}>پاک کردن</Text>
+          <Icon name={'delete'} size={25} color={'#dc3545'}/>
+        </TouchableOpacity>
       </View>
     </View>
-    <View style={{display:'flex',flexDirection:'row-reverse',borderTopColor:'#d3d3d3',borderTopWidth:0.5,alignItems:'center'}}>
-      <View style={{width:responsiveWidth(20),padding:5,borderLeftColor:'#d3d3d3',borderLeftWidth:0.5}}>
-        <Text style={styles.tableContent}>
-        1400/05/29
-        </Text>
+   <ScrollView>
+   <View style={{display:'flex',flexDirection:'column'}}>
+      
+      <View style={styles.searchList}>
+        <View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>
+          <TouchableOpacity>
+            <Icon name={'clear'} color={'#c1c1c1'} size={20}/>
+          </TouchableOpacity>
+          <Text style={styles.searchResult}>
+            صد سال تنهایی
+          </Text>
+        </View>
+        <View style={{}}>
+          <Image source={require('@assets/images/book1.jpg')} style={styles.imageSearch}/>
+        </View>
       </View>
-      <View style={{width:responsiveWidth(25),padding:5,borderLeftColor:'#d3d3d3',borderLeftWidth:0.5}}>
-        <Text style={styles.tableContentGreen}>
-         12048 تومان
-        </Text>
+      <View style={styles.searchList}>
+        <View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>
+          <TouchableOpacity>
+            <Icon name={'clear'} color={'#c1c1c1'} size={20}/>
+          </TouchableOpacity>
+          <Text style={styles.searchResult}>
+            صد سال تنهایی
+          </Text>
+        </View>
+        <View style={{}}>
+          <Image source={require('@assets/images/book1.jpg')} style={styles.imageSearch}/>
+        </View>
       </View>
-      <View style={{width:responsiveWidth(25),padding:5,borderLeftColor:'#d3d3d3',borderLeftWidth:0.5}}>
-        <Text style={styles.tableContent}>
-         خرید
-        </Text>
-        <Text style={styles.tableContent}>
-        "شیوه گرگ"
-        </Text>
+  
       </View>
-      <View style={{width:responsiveWidth(20),padding:5}}>
-        <Text style={styles.tableContent}>
-          کیف پول
-        </Text>
-        <Text style={styles.tableContentGreen}>
-         موفق
-        </Text>
-      </View>
-    </View>
-    <View style={{display:'flex',flexDirection:'row-reverse',borderTopColor:'#d3d3d3',borderTopWidth:0.5,alignItems:'center'}}>
-      <View style={{width:responsiveWidth(20),padding:5,borderLeftColor:'#d3d3d3',borderLeftWidth:0.5}}>
-        <Text style={styles.tableContent}>
-        1400/05/29
-        </Text>
-      </View>
-      <View style={{width:responsiveWidth(25),padding:5,borderLeftColor:'#d3d3d3',borderLeftWidth:0.5}}>
-        <Text style={styles.tableContentGreen}>
-         12048 تومان
-        </Text>
-        
-      </View>
-      <View style={{width:responsiveWidth(25),padding:5,borderLeftColor:'#d3d3d3',borderLeftWidth:0.5}}>
-        <Text style={styles.tableContent}>
-         خرید
-        </Text>
-        <Text style={styles.tableContent}>
-        "شیوه گرگ"
-        </Text>
-      </View>
-      <View style={{width:responsiveWidth(20),padding:5,alignContent:'center',display:'flex',alignItems:'center',justifyContent:'center'}}>
-        <Text style={styles.tableContent}>
-          کیف پول
-        </Text>
-        <Text style={styles.tableContentGreen}>
-         موفق
-        </Text>
-      </View>
-    </View>
-    <View style={{display:'flex',flexDirection:'row-reverse',borderTopColor:'#d3d3d3',borderTopWidth:0.5,alignItems:'center'}}>
-      <View style={{width:responsiveWidth(20),padding:5,borderLeftColor:'#d3d3d3',borderLeftWidth:0.5}}>
-        <Text style={styles.tableContent}>
-        1400/05/29
-        </Text>
-      </View>
-      <View style={{width:responsiveWidth(25),padding:5,borderLeftColor:'#d3d3d3',borderLeftWidth:0.5}}>
-        <Text style={styles.tableContentGreen}>
-         12048 تومان
-        </Text>
-        
-      </View>
-      <View style={{width:responsiveWidth(25),padding:5,borderLeftColor:'#d3d3d3',borderLeftWidth:0.5}}>
-        <Text style={styles.tableContent}>
-         خرید
-        </Text>
-        <Text style={styles.tableContent}>
-        "شیوه گرگ"
-        </Text>
-      </View>
-      <View style={{width:responsiveWidth(20),padding:5,alignContent:'center',display:'flex',alignItems:'center',justifyContent:'center'}}>
-        <Text style={styles.tableContent}>
-         پرداخت آنلاین
-        </Text>
-        <Text style={styles.tableContentGreen}>
-         موفق
-        </Text>
-      </View>
-    </View>
-    <View style={{display:'flex',flexDirection:'row-reverse',borderTopColor:'#d3d3d3',borderTopWidth:0.5,alignItems:'center'}}>
-      <View style={{width:responsiveWidth(20),padding:5,borderLeftColor:'#d3d3d3',borderLeftWidth:0.5}}>
-        <Text style={styles.tableContent}>
-        1400/05/29
-        </Text>
-      </View>
-      <View style={{width:responsiveWidth(25),padding:5,borderLeftColor:'#d3d3d3',borderLeftWidth:0.5}}>
-        <Text style={styles.tableContentGreen}>
-         12048 تومان
-        </Text>
-        
-      </View>
-      <View style={{width:responsiveWidth(25),padding:5,borderLeftColor:'#d3d3d3',borderLeftWidth:0.5}}>
-        <Text style={styles.tableContent}>
-         خرید
-        </Text>
-        <Text style={styles.tableContent}>
-        "شیوه گرگ"
-        </Text>
-      </View>
-      <View style={{width:responsiveWidth(20),padding:5,alignContent:'center',display:'flex',alignItems:'center',justifyContent:'center'}}>
-        <Text style={styles.tableContent}>
-         پرداخت آنلاین
-        </Text>
-        <Text style={styles.tableContentGreen}>
-         موفق
-        </Text>
-      </View>
-    </View>
-    </View>
- 
+   </ScrollView>
   </View>
 
  </View>
@@ -235,8 +147,11 @@ const styles = StyleSheet.create({
     borderBottomStartRadius : 800,
     borderBottomEndRadius : 800,
     overflow : 'hidden',
-    shadowColor: '#b8b8b8', shadowOpacity: 0.5, shadowRadius: 50,
-    elevation:120,
+    shadowColor: '#c1c1c1',
+    shadowOffset: { width: 0, height: 5 },
+    shadowOpacity: 0.8,
+    shadowRadius: 50,
+    elevation: 100,
     zIndex:100,
    
   },
@@ -247,133 +162,49 @@ const styles = StyleSheet.create({
       paddingRight:responsiveWidth(7),
       paddingLeft:responsiveWidth(7),
       zIndex:1000,
-  },aboutView:{
-    width:responsiveWidth(87),
+  },lightGreenBack:{
+    backgroundColor:Colors.lightGreen,
+    height:responsiveHeight(8),
+    padding:10,
+    borderRadius:10,
+    width:responsiveWidth(90),
+    display:'flex',
+    flexDirection:'row-reverse',
     marginRight:'auto',
     marginLeft:'auto',
-    textAlign:'center',
-    marginTop:responsiveHeight(3),
+    marginTop:responsiveHeight(7),
+    alignItems:'center'
+  },aboutView:{
     display:'flex',
-    justifyContent:'center',
-    alignContent:'center',
-    alignItems:'center',
-  }
-  ,aboutText:{
+    
+    alignSelf:'center'
+  },searchInput:{
+    ...myFontStyle.normalRegular,
+  },headText:{
+    ...myFontStyle.textOnImg,
+    color:'#1a1a1a',
+  },delText:{
+    ...myFontStyle.largeRegular,
+    color:'#dc3545',
+  },searchList:{
+    display:'flex',
+    flexDirection:'row-reverse',
+    paddingBottom:responsiveHeight(1),
+    borderBottomColor:'#c1c1c1',
+    borderBottomWidth:0.5,
+    justifyContent:'space-between',
+    paddingTop:responsiveHeight(1),
+  },searchResult:{
     ...myFontStyle.largeRegular,
     color:'#111',
-    textAlign:'justify',
-    lineHeight:30,
-  },aboutTitle:{
-  ...myFontStyle.bookTitle,
-  color:'#111',
-  marginBottom:responsiveHeight(2),
-  marginTop:responsiveHeight(2),
-},radioView:{
-  marginTop:responsiveHeight(2),
-  display:'flex',
-  flexDirection:'row-reverse',
-  marginRight:responsiveWidth(10),
-},radioRow:{
-  display:'flex',
-  flexDirection:'row-reverse',
-  borderBottomColor:'#c1c1c1',
-  borderBottomWidth:0.5,
-} ,viewRadio: {flexDirection:'row',alignItems:'center'},
-radionText: {
-  color: '#111',
-  ...myFontStyle.episodeName,
-  // lineHeight:responsiveHeight(3)
-
-},payBtn:{
-  backgroundColor:Colors.darkGreen,
-  width:responsiveWidth(38),
-  marginTop:responsiveHeight(5),
-  height:responsiveHeight(6),
-  alignContent:'center',
-  alignItems:'center',
-display:'flex',
-alignContent:'center',
-alignItems:'center',
-justifyContent:'center',
-  borderRadius:10,
-
-  
-},btnText:{
-  ...myFontStyle.episodeName,
-  color:'#fff',
-},cancelBtn:{
-  backgroundColor:'#fff',
-  width:responsiveWidth(38),
-  marginTop:responsiveHeight(5),
-  height:responsiveHeight(6),
-  alignContent:'center',
-  alignItems:'center',
-display:'flex',
-alignContent:'center',
-alignItems:'center',
-justifyContent:'center',
-  borderRadius:10,
-borderColor:Colors.darkGreen,
-borderWidth:1,
-  marginRight:responsiveWidth(3),
-},btnText2:{
-  ...myFontStyle.episodeName,
-  color:Colors.darkGreen,
-},greenBack:{
-  backgroundColor:Colors.lightGreen,
-  borderRadius:10,
-  padding:responsiveHeight(2),
-  marginTop:responsiveHeight(3),
-  borderRightColor:Colors.darkGreen,
-  borderRightWidth:5,
-  justifyContent:'flex-start',
-  display:'flex',
-flex:1,
-flexDirection:'row-reverse',
-  alignContent:'flex-start',
-  alignItems:'flex-start',
- textAlign:'right',
-},alertText:{
-  ...myFontStyle.largeRegular,
-  color:'#111',textAlign:'right',
-  marginRight:5,
-},editProfileBtn2:{
-  display:'flex',
-  justifyContent:'space-between',
-  alignItems:'flex-start',
-  flexDirection:'row-reverse',
-  paddingRight:responsiveWidth(0),
-  paddingLeft:responsiveWidth(0),
-  paddingTop:responsiveHeight(1),
-  paddingBottom:responsiveHeight(1),
- marginTop:responsiveHeight(3),
-},btnText3:{
-  ...myFontStyle.episodeName,
-  color:'#111',
-  marginRight:responsiveWidth(2),
-},tableBorder:{
-  borderWidth:0.5,
-  borderColor:'#d3d3d3',
-  marginTop:responsiveHeight(5),
-  width:responsiveWidth(90),
-},tableHeader:{
-  ...myFontStyle.largeRegular,
-  color:'#111',
-  textAlign:'center'
-},tableContent:{
-  ...myFontStyle.normalRegular,
-  color:'#111',
-  textAlign:'center',
-},tableContentGreen:{
-  ...myFontStyle.normalRegular,
-  color:'#28a745',
-  textAlign:'center',
-},backgroundImg:{
-  width:responsiveWidth(80),
-  resizeMode:'contain',position:'absolute',
-marginTop:responsiveHeight(10),
-opacity:0.06,
-}
+    marginRight:responsiveWidth(5),
+  },imageSearch:{
+    width:responsiveWidth(15),
+    borderRadius:5,
+    resizeMode:'cover',
+    height:responsiveHeight(8),
+    
+  }
   });
 
   export default Search;

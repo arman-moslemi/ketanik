@@ -7,13 +7,42 @@ import { Colors} from "@assets/Colors";
 import {Input} from '@components/Input';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Modal from "react-native-modal";
+import { ScrollView } from 'react-native-web';
 // create a component
 // const [showBox, setShowBox] = useState(false);
 // const onClick = () => setShowBox(true);
 
 
 const FirstRoute = () => (
- <></>
+ 
+   <View style={{display:'flex',flexDirection:'row-reverse'}}>
+     <View style={styles.lightGreenBack}>
+        <View style={styles.greenCircle}>
+          <Image source={require('@assets/images/category2.png')} style={styles.miniImg}/>
+        </View>
+        <Text style={styles.largeText}>
+          23
+        </Text>
+        
+     </View>
+     <View style={styles.lightGreenBack}>
+     <View style={styles.greenCircle}>
+          <Image source={require('@assets/images/hour.png')} style={styles.miniImg}/>
+        </View>
+        <Text style={styles.largeText}>
+          23
+        </Text>
+</View>
+<View style={styles.lightGreenBack}>
+<View style={styles.greenCircle}>
+          <Image source={require('@assets/images/book.png')} style={styles.miniImg}/>
+          <Text style={styles.largeText}>
+          23
+        </Text>
+        </View>
+</View>
+   </View>
+ 
 );
 
 const SecondRoute = () => (
@@ -339,6 +368,36 @@ indicatorStyle:{
   width:'100%',
 },greenBoxText:{
   ...myFontStyle.normalRegular,
+  color:'#111',
+},lightGreenBack:{
+  backgroundColor:'#E5EBDF',
+  borderRadius:15,
+  width:responsiveWidth(27),
+  height:responsiveHeight(15),
+  margin:5,
+  marginTop:responsiveHeight(5),
+  display:'flex',
+  flexDirection:'column',
+  justifyContent:'center',
+  alignContent:'center',
+  alignItems:'center',
+  alignSelf:'center',
+},greenCircle:{
+  height:65,
+  width:65,
+  backgroundColor:'#b3e0d9',
+  borderRadius:100,
+  justifyContent:'center',
+  alignContent:'center',
+  alignSelf:'center',
+  display:'flex',
+  alignItems:'center'
+},miniImg:{
+    width:45,
+    height:45,
+    resizeMode:'contain' 
+},largeText:{
+  ...myFontStyle.textOnImg,
   color:'#111',
 }
   });

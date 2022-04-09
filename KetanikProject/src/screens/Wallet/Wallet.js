@@ -187,8 +187,11 @@ const styles = StyleSheet.create({
     borderBottomStartRadius : 800,
     borderBottomEndRadius : 800,
     overflow : 'hidden',
-    shadowColor: '#b8b8b8', shadowOpacity: 0.5, shadowRadius: 50,
-    elevation:120,
+    shadowColor: '#c1c1c1',
+    shadowOffset: { width: 0, height: 5 },
+    shadowOpacity: 0.8,
+    shadowRadius: 50,
+    elevation: 100,
     zIndex:100,
    
   },

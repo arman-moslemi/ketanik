@@ -607,6 +607,12 @@ greenBack:{
     borderBottomStartRadius : 150,
     borderBottomEndRadius : 150,
     overflow : 'hidden',
+    shadowColor: '#c1c1c1',
+    shadowOffset: { width: 0, height: 5 },
+    shadowOpacity: 0.8,
+    shadowRadius: 50,
+    elevation: 100,
+    zIndex:100,
     justifyContent:'center'
 },rightCol:{
  display:'flex',
