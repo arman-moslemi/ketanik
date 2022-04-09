@@ -230,15 +230,15 @@ const styles = StyleSheet.create({
       width:responsiveWidth(60),
       marginRight:'auto',
       marginLeft:'auto',
-      height:responsiveHeight(7),
+      height:responsiveHeight(6),
       color:'#111',
-      ...myFontStyle.episodeName,
+      ...myFontStyle.normalRegular,
     
       padding:10,
       
   },inputText:{
     color:'#111',
-    ...myFontStyle.episodeName,
+    ...myFontStyle.largeRegular,
     width:responsiveWidth(17),
   },editProfileBtn:{
     display:'flex',
@@ -329,13 +329,14 @@ const styles = StyleSheet.create({
   } ,viewRadio: {flexDirection:'row',alignItems:'center'},
   radionText: {
     color: '#707070',
-    ...myFontStyle.episodeName,
+    ...myFontStyle.largeRegular,
     // lineHeight:responsiveHeight(3)
 
   },radioView:{
     marginTop:responsiveHeight(2),
     display:'flex',
     flexDirection:'row-reverse',
+    alignItems:'center',
     marginRight:responsiveWidth(10),
   },radioRow:{
     display:'flex',

@@ -171,8 +171,8 @@ const styles = StyleSheet.create({
       color:'#111',
       textAlign:'center',
     },btnImg:{
-      width:40,
-      height:40,
+      width:30,
+      height:30,
     },editProfileBtn:{
       display:'flex',
       justifyContent:'space-between',
@@ -190,8 +190,8 @@ const styles = StyleSheet.create({
       marginRight:responsiveWidth(2),
     },btnImg2:{
       resizeMode:'contain',
-      width:35,
-      height:40,
+      width:25,
+      height:35 ,
     }
   });
 

@@ -23,6 +23,9 @@ const FirstRoute = () => (
         <Text style={styles.largeText}>
           23
         </Text>
+        <Text style={styles.miniText}>
+          ژانر خوانده شده
+        </Text>
         
      </View>
      <View style={styles.lightGreenBack}>
@@ -32,14 +35,21 @@ const FirstRoute = () => (
         <Text style={styles.largeText}>
           23
         </Text>
+        <Text style={styles.miniText}>
+          ساعت کتاب خوانده شده
+        </Text>
 </View>
 <View style={styles.lightGreenBack}>
 <View style={styles.greenCircle}>
           <Image source={require('@assets/images/book.png')} style={styles.miniImg}/>
-          <Text style={styles.largeText}>
+        
+        </View>
+        <Text style={styles.largeText}>
           23
         </Text>
-        </View>
+        <Text style={styles.miniText}>
+          کتاب خوانده شده
+        </Text>
 </View>
    </View>
  
@@ -372,8 +382,8 @@ indicatorStyle:{
 },lightGreenBack:{
   backgroundColor:'#E5EBDF',
   borderRadius:15,
-  width:responsiveWidth(27),
-  height:responsiveHeight(15),
+  width:responsiveWidth(28),
+  height:responsiveHeight(20),
   margin:5,
   marginTop:responsiveHeight(5),
   display:'flex',
@@ -399,6 +409,9 @@ indicatorStyle:{
 },largeText:{
   ...myFontStyle.textOnImg,
   color:'#111',
+},miniText:{
+  ...myFontStyle.mediumRegular,
+  color:'#111'
 }
   });
 

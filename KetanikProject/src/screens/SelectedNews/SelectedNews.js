@@ -75,11 +75,11 @@ return (
         {truncate("ناشر : انتشارات پندار تابان",30)}
         </Text>
         <View style={{display:'flex',flexDirection:'row-reverse'}}>
-            <Icon name={'star'} size={20} color={'#ffc93d'} style={{marginLeft:2}}/>
-            <Icon name={'star'} size={20} color={'#ffc93d'} style={{marginLeft:2}}/>
-            <Icon name={'star'} size={20} color={'#ffc93d'} style={{marginLeft:2}}/>
-            <Icon name={'star'} size={20} color={'#ffc93d'} style={{marginLeft:2}}/>
-            <Icon name={'star'} size={20} color={'#ffc93d'} style={{marginLeft:2}}/>
+            <Icon name={'star'} size={18} color={'#ffc93d'} style={{marginLeft:2}}/>
+            <Icon name={'star'} size={18} color={'#ffc93d'} style={{marginLeft:2}}/>
+            <Icon name={'star'} size={18} color={'#ffc93d'} style={{marginLeft:2}}/>
+            <Icon name={'star'} size={18} color={'#ffc93d'} style={{marginLeft:2}}/>
+            <Icon name={'star'} size={18} color={'#ffc93d'} style={{marginLeft:2}}/>
         </View>
     </View>
     <View style={{display:"flex",flexDirection:'column',alignContent:'flex-end',justifyContent:'space-between'}}>
@@ -106,11 +106,11 @@ return (
         {truncate("ناشر : انتشارات پندار تابان",30)}
         </Text>
         <View style={{display:'flex',flexDirection:'row-reverse'}}>
-            <Icon name={'star'} size={20} color={'#ffc93d'} style={{marginLeft:2}}/>
-            <Icon name={'star'} size={20} color={'#ffc93d'} style={{marginLeft:2}}/>
-            <Icon name={'star'} size={20} color={'#ffc93d'} style={{marginLeft:2}}/>
-            <Icon name={'star'} size={20} color={'#ffc93d'} style={{marginLeft:2}}/>
-            <Icon name={'star'} size={20} color={'#ffc93d'} style={{marginLeft:2}}/>
+            <Icon name={'star'} size={18} color={'#ffc93d'} style={{marginLeft:2}}/>
+            <Icon name={'star'} size={18} color={'#ffc93d'} style={{marginLeft:2}}/>
+            <Icon name={'star'} size={18} color={'#ffc93d'} style={{marginLeft:2}}/>
+            <Icon name={'star'} size={18} color={'#ffc93d'} style={{marginLeft:2}}/>
+            <Icon name={'star'} size={18} color={'#ffc93d'} style={{marginLeft:2}}/>
         </View>
     </View>
     <View style={{display:"flex",flexDirection:'column',alignContent:'flex-end',justifyContent:'space-between'}}>
@@ -137,11 +137,11 @@ return (
         {truncate("ناشر : انتشارات پندار تابان",30)}
         </Text>
         <View style={{display:'flex',flexDirection:'row-reverse'}}>
-            <Icon name={'star'} size={20} color={'#ffc93d'} style={{marginLeft:2}}/>
-            <Icon name={'star'} size={20} color={'#ffc93d'} style={{marginLeft:2}}/>
-            <Icon name={'star'} size={20} color={'#ffc93d'} style={{marginLeft:2}}/>
-            <Icon name={'star'} size={20} color={'#ffc93d'} style={{marginLeft:2}}/>
-            <Icon name={'star'} size={20} color={'#ffc93d'} style={{marginLeft:2}}/>
+            <Icon name={'star'} size={18} color={'#ffc93d'} style={{marginLeft:2}}/>
+            <Icon name={'star'} size={18} color={'#ffc93d'} style={{marginLeft:2}}/>
+            <Icon name={'star'} size={18} color={'#ffc93d'} style={{marginLeft:2}}/>
+            <Icon name={'star'} size={18} color={'#ffc93d'} style={{marginLeft:2}}/>
+            <Icon name={'star'} size={18} color={'#ffc93d'} style={{marginLeft:2}}/>
         </View>
     </View>
     <View style={{display:"flex",flexDirection:'column',alignContent:'flex-end',justifyContent:'space-between'}}>
@@ -168,11 +168,11 @@ return (
         {truncate("ناشر : انتشارات پندار تابان",30)}
         </Text>
         <View style={{display:'flex',flexDirection:'row-reverse'}}>
-            <Icon name={'star'} size={20} color={'#ffc93d'} style={{marginLeft:2}}/>
-            <Icon name={'star'} size={20} color={'#ffc93d'} style={{marginLeft:2}}/>
-            <Icon name={'star'} size={20} color={'#ffc93d'} style={{marginLeft:2}}/>
-            <Icon name={'star'} size={20} color={'#ffc93d'} style={{marginLeft:2}}/>
-            <Icon name={'star'} size={20} color={'#ffc93d'} style={{marginLeft:2}}/>
+            <Icon name={'star'} size={18} color={'#ffc93d'} style={{marginLeft:2}}/>
+            <Icon name={'star'} size={18} color={'#ffc93d'} style={{marginLeft:2}}/>
+            <Icon name={'star'} size={18} color={'#ffc93d'} style={{marginLeft:2}}/>
+            <Icon name={'star'} size={18} color={'#ffc93d'} style={{marginLeft:2}}/>
+            <Icon name={'star'} size={18} color={'#ffc93d'} style={{marginLeft:2}}/>
         </View>
     </View>
     <View style={{display:"flex",flexDirection:'column',alignContent:'flex-end',justifyContent:'space-between'}}>
@@ -199,11 +199,11 @@ return (
         {truncate("ناشر : انتشارات پندار تابان",30)}
         </Text>
         <View style={{display:'flex',flexDirection:'row-reverse'}}>
-            <Icon name={'star'} size={20} color={'#ffc93d'} style={{marginLeft:2}}/>
-            <Icon name={'star'} size={20} color={'#ffc93d'} style={{marginLeft:2}}/>
-            <Icon name={'star'} size={20} color={'#ffc93d'} style={{marginLeft:2}}/>
-            <Icon name={'star'} size={20} color={'#ffc93d'} style={{marginLeft:2}}/>
-            <Icon name={'star'} size={20} color={'#ffc93d'} style={{marginLeft:2}}/>
+            <Icon name={'star'} size={18} color={'#ffc93d'} style={{marginLeft:2}}/>
+            <Icon name={'star'} size={18} color={'#ffc93d'} style={{marginLeft:2}}/>
+            <Icon name={'star'} size={18} color={'#ffc93d'} style={{marginLeft:2}}/>
+            <Icon name={'star'} size={18} color={'#ffc93d'} style={{marginLeft:2}}/>
+            <Icon name={'star'} size={18} color={'#ffc93d'} style={{marginLeft:2}}/>
         </View>
     </View>
     <View style={{display:"flex",flexDirection:'column',alignContent:'flex-end',justifyContent:'space-between'}}>
@@ -230,11 +230,11 @@ return (
         {truncate("ناشر : انتشارات پندار تابان",30)}
         </Text>
         <View style={{display:'flex',flexDirection:'row-reverse'}}>
-            <Icon name={'star'} size={20} color={'#ffc93d'} style={{marginLeft:2}}/>
-            <Icon name={'star'} size={20} color={'#ffc93d'} style={{marginLeft:2}}/>
-            <Icon name={'star'} size={20} color={'#ffc93d'} style={{marginLeft:2}}/>
-            <Icon name={'star'} size={20} color={'#ffc93d'} style={{marginLeft:2}}/>
-            <Icon name={'star'} size={20} color={'#ffc93d'} style={{marginLeft:2}}/>
+            <Icon name={'star'} size={18} color={'#ffc93d'} style={{marginLeft:2}}/>
+            <Icon name={'star'} size={18} color={'#ffc93d'} style={{marginLeft:2}}/>
+            <Icon name={'star'} size={18} color={'#ffc93d'} style={{marginLeft:2}}/>
+            <Icon name={'star'} size={18} color={'#ffc93d'} style={{marginLeft:2}}/>
+            <Icon name={'star'} size={18} color={'#ffc93d'} style={{marginLeft:2}}/>
         </View>
     </View>
     <View style={{display:"flex",flexDirection:'column',alignContent:'flex-end',justifyContent:'space-between'}}>
@@ -324,14 +324,14 @@ const styles = StyleSheet.create({
       display:'flex',
       flexDirection:'row-reverse',
       backgroundColor:Colors.lightGreen,
-      height:120,
+      height:responsiveHeight(14),
       width:"100%",
       borderRadius:10,
       marginTop:responsiveHeight(4),
       paddingTop:responsiveHeight(0.5),
       paddingBottom:responsiveHeight(0.5),
-      paddingLeft:responsiveWidth(1),
-      paddingRight:responsiveWidth(4),
+      paddingLeft:responsiveWidth(0),
+      paddingRight:responsiveWidth(3),
   },bookImg:{
       width:100,
       resizeMode:'cover',
@@ -340,10 +340,10 @@ const styles = StyleSheet.create({
       marginTop:responsiveHeight(-2),
       marginRight:responsiveWidth(3),
   },bookTitle:{
-      ...myFontStyle.bookTitle,
+      ...myFontStyle.UltraBold,
       color:'#111',
   },bookWriter:{
-    ...myFontStyle.bookWriter,
+    ...myFontStyle.bookWriter3,
     color:'#111',
   },headphone:{
       backgroundColor:'#fff',

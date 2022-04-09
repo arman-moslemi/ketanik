@@ -31,6 +31,10 @@ import { myFontStyle } from "@assets/Constance";
 return (
     <View style={{backgroundColor:'#fff',flex:1}}>
 
+<View style={styles.customRow}>
+        
+    
+        </View>
 
     <View style={styles.topBar}>
 

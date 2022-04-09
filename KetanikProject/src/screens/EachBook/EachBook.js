@@ -414,15 +414,15 @@ return (
 
     <View style={styles.rightCol}>
       
-    <TouchableOpacity  style={{}}>
+    <TouchableOpacity >
     <Image source={require('@assets/images/save.png')} style={styles.saveBtn}/>
       </TouchableOpacity>
-      <TouchableOpacity style={{}}>
+      <TouchableOpacity>
         <Image source={require('@assets/images/share.png')} style={styles.saveBtn}/>
       </TouchableOpacity>
     </View>
     <View style={styles.leftCol}>
-    <TouchableOpacity style={{}}>
+    <TouchableOpacity>
         <Image source={require('@assets/images/back.png')} style={styles.saveBtn}/>
       </TouchableOpacity>
      
@@ -607,12 +607,8 @@ greenBack:{
     borderBottomStartRadius : 150,
     borderBottomEndRadius : 150,
     overflow : 'hidden',
-    shadowColor: '#c1c1c1',
-    shadowOffset: { width: 0, height: 5 },
-    shadowOpacity: 0.8,
-    shadowRadius: 50,
-    elevation: 100,
-    zIndex:100,
+ 
+    
     justifyContent:'center'
 },rightCol:{
  display:'flex',
@@ -686,7 +682,7 @@ marginTop:responsiveHeight(10),
   height:responsiveHeight(6),
   alignContent:'center',
   alignItems:'center',
-  paddingTop:responsiveHeight(0.8),
+  paddingTop:responsiveHeight(1),
   borderRadius:10,
  
 },cardBox:{
@@ -751,7 +747,7 @@ alignItems: 'center',
 height: "100%",
 
 },btnText:{
-  ...myFontStyle.UltraBold,
+  ...myFontStyle.largBold,
   color:'#fff',
 },whiteBtn:{
   width:responsiveWidth(35),
@@ -763,11 +759,11 @@ height: "100%",
   borderRadius:10,
   alignContent:'center',
   alignItems:'center',
-  paddingTop:responsiveHeight(0.8),
+  paddingTop:responsiveHeight(1),
   marginRight:10,
   marginLeft:10,
 },btnText2:{
-  ...myFontStyle.UltraBold,
+  ...myFontStyle.largBold,
   color:Colors.darkGreen,
   
 },greenBtn2:{
@@ -777,7 +773,7 @@ height: "100%",
   height:responsiveHeight(6),
   alignContent:'center',
   alignItems:'center',
-  paddingTop:responsiveHeight(0.8),
+  paddingTop:responsiveHeight(1),
   borderRadius:10,
 },bookDescription:{
   color:'#1a1a1a',
@@ -806,7 +802,7 @@ height: "100%",
   }
   ,table1:{
     color:Colors.darkGreen,
-    ...myFontStyle.UltraBold,
+    ...myFontStyle.largBold,
     marginRight:10,
   }
   ,table2:{
@@ -840,6 +836,7 @@ height: "100%",
   },textRate:{
     ...myFontStyle.rate,
     color:'#1a1a1a',
+    textAlign:'center'
   },lineBack:{
     width:'85%',
     height:8,

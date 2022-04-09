@@ -117,23 +117,23 @@ export default function App() {
      
     }} >
          {/* <Stack.Screen name="TabBar" component={TabStack} /> */}
-        {/* <Stack.Screen name="Home" component={Login} />
-        {/* <Stack.Screen name="Splash" component={Splash} /> */}
-  
-        {/* <Stack.Screen name="SelectedNews" component={SelectedNews} /> */}
+        {/* <Stack.Screen name="Login" component={Login} />  */}
+      {/* <Stack.Screen name="Splash" component={Splash} />
+   */}
+        {/* <Stack.Screen name="SelectedNews" component={SelectedNews} />  */}
    
-        {/* <Stack.Screen name="Share" component={Share} /> */}
+       {/* <Stack.Screen name="Share" component={Share} /> */}
         {/* <Stack.Screen name="AboutUs" component={AboutUs} /> */}
-        {/* <Stack.Screen name="EditPassword" component={EditPassword} /> */}
-        {/* <Stack.Screen name="Home" component={Home} /> */}
-        {/* <Stack.Screen name="UserProfile" component={UserProfile} /> */}
-           <Stack.Screen name="Library" component={Library} /> 
+        {/* <Stack.Screen name="EditPassword" component={EditPassword} />  */}
+        <Stack.Screen name="Home" component={Home} />
+       {/* <Stack.Screen name="UserProfile" component={UserProfile} />  */}
+          {/* <Stack.Screen name="Library" component={Library} /> */}
         {/* <Stack.Screen name="EditProfile" component={EditProfile}/> */}
         {/* <Stack.Screen name="EachBook" component={EachBook} /> */}
-        {/* <Stack.Screen name="ListenBook" component={ListenBook} /> */}
-        {/* <Stack.Screen name="wallet" component={Wallet} /> */}
-        {/* <Stack.Screen name="Factor" component={Factor} /> */}
-        {/* <Stack.Screen name="Search" component={Search} /> */}
+        {/* <Stack.Screen name="ListenBook" component={ListenBook} />  */}
+        {/* <Stack.Screen name="wallet" component={Wallet} />  */}
+         {/* <Stack.Screen name="Factor" component={Factor} /> */}
+       {/* <Stack.Screen name="Search" component={Search} />  */}
       </Stack.Navigator>
     </NavigationContainer>
   );

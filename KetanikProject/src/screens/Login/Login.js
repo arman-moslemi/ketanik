@@ -120,10 +120,10 @@ indicatorStyle:{
   height:responsiveHeight(8),
   alignContent:'center',
   alignItems:'center',
-  paddingTop:responsiveHeight(2.5),
+  paddingTop:responsiveHeight(2),
   borderRadius:15,
 },btnText:{
-  ...myFontStyle.largBold,
+  ...myFontStyle.textOnImg,
   color:'#fff',
 },forgetPassBtn:{
   textAlign:'left',
