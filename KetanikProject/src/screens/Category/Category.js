@@ -31,7 +31,10 @@ import { myFontStyle } from "@assets/Constance";
 return (
     <View style={{backgroundColor:'#fff',flex:1}}>
 
-
+<View style={styles.customRow}>
+        
+    
+        </View>
     <View style={styles.topBar}>
 
     <View style={{flex : 2,textAlign:"right"}}>
@@ -158,7 +161,7 @@ const styles = StyleSheet.create({
         paddingLeft:responsiveWidth(5),
         paddingBottom:responsiveHeight(2),
         alignItems:"flex-end",
-        marginTop:responsiveHeight(4),
+        marginTop:responsiveHeight(7),
     },
 
     menuTitle:{
@@ -374,10 +377,7 @@ const styles = StyleSheet.create({
       height:responsiveHeight(13),
       marginTop:responsiveHeight(-5),
       transform: [{rotate: '20deg'}],
-    //   shadowColor: '#470000',
-    //     shadowOffset: {width: 0, height: 1},
-    //     shadowOpacity: 0.2,
-    //     elevation: 1,
+   
   },cateTitle:{
     color:'#fff',
     ...myFontStyle.largBold,

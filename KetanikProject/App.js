@@ -134,6 +134,7 @@ export default function App() {
         {/* <Stack.Screen name="wallet" component={Wallet} />  */}
          {/* <Stack.Screen name="Factor" component={Factor} /> */}
        {/* <Stack.Screen name="Search" component={Search} />  */}
+       {/* <Stack.Screen name="Category" component={Category} /> */}
       </Stack.Navigator>
     </NavigationContainer>
   );

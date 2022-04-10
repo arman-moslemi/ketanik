@@ -344,7 +344,7 @@ const styles = StyleSheet.create({
     width:responsiveWidth(34),
     borderRadius:10,
     textAlign:'center',
-    padding:10,
+    padding:responsiveHeight(1),
     marginLeft:10,
 
 },bookImg:{
