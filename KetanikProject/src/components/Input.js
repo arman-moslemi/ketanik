@@ -196,7 +196,7 @@ const styles =StyleSheet.create({
     // width: 312,
   },
   errorContainer: {
-    backgroundColor: '#FFF',
+    backgroundColor: 'transparent',
   },
   title: {
     // font: {

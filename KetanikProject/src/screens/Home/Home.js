@@ -36,7 +36,7 @@ export const truncate = (str, len) => {
     console.log(item)
     return (
       <View style={styles.cardBox}>
-      <Image source={require('@assets/images/book3.jpg')} style={styles.bookImg}/>
+      <Image source={require('@assets/images/book1.jpg')} style={styles.bookImg}/>
       <Text style={styles.bookName}>
       {truncate("به سوی من بازگرد",20)}
       </Text>
@@ -340,12 +340,13 @@ const styles = StyleSheet.create({
     
 },cardBox:{
     backgroundColor:'#f1f5ec',
-    height:responsiveHeight(18),
+    height:responsiveHeight(19),
     width:responsiveWidth(34),
     borderRadius:10,
     textAlign:'center',
     padding:responsiveHeight(1),
-    marginLeft:10,
+    marginLeft:responsiveWidth(3),
+    marginTop:responsiveHeight(3)
 
 },bookImg:{
     height:responsiveHeight(14),
@@ -357,7 +358,7 @@ const styles = StyleSheet.create({
     borderRadius:10,
 },bookName:{
     color:'#111',
-    ...myFontStyle.normalRegular,
+    ...myFontStyle.mediumRegular,
     marginTop:responsiveHeight(0.5),
 },priceRed:{
     color:'#dc3545',

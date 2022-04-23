@@ -185,7 +185,7 @@ const styles = StyleSheet.create({
       borderBottomColor:'#eaeaea',
       borderBottomWidth:2,
     },btnText:{
-      ...myFontStyle.episodeName,
+      ...myFontStyle.largeRegular,
       color:'#111',
       marginRight:responsiveWidth(2),
     },btnImg2:{

@@ -1,14 +1,14 @@
-import React, {useState,useRef} from 'react';
-import {View, TextInput, Text, TouchableOpacity,Image,ScrollView} from 'react-native';
+import React, {useState,useEffect} from 'react';
+import {View, TextInput, Text, TouchableOpacity,Image,ScrollView,FlatList} from 'react-native';
 
 
 import { StyleSheet } from 'react-native';
 import { responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
 import { Colors } from '@assets/Colors';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-// import Drawer from 'react-native-drawer'
-// import DrawerContent from './drewerContent/DrawerContent';
 import { myFontStyle } from "@assets/Constance";
+import axios from 'axios';
+import { apiUrl ,apiAsset} from "@commons/inFormTypes";
 
 // create a component
 
@@ -26,8 +26,51 @@ import { myFontStyle } from "@assets/Constance";
 //   };
 
  const Category = ({navigation }) => {
-  
+  const [data,setData]=useState([]);
+  useEffect(() => {
 
+    mutLogin();
+
+
+}, []);
+  const  mutLogin=async()=> {
+    axios.get(apiUrl+'AllGroup')
+    .then(function (response) {
+      const message = response.data;
+      const result = response.data.result;
+      console.log(message);
+
+      if(result == "true"){
+        setData(response.data.GroupData)
+
+        // navigation.navigate("ChangePass",{mobile:user,verify:response.data.Data})
+                        }else{
+
+      }
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+
+
+    };
+    const keyExtractor = item => {
+      return item.GroupID;
+    };
+    const _render = (item, index) => {
+      console.log(item.item)
+      return (
+        // <View style={styles.categoryRow}>
+        <View style={styles.categoryBox}>
+        <Image source={{uri:apiAsset+item.item.Pic}} style={styles.bookImg}/>
+         <Text style={styles.cateTitle}>
+          {item.item.Title}
+         </Text>
+        </View>
+       
+    // </View> 
+      );
+    };
 return (
     <View style={{backgroundColor:'#fff',flex:1}}>
 
@@ -51,7 +94,7 @@ return (
      
   <ScrollView>
  <View style={styles.container}>
-     <View style={styles.categoryRow}>
+     {/* <View style={styles.categoryRow}>
          <View style={styles.categoryBox}>
          <Image source={require('@assets/images/book1.jpg')} style={styles.bookImg}/>
           <Text style={styles.cateTitle}>
@@ -64,91 +107,18 @@ return (
             کتاب های رایگان
           </Text>
          </View>
-     </View>
-     <View style={styles.categoryRow}>
-         <View style={styles.categoryBox3}>
-         <Image source={require('@assets/images/book1.jpg')} style={styles.bookImg}/>
-          <Text style={styles.cateTitle}>
-           داستان و رمان
-          </Text>
-         </View>
-         <View style={styles.categoryBox4}>
-         <Image source={require('@assets/images/book2.jpg')} style={styles.bookImg}/>
-         <Text style={styles.cateTitle}>
-            ادبیات
-          </Text>
-         </View>
-     </View>
-     <View style={styles.categoryRow}>
-         <View style={styles.categoryBox5}>
-         <Image source={require('@assets/images/book1.jpg')} style={styles.bookImg}/>
-          <Text style={styles.cateTitle}>
-            اقتصاد و مدیریت
-          </Text>
-         </View>
-         <View style={styles.categoryBox6}>
-         <Image source={require('@assets/images/book2.jpg')} style={styles.bookImg}/>
-         <Text style={styles.cateTitle}>
-           روانشناسی
-          </Text>
-         </View>
-     </View>
-     <View style={styles.categoryRow}>
-         <View style={styles.categoryBox7}>
-         <Image source={require('@assets/images/book1.jpg')} style={styles.bookImg}/>
-          <Text style={styles.cateTitle}>
-            کودک و نوجوان
-          </Text>
-         </View>
-         <View style={styles.categoryBox8}>
-         <Image source={require('@assets/images/book2.jpg')} style={styles.bookImg}/>
-         <Text style={styles.cateTitle}>
-            تاریخ،فلسفه خودشناسی و هنر
-          </Text>
-         </View>
-     </View>
-     <View style={styles.categoryRow}>
-         <View style={styles.categoryBox9}>
-         <Image source={require('@assets/images/book1.jpg')} style={styles.bookImg}/>
-          <Text style={styles.cateTitle}>
-            سیاسی
-          </Text>
-         </View>
-         <View style={styles.categoryBox10}>
-         <Image source={require('@assets/images/book2.jpg')} style={styles.bookImg}/>
-         <Text style={styles.cateTitle}>
-         تاریخ،فلسفه خودشناسی و هنر
-          </Text>
-         </View>
-     </View>
-     <View style={styles.categoryRow}>
-         <View style={styles.categoryBox11}>
-         <Image source={require('@assets/images/book1.jpg')} style={styles.bookImg}/>
-          <Text style={styles.cateTitle}>
-            استارت اپ
-          </Text>
-         </View>
-         <View style={styles.categoryBox12}>
-         <Image source={require('@assets/images/book2.jpg')} style={styles.bookImg}/>
-         <Text style={styles.cateTitle}>
-            علمی
-          </Text>
-         </View>
-     </View>
-     <View style={styles.categoryRow}>
-         <View style={styles.categoryBox13}>
-         <Image source={require('@assets/images/book1.jpg')} style={styles.bookImg}/>
-          <Text style={styles.cateTitle}>
-           فانتزی
-          </Text>
-         </View>
-         <View style={styles.categoryBox14}>
-         <Image source={require('@assets/images/book2.jpg')} style={styles.bookImg}/>
-         <Text style={styles.cateTitle}>
-           بیوگرافی
-          </Text>
-         </View>
-     </View>
+     </View> */}
+  
+     <FlatList
+          numColumns={2}
+          columnWrapperStyle={styles.charityList}
+          keyExtractor={keyExtractor}
+          data={data}
+          renderItem={_render}
+          // style={{marginTop:responsiveHeight(7),marginLeft:responsiveWidth(2),marginBottom:responsiveHeight(20)}}
+                    // ListFooterComponent={listFooter}
+          // onEndReached={fetchNextCharityPage}
+        />
  </View>
   </ScrollView>
     </View>
@@ -163,7 +133,11 @@ const styles = StyleSheet.create({
         alignItems:"flex-end",
         marginTop:responsiveHeight(7),
     },
-
+    charityList: {
+      marginTop: responsiveHeight(2),
+    
+      justifyContent: 'center',
+    },
     menuTitle:{
 ...myFontStyle.UltraBold,
       color:Colors.darkGreen,
@@ -208,7 +182,7 @@ const styles = StyleSheet.create({
       flex:1,
   },categoryBox:{
       height:responsiveHeight(11),
-      flex:0.5,
+      // flex:0.5,
       backgroundColor:'#e43299',
       borderRadius:10,
       marginRight:5,
@@ -380,7 +354,7 @@ const styles = StyleSheet.create({
    
   },cateTitle:{
     color:'#fff',
-    ...myFontStyle.largBold,
+    ...myFontStyle.normalBold,
     marginRight:responsiveWidth(5),
     width:responsiveWidth(30),
   }

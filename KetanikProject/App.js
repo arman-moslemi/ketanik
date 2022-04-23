@@ -102,8 +102,6 @@ const StackNavigatorsProfile = () => {
     }}>
               <Stack.Screen name="UserProfile" component={UserProfile} />
 
-         <Stack.Screen name="Verify" component={Verify} />
-        <Stack.Screen name="ForgetPassword" component={ForgetPassword} />
         <Stack.Screen name="EditProfile" component={EditProfile}/>
  
     </Stack.Navigator>
@@ -116,10 +114,13 @@ export default function App() {
        headerShown: false,
      
     }} >
-         {/* <Stack.Screen name="TabBar" component={TabStack} /> */}
-        {/* <Stack.Screen name="Login" component={Login} />  */}
       {/* <Stack.Screen name="Splash" component={Splash} />
-   */}
+        <Stack.Screen name="Login" component={Login} /> 
+        <Stack.Screen name="ForgetPassword" component={ForgetPassword} />
+        <Stack.Screen name="Verify" component={Verify} /> */}
+
+         <Stack.Screen name="TabBar" component={TabStack} />
+  
         {/* <Stack.Screen name="SelectedNews" component={SelectedNews} />  */}
    
        {/* <Stack.Screen name="Share" component={Share} /> */}

@@ -5,11 +5,59 @@ import { responsiveFontSize, responsiveHeight, responsiveScreenWidth, responsive
 import { Colors} from "@assets/Colors";
 
 import { View, Text , StyleSheet,Image, TouchableOpacity} from 'react-native';
+import NetInfo  from "@react-native-community/netinfo";
 
 
  const Splash = ({navigation }) => {
+  const  mutLogin=async()=> {
+
+    // const state = await AsyncStorage.getItem("@user");
   
- 
+
+   
+    // if(state!=null && state!="" && state!="false"){
+
+    // console.log(state)
+    //   navigation.navigate('StackNavigatorsssss')
+    // }
+    // else{
+
+    //   navigation.navigate('Login');
+
+
+    // }
+
+    navigation.navigate('Login');
+
+    };
+  useEffect(() => {
+    //   NetInfo.fetch().then(state => {
+    //     console.log("Connection type", state.type);
+    //     console.log("Is connected?", state.isConnected);
+    //     Alert.alert("","اینترنت را بررسی کنید")
+    // });
+    const unsubscribe = NetInfo.addEventListener(state => {
+    !state.isConnected?
+    Alert.alert("","اینترنت را بررسی کنید")
+    :
+  null
+  });
+  
+  // Unsubscribe
+  unsubscribe();
+  
+   
+      setTimeout(() => {
+        mutLogin();
+     // BadgeAndroid.setBadge(10);
+  
+      //  ShortcutBadge.setCount(28);
+     // navigation.navigate('SliderPage')
+     // navigation.push('Signup')
+  
+      }, 2000)
+  
+    }, []);
  
 return (
     <View style={{ flex: 2,padding:0,alignItems:'center'}}>
