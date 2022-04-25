@@ -18,6 +18,7 @@ import EditPassword from '@screens/EditPassword/EditPassword';
 import Home from '@screens/Home/Home';
 import UserProfile from '@screens/UserProfile/UserProfile';
 import EditProfile from '@screens/UserProfile/EditProfile';
+import GroupBook from '@screens/GroupBook/GroupBook';
 import Library from '@screens/Library/Library';
 import { Colors } from '@assets/Colors';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -55,7 +56,7 @@ shifting={false}
 
 <Tab.Screen
        // name="home"
-       name={"Category"}
+       name={"Categorys"}
        component={StackNavigatorsCat}
 
        options={{          tabBarLabel: '',          tabBarIcon: ({ color }) => (            <Icon name="how-to-vote" color={Colors.appColor} style={{height:responsiveHeight(10),width:responsiveWidth(8)}} size={35} />          ),        }}      />
@@ -89,6 +90,7 @@ const StackNavigatorsCat = () => {
     
     
         <Stack.Screen name="Category" component={Category} />
+        <Stack.Screen name="GroupBook" component={GroupBook} /> 
  
     </Stack.Navigator>
   );
@@ -114,10 +116,10 @@ export default function App() {
        headerShown: false,
      
     }} >
-      {/* <Stack.Screen name="Splash" component={Splash} />
+      <Stack.Screen name="Splash" component={Splash} />
         <Stack.Screen name="Login" component={Login} /> 
         <Stack.Screen name="ForgetPassword" component={ForgetPassword} />
-        <Stack.Screen name="Verify" component={Verify} /> */}
+        <Stack.Screen name="Verify" component={Verify} />
 
          <Stack.Screen name="TabBar" component={TabStack} />
   

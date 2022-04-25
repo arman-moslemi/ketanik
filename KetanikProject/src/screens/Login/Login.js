@@ -14,9 +14,14 @@ import Spinner from '@components/Spinner';
 const Login = ({navigation }) => {
   const [user,setUser]=useState("");
 const [pass,setPass]=useState("");
+const [email,setEmail]=useState("");
+const [name,setName]=useState("");
+const [pass2,setPass2]=useState("");
 const [isLoading,setLoading]=useState(false);
 const [eror,SetEror]=useState(false);
 const [eror2,SetEror2]=useState(false);
+const [erorReg,SetErorReg]=useState(false);
+const [erorReg2,SetErorReg2]=useState(false);
 const [page,setPage]=useState(0);
 const keyboardVerticalOffset = responsiveHeight(5)
   const  mutLogin=async()=> {
@@ -65,6 +70,59 @@ console.log(user)
                                 }else{
                  setLoading(false);
                  SetEror2(true);
+              }
+            })
+            .catch(function (error) {
+              console.log(error);
+            });
+
+    // }
+// else{
+//         setLoading(false);
+//          SetEror2(true)
+
+
+
+// }
+
+
+}
+
+    };
+  const  register=async()=> {
+    setLoading(true);
+if(email=="" || pass2=="" || name==""){
+    // alert("Please fill input")
+    SetErorReg(true)
+    setLoading(false);
+
+}
+
+else{
+console.log(545)
+console.log(user)
+    // if((user=="user1"&&pass=="pass1")||(user=="user2"&&pass=="pass2")){
+      // console.log(await  AsyncStorage.getItem("userID") )
+    // await  AsyncStorage.setItem("userID",3)
+      setLoading(false);
+            axios.post(apiUrl + 'RegisterSMS',{Email:email})
+            .then(function (response) {
+              // await AsyncStorage.setItem("@user","true")
+              const result = response.data.result;
+              console.log(result);
+              if(result == "true"){
+               console.log(22);
+               console.log(response.data.Data);
+               console.log(response.data.Data.code);
+               navigation.navigate("Verify",{email:email,name:name,pass:pass2,code:response.data.Data})
+             
+                                }
+                                else if(result == "duplicate"){
+alert("کاربر با این ایمیل وجود دارد")
+                                }
+                                else{
+                 setLoading(false);
+                 SetErorReg2(true);
               }
             })
             .catch(function (error) {
@@ -185,12 +243,16 @@ return (
   :
   <View style={{ flex: 1}}>
   <View style={{flex:1,alignItems:'center'}}>
-  <Input  placeholder="نام کاربری" inputStyle={{marginTop:responsiveHeight(5)}} />
-  <Input  placeholder="yasaman@yahoo.com" inputStyle={{marginTop:responsiveHeight(2)}} />
-  <Input  placeholder="رمز عبور" inputStyle={{marginTop:responsiveHeight(2)}} />
-  <TouchableOpacity style={styles.loginBtn}>
+  <Input onChangeText={(ss)=>setName(ss)}  placeholder="نام کاربری" inputStyle={{marginTop:responsiveHeight(5)}} />
+  <Input onChangeText={(ss)=>setEmail(ss)} placeholder="yasaman@yahoo.com" inputStyle={{marginTop:responsiveHeight(2)}} />
+  <Input onChangeText={(ss)=>setPass2(ss)} ErrorText={erorReg?"لطفا موارد را وارد نمایید":erorReg2?"نام کاربری یا رمز عبور درست نیست":""}  placeholder="رمز عبور" inputStyle={{marginTop:responsiveHeight(2)}} />
+  {isLoading == true ?
+          <Spinner size={50} color={"#fff"} />
+        :   
+        <TouchableOpacity onPress={()=>register()} style={styles.loginBtn}>
     <Text style={styles.btnText}>ثبت نام</Text>
   </TouchableOpacity>
+      }
   </View>
       
 </View>

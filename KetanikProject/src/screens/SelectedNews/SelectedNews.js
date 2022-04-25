@@ -340,10 +340,10 @@ const styles = StyleSheet.create({
       marginTop:responsiveHeight(-2),
       marginRight:responsiveWidth(3),
   },bookTitle:{
-      ...myFontStyle.UltraBold,
+      ...myFontStyle.largBold,
       color:'#111',
   },bookWriter:{
-    ...myFontStyle.bookWriter3,
+    ...myFontStyle.mediumRegular,
     color:'#111',
   },headphone:{
       backgroundColor:'#fff',

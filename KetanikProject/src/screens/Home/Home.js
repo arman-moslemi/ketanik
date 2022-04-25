@@ -1,4 +1,4 @@
-import React, {useState,useRef} from 'react';
+import React, {useState,useRef,useEffect} from 'react';
 import {View, TextInput, Text, TouchableOpacity,Image,ScrollView,FlatList} from 'react-native';
 
 
@@ -10,6 +10,8 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 // import DrawerContent from './drewerContent/DrawerContent';
 import { myFontStyle } from "@assets/Constance";
 import ViewSlider from 'react-native-view-slider';
+import axios from 'axios';
+import { apiUrl ,apiAsset} from "@commons/inFormTypes";
 
 // create a component
 
@@ -27,22 +29,51 @@ export const truncate = (str, len) => {
   };
 
  const Home = ({navigation }) => {
-  
+  const [data,setData]=useState([]);
+  const [slider,setSlider]=useState([]);
+  useEffect(() => {
+
+    mutLogin();
+
+
+}, []);
+  const  mutLogin=async()=> {
+    axios.get(apiUrl+'MainSlider')
+    .then(function (response) {
+      const message = response.data;
+      const result = response.data.result;
+      console.log(message);
+
+      if(result == "true"){
+        setData(response.data.Data)
+        setSlider(response.data.SliderData)
+
+        // navigation.navigate("ChangePass",{mobile:user,verify:response.data.Data})
+                        }else{
+
+      }
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+
+
+    };
   const keyExtractor = item => {
     return item.id;
   };
-  const data=[1,2,3,4,5]
+  // const data=[1,2,3,4,5]
   const _render = (item, index) => {
     console.log(item)
     return (
       <View style={styles.cardBox}>
-      <Image source={require('@assets/images/book1.jpg')} style={styles.bookImg}/>
+      <Image source={{uri:apiAsset+item.item.Pic}} style={styles.bookImg}/>
       <Text style={styles.bookName}>
-      {truncate("به سوی من بازگرد",20)}
+      {truncate(item.item.BookName,20)}
       </Text>
       <View style={{display:'flex',flexDirection:'row-reverse',justifyContent:'space-between'}}>
       <Text style={styles.bookName}>
-      29.000ت
+      {item.item.Cost}ت
       </Text>
       <View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>
       <Text style={styles.bookName}>
@@ -92,11 +123,10 @@ return (
         renderSlides = {
           <>
             <TouchableOpacity onPress={()=>Linking.openURL(data?.Link1)} style={styles.viewBox}>
-            <Image source={require('@assets/images/book1.jpg')} resizeMode={"stretch"} style={styles.imageSlider}/>
+            <Image source={{uri:apiAsset+slider[0]?.Slider1}} resizeMode={"stretch"} style={styles.imageSlider}/>
             </TouchableOpacity>
-            <TouchableOpacity onPress={()=>Linking.openURL(data?.Link2)} style={styles.viewBox}><Image source={require('@assets/images/book1.jpg')}  resizeMode={"stretch"} style={styles.imageSlider}></Image></TouchableOpacity>
-            <TouchableOpacity onPress={()=>Linking.openURL(data?.Link3)} style={styles.viewBox}><Image source={require('@assets/images/book1.jpg')}  resizeMode={"stretch"} style={styles.imageSlider}></Image></TouchableOpacity>
-            <TouchableOpacity onPress={()=>Linking.openURL(data?.Link4)} style={styles.viewBox}><Image source={require('@assets/images/book1.jpg')}  resizeMode={"stretch"} style={styles.imageSlider}></Image></TouchableOpacity>
+            <TouchableOpacity onPress={()=>Linking.openURL(data?.Link3)} style={styles.viewBox}><Image source={{uri:apiAsset+slider[0]?.Slider2}}  resizeMode={"stretch"} style={styles.imageSlider}></Image></TouchableOpacity>
+            <TouchableOpacity onPress={()=>Linking.openURL(data?.Link4)} style={styles.viewBox}><Image source={{uri:apiAsset+slider[0]?.Slider3}}  resizeMode={"stretch"} style={styles.imageSlider}></Image></TouchableOpacity>
 
             </>
       }
@@ -109,8 +139,8 @@ return (
       dotsContainerStyle={styles.dotContainer}     // Container style of the pagination dots
       autoSlide = {true}    //The views will slide automatically
       slideInterval = {5000}    //In Miliseconds
-     /> 
-      */}
+     />  */}
+     
        <ScrollView>
   <View style={styles.container}>
   <View style={{display:'flex',flexDirection:'row-reverse',justifyContent:'space-between',marginBottom:responsiveHeight(5)}}>
@@ -129,7 +159,6 @@ return (
       </View>
 
               <FlatList
-       
           keyExtractor={keyExtractor}
           data={data}
           renderItem={_render}

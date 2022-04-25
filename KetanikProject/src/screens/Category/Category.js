@@ -9,6 +9,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import { myFontStyle } from "@assets/Constance";
 import axios from 'axios';
 import { apiUrl ,apiAsset} from "@commons/inFormTypes";
+import { isMessageIgnored } from 'react-native/Libraries/LogBox/Data/LogBoxData';
 
 // create a component
 
@@ -61,12 +62,14 @@ import { apiUrl ,apiAsset} from "@commons/inFormTypes";
       console.log(item.item)
       return (
         // <View style={styles.categoryRow}>
-        <View style={styles.categoryBox}>
+        <TouchableOpacity onPress={()=>navigation.navigate("GroupBook",{GroupID:item.item.GroupID,Name:item.item.Title})} style={item.item.GroupID==1?styles.categoryBox:item.item.GroupID==2?styles.categoryBox2:item.item.GroupID==3?styles.categoryBox3:
+          item.item.GroupID==4?styles.categoryBox4:item.item.GroupID==5?styles.categoryBox5:item.item.GroupID==6?styles.categoryBox6:item.item.GroupID==7?styles.categoryBox7:styles.categoryBox8
+        }>
         <Image source={{uri:apiAsset+item.item.Pic}} style={styles.bookImg}/>
          <Text style={styles.cateTitle}>
           {item.item.Title}
          </Text>
-        </View>
+        </TouchableOpacity>
        
     // </View> 
       );
@@ -127,8 +130,8 @@ return (
 
 const styles = StyleSheet.create({
     container: {
-        paddingRight:responsiveWidth(5),
-        paddingLeft:responsiveWidth(5),
+        paddingRight:responsiveWidth(1),
+        paddingLeft:responsiveWidth(1),
         paddingBottom:responsiveHeight(2),
         alignItems:"flex-end",
         marginTop:responsiveHeight(7),
@@ -185,7 +188,7 @@ const styles = StyleSheet.create({
       // flex:0.5,
       backgroundColor:'#e43299',
       borderRadius:10,
-      marginRight:5,
+      margin:5,
       overflow:'hidden',
       display:'flex',
       flexDirection:'row-reverse',
@@ -193,10 +196,10 @@ const styles = StyleSheet.create({
       alignItems:'center',
   },categoryBox2:{
     height:responsiveHeight(11),
-      flex:0.5,
+      // flex:0.5,
     backgroundColor:'#e0ad5c',
     borderRadius:10,
-    marginLeft:5,
+    margin:5,
     overflow:'hidden',
     display:'flex',
     flexDirection:'row-reverse',
@@ -204,10 +207,10 @@ const styles = StyleSheet.create({
     alignItems:'center',
   },categoryBox3:{
     height:responsiveHeight(11),
-      flex:0.5,
+      // flex:0.5,
     backgroundColor:'#bad259',
     borderRadius:10,
-    marginRight:5,
+    margin:5,
     overflow:'hidden',
     display:'flex',
     flexDirection:'row-reverse',
@@ -215,10 +218,10 @@ const styles = StyleSheet.create({
     alignItems:'center',
   },categoryBox4:{
     height:responsiveHeight(11),
-      flex:0.5,
+      // flex:0.5,
     backgroundColor:'#e35831',
     borderRadius:10,
-    marginLeft:5,
+    margin:5,
     overflow:'hidden',
     display:'flex',
     flexDirection:'row-reverse',
@@ -227,10 +230,10 @@ const styles = StyleSheet.create({
   },
   categoryBox5:{
     height:responsiveHeight(11),
-      flex:0.5,
+      // flex:0.5,
     backgroundColor:'#dfab58',
     borderRadius:10,
-    marginRight:5,
+    margin:5,
     overflow:'hidden',
     display:'flex',
     flexDirection:'row-reverse',
@@ -239,10 +242,10 @@ const styles = StyleSheet.create({
   },
   categoryBox6:{
     height:responsiveHeight(11),
-      flex:0.5,
+      // flex:0.5,
     backgroundColor:'#6c6263',
     borderRadius:10,
-    marginLeft:5,
+    margin:5,
     overflow:'hidden',
     display:'flex',
     flexDirection:'row-reverse',
@@ -251,7 +254,7 @@ const styles = StyleSheet.create({
   },
   categoryBox7:{
     height:responsiveHeight(11),
-      flex:0.5,
+      // flex:0.5,
     backgroundColor:'#262d5b',
     borderRadius:10,
     marginRight:5,
@@ -263,7 +266,7 @@ const styles = StyleSheet.create({
   },
   categoryBox8:{
     height:responsiveHeight(11),
-      flex:0.5,
+      // flex:0.5,
     backgroundColor:'#b1cfad',
     borderRadius:10,
     marginLeft:5,
@@ -275,7 +278,7 @@ const styles = StyleSheet.create({
   },
   categoryBox9:{
     height:responsiveHeight(11),
-      flex:0.5,
+      // flex:0.5,
     backgroundColor:'#95a8b6',
     borderRadius:10,
     marginRight:5,
@@ -287,7 +290,7 @@ const styles = StyleSheet.create({
   },
   categoryBox10:{
     height:responsiveHeight(11),
-      flex:0.5,
+      // flex:0.5,
     backgroundColor:'#a485ae',
     borderRadius:10,
     marginLeft:5,
@@ -299,7 +302,7 @@ const styles = StyleSheet.create({
   },
   categoryBox11:{
     height:responsiveHeight(11),
-      flex:0.5,
+      // flex:0.5,
     backgroundColor:'#6e6365',
     borderRadius:10,
     marginRight:5,
@@ -311,7 +314,7 @@ const styles = StyleSheet.create({
   },
   categoryBox12:{
     height:responsiveHeight(11),
-      flex:0.5,
+      // flex:0.5,
     backgroundColor:'#e48921',
     borderRadius:10,
     marginLeft:5,
@@ -323,7 +326,7 @@ const styles = StyleSheet.create({
   },
   categoryBox13:{
     height:responsiveHeight(11),
-      flex:0.5,
+      // flex:0.5,
     backgroundColor:'#4f86d6',
     borderRadius:10,
     marginRight:5,
@@ -335,7 +338,7 @@ const styles = StyleSheet.create({
   },
   categoryBox14:{
     height:responsiveHeight(11),
-      flex:0.5,
+      // flex:0.5,
     backgroundColor:'#d91c2e',
     borderRadius:10,
     marginLeft:5,

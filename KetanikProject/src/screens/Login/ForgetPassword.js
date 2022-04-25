@@ -5,14 +5,42 @@ import { TabView, SceneMap,TabBar } from 'react-native-tab-view';
 import { responsiveFontSize, responsiveHeight, responsiveScreenWidth, responsiveWidth } from 'react-native-responsive-dimensions';
 import { Colors} from "@assets/Colors";
 import {Input} from '@components/Input';
-// create a component
-
-
-
+import { apiUrl ,apiAsset} from "@commons/inFormTypes";
+import axios from 'axios';
 
  const ForgetPassword = ({navigation }) => {
-  
+  const [email,setEmail]=useState("");
+  const [eror,SetEror]=useState(false);
 
+  const  again=async()=> {
+    
+    console.log(545)
+    
+                axios.post(apiUrl + 'ForgettingSMS',{Email:email})
+                .then(function (response) {
+                  // await AsyncStorage.setItem("@user","true")
+                  const result = response.data.result;
+                  console.log(result);
+                  if(result == "true"){
+                   console.log(22);
+                   alert("رمز عبور برای شما ارسال شد")
+
+                   navigation.navigate("Login")
+                 
+                                    } else{
+                     setLoading(false);
+                     SetEror2(true);
+                  }
+                })
+                .catch(function (error) {
+                  console.log(error);
+                });
+    
+    
+    
+    
+    
+        };
 return (
     <View style={{ flex: 1,padding:0,alignItems:'center'}}>
       <Image source={require('@assets/images/login.png')} style={styles.loginImg} />
@@ -20,8 +48,8 @@ return (
         <Text style={styles.verifyTitle}>
            فراموشی رمز عبور
         </Text>
-        <Input  placeholder="رمز عبور" inputStyle={{marginTop:responsiveHeight(8)}} />
-        <TouchableOpacity style={styles.loginBtn}>
+        <Input onChangeText={(ss)=>setEmail(ss)} ErrorText={eror?"لطفا ایمیل را وارد نمایید":""} placeholder="ایمیل" inputStyle={{marginTop:responsiveHeight(8)}} />
+        <TouchableOpacity onPress={()=>again()} style={styles.loginBtn}>
        <Text style={styles.btnText}>ورود</Text>
      </TouchableOpacity>
     
@@ -45,7 +73,7 @@ loginImg:{
   height:responsiveHeight(8),
   alignContent:'center',
   alignItems:'center',
-  paddingTop:responsiveHeight(2.5),
+  justifyContent:'center',
   borderRadius:15,
 },btnText:{
   ...myFontStyle.largBold,
