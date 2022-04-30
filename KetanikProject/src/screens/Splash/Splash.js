@@ -6,28 +6,29 @@ import { Colors} from "@assets/Colors";
 
 import { View, Text , StyleSheet,Image, TouchableOpacity} from 'react-native';
 import NetInfo  from "@react-native-community/netinfo";
+import AsyncStorage from  '@react-native-async-storage/async-storage';
 
 
  const Splash = ({navigation }) => {
   const  mutLogin=async()=> {
 
-    // const state = await AsyncStorage.getItem("@user");
+    const state = await AsyncStorage.getItem("@user");
   
 
    
-    // if(state!=null && state!="" && state!="false"){
+    if(state!=null && state!="" && state!="false"){
 
-    // console.log(state)
-    //   navigation.navigate('StackNavigatorsssss')
-    // }
-    // else{
+    console.log(state)
+      navigation.navigate('TabBar')
+    }
+    else{
 
-    //   navigation.navigate('Login');
+      navigation.navigate('Login');
 
 
-    // }
+    }
 
-    navigation.navigate('Login');
+    // navigation.navigate('Login');
 
     };
   useEffect(() => {

@@ -8,7 +8,7 @@ import {Input} from '@components/Input';
 import { apiUrl ,apiAsset} from "@commons/inFormTypes";
 import axios from 'axios';
 import Spinner from '@components/Spinner';
-
+import AsyncStorage from  '@react-native-async-storage/async-storage';
 
 // create a component
 const Login = ({navigation }) => {
@@ -50,9 +50,10 @@ console.log(user)
               if(result == "true"){
                console.log(22);
                console.log(response.data.Data);
+               console.log(response.data.Data.CustomerID);
                 // storeData(response.data.CustomerID);
-                // AsyncStorage.setItem('@user',response.data.Data[0].CustomerID.toString())
-                // AsyncStorage.setItem('@userName',response.data.Data[0].Name.toString())
+                AsyncStorage.setItem('@user',response.data.Data.CustomerID.toString())
+                AsyncStorage.setItem('@userName',response.data.Data.Username.toString())
             //     if(response.data.Data[0].Photo)
             //     {
 
@@ -62,11 +63,11 @@ console.log(user)
             //       AsyncStorage.setItem('@userPhoto',"")
 
             //     }
-            //     navigation.reset({
-            //       index: 0,
-            //       routes: [{ name: 'StackNavigatorsssss' }]
-            //  })
-            navigation.navigate("TabBar")
+                navigation.reset({
+                  index: 0,
+                  routes: [{ name: 'TabBar' }]
+             })
+            // navigation.navigate("TabBar")
                                 }else{
                  setLoading(false);
                  SetEror2(true);

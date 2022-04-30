@@ -30,6 +30,7 @@ export const truncate = (str, len) => {
 
  const Home = ({navigation }) => {
   const [data,setData]=useState([]);
+  const [best,setBest]=useState([]);
   const [slider,setSlider]=useState([]);
   useEffect(() => {
 
@@ -42,10 +43,11 @@ export const truncate = (str, len) => {
     .then(function (response) {
       const message = response.data;
       const result = response.data.result;
-      console.log(message);
+      // console.log(message);
 
       if(result == "true"){
         setData(response.data.Data)
+        setBest(response.data.BestSellerData)
         setSlider(response.data.SliderData)
 
         // navigation.navigate("ChangePass",{mobile:user,verify:response.data.Data})
@@ -66,7 +68,7 @@ export const truncate = (str, len) => {
   const _render = (item, index) => {
     console.log(item)
     return (
-      <View style={styles.cardBox}>
+      <TouchableOpacity onPress={()=>navigation.navigate("EachBook",{id:item.item.BookID})} style={styles.cardBox}>
       <Image source={{uri:apiAsset+item.item.Pic}} style={styles.bookImg}/>
       <Text style={styles.bookName}>
       {truncate(item.item.BookName,20)}
@@ -82,7 +84,7 @@ export const truncate = (str, len) => {
       <Icon name={'star'} size={15} color={'#ffc93d'} style={{}}/>
       </View>
       </View>
-     </View>
+     </TouchableOpacity>
     );
   };
 return (
@@ -150,7 +152,7 @@ return (
       </Text>
      </View>
       <View>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={()=>navigation.navigate("SelectedNews")}>
       <Text style={styles.seeAll}>
          مشاهده همه
       </Text>
@@ -186,96 +188,16 @@ return (
       </View>
       </View>
    <View style={{display:'flex',flexDirection:'row-reverse'}}>
-   <View style={styles.cardBox}>
-    <Image source={require('@assets/images/book3.jpg')} style={styles.bookImg}/>
-    <Text style={styles.bookName}>
-    {truncate("به سوی من بازگرد",20)}
-    </Text>
-    <View style={{display:'flex',flexDirection:'row-reverse',justifyContent:'space-between'}}>
-    <Text style={styles.bookName}>
-    29.000ت
-    </Text>
-    <View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>
-    <Text style={styles.bookName}>
-    4.5
-    </Text>
-    <Icon name={'star'} size={15} color={'#ffc93d'} style={{}}/>
-    </View>
-    </View>
+   <FlatList
+          keyExtractor={keyExtractor}
+          data={best}
+          renderItem={_render}
+          horizontal={true}
+          style={{marginTop:responsiveHeight(1),marginBottom:responsiveHeight(1)}}
+          
+        />
    </View>
-   <View style={styles.cardBox}>
-    <Image source={require('@assets/images/book4.jpg')} style={styles.bookImg}/>
-    <Text style={styles.bookName}>
-    {truncate("به سوی من بازگرد",20)}
-    </Text>
-    <View style={{display:'flex',flexDirection:'row-reverse',justifyContent:'space-between'}}>
-    <Text style={styles.bookName}>
-    29.000ت
-    </Text>
-    <View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>
-    <Text style={styles.bookName}>
-    4.5
-    </Text>
-    <Icon name={'star'} size={15} color={'#ffc93d'} style={{}}/>
-    </View>
-    </View>
-   </View>
-   </View>
-   <View style={{display:'flex',flexDirection:'row-reverse',justifyContent:'space-between',marginBottom:responsiveHeight(5),marginTop:responsiveHeight(5)}}>
-     <View style={{flex:1}}>
-     <Text style={styles.rowTitle}>
-        فروش ویژه
-      </Text>
-     </View>
-      <View>
-      <TouchableOpacity>
-      <Text style={styles.seeAll}>
-         مشاهده همه
-      </Text>
-      </TouchableOpacity>
-      </View>
-      </View>
-   <View style={{display:'flex',flexDirection:'row-reverse'}}>
-   <View style={styles.cardBox}>
-    <Image source={require('@assets/images/book1.jpg')} style={styles.bookImg}/>
-    <Text style={styles.bookName}>
-    {truncate("به سوی من بازگرد",20)}
-    </Text>
-    <View style={{display:'flex',flexDirection:'row-reverse',justifyContent:'space-between'}}>
-    <Text style={styles.bookName}>
-    29.000ت
-    </Text>
-    <View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>
-    <Text style={styles.bookName}>
-    4.5
-    </Text>
-    <Icon name={'star'} size={15} color={'#ffc93d'} style={{}}/>
-    </View>
-    </View>
-   </View>
-   <View style={styles.cardBox}>
-    <Image source={require('@assets/images/book2.jpg')} style={styles.bookImg}/>
-    <Text style={styles.bookName}>
-    {truncate("به سوی من بازگرد",20)}
-    </Text>
-    <View style={{display:'flex',flexDirection:'row-reverse',justifyContent:'space-between'}}>
-    <View style={{display:'flex',flexDirection:'row-reverse'}}>
-    <Text style={styles.priceRed}>
-    29.000ت
-    </Text>
-    <Text style={styles.priceStroke}>
-    29.000
-    </Text>
-    </View>
-    <View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>
-    <Text style={styles.bookName}>
-    4.5
-    </Text>
-    <Icon name={'star'} size={15} color={'#ffc93d'} style={{}}/>
-    </View>
-    </View>
-   </View>
-   </View>
+
 
    </View>
   </ScrollView>

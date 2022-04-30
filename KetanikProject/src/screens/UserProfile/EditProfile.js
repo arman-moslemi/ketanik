@@ -216,12 +216,13 @@ const styles = StyleSheet.create({
       height:responsiveHeight(7),
       alignContent:'center',
       alignItems:'center',
-      paddingTop:responsiveHeight(1.5),
+      justifyContent:"center",
+      // paddingTop:responsiveHeight(1.5),
       borderRadius:10,
       marginRight:'auto',
       marginLeft:'auto',
     },btnText:{
-      ...myFontStyle.UltraBold,
+      ...myFontStyle.largBold,
       color:'#fff',
     },discountInput:{
       borderColor:'#bbbbbb',
@@ -264,12 +265,12 @@ const styles = StyleSheet.create({
     height:responsiveHeight(6),
     alignContent:'center',
     alignItems:'center',
-    paddingTop:responsiveHeight(1),
+    justifyContent:'center',
     borderRadius:10,
     marginLeft:5,
     
   },purchaseBtnText:{
-    ...myFontStyle.episodeName,
+    ...myFontStyle.largeRegular,
     color:'#fff',
   },btnRow:{
       flex:1,
@@ -291,7 +292,7 @@ const styles = StyleSheet.create({
     borderColor:Colors.darkGreen,
     borderWidth:1,
   },purchaseBtnText2:{
-    ...myFontStyle.episodeName,
+    ...myFontStyle.largeRegular,
     color:Colors.darkGreen,
   },btnBox:{
       display:'flex',
@@ -308,7 +309,7 @@ const styles = StyleSheet.create({
     padding:20,
 
   },modalTitle:{
-    ...myFontStyle.UltraBold,
+    ...myFontStyle.largBold,
     color:'#111',
     marginTop:responsiveHeight(1),
 

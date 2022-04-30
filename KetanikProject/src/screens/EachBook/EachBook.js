@@ -8,6 +8,10 @@ import {Input} from '@components/Input';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Modal from "react-native-modal";
 import ShowMore from 'react-native-show-more-button';
+import axios from 'axios';
+import { apiUrl ,apiAsset} from "@commons/inFormTypes";
+import { Rating, AirbnbRating } from 'react-native-ratings';
+import AsyncStorage from  '@react-native-async-storage/async-storage';
 // create a component
 // const [showBox, setShowBox] = useState(false);
 // const onClick = () => setShowBox(true);
@@ -23,423 +27,594 @@ export const truncate = (str, len) => {
   return str;
 };
 
-const FirstRoute = () => (
- <ScrollView>
-   <View style={styles.commentView}>
-  
-  <View style={{width:responsiveWidth(65),marginLeft:responsiveWidth(5)}}>
-    <View style={{display:'flex',flexDirection:'row',alignItems:'center'}}>
-      <Icon name={'star'} color={'#ffc93d'} size={20}/>
-      <View style={styles.lineBack}>
-        <View style={styles.lineFront1}>
 
-        </View>
-      </View>
-    </View>
-    <View style={{display:'flex',flexDirection:'row',alignItems:'center'}}>
-      <Icon name={'star'} color={'#ffc93d'} size={20}/>
-      <View style={styles.lineBack}>
-        <View style={styles.lineFront2}>
-
-        </View>
-      </View>
-    </View>
-    <View style={{display:'flex',flexDirection:'row',alignItems:'center'}}>
-      <Icon name={'star'} color={'#ffc93d'} size={20}/>
-      <View style={styles.lineBack}>
-        <View style={styles.lineFront3}>
-
-        </View>
-      </View>
-    </View>
-    <View style={{display:'flex',flexDirection:'row',alignItems:'center'}}>
-      <Icon name={'star'} color={'#ffc93d'} size={20}/>
-      <View style={styles.lineBack}>
-        <View style={styles.lineFront4}>
-
-        </View>
-      </View>
-    </View>
-    <View style={{display:'flex',flexDirection:'row',alignItems:'center'}}>
-      <Icon name={'star'} color={'#ffc93d'} size={20}/>
-      <View style={styles.lineBack}>
-        <View style={styles.lineFront5}>
-
-        </View>
-      </View>
-    </View>
-    
-  </View>
-  <View style={{width:responsiveWidth(20)}}>
-    <Text style={styles.textRate}>
-      4.5
-    </Text>
-    <View style={{display:'flex',flexDirection:'row-reverse',justifyContent:'flex-end',marginTop:responsiveHeight(-1),marginBottom:responsiveHeight(1)}}>
-      <Icon name={'star'} color={Colors.darkGreen} size={15}/>
-      <Icon name={'star'} color={Colors.darkGreen} size={15}/>
-      <Icon name={'star'} color={Colors.darkGreen} size={15}/>
-      <Icon name={'star'} color={Colors.darkGreen} size={15}/>
-      <Icon name={'star'} color={Colors.darkGreen} size={15}/>
-    </View>
-    <View style={{display:'flex',flexDirection:'row-reverse'}}>
-      <Icon name={'person'} color={'#1a1a1a'} size={25}/>
-      <Text style={styles.eachBookDetail3}>
-        نظر (141)
-      </Text>
-    </View>
-  </View>
-   </View>
-   <View style={styles.commentGreenBox}>
-      <View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>
-        <View>
-        <Image source={require('@assets/images/book3.jpg')} style={styles.writerImg}/>
-        </View>
-        <View>
-          <Text style={styles.eachBookDetail5}>نرگس عامری</Text>
-         <View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>
-         <View style={{display:'flex',flexDirection:'row-reverse',justifyContent:'flex-end',marginTop:responsiveHeight(1),marginBottom:responsiveHeight(1)}}>
-      <Icon name={'star'} color={Colors.darkGreen} size={15}/>
-      <Icon name={'star'} color={Colors.darkGreen} size={15}/>
-      <Icon name={'star'} color={Colors.darkGreen} size={15}/>
-      <Icon name={'star'} color={Colors.darkGreen} size={15}/>
-      <Icon name={'star'} color={Colors.darkGreen} size={15}/>
-    </View>
-    <Text style={styles.eachBookDetail3}>01/01/12</Text>
-         </View>
-        </View>
-      </View>
-      <Text style={styles.bookDescription}>
-      لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از
-صنعت چاپ و با استفاده از طراحان گرافیک است.
-      </Text>
-      <TouchableOpacity style={{display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>
-        
-        <View>
-        <Text style={styles.bookDescription}>14 <Icon name={'favorite-border'} size={20}/></Text>
-        </View>
-      </TouchableOpacity>
-    </View>
-    <View style={styles.commentGreenBox}>
-      <View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>
-        <View>
-        <Image source={require('@assets/images/book3.jpg')} style={styles.writerImg}/>
-        </View>
-        <View>
-          <Text style={styles.eachBookDetail5}>نرگس عامری</Text>
-         <View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>
-         <View style={{display:'flex',flexDirection:'row-reverse',justifyContent:'flex-end',marginTop:responsiveHeight(1),marginBottom:responsiveHeight(1)}}>
-      <Icon name={'star'} color={Colors.darkGreen} size={15}/>
-      <Icon name={'star'} color={Colors.darkGreen} size={15}/>
-      <Icon name={'star'} color={Colors.darkGreen} size={15}/>
-      <Icon name={'star'} color={Colors.darkGreen} size={15}/>
-      <Icon name={'star'} color={Colors.darkGreen} size={15}/>
-    </View>
-    <Text style={styles.eachBookDetail3}>01/01/12</Text>
-         </View>
-        </View>
-      </View>
-      <Text style={styles.bookDescription}>
-      لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از
-صنعت چاپ و با استفاده از طراحان گرافیک است.
-      </Text>
-      <TouchableOpacity style={{display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>
-        
-        <View>
-        <Text style={styles.bookDescription}>14 <Icon name={'favorite-border'} size={20}/></Text>
-        </View>
-      </TouchableOpacity>
-    </View>
- </ScrollView>
-);
-
-const SecondRoute = () => (
+// const renderScene = SceneMap({
+//   comment: FirstRoute,
+//   present: ThirdRoute,
+//   detail: SecondRoute,
  
-<ScrollView>
-<View style={{ flex: 1}}>
+// });
+ const EachBook = ({navigation,route }) => {
 
-     <View style={{display:'flex',flexDirection:'row-reverse',marginTop:responsiveHeight(5),justifyContent:"space-between",marginBottom:responsiveHeight(5)}}>
-       <View style={{display:'flex',flexDirection:'row-reverse',flex:0.5,alignItems:'center'}}>
-          <Image source={require('@assets/images/book1.jpg')} style={styles.writerImg}/>
-          <View>
-            <Text style={styles.writerName}>
-              لی باردوگو
-            </Text>
-            <Text style={styles.writerName2}>
-         نویسنده
-            </Text>
-          </View>
-       </View>
-       <View style={{display:'flex',flexDirection:'row-reverse',flex:0.5,alignItems:'center'}}>
-          <Image source={require('@assets/images/book2.jpg')} style={styles.writerImg}/>
-          <View>
-            <Text style={styles.writerName}>
-            بهناز عسگری
-            </Text>
-            <Text style={styles.writerName2}>
-مترجم            </Text>
-          </View>
-       </View>
-     </View>
-     <View style={styles.bookDetilTable}>
-       <View style={{display:'flex',flexDirection:'row-reverse',flex:0.5,alignItems:'center'}}>
-         <Icon name={'fiber-manual-record'} color={Colors.darkGreen} size={10}/>
-         <Text style={styles.table1}>
-           نام کتاب
-         </Text>
-       </View>
-       <View style={{flex:0.5}}>
-       <Text style={styles.table2}>
-         سایه و استخوان
-       </Text>
-       </View>
-     </View>
-     <View style={styles.bookDetilTable}>
-       <View style={{display:'flex',flexDirection:'row-reverse',flex:0.5,alignItems:'center'}}>
-         <Icon name={'fiber-manual-record'} color={Colors.darkGreen} size={10}/>
-         <Text style={styles.table1}>
-          نویسنده
-         </Text>
-       </View>
-       <View style={{flex:0.5}}>
-       <Text style={styles.table2}>
-         لی باردوگو
-       </Text>
-       </View>
-     </View>
-     <View style={styles.bookDetilTable}>
-       <View style={{display:'flex',flexDirection:'row-reverse',flex:0.5,alignItems:'center'}}>
-         <Icon name={'fiber-manual-record'} color={Colors.darkGreen} size={10}/>
-         <Text style={styles.table1}>
-          مترجم
-         </Text>
-       </View>
-       <View style={{flex:0.5}}>
-       <Text style={styles.table2}>
-         بهناز عسگری
-       </Text>
-       </View>
-     </View>
-     <View style={styles.bookDetilTable}>
-       <View style={{display:'flex',flexDirection:'row-reverse',flex:0.5,alignItems:'center'}}>
-         <Icon name={'fiber-manual-record'} color={Colors.darkGreen} size={10}/>
-         <Text style={styles.table1}>
-         ناشر
-         </Text>
-       </View>
-       <View style={{flex:0.5}}>
-       <Text style={styles.table2}>
-        نقش و نگار
-       </Text>
-       </View>
-     </View>
-     <View style={styles.bookDetilTable}>
-       <View style={{display:'flex',flexDirection:'row-reverse',flex:0.5,alignItems:'center'}}>
-         <Icon name={'fiber-manual-record'} color={Colors.darkGreen} size={10}/>
-         <Text style={styles.table1}>
-          دسته
-         </Text>
-       </View>
-       <View style={{flex:0.5}}>
-       <Text style={styles.table2}>
-        فانتزی_تخیلی
-       </Text>
-       </View>
-     </View>
-     <View style={styles.bookDetilTable}>
-       <View style={{display:'flex',flexDirection:'row-reverse',flex:0.5,alignItems:'center'}}>
-         <Icon name={'fiber-manual-record'} color={Colors.darkGreen} size={10}/>
-         <Text style={styles.table1}>
-         تعداد صفحات
-         </Text>
-       </View>
-       <View style={{flex:0.5}}>
-       <Text style={styles.table2}>
-         316
-       </Text>
-       </View>
-     </View>
-     <View style={styles.bookDetilTable}>
-       <View style={{display:'flex',flexDirection:'row-reverse',flex:0.5,alignItems:'center'}}>
-         <Icon name={'fiber-manual-record'} color={Colors.darkGreen} size={10}/>
-         <Text style={styles.table1}>
-        زبان
-         </Text>
-       </View>
-       <View style={{flex:0.5}}>
-       <Text style={styles.table2}>
-        فارسی
-       </Text>
-       </View>
-     </View>
-     <View style={styles.bookDetilTable}>
-       <View style={{display:'flex',flexDirection:'row-reverse',flex:0.5,alignItems:'center'}}>
-         <Icon name={'fiber-manual-record'} color={Colors.darkGreen} size={10}/>
-         <Text style={styles.table1}>
-         سایز
-         </Text>
-       </View>
-       <View style={{flex:0.5}}>
-       <Text style={styles.table2}>
-      1.6MB
-       </Text>
-       </View>
-     </View>
-     <View style={styles.bookDetilTable}>
-       <View style={{display:'flex',flexDirection:'row-reverse',flex:0.5,alignItems:'center'}}>
-         <Icon name={'fiber-manual-record'} color={Colors.darkGreen} size={10}/>
-         <Text style={styles.table1}>
-         تاریخ انتشار
-         </Text>
-       </View>
-       <View style={{flex:0.5}}>
-       <Text style={styles.table2}>
-       1398_2021
-       </Text>
-       </View>
-     </View>
-     <View style={styles.bookDetilTable}>
-       <View style={{display:'flex',flexDirection:'row-reverse',flex:0.5,alignItems:'center'}}>
-         <Icon name={'fiber-manual-record'} color={Colors.darkGreen} size={10}/>
-         <Text style={styles.table1}>
-          شابک
-         </Text>
-       </View>
-       <View style={{flex:0.5}}>
-       <Text style={styles.table2}>
-       978-6009553457
-       </Text>
-       </View>
-     </View>
-     <View style={styles.bookDetilTable}>
-       <View style={{display:'flex',flexDirection:'row-reverse',flex:0.5,alignItems:'center'}}>
-         <Icon name={'fiber-manual-record'} color={Colors.darkGreen} size={10}/>
-         <Text style={styles.table1}>
-         راوی
-         </Text>
-       </View>
-       <View style={{flex:0.5}}>
-       <Text style={styles.table2}>
-       سحر جعفری جوزانی
-       </Text>
-       </View>
-     </View>
-  </View>
-</ScrollView>
-);
-const ThirdRoute = () => (
-<ScrollView>
-<View style={styles.bookDescriptionBox}>
-  <Text style={styles.bookDescription}>
-  اولین رمان از سهگانه گریشا است که توسط نویسنده آمریکایی لی
-باردوگو نوشته شده است. «ستر» سایه نواری از جنس تاریکی بی
-پایان و پر از هیولاهای خونخوار است که کشور «راوکا» را دربر
-گرفته است. از طرف دیگر راوکا در محاصره دشمنان و در شرف از
-هم فروپاشیدن است. سرنوشت کشور به یک دخترک پناهنده گره
-خورد
-  </Text>
+  const [page,setPage]=useState(0);
 
-</View>
-</ScrollView>
- );
-const renderScene = SceneMap({
-  comment: FirstRoute,
-  present: ThirdRoute,
-  detail: SecondRoute,
- 
-});
- const EachBook = ({navigation }) => {
-  // const [showSearch, setshowSearch] = useState(false);
-  // const onClick = () =>{
-  //   setshowSearch(!showSearch);
-  // };
   const [index, setIndex] = React.useState(2);
-  const [routes] = React.useState([
-    { key: 'comment', title: 'نظرات' },
+  // const [routes] = React.useState([
+  //   { key: 'comment', title: 'نظرات' },
    
-    { key: 'detail', title: 'جزئیات' },
-    { key: 'present', title: 'معرفی کتاب' },
+  //   { key: 'detail', title: 'جزئیات' },
+  //   { key: 'present', title: 'معرفی کتاب' },
    
-  ]);
-  const renderTabBar = props => (
-    <TabBar
-      {...props}
-      indicatorStyle={styles.indicatorStyle}
-      style={styles.tabBar}
-      getLabelText={({route}) => route.title}
-      renderLabel={({route, focused, color}) =>
-        focused ? (
-          <Text style={styles.tabBarText}>{route.title}</Text>
-        ) : (
-          <Text style={styles.tabBarText2}>{route.title}</Text>
-        )
-      }
-    />
+  // ]);
+  // const renderTabBar = props => (
+  //   <TabBar
+  //     {...props}
+  //     indicatorStyle={styles.indicatorStyle}
+  //     style={styles.tabBar}
+  //     getLabelText={({route}) => route.title}
+  //     renderLabel={({route, focused, color}) =>
+  //       focused ? (
+  //         <Text style={styles.tabBarText}>{route.title}</Text>
+  //       ) : (
+  //         <Text style={styles.tabBarText2}>{route.title}</Text>
+  //       )
+  //     }
+  //   />
+  // );
+  const [data,setData]=useState([]);
+  const [rate,setRate]=useState([]);
+  const [comment,setComment]=useState([]);
+  const [rateNum, setRateNum] = useState(false);
+  const [income, setIncome] = useState("");
+  const [rel, setRel] = useState([]);
+  const [relWri, setRelWri] = useState([]);
+  const [relTran, setRelTran] = useState([]);
+  const [relPub, setRelPub] = useState([]);
+
+  useEffect(() => {
+
+    mutLogin();
+
+
+}, []);
+const keyExtractor = item => {
+  return item.id;
+};
+// const data=[1,2,3,4,5]
+const _render = (item, index) => {
+  console.log(item)
+  return (
+    <TouchableOpacity onPress={()=>navigation.navigate("EachBook",{id:item.item.BookID})} style={styles.cardBox}>
+    <Image source={{uri:apiAsset+item.item.Pic}} style={styles.bookImg}/>
+    <Text style={styles.bookName}>
+    {truncate(item.item.BookName,20)}
+    </Text>
+    <View style={{display:'flex',flexDirection:'row-reverse',justifyContent:'space-between'}}>
+    <Text style={styles.bookName}>
+    {item.item.Cost}ت
+    </Text>
+    <View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>
+    <Text style={styles.bookName}>
+    4.5
+    </Text>
+    <Icon name={'star'} size={15} color={'#ffc93d'} style={{}}/>
+    </View>
+    </View>
+   </TouchableOpacity>
   );
-  const keyExtractor = item => {
-    return item.id;
-  };const data=[1,2,3,4,5]
-  const _render = (item, index) => {
-    console.log(item)
-    return (
-      <View style={styles.cardBox}>
-      <Image source={require('@assets/images/book3.jpg')} style={styles.bookImg}/>
-      <Text style={styles.bookName}>
-      {truncate("به سوی من بازگرد",20)}
-      </Text>
-      <View style={{display:'flex',flexDirection:'row-reverse',justifyContent:'space-between'}}>
-      <Text style={styles.bookName}>
-      29.000ت
-      </Text>
-      <View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>
-      <Text style={styles.bookName}>
-      4.5
-      </Text>
-      <Icon name={'star'} size={15} color={'#ffc93d'} style={{}}/>
-      </View>
-      </View>
+};
+const {id} = route?.params ?? {};
+
+  const  mutLogin=async()=> {
+    axios.post(apiUrl+'SingleBook',{BookID:id})
+    .then(function (response) {
+      const message = response.data;
+      const result = response.data.result;
+      console.log(333);
+
+      console.log(message);
+
+      if(result == "true"){
+        setData(response.data.GroupData)
+        setRate(response.data.RateData)
+        setComment(response.data.CommentData)
+        console.log(896);
+        console.log(response.data.GroupData.Writer);
+        axios.post(apiUrl+'LastRelatedBook',{GroupID:response.data.GroupData.GroupID})
+        .then(function (response) {
+          const message = response.data;
+          const result = response.data.result;
+          console.log(333);
+    
+          console.log(message);
+    
+          if(result == "true"){
+            setRel(response.data.Data)
+        
+            // navigation.navigate("ChangePass",{mobile:user,verify:response.data.Data})
+                            }else{
+    
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+        axios.post(apiUrl+'LastWriterBook',{GroupID:response.data.GroupData.Writer})
+        .then(function (response) {
+          const message = response.data;
+          const result = response.data.result;
+          console.log(333);
+    
+          console.log(message);
+    
+          if(result == "true"){
+            setRelWri(response.data.Data)
+        
+            // navigation.navigate("ChangePass",{mobile:user,verify:response.data.Data})
+                            }else{
+    
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+        axios.post(apiUrl+'LastTranslatorBook',{GroupID:response.data.GroupData.Translator})
+        .then(function (response) {
+          const message = response.data;
+          const result = response.data.result;
+          console.log(333);
+    
+          console.log(message);
+    
+          if(result == "true"){
+            setRelTran(response.data.Data)
+        
+            // navigation.navigate("ChangePass",{mobile:user,verify:response.data.Data})
+                            }else{
+    
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+        axios.post(apiUrl+'LastPublisherBook',{GroupID:response.data.GroupData.Publisher})
+        .then(function (response) {
+          const message = response.data;
+          const result = response.data.result;
+          console.log(333);
+    
+          console.log(message);
+    
+          if(result == "true"){
+            setRelPub(response.data.Data)
+        
+            // navigation.navigate("ChangePass",{mobile:user,verify:response.data.Data})
+                            }else{
+    
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+                        }else{
+
+      }
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+
+    
+    };
+  const  mutComment=async()=> {
+    console.log(rateNum);
+    const state = await AsyncStorage.getItem("@user");
+if( rate==""|| income==""){
+  alert("موارد را وارد نمایید")
+
+}
+if(state==""){
+  alert("لطفا وارد شوید")
+
+}
+    axios.post(apiUrl+'InsertComment',{BookID:id,CustomerID:state,Rate:rateNum,Text:income})
+    .then(function (response) {
+      const message = response.data;
+      const result = response.data.result;
+      console.log(333);
+      
+      console.log(message);
+      
+      if(result == "true"){
+        alert("با موفیت اضافه شد")
+        setModalVisibleCom(false)
+        // navigation.navigate("ChangePass",{mobile:user,verify:response.data.Data})
+                        }else{
+
+      }
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+
+
+    };
+  const  mutSave=async()=> {
+    console.log(rateNum);
+    const state = await AsyncStorage.getItem("@user");
+
+if(state==""){
+  alert("لطفا وارد شوید")
+
+}
+    axios.post(apiUrl+'SingleBookSave',{BookID:id,CustomerID:state})
+    .then(function (response) {
+      const message = response.data;
+      const result = response.data.result;
+      console.log(333);
+      
+      console.log(message);
+      
+      if(result == "true"){
+        alert("با موفیت ذخیره شد")
+        setModalVisibleCom(false)
+        // navigation.navigate("ChangePass",{mobile:user,verify:response.data.Data})
+                        }else{
+
+      }
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+
+
+    };
+  const FirstRoute = () => (
+    <ScrollView>
+      <View style={styles.commentView}>
+     
+     <View style={{width:responsiveWidth(65),marginLeft:responsiveWidth(5)}}>
+       <View style={{display:'flex',flexDirection:'row',alignItems:'center',}}>
+         <Text style={styles.rateNum}>5</Text>
+         <Icon name={'star'} color={'#ffc93d'} size={20}/>
+         <View style={styles.lineBack}>
+           <View style={[styles.lineFront1,{width:""+parseInt(rate[0]?.Five)/parseInt(rate[0]?.Number)*100+"%"}]}>
+   
+           </View>
+         </View>
+       </View>
+       <View style={{display:'flex',flexDirection:'row',alignItems:'center'}}>
+       <Text style={styles.rateNum}>4</Text>
+
+         <Icon name={'star'} color={'#ffc93d'} size={20}/>
+         <View style={styles.lineBack}>
+         <View style={[styles.lineFront1,{width:""+parseInt(rate[0]?.Four)/parseInt(rate[0]?.Number)*100+"%"}]}>
+   
+           </View>
+         </View>
+       </View>
+       <View style={{display:'flex',flexDirection:'row',alignItems:'center'}}>
+       <Text style={styles.rateNum}>3</Text>
+
+         <Icon name={'star'} color={'#ffc93d'} size={20}/>
+         <View style={styles.lineBack}>
+         <View style={[styles.lineFront1,{width:""+parseInt(rate[0]?.Three)/parseInt(rate[0]?.Number)*100+"%"}]}>
+   
+           </View>
+         </View>
+       </View>
+       <View style={{display:'flex',flexDirection:'row',alignItems:'center'}}>
+       <Text style={styles.rateNum}>2</Text>
+
+         <Icon name={'star'} color={'#ffc93d'} size={20}/>
+         <View style={styles.lineBack}>
+         <View style={[styles.lineFront1,{width:""+parseInt(rate[0]?.Two)/parseInt(rate[0]?.Number)*100+"%"}]}>
+   
+           </View>
+         </View>
+       </View>
+       <View style={{display:'flex',flexDirection:'row',alignItems:'center'}}>
+       <Text style={styles.rateNum}>1</Text>
+
+         <Icon name={'star'} color={'#ffc93d'} size={20}/>
+         <View style={styles.lineBack}>
+         <View style={[styles.lineFront1,{width:""+parseInt(rate[0]?.One)/parseInt(rate[0]?.Number)*100+"%"}]}>
+   
+           </View>
+         </View>
+       </View>
+       
      </View>
+     <View style={{width:responsiveWidth(20)}}>
+       <Text style={styles.textRate}>
+        {rate[0]?.Average}
+       </Text>
+       <View style={{display:'flex',flexDirection:'row-reverse',justifyContent:'flex-end',marginTop:responsiveHeight(-1),marginBottom:responsiveHeight(1)}}>
+       {[...new Array(5)].map((item,index)=>{
+                        return(
+index+1>rate[0]?.Average?
+<Icon name={'star'} color={"#fff"} size={15}/>
+:
+<Icon name={'star'} color={Colors.darkGreen} size={15}/>
+
+)
+})
+}
+         {/* <Icon name={'star'} color={Colors.darkGreen} size={15}/> */}
+        
+       </View>
+       <View style={{display:'flex',flexDirection:'row-reverse'}}>
+         <Icon name={'person'} color={'#1a1a1a'} size={25}/>
+         <Text style={styles.eachBookDetail3}>
+           نظر ({comment.length})
+         </Text>
+       </View>
+     </View>
+      </View>
+      {
+        comment.map((item)=>{
+          return(
+
+      <View style={styles.commentGreenBox}>
+         <View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>
+           <View>
+           <Image source={{uri:apiAsset+data?.Pic}} style={styles.writerImg}/>
+           </View>
+           <View>
+             <Text style={styles.eachBookDetail5}>{item.Username}</Text>
+            <View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>
+            <View style={{display:'flex',flexDirection:'row-reverse',justifyContent:'flex-end',marginTop:responsiveHeight(1),marginBottom:responsiveHeight(1)}}>
+            {[...new Array(5)].map((item2,index)=>{
+                        return(
+index+1>item?.Rate?
+<Icon name={'star'} color={"#fff"} size={15}/>
+:
+<Icon name={'star'} color={Colors.darkGreen} size={15}/>
+
+)
+})
+}
+        
+       </View>
+       <Text style={styles.eachBookDetail3}>{item.Date}</Text>
+            </View>
+           </View>
+         </View>
+         <Text style={styles.bookDescription}>
+      {item.Text}
+         </Text>
+         <TouchableOpacity style={{display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>
+           
+           <View>
+           <Text style={styles.bookDescription}>{item?.Like} <Icon name={'favorite-border'} size={20}/></Text>
+           </View>
+         </TouchableOpacity>
+       </View>
+          )
+        })
+      }
+    
+    </ScrollView>
+   );
+   
+   const SecondRoute = () => (
+    
+   <ScrollView>
+   <View style={{ flex: 1}}>
+   
+        {/* <View style={{display:'flex',flexDirection:'row-reverse',marginTop:responsiveHeight(5),justifyContent:"space-between",marginBottom:responsiveHeight(5)}}>
+          <View style={{display:'flex',flexDirection:'row-reverse',flex:0.5,alignItems:'center'}}>
+             <Image source={require('@assets/images/book1.jpg')} style={styles.writerImg}/>
+             <View>
+               <Text style={styles.writerName}>
+                 {data.Writer}
+               </Text>
+               <Text style={styles.writerName2}>
+            نویسنده
+               </Text>
+             </View>
+          </View>
+          <View style={{display:'flex',flexDirection:'row-reverse',flex:0.5,alignItems:'center'}}>
+             <Image source={require('@assets/images/book2.jpg')} style={styles.writerImg}/>
+             <View>
+               <Text style={styles.writerName}>
+{data.Translator}               </Text>
+               <Text style={styles.writerName2}>
+   مترجم            </Text>
+             </View>
+          </View>
+        </View> */}
+        <View style={styles.bookDetilTable}>
+          <View style={{display:'flex',flexDirection:'row-reverse',flex:0.5,alignItems:'center'}}>
+            <Icon name={'fiber-manual-record'} color={Colors.darkGreen} size={10}/>
+            <Text style={styles.table1}>
+              نام کتاب
+            </Text>
+          </View>
+          <View style={{flex:0.5}}>
+          <Text style={styles.table2}>
+{data.BookName}          </Text>
+          </View>
+        </View>
+        <View style={styles.bookDetilTable}>
+          <View style={{display:'flex',flexDirection:'row-reverse',flex:0.5,alignItems:'center'}}>
+            <Icon name={'fiber-manual-record'} color={Colors.darkGreen} size={10}/>
+            <Text style={styles.table1}>
+             نویسنده
+            </Text>
+          </View>
+          <View style={{flex:0.5}}>
+          <Text style={styles.table2}>
+          {data.Writer}          </Text>
+          </View>
+        </View>
+        <View style={styles.bookDetilTable}>
+          <View style={{display:'flex',flexDirection:'row-reverse',flex:0.5,alignItems:'center'}}>
+            <Icon name={'fiber-manual-record'} color={Colors.darkGreen} size={10}/>
+            <Text style={styles.table1}>
+             مترجم
+            </Text>
+          </View>
+          <View style={{flex:0.5}}>
+          <Text style={styles.table2}>
+{data.Translator}          </Text>
+          </View>
+        </View>
+        <View style={styles.bookDetilTable}>
+          <View style={{display:'flex',flexDirection:'row-reverse',flex:0.5,alignItems:'center'}}>
+            <Icon name={'fiber-manual-record'} color={Colors.darkGreen} size={10}/>
+            <Text style={styles.table1}>
+            ناشر
+            </Text>
+          </View>
+          <View style={{flex:0.5}}>
+          <Text style={styles.table2}>
+{data.Publisher}          </Text>
+          </View>
+        </View>
+        <View style={styles.bookDetilTable}>
+          <View style={{display:'flex',flexDirection:'row-reverse',flex:0.5,alignItems:'center'}}>
+            <Icon name={'fiber-manual-record'} color={Colors.darkGreen} size={10}/>
+            <Text style={styles.table1}>
+             دسته
+            </Text>
+          </View>
+          <View style={{flex:0.5}}>
+          <Text style={styles.table2}>
+           فانتزی_تخیلی
+          </Text>
+          </View>
+        </View>
+        <View style={styles.bookDetilTable}>
+          <View style={{display:'flex',flexDirection:'row-reverse',flex:0.5,alignItems:'center'}}>
+            <Icon name={'fiber-manual-record'} color={Colors.darkGreen} size={10}/>
+            <Text style={styles.table1}>
+            تعداد صفحات
+            </Text>
+          </View>
+          <View style={{flex:0.5}}>
+          <Text style={styles.table2}>
+            {data.Pages}
+          </Text>
+          </View>
+        </View>
+        <View style={styles.bookDetilTable}>
+          <View style={{display:'flex',flexDirection:'row-reverse',flex:0.5,alignItems:'center'}}>
+            <Icon name={'fiber-manual-record'} color={Colors.darkGreen} size={10}/>
+            <Text style={styles.table1}>
+           زبان
+            </Text>
+          </View>
+          <View style={{flex:0.5}}>
+          <Text style={styles.table2}>
+           {data.Language}
+          </Text>
+          </View>
+        </View>
+        <View style={styles.bookDetilTable}>
+          <View style={{display:'flex',flexDirection:'row-reverse',flex:0.5,alignItems:'center'}}>
+            <Icon name={'fiber-manual-record'} color={Colors.darkGreen} size={10}/>
+            <Text style={styles.table1}>
+            سایز
+            </Text>
+          </View>
+          <View style={{flex:0.5}}>
+          <Text style={styles.table2}>
+         {data.Size}MB
+          </Text>
+          </View>
+        </View>
+        <View style={styles.bookDetilTable}>
+          <View style={{display:'flex',flexDirection:'row-reverse',flex:0.5,alignItems:'center'}}>
+            <Icon name={'fiber-manual-record'} color={Colors.darkGreen} size={10}/>
+            <Text style={styles.table1}>
+            تاریخ انتشار
+            </Text>
+          </View>
+          <View style={{flex:0.5}}>
+          <Text style={styles.table2}>
+          {data.Date}
+          </Text>
+          </View>
+        </View>
+        <View style={styles.bookDetilTable}>
+          <View style={{display:'flex',flexDirection:'row-reverse',flex:0.5,alignItems:'center'}}>
+            <Icon name={'fiber-manual-record'} color={Colors.darkGreen} size={10}/>
+            <Text style={styles.table1}>
+             شابک
+            </Text>
+          </View>
+          <View style={{flex:0.5}}>
+          <Text style={styles.table2}>
+{data.ISBN}          </Text>
+          </View>
+        </View>
+        <View style={styles.bookDetilTable}>
+          <View style={{display:'flex',flexDirection:'row-reverse',flex:0.5,alignItems:'center'}}>
+            <Icon name={'fiber-manual-record'} color={Colors.darkGreen} size={10}/>
+            <Text style={styles.table1}>
+            راوی
+            </Text>
+          </View>
+          <View style={{flex:0.5}}>
+          <Text style={styles.table2}>
+{data.Narrator}          </Text>
+          </View>
+        </View>
+     </View>
+   </ScrollView>
+   );
+   const ThirdRoute = () => (
+   <ScrollView>
+   <View style={styles.bookDescriptionBox}>
+     <Text style={styles.bookDescription}>
+   {data.Description}
+     </Text>
+   
+   </View>
+   </ScrollView>
     );
-  };
   const [isModalVisible, setModalVisible] = useState(false);
+  const [isModalVisibleCom, setModalVisibleCom] = useState(false);
 
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
   };
 return (
  
-<View style={{ flex: 1,padding:0,backgroundColor:'#fff'}}>
+<ScrollView style={{ flex: 1,padding:0,backgroundColor:'#fff'}}>
     <View style={styles.greenBack}>
     <View style={styles.topBar}>
 
 
-    <View style={styles.rightCol}>
-      
-    <TouchableOpacity >
+    {/* <View style={styles.rightCol}>
+    <TouchableOpacity onPress={()=>alert(55)}>
     <Image source={require('@assets/images/save.png')} style={styles.saveBtn}/>
       </TouchableOpacity>
+      
       <TouchableOpacity>
         <Image source={require('@assets/images/share.png')} style={styles.saveBtn}/>
       </TouchableOpacity>
-    </View>
-    <View style={styles.leftCol}>
+    </View> */}
+    {/* <View style={styles.leftCol}>
     <TouchableOpacity>
         <Image source={require('@assets/images/back.png')} style={styles.saveBtn}/>
       </TouchableOpacity>
      
-</View>
-      
+</View> */}
+       
 </View>
 
 
     </View>
     
     <View style={styles.bookDetailBox}>
-<Image source={require('@assets/images/book1.jpg')} style={styles.bookImg2}/>
-<Text style={styles.eachBookName}>کتاب سایه و استخوان</Text>
-<Text style={styles.eachBookDetail}>اثر لی باردوگو</Text>
-<Text style={styles.eachBookDetail}>29.000 تومان</Text>
+<Image source={{uri:apiAsset+data?.Pic}} style={styles.bookImg2}/>
+<Text style={styles.eachBookName}>{data.BookName}</Text>
+<Text style={styles.eachBookDetail}>{data.Writer}</Text>
+<Text style={styles.eachBookDetail}>{data.Cost} تومان</Text>
 <View style={styles.rateRow}>
-<Text style={styles.eachBookDetail2}>4.5</Text>
+<Text style={styles.eachBookDetail2}>{rate[0]?.Average}</Text>
 <Icon name={'star'} color={'#ffc93d'} size={20}/>
 </View>
 </View>
@@ -454,23 +629,29 @@ return (
       <Icon name={'keyboard-control'} size={30} color={'#fff'}/>
      </TouchableOpacity>
 </View>
+<View>
+<TouchableOpacity onPress={()=>setModalVisibleCom(true)} style={styles.comBtn}>
+       <Text style={styles.btnText}>نظر دهید</Text>
+     </TouchableOpacity>
+
+</View>
 <Modal isVisible={isModalVisible} onBackdropPress={() => setModalVisible(false)} >
  <View style={styles.moreModal}>
  
 <View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center',marginBottom:responsiveHeight(5)}}>
   <View>
-  <Image source={require('@assets/images/book1.jpg')} style={styles.modalImg}/>
+  <Image source={{uri:apiAsset+data.Pic}} style={styles.modalImg}/>
   </View>
   <View>
     <Text style={styles.eachBookDetail4}>
-      کتاب سایه و استخوان
+    {data.BookName}
     </Text>
     <Text style={styles.eachBookDetail3}>
-     اثر لی باردوگو
+    {data.Writer}
     </Text>
   </View>
 </View>
-<TouchableOpacity style={{borderTopWidth:0.5,borderTopColor:'#c1c1c1',display:'flex',justifyContent:'space-between',alignItems:'center',flexDirection:'row-reverse',paddingTop:responsiveHeight(2),paddingBottom:responsiveHeight(2)}}>
+<TouchableOpacity onPress={()=>navigation.navigate("Rosters")} style={{borderTopWidth:0.5,borderTopColor:'#c1c1c1',display:'flex',justifyContent:'space-between',alignItems:'center',flexDirection:'row-reverse',paddingTop:responsiveHeight(2),paddingBottom:responsiveHeight(2)}}>
 <View>
 <Text style={styles.eachBookDetail3}>
      فهرست کتاب
@@ -480,7 +661,7 @@ return (
   <Image source={require('@assets/images/detail.png')} style={styles.miniIcon}/>
 </View>
 </TouchableOpacity>
-<TouchableOpacity style={{borderTopWidth:0.5,borderTopColor:'#c1c1c1',display:'flex',justifyContent:'space-between',alignItems:'center',flexDirection:'row-reverse',paddingTop:responsiveHeight(2),paddingBottom:responsiveHeight(2)}}>
+{/* <TouchableOpacity style={{borderTopWidth:0.5,borderTopColor:'#c1c1c1',display:'flex',justifyContent:'space-between',alignItems:'center',flexDirection:'row-reverse',paddingTop:responsiveHeight(2),paddingBottom:responsiveHeight(2)}}>
 <View>
 <Text style={styles.eachBookDetail3}>
      ارسال هدیه
@@ -489,8 +670,8 @@ return (
 <View>
   <Image source={require('@assets/images/gift.png')} style={styles.miniIcon}/>
 </View>
-</TouchableOpacity>
-<TouchableOpacity style={{borderTopWidth:0.5,borderTopColor:'#c1c1c1',display:'flex',justifyContent:'space-between',alignItems:'center',flexDirection:'row-reverse',paddingTop:responsiveHeight(2),paddingBottom:responsiveHeight(2)}}>
+</TouchableOpacity> */}
+<TouchableOpacity onPress={()=>mutSave()} style={{borderTopWidth:0.5,borderTopColor:'#c1c1c1',display:'flex',justifyContent:'space-between',alignItems:'center',flexDirection:'row-reverse',paddingTop:responsiveHeight(2),paddingBottom:responsiveHeight(2)}}>
 <View>
 <Text style={styles.eachBookDetail3}>
     افزودن به کتاب های دلخواه
@@ -514,32 +695,185 @@ return (
  </Modal>
 
       <View style={styles.tabViewBox}>
-      <TabView
+      {/* <TabView
       renderTabBar={renderTabBar}
       navigationState={{ index, routes }}
       renderScene={renderScene}
       onIndexChange={setIndex}
       initialLayout={{ width:responsiveWidth(90) }}
-    />
+    /> */}
+      <View style={styles.viwTab}>
+      <TouchableOpacity onPress={()=>setPage(2)} style={page==2?styles.tab:styles.tabINActive}>
+        <Text style={styles.tabBarText}>
+         نظرات
+        </Text>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={()=>setPage(1)} style={page==1?styles.tab:styles.tabINActive}>
+        <Text style={styles.tabBarText}>
+        جزییات
+        </Text>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={()=>setPage(0)} style={page==0?styles.tab:styles.tabINActive}>
+        <Text style={styles.tabBarText}>
+        معرفی کتاب
+        </Text>
+      </TouchableOpacity>
+          </View>
       </View> 
-{/*      
-      <FlatList
-       
-       keyExtractor={keyExtractor}
-       data={data}
-       renderItem={_render}
-       horizontal={true}
-       style={{marginTop:responsiveHeight(1),marginBottom:responsiveHeight(1)}}
-       
-     /> */}
+      <View style={{padding:10}}>
+      {
+        page==0?
+      ThirdRoute()
+        :page==1?
+        SecondRoute()
+        :
+        FirstRoute()
+      }
+      </View>
+      <Modal isVisible={isModalVisibleCom} onBackdropPress={() => setModalVisibleCom(false)} >
+ <View style={styles.moreModal}>
+ 
+<View style={{display:'flex',alignItems:'center',justifyContent:'center',marginBottom:responsiveHeight(2)}}>
+<Rating
+                    type='star'
+                    ratingCount={5}
+                    imageSize={40}
+                    // showRating
+
+                    ratingTextColor={'#fff'}
+                    ratingColor={'#FFC444'}
+                    onFinishRating={(ss)=>setRateNum(ss)}
+                    // style={{transform: [{rotateY: '180deg'}]}}
+                    style={{backgroundColor:Colors.darkGreen}}
+                  />
+</View>
+<View style={{alignItems:'center',justifyContent:'center'}}>
+<Input multiline={true} onChangeText={(ss)=>setIncome(ss)}  placeholder="نظر" inputStyle={{marginTop:responsiveHeight(2)}}  />
+
+</View>
+<TouchableOpacity onPress={()=>mutComment()} style={styles.comBtn}>
+       <Text style={styles.btnText}>ثبت</Text>
+     </TouchableOpacity>
+ </View>
+ </Modal>
+ <View style={styles.container}>
+
+ <View style={{display:'flex',flexDirection:'row-reverse',justifyContent:'space-between',marginBottom:responsiveHeight(5),marginTop:responsiveHeight(5)}}>
+     <View style={{flex:1}}>
+     <Text style={styles.rowTitle}>
+         کتاب های مرتبط
+      </Text>
+     </View>
+      <View>
+      <TouchableOpacity>
+      <Text style={styles.seeAll}>
+         مشاهده همه
+      </Text>
+      </TouchableOpacity>
+      </View>
+      </View>
+   <View style={{display:'flex',flexDirection:'row-reverse'}}>
+   <FlatList
+          keyExtractor={keyExtractor}
+          data={rel}
+          renderItem={_render}
+          horizontal={true}
+          style={{marginTop:responsiveHeight(1),marginBottom:responsiveHeight(1)}}
+          
+        />
+   </View>
+ <View style={{display:'flex',flexDirection:'row-reverse',justifyContent:'space-between',marginBottom:responsiveHeight(5),marginTop:responsiveHeight(5)}}>
+     <View style={{flex:1}}>
+     <Text style={styles.rowTitle}>
+         دیگر کتاب های {data.Writer}
+      </Text>
+     </View>
+      <View>
+      <TouchableOpacity>
+      <Text style={styles.seeAll}>
+         مشاهده همه
+      </Text>
+      </TouchableOpacity>
+      </View>
+      </View>
+   <View style={{display:'flex',flexDirection:'row-reverse'}}>
+   <FlatList
+          keyExtractor={keyExtractor}
+          data={relWri}
+          renderItem={_render}
+          horizontal={true}
+          style={{marginTop:responsiveHeight(1),marginBottom:responsiveHeight(1)}}
+          
+        />
+   </View>
+
+
+ <View style={{display:'flex',flexDirection:'row-reverse',justifyContent:'space-between',marginBottom:responsiveHeight(5),marginTop:responsiveHeight(5)}}>
+     <View style={{flex:1}}>
+     <Text style={styles.rowTitle}>
+         دیگر کتاب های {data.Publisher}
+      </Text>
+     </View>
+      <View>
+      <TouchableOpacity>
+      <Text style={styles.seeAll}>
+         مشاهده همه
+      </Text>
+      </TouchableOpacity>
+      </View>
+      </View>
+   <View style={{display:'flex',flexDirection:'row-reverse'}}>
+   <FlatList
+          keyExtractor={keyExtractor}
+          data={relPub}
+          renderItem={_render}
+          horizontal={true}
+          style={{marginTop:responsiveHeight(1),marginBottom:responsiveHeight(1)}}
+          
+        />
+   </View>
+
+
+ <View style={{display:'flex',flexDirection:'row-reverse',justifyContent:'space-between',marginBottom:responsiveHeight(5),marginTop:responsiveHeight(5)}}>
+     <View style={{flex:1}}>
+     <Text style={styles.rowTitle}>
+         دیگر کتاب های مترجم
+      </Text>
+     </View>
+      <View>
+      <TouchableOpacity>
+      <Text style={styles.seeAll}>
+         مشاهده همه
+      </Text>
+      </TouchableOpacity>
+      </View>
+      </View>
+   <View style={{display:'flex',flexDirection:'row-reverse'}}>
+   <FlatList
+          keyExtractor={keyExtractor}
+          data={relTran}
+          renderItem={_render}
+          horizontal={true}
+          style={{marginTop:responsiveHeight(1),marginBottom:responsiveHeight(1)}}
+          
+        />
+   </View>
+   </View>
   
-  </View>
+  </ScrollView>
 
     
 );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    paddingRight:responsiveWidth(5),
+    paddingLeft:responsiveWidth(5),
+    paddingBottom:responsiveHeight(2),
+    alignItems:"flex-end",
+    marginTop:responsiveHeight(15),
+},
 loginImg:{
   width:responsiveWidth(100),
   resizeMode:'contain',
@@ -569,12 +903,12 @@ tabBar:{
   borderBottomWidth:2
 },
 tabBarText:{
-  color: "#000",
-  ...myFontStyle.mediumBold
+  color: Colors.darkGreen,
+  ...myFontStyle.largBold
 },
 tabBarText2:{
-  color: "#000",
-  ...myFontStyle.mediumRegular
+  color:Colors.darkGreen,
+  ...myFontStyle.largBold
 },
 indicatorStyle:{
   backgroundColor: Colors.darkGreen,
@@ -619,11 +953,11 @@ greenBack:{
 }
 ,saveBtn:{
   width:25,
-  resizeMode:'contain',
+    resizeMode:'contain',
   marginLeft:responsiveWidth(5),
 },bookImg2:{
   width:responsiveWidth(45),
-  height:responsiveHeight(28),
+  height:responsiveHeight(23),
   zIndex:2000,
 marginRight:'auto',
 marginLeft:'auto',
@@ -672,27 +1006,44 @@ marginTop:responsiveHeight(10),
 },btnRow:{
   marginRight:'auto',
   marginLeft:'auto',
-  marginTop:responsiveHeight(0.5),
+  marginTop:responsiveHeight(2),
   display:'flex',
   flexDirection:'row-reverse',
-},loginBtn:{
+},
+loginBtn:{
   backgroundColor:Colors.darkGreen,
   width:responsiveWidth(35),
   
   height:responsiveHeight(6),
   alignContent:'center',
   alignItems:'center',
-  paddingTop:responsiveHeight(1),
+  justifyContent:'center',
   borderRadius:10,
  
-},cardBox:{
+},
+comBtn:{
+  backgroundColor:Colors.darkGreen,
+  width:responsiveWidth(35),
+  
+  height:responsiveHeight(6),
+  alignContent:'center',
+  alignItems:'center',
+  alignSelf:'center',
+justifyContent:'center',
+  borderRadius:10,
+  marginTop:responsiveHeight(1)
+ 
+},
+
+cardBox:{
   backgroundColor:'#f1f5ec',
-  height:responsiveHeight(18),
+  height:responsiveHeight(19),
   width:responsiveWidth(34),
   borderRadius:10,
   textAlign:'center',
-  padding:10,
-  marginLeft:10,
+  padding:responsiveHeight(1),
+  marginLeft:responsiveWidth(3),
+  marginTop:responsiveHeight(3)
 
 },bookImg:{
   height:responsiveHeight(14),
@@ -780,7 +1131,13 @@ height: "100%",
   ...myFontStyle.bookWriter3,
   marginTop:responsiveHeight(2),
   
-  },writerName:{
+  },
+  rateNum:{
+    color:'#1a1a1a',
+    ...myFontStyle.bookWriter3,
+    
+    },
+  writerName:{
     color:'#1a1a1a',
     ...myFontStyle.largBold,
   },writerName2:{
@@ -819,8 +1176,8 @@ height: "100%",
     display:'flex',
     justifyContent:'flex-start',
   },modalImg:{
-    height:100,
-    width:70,
+    height:responsiveHeight(12),
+    width:responsiveWidth(24),
     resizeMode:'cover',
     borderRadius:10,
     marginLeft:responsiveWidth(5),
@@ -847,7 +1204,6 @@ height: "100%",
   ,lineFront1:{
     backgroundColor:Colors.darkGreen,
     height:8,
-    width:'100%',
     borderRadius:200,
   },lineFront2:{
     backgroundColor:Colors.darkGreen,
@@ -880,7 +1236,14 @@ height: "100%",
   },eachBookDetail5:{
     ...myFontStyle.largBold,
     color:'#1a1a1a',
-  }
+  },
+  viwTab:{flexDirection:'row',alignItems:'center',justifyContent:"center"},
+  tab:{borderBottomWidth:1,width:responsiveWidth(30),alignItems:'center',
+justifyContent:"center",paddingBottom:responsiveHeight(3)}
+ ,
+  tabINActive:{borderBottomWidth:1,width:responsiveWidth(30),alignItems:'center',
+justifyContent:"center",paddingBottom:responsiveHeight(3),borderBottomColor:"#f1f1f1"}
+
 });
 
   export default EachBook;

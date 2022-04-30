@@ -209,7 +209,8 @@ const styles = StyleSheet.create({
   },viewPageTitle:{
       display:"flex",
      
-  },bookRow:{
+  },
+  bookRow:{
       display:'flex',
       flexDirection:'row-reverse',
       backgroundColor:Colors.lightGreen,

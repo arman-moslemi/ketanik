@@ -1,5 +1,5 @@
-import React, {useState,useRef} from 'react';
-import {View, TextInput, Text, TouchableOpacity,Image,ScrollView} from 'react-native';
+import React, {useState,useRef,useEffect} from 'react';
+import {View, TextInput, Text, TouchableOpacity,Image,ScrollView,FlatList} from 'react-native';
 
 
 import { StyleSheet } from 'react-native';
@@ -9,6 +9,8 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 // import Drawer from 'react-native-drawer'
 // import DrawerContent from './drewerContent/DrawerContent';
 import { myFontStyle } from "@assets/Constance";
+import axios from 'axios';
+import { apiUrl ,apiAsset} from "@commons/inFormTypes";
 
 // create a component
 
@@ -25,8 +27,76 @@ export const truncate = (str, len) => {
     return str;
   };
 
- const SelectedNews = ({navigation }) => {
+ const SelectedNews = ({navigation,route }) => {
+    const [data,setData]=useState([]);
+    useEffect(() => {
   
+      mutLogin();
+  
+  
+  }, []);
+
+    const  mutLogin=async()=> {
+      axios.get(apiUrl+'LastNewBook')
+      .then(function (response) {
+        const message = response.data;
+        const result = response.data.result;
+        console.log(message);
+  
+        if(result == "true"){
+          setData(response.data.Data)
+  
+          // navigation.navigate("ChangePass",{mobile:user,verify:response.data.Data})
+                          }else{
+  
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  
+  
+      };
+    const keyExtractor = item => {
+        return item.BookID;
+      };
+      const _render = (item) => {
+        console.log(item.item.BookName)
+        return (
+            <View style={styles.bookRow}>
+            <Image source={{uri:apiAsset+item.item.Pic}} style={styles.bookImg}/>
+            <View style={{marginRight:responsiveWidth(3)}}>
+                <Text style={styles.bookTitle}>
+                {truncate(item.item.BookName,20)}
+               {/* { item.item.BookName} */}
+                </Text>
+                <Text style={styles.bookWriter}>
+                {truncate(item.item.Writer,20)}
+                </Text>
+                <Text style={styles.bookWriter}>
+                {truncate("ناشر :"+item.item.Publisher,30)}
+                </Text>
+                <View style={{display:'flex',flexDirection:'row-reverse'}}>
+                    <Icon name={'star'} size={18} color={'#ffc93d'} style={{marginLeft:2}}/>
+                    <Icon name={'star'} size={18} color={'#ffc93d'} style={{marginLeft:2}}/>
+                    <Icon name={'star'} size={18} color={'#ffc93d'} style={{marginLeft:2}}/>
+                    <Icon name={'star'} size={18} color={'#ffc93d'} style={{marginLeft:2}}/>
+                    <Icon name={'star'} size={18} color={'#ffc93d'} style={{marginLeft:2}}/>
+                </View>
+            </View>
+            <View style={{display:"flex",flexDirection:'column',alignContent:'flex-end',justifyContent:'space-between'}}>
+                <View style={styles.headphone}>
+                <Icon name={'headset'} color={'#111'} size={22}/>
+                </View>
+                <View>
+                    <Text style={styles.price}>
+                        {item.item.Cost} تومان
+                    </Text>
+                </View>
+            </View>
+        </View>
+        );
+      };
 
 return (
     <View style={{backgroundColor:'#fff',flex:1}}>
@@ -53,201 +123,17 @@ return (
     </View>
   <ScrollView>
   <View style={styles.container}>
-   <View style={styles.viewPageTitle}>
-        <View style={styles.pageTitle}>
-        <Icon name={"notes"} color={'#707070'} size={30} style={{transform: [{rotateY: '180deg'}]}}/>
-        <Text style={styles.pageTitleText}>
-            تازه های برگزیده
-        </Text>
-        </View>
-       
-    </View>
-    <View style={styles.bookRow}>
-    <Image source={require('@assets/images/book1.jpg')} style={styles.bookImg}/>
-    <View style={{marginRight:responsiveWidth(3),display:"flex",flexDirection:'column',flex:1}}>
-        <Text style={styles.bookTitle}>
-        {truncate("صد سال تنهایی",20)}
-        </Text>
-        <Text style={styles.bookWriter}>
-        {truncate("گابریل گارسیا",20)}
-        </Text>
-        <Text style={styles.bookWriter}>
-        {truncate("ناشر : انتشارات پندار تابان",30)}
-        </Text>
-        <View style={{display:'flex',flexDirection:'row-reverse'}}>
-            <Icon name={'star'} size={18} color={'#ffc93d'} style={{marginLeft:2}}/>
-            <Icon name={'star'} size={18} color={'#ffc93d'} style={{marginLeft:2}}/>
-            <Icon name={'star'} size={18} color={'#ffc93d'} style={{marginLeft:2}}/>
-            <Icon name={'star'} size={18} color={'#ffc93d'} style={{marginLeft:2}}/>
-            <Icon name={'star'} size={18} color={'#ffc93d'} style={{marginLeft:2}}/>
-        </View>
-    </View>
-    <View style={{display:"flex",flexDirection:'column',alignContent:'flex-end',justifyContent:'space-between'}}>
-        <View style={styles.headphone}>
-        <Icon name={'headset'} color={'#111'} size={22}/>
-        </View>
-        <View>
-            <Text style={styles.price}>
-                25.000 تومان
-            </Text>
-        </View>
-    </View>
-</View>
-<View style={styles.bookRow}>
-    <Image source={require('@assets/images/book2.jpg')} style={styles.bookImg}/>
-    <View style={{marginRight:responsiveWidth(3),display:"flex",flexDirection:'column',flex:1}}>
-    <Text style={styles.bookTitle}>
-        {truncate("صد سال تنهایی",20)}
-        </Text>
-        <Text style={styles.bookWriter}>
-        {truncate("گابریل گارسیا",20)}
-        </Text>
-        <Text style={styles.bookWriter}>
-        {truncate("ناشر : انتشارات پندار تابان",30)}
-        </Text>
-        <View style={{display:'flex',flexDirection:'row-reverse'}}>
-            <Icon name={'star'} size={18} color={'#ffc93d'} style={{marginLeft:2}}/>
-            <Icon name={'star'} size={18} color={'#ffc93d'} style={{marginLeft:2}}/>
-            <Icon name={'star'} size={18} color={'#ffc93d'} style={{marginLeft:2}}/>
-            <Icon name={'star'} size={18} color={'#ffc93d'} style={{marginLeft:2}}/>
-            <Icon name={'star'} size={18} color={'#ffc93d'} style={{marginLeft:2}}/>
-        </View>
-    </View>
-    <View style={{display:"flex",flexDirection:'column',alignContent:'flex-end',justifyContent:'space-between'}}>
-        <View style={styles.headphone}>
-        <Icon name={'headset'} color={'#111'} size={22}/>
-        </View>
-        <View>
-            <Text style={styles.price}>
-                25.000 تومان
-            </Text>
-        </View>
-    </View>
-</View>
-<View style={styles.bookRow}>
-    <Image source={require('@assets/images/book3.jpg')} style={styles.bookImg}/>
-    <View style={{marginRight:responsiveWidth(3),display:"flex",flexDirection:'column',flex:1}}>
-    <Text style={styles.bookTitle}>
-        {truncate("صد سال تنهایی",20)}
-        </Text>
-        <Text style={styles.bookWriter}>
-        {truncate("گابریل گارسیا",20)}
-        </Text>
-        <Text style={styles.bookWriter}>
-        {truncate("ناشر : انتشارات پندار تابان",30)}
-        </Text>
-        <View style={{display:'flex',flexDirection:'row-reverse'}}>
-            <Icon name={'star'} size={18} color={'#ffc93d'} style={{marginLeft:2}}/>
-            <Icon name={'star'} size={18} color={'#ffc93d'} style={{marginLeft:2}}/>
-            <Icon name={'star'} size={18} color={'#ffc93d'} style={{marginLeft:2}}/>
-            <Icon name={'star'} size={18} color={'#ffc93d'} style={{marginLeft:2}}/>
-            <Icon name={'star'} size={18} color={'#ffc93d'} style={{marginLeft:2}}/>
-        </View>
-    </View>
-    <View style={{display:"flex",flexDirection:'column',alignContent:'flex-end',justifyContent:'space-between'}}>
-        <View style={styles.headphone}>
-        <Icon name={'headset'} color={'#111'} size={22}/>
-        </View>
-        <View>
-            <Text style={styles.price}>
-                25.000 تومان
-            </Text>
-        </View>
-    </View>
-</View>
-<View style={styles.bookRow}>
-    <Image source={require('@assets/images/book4.jpg')} style={styles.bookImg}/>
-    <View style={{marginRight:responsiveWidth(3),display:"flex",flexDirection:'column',flex:1}}>
-    <Text style={styles.bookTitle}>
-        {truncate("صد سال تنهایی",20)}
-        </Text>
-        <Text style={styles.bookWriter}>
-        {truncate("گابریل گارسیا",20)}
-        </Text>
-        <Text style={styles.bookWriter}>
-        {truncate("ناشر : انتشارات پندار تابان",30)}
-        </Text>
-        <View style={{display:'flex',flexDirection:'row-reverse'}}>
-            <Icon name={'star'} size={18} color={'#ffc93d'} style={{marginLeft:2}}/>
-            <Icon name={'star'} size={18} color={'#ffc93d'} style={{marginLeft:2}}/>
-            <Icon name={'star'} size={18} color={'#ffc93d'} style={{marginLeft:2}}/>
-            <Icon name={'star'} size={18} color={'#ffc93d'} style={{marginLeft:2}}/>
-            <Icon name={'star'} size={18} color={'#ffc93d'} style={{marginLeft:2}}/>
-        </View>
-    </View>
-    <View style={{display:"flex",flexDirection:'column',alignContent:'flex-end',justifyContent:'space-between'}}>
-        <View style={styles.headphone}>
-        <Icon name={'headset'} color={'#111'} size={22}/>
-        </View>
-        <View>
-            <Text style={styles.price}>
-                25.000 تومان
-            </Text>
-        </View>
-    </View>
-</View>
-<View style={styles.bookRow}>
-    <Image source={require('@assets/images/book1.jpg')} style={styles.bookImg}/>
-    <View style={{marginRight:responsiveWidth(3),display:"flex",flexDirection:'column',flex:1}}>
-    <Text style={styles.bookTitle}>
-        {truncate("صد سال تنهایی",20)}
-        </Text>
-        <Text style={styles.bookWriter}>
-        {truncate("گابریل گارسیا",20)}
-        </Text>
-        <Text style={styles.bookWriter}>
-        {truncate("ناشر : انتشارات پندار تابان",30)}
-        </Text>
-        <View style={{display:'flex',flexDirection:'row-reverse'}}>
-            <Icon name={'star'} size={18} color={'#ffc93d'} style={{marginLeft:2}}/>
-            <Icon name={'star'} size={18} color={'#ffc93d'} style={{marginLeft:2}}/>
-            <Icon name={'star'} size={18} color={'#ffc93d'} style={{marginLeft:2}}/>
-            <Icon name={'star'} size={18} color={'#ffc93d'} style={{marginLeft:2}}/>
-            <Icon name={'star'} size={18} color={'#ffc93d'} style={{marginLeft:2}}/>
-        </View>
-    </View>
-    <View style={{display:"flex",flexDirection:'column',alignContent:'flex-end',justifyContent:'space-between'}}>
-        <View style={styles.headphone}>
-        <Icon name={'headset'} color={'#111'} size={22}/>
-        </View>
-        <View>
-            <Text style={styles.price}>
-                25.000 تومان
-            </Text>
-        </View>
-    </View>
-</View>
-<View style={styles.bookRow}>
-    <Image source={require('@assets/images/book2.jpg')} style={styles.bookImg}/>
-    <View style={{marginRight:responsiveWidth(3),display:"flex",flexDirection:'column',flex:1}}>
-    <Text style={styles.bookTitle}>
-        {truncate("صد سال تنهایی",20)}
-        </Text>
-        <Text style={styles.bookWriter}>
-        {truncate("گابریل گارسیا",20)}
-        </Text>
-        <Text style={styles.bookWriter}>
-        {truncate("ناشر : انتشارات پندار تابان",30)}
-        </Text>
-        <View style={{display:'flex',flexDirection:'row-reverse'}}>
-            <Icon name={'star'} size={18} color={'#ffc93d'} style={{marginLeft:2}}/>
-            <Icon name={'star'} size={18} color={'#ffc93d'} style={{marginLeft:2}}/>
-            <Icon name={'star'} size={18} color={'#ffc93d'} style={{marginLeft:2}}/>
-            <Icon name={'star'} size={18} color={'#ffc93d'} style={{marginLeft:2}}/>
-            <Icon name={'star'} size={18} color={'#ffc93d'} style={{marginLeft:2}}/>
-        </View>
-    </View>
-    <View style={{display:"flex",flexDirection:'column',alignContent:'flex-end',justifyContent:'space-between'}}>
-        <View style={styles.headphone}>
-        <Icon name={'headset'} color={'#111'} size={22}/>
-        </View>
-        <View>
-            <Text style={styles.price}>
-                25.000 تومان
-            </Text>
-        </View>
-    </View>
-</View>
+ 
+
+<FlatList
+
+          keyExtractor={keyExtractor}
+          data={data}
+          renderItem={_render}
+          // style={{marginTop:responsiveHeight(7),marginLeft:responsiveWidth(2),marginBottom:responsiveHeight(20)}}
+                    // ListFooterComponent={listFooter}
+          // onEndReached={fetchNextCharityPage}
+        />
 <TouchableOpacity style={styles.moreBtn}>
     <Text style={styles.moreText}>
         بیشتر
@@ -265,7 +151,9 @@ const styles = StyleSheet.create({
         paddingRight:responsiveWidth(5),
         paddingLeft:responsiveWidth(5),
         paddingBottom:responsiveHeight(2),
-        alignItems:"flex-end"
+        alignItems:"flex-end",
+        marginTop:responsiveHeight(4),
+
     },
 
     menuTitle:{
@@ -325,9 +213,9 @@ const styles = StyleSheet.create({
       flexDirection:'row-reverse',
       backgroundColor:Colors.lightGreen,
       height:responsiveHeight(14),
+      marginTop:responsiveHeight(4),
       width:"100%",
       borderRadius:10,
-      marginTop:responsiveHeight(4),
       paddingTop:responsiveHeight(0.5),
       paddingBottom:responsiveHeight(0.5),
       paddingLeft:responsiveWidth(0),

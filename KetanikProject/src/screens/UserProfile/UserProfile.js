@@ -6,12 +6,54 @@ import { Colors} from "@assets/Colors";
 import { Switch } from 'react-native-paper';
 import { View, Text , StyleSheet,Image, TouchableOpacity,ScrollView} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { apiUrl ,apiAsset} from "@commons/inFormTypes";
+import axios from 'axios';
+import Spinner from '@components/Spinner';
+import AsyncStorage from  '@react-native-async-storage/async-storage';
  const UserProfile = ({navigation }) => {
-  const [isSwitchOn, setIsSwitchOn] = React.useState(false);
+  const [isSwitchOn, setIsSwitchOn] = useState(false);
+  const [data,setData]=useState([]);
 
   const onToggleSwitch = () => setIsSwitchOn(!isSwitchOn);
 
- 
+  useEffect(() => {
+  
+    mutLogin();
+
+
+}, []);
+const  LogOut=async()=> {
+  AsyncStorage.setItem('@user',"")
+
+  navigation.reset({
+    index: 0,
+    routes: [{ name: 'Login' }]
+})
+
+}
+  const  mutLogin=async()=> {
+    const state = await AsyncStorage.getItem("@user");
+console.log(state)
+    axios.post(apiUrl+'ReadCustomer',{CustomerID :state})
+    .then(function (response) {
+      const message = response.data;
+      const result = response.data.result;
+      console.log(message);
+
+      if(result == "true"){
+        setData(response.data.Data)
+
+        // navigation.navigate("ChangePass",{mobile:user,verify:response.data.Data})
+                        }else{
+
+      }
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+
+
+    };
  
 return (
     <View style={{ padding:0,justifyContent:'flex-start',alignContent:'flex-start',alignSelf:'flex-start'}}>
@@ -32,7 +74,7 @@ return (
       <Text style={styles.userEmail}>sepehrkhosravi@gmail.com</Text>
     </View>
     <View style={styles.edit}>
-      <TouchableOpacity style={{display:'flex',flexDirection:'row-reverse',alignItems:'center',justifyContent:'flex-end'}}>
+      <TouchableOpacity onPress={()=>navigation.navigate("EditProfile")} style={{display:'flex',flexDirection:'row-reverse',alignItems:'center',justifyContent:'flex-end'}}>
       <Icon name={'mode-edit'} size={20} color={'#007bff'} />
       <Text style={styles.btnEdit}>ویرایش حساب کاربری</Text>
       </TouchableOpacity>
@@ -40,7 +82,7 @@ return (
    
     </View>
   <ScrollView>
-  <TouchableOpacity style={styles.editProfileBtn}>
+  <TouchableOpacity style={styles.editProfileBtn} onPress={()=>navigation.navigate("wallet")}>
       <View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>
         <Image source={require('@assets/images/wallet.png')} style={styles.btnImg2}/>
         <Text style={styles.btnText}>کیف پول</Text>
@@ -104,7 +146,7 @@ return (
         <Icon name={'chevron-left'} size={20} color={'#111'}/>
       </View>
     </TouchableOpacity>
-    <TouchableOpacity style={styles.editProfileBtn}>
+    <TouchableOpacity style={styles.editProfileBtn} onPress={()=>navigation.navigate("AboutUs")}>
       <View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>
         <Image source={require('@assets/images/about.png')} style={styles.btnImg}/>
         <Text style={styles.btnText}>درباره ما</Text>
@@ -113,14 +155,14 @@ return (
         <Icon name={'chevron-left'} size={20} color={'#111'}/>
       </View>
     </TouchableOpacity>
-    <TouchableOpacity style={styles.editProfileBtn}>
+    <TouchableOpacity onPress={()=>navigation.navigate("Share")} style={styles.editProfileBtn}>
       <View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>
         <Image source={require('@assets/images/friend.png')} style={styles.btnImg}/>
         <Text style={styles.btnText}>دعوت از دوستان</Text>
       </View>
    
     </TouchableOpacity>
-    <TouchableOpacity style={styles.editProfileBtn}>
+    <TouchableOpacity onPress={()=> LogOut()} style={styles.editProfileBtn}>
       <View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>
         <Image source={require('@assets/images/exit.png')} style={styles.btnImg}/>
         <Text style={styles.btnText}>خروج از حساب</Text>

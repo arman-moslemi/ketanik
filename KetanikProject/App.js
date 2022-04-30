@@ -26,6 +26,7 @@ import { responsiveHeight, responsiveWidth } from 'react-native-responsive-dimen
 
 
 import EachBook from '@screens/EachBook/EachBook';
+import Rosters from '@screens/Rosters/Rosters';
 import ListenBook from '@screens/ListenBook/ListenBook';
 import Wallet from '@screens/Wallet/Wallet';
 import Factor from '@screens/Factor/Factor';
@@ -74,9 +75,12 @@ const StackNavigatorsHome = () => {
       <Stack.Screen name="Home" component={Home} />
     
      <Stack.Screen name="EpisodesList" component={EpisodesList} />
-        <Stack.Screen name="EachSelectedNews" component={EachSelectedNews} />
+        <Stack.Screen name="Rosters" component={Rosters} />
         <Stack.Screen name="Cart" component={Cart} />
- 
+        <Stack.Screen name="SelectedNews" component={SelectedNews} />
+        <Stack.Screen name="EachBook" component={EachBook} />
+        <Stack.Screen name="ListenBook" component={ListenBook} />
+        <Stack.Screen name="Library" component={Library} />
     </Stack.Navigator>
   );
  }
@@ -105,7 +109,9 @@ const StackNavigatorsProfile = () => {
               <Stack.Screen name="UserProfile" component={UserProfile} />
 
         <Stack.Screen name="EditProfile" component={EditProfile}/>
- 
+               <Stack.Screen name="Share" component={Share} />
+        <Stack.Screen name="AboutUs" component={AboutUs} />
+        <Stack.Screen name="wallet" component={Wallet} /> 
     </Stack.Navigator>
   );
  }
@@ -125,19 +131,14 @@ export default function App() {
   
         {/* <Stack.Screen name="SelectedNews" component={SelectedNews} />  */}
    
-       {/* <Stack.Screen name="Share" component={Share} /> */}
-        {/* <Stack.Screen name="AboutUs" component={AboutUs} /> */}
+
         {/* <Stack.Screen name="EditPassword" component={EditPassword} />  */}
         <Stack.Screen name="Home" component={Home} />
        {/* <Stack.Screen name="UserProfile" component={UserProfile} />  */}
-          {/* <Stack.Screen name="Library" component={Library} /> */}
         {/* <Stack.Screen name="EditProfile" component={EditProfile}/> */}
-        {/* <Stack.Screen name="EachBook" component={EachBook} /> */}
-        {/* <Stack.Screen name="ListenBook" component={ListenBook} />  */}
-        {/* <Stack.Screen name="wallet" component={Wallet} />  */}
+        {/*   */}
          {/* <Stack.Screen name="Factor" component={Factor} /> */}
        {/* <Stack.Screen name="Search" component={Search} />  */}
-       {/* <Stack.Screen name="Category" component={Category} /> */}
       </Stack.Navigator>
     </NavigationContainer>
   );
