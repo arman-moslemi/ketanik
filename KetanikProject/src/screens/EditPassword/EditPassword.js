@@ -9,8 +9,10 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 // import Drawer from 'react-native-drawer'
 // import DrawerContent from './drewerContent/DrawerContent';
 import { myFontStyle } from "@assets/Constance";
-
-// create a component
+import { Input } from '@components/Input';
+import { apiUrl ,apiAsset} from "@commons/inFormTypes";
+import axios from 'axios';
+import AsyncStorage from  '@react-native-async-storage/async-storage';
 
 
 export const truncate = (str, len) => {
@@ -26,7 +28,40 @@ export const truncate = (str, len) => {
   };
 
  const EditPassword = ({navigation }) => {
+  const [oldPass,setOldPass]=useState("");
+  const [newPass,setNewPass]=useState("");
+  const [againPass,setAginPass]=useState("");
 
+  const  mutEdit=async()=> {
+    const state = await AsyncStorage.getItem("@user");
+if(againPass==""|| oldPass==""|| newPass==""){
+  alert("همه موارد را وارد نمایید")
+}
+else if(againPass!=newPass){
+  alert("تکرار درست نیست")
+}
+ else{   console.log(state)
+        axios.post(apiUrl+'ChangePassword',{CustomerID :state,OldPassword:oldPass,NewPassword:newPass})
+        .then(function (response) {
+          const message = response.data;
+          const result = response.data.result;
+          console.log(message);
+    
+          if(result == "true"){
+            alert("رمز با موفقیت تغییر کرد")
+
+             navigation.navigate("UserProfile")
+                            }else{
+                              alert("رمز عبور درست نیست")
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    
+      }
+
+  }
 return (
     <View style={{backgroundColor:'#fff',flex:1}}>
 
@@ -57,13 +92,13 @@ return (
 <View style={styles.takhfifRow}>
   
     <View>
-        <TextInput placeholder="رمز عبور فعلی" style={styles.discountInput} />
+        <Input onChangeText={(ss)=>setOldPass(ss)} placeholder="رمز عبور فعلی" style={styles.discountInput} />
     </View>
     <View>
-        <TextInput placeholder="رمز عبور جدید" style={styles.discountInput} />
+        <Input onChangeText={(ss)=>setNewPass(ss)} placeholder="رمز عبور جدید" style={styles.discountInput} />
     </View>
     <View>
-        <TextInput placeholder="تکرار رمز عبور جدید" style={styles.discountInput} />
+        <Input onChangeText={(ss)=>setAginPass(ss)} placeholder="تکرار رمز عبور جدید" style={styles.discountInput} />
     </View>
     <View>
    
@@ -71,7 +106,7 @@ return (
 </View>
 <View style={styles.btnRow}>
     <View style={styles.btnBox}>
-    <TouchableOpacity style={styles.purchaseBtn}>
+    <TouchableOpacity onPress={()=>mutEdit()} style={styles.purchaseBtn}>
        <Text style={styles.purchaseBtnText}>ذخیره تغییرات</Text>
      </TouchableOpacity>
     </View>
@@ -168,7 +203,7 @@ const styles = StyleSheet.create({
     height:responsiveHeight(6),
     alignContent:'center',
     alignItems:'center',
-    paddingTop:responsiveHeight(1),
+    justifyContent:'center',
     borderRadius:10,
     marginLeft:5,
     
@@ -189,7 +224,7 @@ const styles = StyleSheet.create({
     height:responsiveHeight(6),
     alignContent:'center',
     alignItems:'center',
-    paddingTop:responsiveHeight(1),
+    justifyContent:'center',
     borderRadius:10,
     marginRight:5,
     borderColor:Colors.darkGreen,

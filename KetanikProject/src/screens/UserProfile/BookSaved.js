@@ -1,4 +1,4 @@
-import React, {useState,useEffect} from 'react';
+import React, {useState,useRef,useEffect} from 'react';
 import {View, TextInput, Text, TouchableOpacity,Image,ScrollView,FlatList} from 'react-native';
 
 
@@ -17,17 +17,17 @@ import { apiUrl ,apiAsset} from "@commons/inFormTypes";
 
 export const truncate = (str, len) => {
     // console.log("truncate", str, str.length, len);
-    if (str?.length > len && str?.length > 0) {
+    if (str.length > len && str.length > 0) {
       let new_str = str + " ";
-      new_str = str?.substr(0, len);
-      new_str = str?.substr(0, new_str?.lastIndexOf(" "));
-      new_str = new_str?.length > 0 ? new_str : str?.substr(0, len);
+      new_str = str.substr(0, len);
+      new_str = str.substr(0, new_str.lastIndexOf(" "));
+      new_str = new_str.length > 0 ? new_str : str.substr(0, len);
       return new_str + "...";
     }
     return str;
   };
 
- const SelectedNews = ({navigation,route }) => {
+ const BookSaved = ({navigation,route }) => {
     const [data,setData]=useState([]);
     useEffect(() => {
   
@@ -35,103 +35,11 @@ export const truncate = (str, len) => {
   
   
   }, []);
-  const {type,writer,translator,publisher,GroupID,GroupName} = route?.params ?? {};
 
     const  mutLogin=async()=> {
-type=="best"?
+      const state = await AsyncStorage.getItem("@user");
 
-axios.get(apiUrl+'BestSellerBook')
-.then(function (response) {
-  const message = response.data;
-  const result = response.data.result;
-  console.log(message);
-
-  if(result == "true"){
-    setData(response.data.Data)
-
-    // navigation.navigate("ChangePass",{mobile:user,verify:response.data.Data})
-                    }else{
-
-  }
-})
-.catch(function (error) {
-  console.log(error);
-})
-:type=="writer"?
-axios.post(apiUrl+'WriterBook',{Writer:writer})
-.then(function (response) {
-  const message = response.data;
-  const result = response.data.result;
-  console.log(message);
-
-  if(result == "true"){
-    setData(response.data.Data)
-
-    // navigation.navigate("ChangePass",{mobile:user,verify:response.data.Data})
-                    }else{
-
-  }
-})
-.catch(function (error) {
-  console.log(error);
-}):type=="translator"?
-axios.post(apiUrl+'TranslatorBook',{Translator:translator})
-.then(function (response) {
-  const message = response.data;
-  const result = response.data.result;
-  console.log(message);
-
-  if(result == "true"){
-    setData(response.data.Data)
-
-    // navigation.navigate("ChangePass",{mobile:user,verify:response.data.Data})
-                    }else{
-
-  }
-})
-.catch(function (error) {
-  console.log(error);
-})
-:type=="publisher"?
-axios.post(apiUrl+'PublisherBook',{Publisher:publisher})
-.then(function (response) {
-  const message = response.data;
-  const result = response.data.result;
-  console.log(message);
-
-  if(result == "true"){
-    setData(response.data.Data)
-
-    // navigation.navigate("ChangePass",{mobile:user,verify:response.data.Data})
-                    }else{
-
-  }
-})
-.catch(function (error) {
-  console.log(error);
-})
-:type=="group"?
-
-
-axios.post(apiUrl+'RelatedBook',{GroupID:GroupID})
-.then(function (response) {
-  const message = response.data;
-  const result = response.data.result;
-  console.log(message);
-
-  if(result == "true"){
-    setData(response.data.Data)
-
-    // navigation.navigate("ChangePass",{mobile:user,verify:response.data.Data})
-                    }else{
-
-  }
-})
-.catch(function (error) {
-  console.log(error);
-})
-:
-      axios.get(apiUrl+'LastNewBook')
+      axios.post(apiUrl+'SaveBookShow',{CustomerID:state})
       .then(function (response) {
         const message = response.data;
         const result = response.data.result;
@@ -171,16 +79,11 @@ axios.post(apiUrl+'RelatedBook',{GroupID:GroupID})
                 {truncate("ناشر :"+item.item.Publisher,30)}
                 </Text>
                 <View style={{display:'flex',flexDirection:'row-reverse'}}>
-                {[...new Array(5)].map((index)=>{
-                        return(
-index+1>item.item.Rate?
-<Icon name={'star'} color={Colors.darkGreen} size={15}/>
-:
-<Icon name={'star'} color={"#fff"} size={15}/>
-
-)
-})
-}
+                    <Icon name={'star'} size={18} color={'#ffc93d'} style={{marginLeft:2}}/>
+                    <Icon name={'star'} size={18} color={'#ffc93d'} style={{marginLeft:2}}/>
+                    <Icon name={'star'} size={18} color={'#ffc93d'} style={{marginLeft:2}}/>
+                    <Icon name={'star'} size={18} color={'#ffc93d'} style={{marginLeft:2}}/>
+                    <Icon name={'star'} size={18} color={'#ffc93d'} style={{marginLeft:2}}/>
                 </View>
             </View>
             <View style={{display:"flex",flexDirection:'column',alignContent:'flex-end',justifyContent:'space-between'}}>
@@ -210,24 +113,7 @@ return (
     <View style={styles.topBar}>
 
     <View style={{flex : 2,textAlign:"right"}}>
-    {type=="writer"?
-        <Text style={styles.menuTitle}>کتابهای {writer}</Text>
-     
-    : type=="publisher"?
-    <Text style={styles.menuTitle}>انتشارات {publisher}</Text>
- 
-: type=="translator"?
-<Text style={styles.menuTitle}>کتابهای {translator}</Text>
-
-: type=="translator"?
-<Text style={styles.menuTitle}>پرفروش ترین ها</Text>
-
-:type=="group"?
-<Text style={styles.menuTitle}>{GroupName}</Text>
-
-:
-    <Text style={styles.menuTitle}>تازه های برگزیده</Text>
-    }
+          <Text style={styles.menuTitle}>کتاب های ذخیره شده</Text>
           </View>
     
         
@@ -250,12 +136,12 @@ return (
                     // ListFooterComponent={listFooter}
           // onEndReached={fetchNextCharityPage}
         />
-{/* <TouchableOpacity style={styles.moreBtn}>
+<TouchableOpacity style={styles.moreBtn}>
     <Text style={styles.moreText}>
         بیشتر
     </Text>
     <Icon name={'expand-more'} color={'#373635'} size={25}/>
-</TouchableOpacity> */}
+</TouchableOpacity>
    </View>
   </ScrollView>
     </View>
@@ -337,9 +223,9 @@ const styles = StyleSheet.create({
       paddingLeft:responsiveWidth(0),
       paddingRight:responsiveWidth(3),
   },bookImg:{
-    height:responsiveHeight(14.25),
-    width:responsiveWidth(28),
+      width:100,
       resizeMode:'cover',
+      height:120,
       borderRadius:15,
       marginTop:responsiveHeight(-2),
       marginRight:responsiveWidth(3),
@@ -384,6 +270,6 @@ const styles = StyleSheet.create({
   }
   });
 
-  export default SelectedNews;
+  export default BookSaved;
 
 //make this component available to the <app></app>

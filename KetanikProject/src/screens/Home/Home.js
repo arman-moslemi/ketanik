@@ -79,8 +79,7 @@ export const truncate = (str, len) => {
       </Text>
       <View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>
       <Text style={styles.bookName}>
-      4.5
-      </Text>
+{item.item.Rate}      </Text>
       <Icon name={'star'} size={15} color={'#ffc93d'} style={{}}/>
       </View>
       </View>

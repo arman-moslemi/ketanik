@@ -1,5 +1,5 @@
-import React, {useState,useRef} from 'react';
-import {View, TextInput, Text, TouchableOpacity,Image,ScrollView,ImageBackground} from 'react-native';
+import React, {useState,useEffect} from 'react';
+import {View, TextInput, Text, TouchableOpacity,Image,ScrollView,FlatList} from 'react-native';
 
 
 import { StyleSheet } from 'react-native';
@@ -10,26 +10,92 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 // import DrawerContent from './drewerContent/DrawerContent';
 import { myFontStyle } from "@assets/Constance";
 import { RadioButton } from 'react-native-paper';
+import axios from 'axios';
+import { apiUrl ,apiAsset} from "@commons/inFormTypes";
+import { Input } from '@components/Input';
 
-// create a component
-
-
-// export const truncate = (str, len) => {
-//     // console.log("truncate", str, str.length, len);
-//     if (str.length > len && str.length > 0) {
-//       let new_str = str + " ";
-//       new_str = str.substr(0, len);
-//       new_str = str.substr(0, new_str.lastIndexOf(" "));
-//       new_str = new_str.length > 0 ? new_str : str.substr(0, len);
-//       return new_str + "...";
-//     }
-//     return str;
-//   };
 
  const Search = ({navigation }) => {
-  
+  const [name,setName]=useState("");
+
    
   const [checked, setChecked] = React.useState('first');
+
+  const keyExtractor = item => {
+    return item.BookID;
+  };
+  const [data,setData]=useState([]);
+    useEffect(() => {
+  
+      mutLogin();
+  
+  
+  }, [name]);
+
+    const  mutLogin=async()=> {
+    name.length!=0?
+      axios.post(apiUrl+'SearchBook',{Search:name})
+      .then(function (response) {
+        const message = response.data;
+        const result = response.data.result;
+        console.log(message);
+      
+        if(result == "true"){
+          setData(response.data.Data)
+      
+          // navigation.navigate("ChangePass",{mobile:user,verify:response.data.Data})
+                          }else{
+      
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+      })
+:
+null
+    }
+  const _render = (item) => {
+    console.log(item.item.BookName)
+    return (
+        <View style={styles.bookRow}>
+        <Image source={{uri:apiAsset+item.item.Pic}} style={styles.bookImg}/>
+        <View style={{marginRight:responsiveWidth(3)}}>
+            <Text style={styles.bookTitle}>
+            {truncate(item.item.BookName,20)}
+           {/* { item.item.BookName} */}
+            </Text>
+            <Text style={styles.bookWriter}>
+            {truncate(item.item.Writer,20)}
+            </Text>
+            <Text style={styles.bookWriter}>
+            {truncate("ناشر :"+item.item.Publisher,30)}
+            </Text>
+            <View style={{display:'flex',flexDirection:'row-reverse'}}>
+            {[...new Array(5)].map((index)=>{
+                    return(
+index+1>item.item.Rate?
+<Icon name={'star'} color={Colors.darkGreen} size={15}/>
+:
+<Icon name={'star'} color={"#fff"} size={15}/>
+
+)
+})
+}
+            </View>
+        </View>
+        <View style={{display:"flex",flexDirection:'column',alignContent:'flex-end',justifyContent:'space-between'}}>
+            <View style={styles.headphone}>
+            <Icon name={'headset'} color={'#111'} size={22}/>
+            </View>
+            <View>
+                <Text style={styles.price}>
+                    {item.item.Cost} تومان
+                </Text>
+            </View>
+        </View>
+    </View>
+    );
+  };
 return (
     <View style={{backgroundColor:'#fff',flex:1}}>
 
@@ -60,10 +126,10 @@ return (
   <Icon name={'search'} size={40} color={'#c1c1c1'}/>
 </View>
 <View>
-  <TextInput placeholder='جستجو کتاب،نویسنده و ناشر...' style={styles.searchInput}/>
+  <Input onChangeText={(ss)=>setName(ss)} placeholder='جستجو کتاب،نویسنده و ناشر...' inputStyle={styles.searchInput}/>
 </View>
     </View>
-    <View style={{display:'flex',justifyContent:'space-between',alignItems:'center',flexDirection:'row-reverse',marginTop:responsiveHeight(3),marginBottom:responsiveHeight(3)}}>
+    {/* <View style={{display:'flex',justifyContent:'space-between',alignItems:'center',flexDirection:'row-reverse',marginTop:responsiveHeight(3),marginBottom:responsiveHeight(3)}}>
       <View>
         <Text style={styles.headText}>
           تاریخچه
@@ -75,9 +141,18 @@ return (
           <Icon name={'delete'} size={25} color={'#dc3545'}/>
         </TouchableOpacity>
       </View>
-    </View>
+    </View> */}
    <ScrollView>
-   <View style={{display:'flex',flexDirection:'column'}}>
+   <FlatList
+
+keyExtractor={keyExtractor}
+data={data}
+renderItem={_render}
+// style={{marginTop:responsiveHeight(7),marginLeft:responsiveWidth(2),marginBottom:responsiveHeight(20)}}
+          // ListFooterComponent={listFooter}
+// onEndReached={fetchNextCharityPage}
+/>
+   {/* <View style={{display:'flex',flexDirection:'column'}}>
       
       <View style={styles.searchList}>
         <View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>
@@ -106,7 +181,7 @@ return (
         </View>
       </View>
   
-      </View>
+      </View> */}
    </ScrollView>
   </View>
 
@@ -180,6 +255,7 @@ const styles = StyleSheet.create({
     alignSelf:'center'
   },searchInput:{
     ...myFontStyle.normalRegular,
+    borderWidth:0
   },headText:{
     ...myFontStyle.textOnImg,
     color:'#1a1a1a',
@@ -204,7 +280,45 @@ const styles = StyleSheet.create({
     resizeMode:'cover',
     height:responsiveHeight(8),
     
-  }
+  },bookRow:{
+    display:'flex',
+    flexDirection:'row-reverse',
+    backgroundColor:Colors.lightGreen,
+    height:responsiveHeight(14),
+    marginTop:responsiveHeight(4),
+    width:"100%",
+    borderRadius:10,
+    paddingTop:responsiveHeight(0.5),
+    paddingBottom:responsiveHeight(0.5),
+    paddingLeft:responsiveWidth(0),
+    paddingRight:responsiveWidth(3),
+},bookImg:{
+  height:responsiveHeight(14.25),
+  width:responsiveWidth(28),
+    resizeMode:'cover',
+    borderRadius:15,
+    marginTop:responsiveHeight(-2),
+    marginRight:responsiveWidth(3),
+},bookTitle:{
+    ...myFontStyle.largBold,
+    color:'#111',
+},bookWriter:{
+  ...myFontStyle.mediumRegular,
+  color:'#111',
+},headphone:{
+    backgroundColor:'#fff',
+    height:35,
+    width:35,
+    borderRadius:50,
+    alignItems:'center',
+    alignContent:'center',
+    display:'flex',
+    justifyContent:'center',
+    marginTop:responsiveHeight(1),
+},price:{
+    ...myFontStyle.largBold,
+    color:Colors.darkGreen,
+}
   });
 
   export default Search;

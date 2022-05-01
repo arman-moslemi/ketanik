@@ -16,7 +16,6 @@ import AsyncStorage from  '@react-native-async-storage/async-storage';
 // const [showBox, setShowBox] = useState(false);
 // const onClick = () => setShowBox(true);
 export const truncate = (str, len) => {
-  // console.log("truncate", str, str.length, len);
   if (str.length > len && str.length > 0) {
     let new_str = str + " ";
     new_str = str.substr(0, len);
@@ -70,19 +69,23 @@ export const truncate = (str, len) => {
   const [relWri, setRelWri] = useState([]);
   const [relTran, setRelTran] = useState([]);
   const [relPub, setRelPub] = useState([]);
+  const [like, setLike] = useState();
+  const [trans, setTrans] = useState();
+  const [pub, setPub] = useState();
+  const [writer, setWriter] = useState();
+  const [grid, setGrid] = useState();
 
   useEffect(() => {
 
     mutLogin();
 
 
-}, []);
+}, [like]);
 const keyExtractor = item => {
   return item.id;
 };
 // const data=[1,2,3,4,5]
 const _render = (item, index) => {
-  console.log(item)
   return (
     <TouchableOpacity onPress={()=>navigation.navigate("EachBook",{id:item.item.BookID})} style={styles.cardBox}>
     <Image source={{uri:apiAsset+item.item.Pic}} style={styles.bookImg}/>
@@ -95,7 +98,7 @@ const _render = (item, index) => {
     </Text>
     <View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>
     <Text style={styles.bookName}>
-    4.5
+    {item.item.Rate}
     </Text>
     <Icon name={'star'} size={15} color={'#ffc93d'} style={{}}/>
     </View>
@@ -118,18 +121,18 @@ const {id} = route?.params ?? {};
         setData(response.data.GroupData)
         setRate(response.data.RateData)
         setComment(response.data.CommentData)
+        setWriter(response.data.GroupData.Writer)
+        setTrans(response.data.GroupData.Translator)
+        setPub(response.data.GroupData.Publisher)
+        setGrid(response.data.GroupData.GroupID)
         console.log(896);
         console.log(response.data.GroupData.Writer);
         axios.post(apiUrl+'LastRelatedBook',{GroupID:response.data.GroupData.GroupID})
-        .then(function (response) {
-          const message = response.data;
-          const result = response.data.result;
-          console.log(333);
-    
-          console.log(message);
+        .then(function (response2) {
+  
     
           if(result == "true"){
-            setRel(response.data.Data)
+            setRel(response2.data.Data)
         
             // navigation.navigate("ChangePass",{mobile:user,verify:response.data.Data})
                             }else{
@@ -139,16 +142,16 @@ const {id} = route?.params ?? {};
         .catch(function (error) {
           console.log(error);
         });
-        axios.post(apiUrl+'LastWriterBook',{GroupID:response.data.GroupData.Writer})
-        .then(function (response) {
-          const message = response.data;
-          const result = response.data.result;
-          console.log(333);
+        console.log(response.data.GroupData.Writer);
+
+        axios.post(apiUrl+'LastWriterBook',{Writer:response.data.GroupData.Writer})
+        .then(function (response3) {
+          const message = response3.data;
+          const result = response3.data.result;
     
-          console.log(message);
     
           if(result == "true"){
-            setRelWri(response.data.Data)
+            setRelWri(response3.data.Data)
         
             // navigation.navigate("ChangePass",{mobile:user,verify:response.data.Data})
                             }else{
@@ -158,16 +161,14 @@ const {id} = route?.params ?? {};
         .catch(function (error) {
           console.log(error);
         });
-        axios.post(apiUrl+'LastTranslatorBook',{GroupID:response.data.GroupData.Translator})
-        .then(function (response) {
-          const message = response.data;
-          const result = response.data.result;
-          console.log(333);
-    
-          console.log(message);
+        axios.post(apiUrl+'LastTranslatorBook',{Translator:response.data.GroupData.Translator})
+        .then(function (response4) {
+          const message = response4.data;
+          const result = response4.data.result;
+        
     
           if(result == "true"){
-            setRelTran(response.data.Data)
+            setRelTran(response4.data.Data)
         
             // navigation.navigate("ChangePass",{mobile:user,verify:response.data.Data})
                             }else{
@@ -177,16 +178,14 @@ const {id} = route?.params ?? {};
         .catch(function (error) {
           console.log(error);
         });
-        axios.post(apiUrl+'LastPublisherBook',{GroupID:response.data.GroupData.Publisher})
-        .then(function (response) {
-          const message = response.data;
-          const result = response.data.result;
-          console.log(333);
-    
-          console.log(message);
+        axios.post(apiUrl+'LastPublisherBook',{Publisher:response.data.GroupData.Publisher})
+        .then(function (response5) {
+          const message = response5.data;
+          const result = response5.data.result;
+         
     
           if(result == "true"){
-            setRelPub(response.data.Data)
+            setRelPub(response5.data.Data)
         
             // navigation.navigate("ChangePass",{mobile:user,verify:response.data.Data})
                             }else{
@@ -207,7 +206,6 @@ const {id} = route?.params ?? {};
     
     };
   const  mutComment=async()=> {
-    console.log(rateNum);
     const state = await AsyncStorage.getItem("@user");
 if( rate==""|| income==""){
   alert("موارد را وارد نمایید")
@@ -221,9 +219,7 @@ if(state==""){
     .then(function (response) {
       const message = response.data;
       const result = response.data.result;
-      console.log(333);
       
-      console.log(message);
       
       if(result == "true"){
         alert("با موفیت اضافه شد")
@@ -269,6 +265,30 @@ if(state==""){
 
 
     };
+  const  mutLike=async(aa)=> {
+    console.log(rateNum);
+
+    setLike(aa)
+    axios.post(apiUrl+'InsertLike',{CommentBookID:aa})
+    .then(function (response) {
+      const message = response.data;
+      const result = response.data.result;
+      console.log(333);
+      
+      console.log(message);
+      
+      if(result == "true"){
+        alert("با موفیت ذخیره شد")
+                        }else{
+
+      }
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+
+
+    };
   const FirstRoute = () => (
     <ScrollView>
       <View style={styles.commentView}>
@@ -278,7 +298,7 @@ if(state==""){
          <Text style={styles.rateNum}>5</Text>
          <Icon name={'star'} color={'#ffc93d'} size={20}/>
          <View style={styles.lineBack}>
-           <View style={[styles.lineFront1,{width:""+parseInt(rate[0]?.Five)/parseInt(rate[0]?.Number)*100+"%"}]}>
+           <View style={[styles.lineFront1,{width:rate[0]?.Five==0?0:""+parseInt(rate[0]?.Five)/parseInt(rate[0]?.Number)*100+"%"}]}>
    
            </View>
          </View>
@@ -288,7 +308,7 @@ if(state==""){
 
          <Icon name={'star'} color={'#ffc93d'} size={20}/>
          <View style={styles.lineBack}>
-         <View style={[styles.lineFront1,{width:""+parseInt(rate[0]?.Four)/parseInt(rate[0]?.Number)*100+"%"}]}>
+         <View style={[styles.lineFront1,{width:rate[0]?.Four==0?0:""+parseInt(rate[0]?.Four)/parseInt(rate[0]?.Number)*100+"%"}]}>
    
            </View>
          </View>
@@ -298,7 +318,7 @@ if(state==""){
 
          <Icon name={'star'} color={'#ffc93d'} size={20}/>
          <View style={styles.lineBack}>
-         <View style={[styles.lineFront1,{width:""+parseInt(rate[0]?.Three)/parseInt(rate[0]?.Number)*100+"%"}]}>
+         <View style={[styles.lineFront1,{width:rate[0]?.Three==0?0:""+parseInt(rate[0]?.Three)/parseInt(rate[0]?.Number)*100+"%"}]}>
    
            </View>
          </View>
@@ -308,7 +328,7 @@ if(state==""){
 
          <Icon name={'star'} color={'#ffc93d'} size={20}/>
          <View style={styles.lineBack}>
-         <View style={[styles.lineFront1,{width:""+parseInt(rate[0]?.Two)/parseInt(rate[0]?.Number)*100+"%"}]}>
+         <View style={[styles.lineFront1,{width:rate[0]?.Two==0?0:""+parseInt(rate[0]?.Two)/parseInt(rate[0]?.Number)*100+"%"}]}>
    
            </View>
          </View>
@@ -318,7 +338,7 @@ if(state==""){
 
          <Icon name={'star'} color={'#ffc93d'} size={20}/>
          <View style={styles.lineBack}>
-         <View style={[styles.lineFront1,{width:""+parseInt(rate[0]?.One)/parseInt(rate[0]?.Number)*100+"%"}]}>
+         <View style={[styles.lineFront1,{width:rate[0]?.One==0?0:""+parseInt(rate[0]?.One)/parseInt(rate[0]?.Number)*100+"%"}]}>
    
            </View>
          </View>
@@ -383,10 +403,10 @@ index+1>item?.Rate?
          <Text style={styles.bookDescription}>
       {item.Text}
          </Text>
-         <TouchableOpacity style={{display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>
+         <TouchableOpacity onPress={()=>mutLike(item.CommentBookID)} style={{display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>
            
            <View>
-           <Text style={styles.bookDescription}>{item?.Like} <Icon name={'favorite-border'} size={20}/></Text>
+           <Text style={styles.bookDescription}>{item?.Likee} <Icon name={like==item.CommentBookID?'favorite':'favorite-border'} color={'red'} size={20}/></Text>
            </View>
          </TouchableOpacity>
        </View>
@@ -481,7 +501,7 @@ index+1>item?.Rate?
           </View>
           <View style={{flex:0.5}}>
           <Text style={styles.table2}>
-           فانتزی_تخیلی
+           {data.Title}
           </Text>
           </View>
         </View>
@@ -622,7 +642,7 @@ return (
 <TouchableOpacity style={styles.loginBtn}>
        <Text style={styles.btnText}>خرید</Text>
      </TouchableOpacity>
-     <TouchableOpacity style={styles.whiteBtn}>
+     <TouchableOpacity onPress={()=>navigation.navigate("ListenBook",{id:data.BookID,link:data.Link})} style={styles.whiteBtn}>
        <Text style={styles.btnText2}>نسخه نمونه</Text>
      </TouchableOpacity>
      <TouchableOpacity style={styles.greenBtn2} onPress={toggleModal}>
@@ -765,7 +785,7 @@ return (
       </Text>
      </View>
       <View>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={()=>navigation.navigate('SelectedNews',{type:"group",GroupID:grid,GroupName:data.Title})}>
       <Text style={styles.seeAll}>
          مشاهده همه
       </Text>
@@ -789,7 +809,7 @@ return (
       </Text>
      </View>
       <View>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={()=>navigation.navigate("SelectedNews",{type:"writer",writer:writer})}>
       <Text style={styles.seeAll}>
          مشاهده همه
       </Text>
@@ -815,8 +835,9 @@ return (
       </Text>
      </View>
       <View>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={()=>navigation.navigate("SelectedNews",{type:"publisher",publisher:pub})}>
       <Text style={styles.seeAll}>
+
          مشاهده همه
       </Text>
       </TouchableOpacity>
@@ -841,7 +862,7 @@ return (
       </Text>
      </View>
       <View>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={()=>navigation.navigate("SelectedNews",{type:"translator",translator:trans})}>
       <Text style={styles.seeAll}>
          مشاهده همه
       </Text>

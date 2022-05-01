@@ -39,28 +39,35 @@ const TabStack= () => {
   return (
 
    <Tab.Navigator
-   barStyle={{ backgroundColor: Colors.white,paddingRight:5 }}
+   barStyle={{ backgroundColor: Colors.white,paddingRight:5 ,height:responsiveHeight(8)}}
 initialRouteName={"StackNavigatorsHome"}
 shifting={false}
-
+activeColor={Colors.darkGreen}
 // tabBar={props => <TabBar {...props} />}
 >
 <Tab.Screen
-   name="Search" component={StackNavigatorsProfile}
-   options={{          tabBarLabel: '',    tabBarIcon: ({ color }) => (    <Icon name="person-outline" color={Colors.appColor} style={{height:responsiveHeight(10),width:responsiveWidth(8)}} size={35} />         ),           }}      />
+   name="Profile" component={StackNavigatorsProfile}
+   
+   options={{          tabBarLabel: 'حساب کاربری',    tabBarIcon: ({ color }) => (    <Icon name="person-outline" color={Colors.darkGreen} style={{height:responsiveHeight(13),width:responsiveWidth(8)}} size={30} />         ),           }}      />
+<Tab.Screen
+   name="Library" component={StackNavigatorsLibrary}
+   options={{          tabBarLabel: 'کتابخانه',    tabBarIcon: ({ color }) => (    <Icon name="library-books" color={Colors.darkGreen} style={{height:responsiveHeight(13),width:responsiveWidth(8)}} size={29} />         ),           }}      />
+<Tab.Screen
+   name="Search" component={StackNavigatorsSearch}
+   options={{          tabBarLabel: 'جستجو',    tabBarIcon: ({ color }) => (    <Icon name="search" color={Colors.darkGreen} style={{height:responsiveHeight(13),width:responsiveWidth(8)}} size={30} />         ),           }}      />
 
-   <Tab.Screen
-   // name="home"
-   name={"StackNavigatorsHome"}
-   component={StackNavigatorsHome}
-   options={{          tabBarLabel: null,  tabBarIcon: ({ color }) => (            <Icon name="home" color={Colors.appColor} style={{height:responsiveHeight(10),width:responsiveWidth(8)}} size={35} />          ),        }}      />
-
+  
 <Tab.Screen
        // name="home"
        name={"Categorys"}
        component={StackNavigatorsCat}
 
-       options={{          tabBarLabel: '',          tabBarIcon: ({ color }) => (            <Icon name="how-to-vote" color={Colors.appColor} style={{height:responsiveHeight(10),width:responsiveWidth(8)}} size={35} />          ),        }}      />
+       options={{          tabBarLabel: 'دسته بندی',          tabBarIcon: ({ color }) => (            <Icon name="apps" color={Colors.darkGreen} style={{height:responsiveHeight(13),width:responsiveWidth(8)}} size={30} />          ),        }}      />
+ <Tab.Screen
+   // name="home"
+   name={"StackNavigatorsHome"}
+   component={StackNavigatorsHome}
+   options={{          tabBarLabel: 'خانه',  tabBarIcon: ({ color }) => (            <Icon name="home" color={Colors.darkGreen} style={{height:responsiveHeight(13),width:responsiveWidth(8)}} size={30} />          ),        }}      />
 
 </Tab.Navigator>
   );
@@ -80,7 +87,30 @@ const StackNavigatorsHome = () => {
         <Stack.Screen name="SelectedNews" component={SelectedNews} />
         <Stack.Screen name="EachBook" component={EachBook} />
         <Stack.Screen name="ListenBook" component={ListenBook} />
+    </Stack.Navigator>
+  );
+ }
+const StackNavigatorsLibrary = () => {
+
+  return (
+ 
+    <Stack.Navigator screenOptions={{
+      headerShown: false
+    }}>
+     
         <Stack.Screen name="Library" component={Library} />
+    </Stack.Navigator>
+  );
+ }
+const StackNavigatorsSearch = () => {
+
+  return (
+ 
+    <Stack.Navigator screenOptions={{
+      headerShown: false
+    }}>
+     
+        <Stack.Screen name="Search" component={Search} />
     </Stack.Navigator>
   );
  }
@@ -111,6 +141,7 @@ const StackNavigatorsProfile = () => {
         <Stack.Screen name="EditProfile" component={EditProfile}/>
                <Stack.Screen name="Share" component={Share} />
         <Stack.Screen name="AboutUs" component={AboutUs} />
+        <Stack.Screen name="EditPassword" component={EditPassword} /> 
         <Stack.Screen name="wallet" component={Wallet} /> 
     </Stack.Navigator>
   );
@@ -132,11 +163,8 @@ export default function App() {
         {/* <Stack.Screen name="SelectedNews" component={SelectedNews} />  */}
    
 
-        {/* <Stack.Screen name="EditPassword" component={EditPassword} />  */}
         <Stack.Screen name="Home" component={Home} />
-       {/* <Stack.Screen name="UserProfile" component={UserProfile} />  */}
-        {/* <Stack.Screen name="EditProfile" component={EditProfile}/> */}
-        {/*   */}
+    
          {/* <Stack.Screen name="Factor" component={Factor} /> */}
        {/* <Stack.Screen name="Search" component={Search} />  */}
       </Stack.Navigator>

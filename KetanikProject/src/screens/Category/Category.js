@@ -62,7 +62,7 @@ import { isMessageIgnored } from 'react-native/Libraries/LogBox/Data/LogBoxData'
       console.log(item.item)
       return (
         // <View style={styles.categoryRow}>
-        <TouchableOpacity onPress={()=>navigation.navigate("GroupBook",{GroupID:item.item.GroupID,Name:item.item.Title})} style={item.item.GroupID==1?styles.categoryBox:item.item.GroupID==2?styles.categoryBox2:item.item.GroupID==3?styles.categoryBox3:
+        <TouchableOpacity onPress={()=>navigation.navigate("SelectedNews",{type:"group",GroupID:item.item.GroupID,GroupName:item.item.Title})} style={item.item.GroupID==1?styles.categoryBox:item.item.GroupID==2?styles.categoryBox2:item.item.GroupID==3?styles.categoryBox3:
           item.item.GroupID==4?styles.categoryBox4:item.item.GroupID==5?styles.categoryBox5:item.item.GroupID==6?styles.categoryBox6:item.item.GroupID==7?styles.categoryBox7:styles.categoryBox8
         }>
         <Image source={{uri:apiAsset+item.item.Pic}} style={styles.bookImg}/>

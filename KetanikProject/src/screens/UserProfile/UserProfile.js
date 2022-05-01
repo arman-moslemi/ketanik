@@ -13,6 +13,9 @@ import AsyncStorage from  '@react-native-async-storage/async-storage';
  const UserProfile = ({navigation }) => {
   const [isSwitchOn, setIsSwitchOn] = useState(false);
   const [data,setData]=useState([]);
+  const [name,setName]=useState();
+  const [pic,setPic]=useState();
+  const [email,setEmail]=useState();
 
   const onToggleSwitch = () => setIsSwitchOn(!isSwitchOn);
 
@@ -33,8 +36,9 @@ const  LogOut=async()=> {
 }
   const  mutLogin=async()=> {
     const state = await AsyncStorage.getItem("@user");
+
 console.log(state)
-    axios.post(apiUrl+'ReadCustomer',{CustomerID :state})
+    axios.post(apiUrl+'OneCustomer',{CustomerID :state})
     .then(function (response) {
       const message = response.data;
       const result = response.data.result;
@@ -42,7 +46,10 @@ console.log(state)
 
       if(result == "true"){
         setData(response.data.Data)
-
+console.log(response.data.Data)
+setName(response.data.Data.Username)
+setPic(response.data.Data.Pic)
+setEmail(response.data.Data.Email)
         // navigation.navigate("ChangePass",{mobile:user,verify:response.data.Data})
                         }else{
 
@@ -59,19 +66,19 @@ return (
     <View style={{ padding:0,justifyContent:'flex-start',alignContent:'flex-start',alignSelf:'flex-start'}}>
        <Image source={require('@assets/images/userProfileTop.png')} style={styles.topImg}/>
   
-     <View style={styles.backView}>
+     {/* <View style={styles.backView}>
      <TouchableOpacity>
      <Icon name={'west'} size={40} color={'#111'} style={{}}/>
    
      </TouchableOpacity>
       
-     </View>
-     <Image source={require('@assets/images/profile.jpg')} style={styles.profile2}/>
+     </View> */}
+     <Image source={pic?{uri:apiAsset+pic}:require('@assets/images/profile.jpg')} style={styles.profile2}/>
     <View style={{padding:15,borderBottomColor:'#E8EAE6',borderBottomWidth:20,}}>
 
     <View style={{display:'flex',justifyContent:'center',flexDirection:'column'}}>
-      <Text style={styles.userName}>سپهر خسروی</Text>
-      <Text style={styles.userEmail}>sepehrkhosravi@gmail.com</Text>
+      <Text style={styles.userName}>{name}</Text>
+      <Text style={styles.userEmail}>{email}</Text>
     </View>
     <View style={styles.edit}>
       <TouchableOpacity onPress={()=>navigation.navigate("EditProfile")} style={{display:'flex',flexDirection:'row-reverse',alignItems:'center',justifyContent:'flex-end'}}>

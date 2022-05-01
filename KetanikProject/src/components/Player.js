@@ -14,7 +14,7 @@ import {
   View,
   ViewPropTypes
 } from "react-native";
-import { Colors } from "../assets/Colors";
+import { Colors } from "@assets/Colors";
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 function ProgressBar() {
@@ -22,12 +22,12 @@ function ProgressBar() {
 
   return (
     <View style={styles.progress}>
-      <View style={{ flex: progress.position, backgroundColor: "red",height:2, }} />
+      <View style={{ flex: progress.position, backgroundColor:"#D3D3D3",height:2, }} />
       <View
         style={{
             height:2,
           flex: progress.duration - progress.position,
-          backgroundColor: "#FFC444"
+          backgroundColor: Colors.darkGreen
         }}
       />
     </View>
@@ -85,14 +85,14 @@ export default function Player(props) {
         {
             isplay?
             // <TouchableOpacity onPress={stop} style={{borderRadius:50,backgroundColor:Colors.white}}>
-            <TouchableOpacity onPress={onTogglePlayback} style={{borderRadius:50,backgroundColor:Colors.white}}>
+            <TouchableOpacity onPress={onTogglePlayback} style={{borderRadius:50,backgroundColor:Colors.darkGreen}}>
 
-<Icon name={"pause-circle-filled"} size={40} color={Colors.yellow}/>
+<Icon name={"pause-circle-filled"} size={40} color={"#fff"}/>
 </TouchableOpacity>
 :
-<TouchableOpacity onPress={onTogglePlayback} style={{borderRadius:50,backgroundColor:Colors.white}}>
+<TouchableOpacity onPress={onTogglePlayback} style={{borderRadius:50,backgroundColor:Colors.darkGreen}}>
 
-<Icon name={"play-circle-filled"} size={40} color={Colors.yellow}/>
+<Icon name={"play-circle-filled"} size={40} color={"#fff"}/>
 </TouchableOpacity>
         }
 
@@ -118,12 +118,12 @@ const styles = StyleSheet.create({
   card: {
     width: "80%",
     // elevation: 1,
-    borderRadius: 4,
+    borderRadius: 4
     // shadowRadius: 2,
     // shadowOpacity: 0.1,
     // alignItems: "center",
     // shadowColor: "black",
-    backgroundColor: "white"
+    // backgroundColor: "white"
     ,alignItems:'center',
     shadowOffset: { width: 0, height: 1 }
   },

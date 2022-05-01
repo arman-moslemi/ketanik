@@ -8,18 +8,150 @@ import { View, Text , StyleSheet,Image, TouchableOpacity,ScrollView,TextInput} f
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Modal from 'react-native-modal';
 import { RadioButton } from 'react-native-paper';
+import { apiUrl ,apiAsset} from "@commons/inFormTypes";
+import axios from 'axios';
+import Spinner from '@components/Spinner';
+import AsyncStorage from  '@react-native-async-storage/async-storage';
+import {launchImageLibrary} from 'react-native-image-picker';
+import ImgToBase64 from 'react-native-image-base64';
  const EditProfile = ({navigation }) => {
    
-  const [checked, setChecked] = React.useState('first');
+  // const [checked, setChecked] = React.useState('first');
   const [isModalVisible, setModalVisible] = useState(false);
-
+  const [data,setData]=useState([]);
+  const [name,setName]=useState();
+  const [pic,setPic]=useState();
+  const [email,setEmail]=useState();
+  const [gender,setGender]=useState();
+  const [backimage, setbackimageData] = React.useState('');
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
+  };
+  const  mutLogin=async()=> {
+    const state = await AsyncStorage.getItem("@user");
+
+console.log(state)
+    axios.post(apiUrl+'OneCustomer',{CustomerID :state})
+    .then(function (response) {
+      const message = response.data;
+      const result = response.data.result;
+      console.log(message);
+
+      if(result == "true"){
+        setData(response.data.Data)
+console.log(response.data.Data)
+setName(response.data.Data.Username)
+setPic(response.data.Data.Pic)
+setEmail(response.data.Data.Email)
+        // navigation.navigate("ChangePass",{mobile:user,verify:response.data.Data})
+                        }else{
+
+      }
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+
+
+    };
+    const  mutEdit=async()=> {
+      const state = await AsyncStorage.getItem("@user");
+
+      console.log(state)
+      console.log(name)
+      console.log(gender)
+          axios.post(apiUrl+'EditCustomer',{CustomerID :state,Username:name,Gender:gender})
+          .then(function (response) {
+            const message = response.data;
+            const result = response.data.result;
+            console.log(message);
+      
+            if(result == "true"){
+        alert("تغییرات با موفقیت ذخیره شد")
+              // navigation.navigate("ChangePass",{mobile:user,verify:response.data.Data})
+                              }else{
+      
+            }
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      
+      
+
+    }
+    useEffect(() => {
+  
+      mutLogin();
+  
+  
+  }, []);
+  const handleChoosePhoto =async ()=>{
+
+    // setbackimageData(10);
+    // console.log(backimage);
+    const state = await AsyncStorage.getItem("@user");
+
+    const options = {
+      noData:true
+    };
+    const response = await launchImageLibrary(options);
+    console.log(response.assets[0]);
+  // launchImageLibrary(options,response => {
+      if(response.assets[0].uri){
+        console.log(response.assets[0]);
+        console.log(1111);
+
+        setbackimageData(response.assets[0].uri);
+        console.log(backimage);
+
+
+        ImgToBase64.getBase64String(response.assets[0].uri)
+        .then(base64String =>
+        //  console.log(base64String) &&
+        
+        axios.post(apiUrl + 'EditCustomerPic', {
+          CustomerID: state,
+          PicName:response.assets[0].fileName,
+          Pic:base64String,
+        })
+          .then(response => {
+           //   setData(response.data.data);
+             // setids(id);
+              // return;
+              const result = response.data.result;
+console.log(888)
+console.log( response.data)
+// alert("",response.data.message)
+if(result=="true"){
+
+  console.log(222);
+  
+  console.log(response.data.result);
+  alert("",'عکس با موفقیت ثبت شد')
+  AsyncStorage.setItem('@userPhoto',response.data.Data.Photo.toString())
+}
+
+
+          })
+          .catch(function(error) {
+            console.log(222);
+            console.log(error);
+
+          }
+          )
+
+
+    );
+
+
+      }
+    // });
   };
 return (
     <View style={{ padding:0,justifyContent:'flex-start',alignContent:'flex-start',alignSelf:'flex-start',backgroundColor:'#fff'}}>
        <Image source={require('@assets/images/userProfileTop.png')} style={styles.topImg}/>
-  
+   
      <View style={styles.backView}>
      <TouchableOpacity>
      <Icon name={'west'} size={40} color={'#111'} style={{}}/>
@@ -27,8 +159,25 @@ return (
      </TouchableOpacity>
       
      </View>
-     <Image source={require('@assets/images/profile.jpg')} style={styles.profile2}/>
-     <TouchableOpacity style={styles.loginBtn} onPress={toggleModal} >
+     {/* <Image source={require('@assets/images/profile.jpg')} style={styles.profile2}/> */}
+     {
+                  backimage !=''?
+                  <Image style={styles.profile2}  source={{uri:backimage}}/>
+
+                  :
+            pic?
+
+            <Image style={styles.profile2} source={{uri:apiAsset+pic}} />
+            :
+
+          <Image style={styles.profile2}source={require('@assets/images/profile.jpg')} />
+          }
+     <TouchableOpacity style={styles.loginBtn} 
+    //  onPress={toggleModal} 
+    onPress={
+      ()=>{handleChoosePhoto()}
+    }
+     >
        <Text style={styles.btnText}>ویرایش تصویر</Text>
      </TouchableOpacity>
    
@@ -43,13 +192,13 @@ return (
   <Text style={styles.inputText}>
 نام کاربری
   </Text>
-  <TextInput placeholder="نام کاربری" style={styles.discountInput} placeholderTextColor={'#111'} />
+  <TextInput value={name} onChangeText={(ss)=>setName(ss)} placeholder="نام کاربری" style={styles.discountInput} placeholderTextColor={'#111'} />
 </View>
 <View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center',width:responsiveWidth(90),marginRight:'auto',marginLeft:'auto',marginBottom:responsiveHeight(2),marginTop:responsiveHeight(2),justifyContent:'space-between'}}>
   <Text style={styles.inputText}>
 ایمیل
   </Text>
-  <TextInput placeholder="ایمیل" style={styles.discountInput} placeholderTextColor={'#111'} />
+  <TextInput disableFullscreenUI={true} value={email} editable={false} placeholder="ایمیل" style={styles.discountInput} placeholderTextColor={'#111'} />
 </View>
 <View style={{padding:15,borderBottomColor:'#E8EAE6',borderBottomWidth:10,}}>
 </View>
@@ -57,8 +206,8 @@ return (
   <View style={styles.radioView}>
   <RadioButton
         value="first"
-        status={ checked === 'first' ? 'checked' : 'unchecked' }
-        onPress={() => setChecked('first')}
+        status={ gender  ? 'unchecked' : 'checked' }
+        onPress={() => setGender(false)}
         color={Colors.darkGreen}
       />
   <Text style={styles.radionText}>
@@ -69,8 +218,8 @@ return (
   <View style={styles.radioView}>
       <RadioButton
         value="second"
-        status={ checked === 'second' ? 'checked' : 'unchecked' }
-        onPress={() => setChecked('second')}
+        status={ gender  ? 'checked' : 'unchecked' }
+        onPress={() => setGender(true)}
         color={Colors.darkGreen}
       />
         <Text style={styles.radionText}>
@@ -81,7 +230,7 @@ return (
   
 <View style={{padding:15,borderBottomColor:'#E8EAE6',borderBottomWidth:10,}}>
 </View>
-<TouchableOpacity style={styles.editProfileBtn2}>
+<TouchableOpacity onPress={()=>navigation.navigate("EditPassword")} style={styles.editProfileBtn2}>
       <View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>
         
         <Text style={styles.btnText2}>تغییر رمزعبور</Text>
@@ -92,12 +241,12 @@ return (
     </TouchableOpacity>
     <View style={styles.btnRow}>
     <View style={styles.btnBox}>
-    <TouchableOpacity style={styles.purchaseBtn}>
+    <TouchableOpacity onPress={()=>mutEdit()} style={styles.purchaseBtn}>
        <Text style={styles.purchaseBtnText}>ذخیره تغییرات</Text>
      </TouchableOpacity>
     </View>
     <View style={styles.btnBox}>
-    <TouchableOpacity style={styles.purchaseBtn2}>
+    <TouchableOpacity onPress={()=>navigation.goBack()} style={styles.purchaseBtn2}>
        <Text style={styles.purchaseBtnText2}>انصراف</Text>
      </TouchableOpacity>
     </View>

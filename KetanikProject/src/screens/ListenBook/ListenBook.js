@@ -8,10 +8,15 @@ import { View, Text , StyleSheet,Image, TouchableOpacity,ScrollView,TextInput} f
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Modal from 'react-native-modal';
 import { RadioButton } from 'react-native-paper';
- const ListenBook = ({navigation }) => {
+import TrackPlayer, { usePlaybackState } from "react-native-track-player";
+import Player from "@components/Player";
+import axios from 'axios';
+import { apiUrl ,apiAsset} from "@commons/inFormTypes";
+ const ListenBook = ({navigation,route }) => {
    
   const [checked, setChecked] = React.useState('first');
-  const [isModalVisible, setModalVisible] = useState(false);
+  const [isModalVisible, setModalVisible] = useState(false); 
+  const [isplay, setPlay] = useState(false);
 
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
@@ -21,6 +26,59 @@ import { RadioButton } from 'react-native-paper';
   const toggleModal2 = () => {
     setModalVisible2(!isModalVisible2);
   };
+  const {link,id} = route?.params ?? {};
+console.log(link)
+  async function togglePlayback() {
+    const currentTrack = await TrackPlayer.getPosition();
+    const currentTrack2 = await TrackPlayer.getDuration();
+    console.log(444)
+    console.log(currentTrack)
+    if (currentTrack == currentTrack2) {
+      setPlay(true)
+      // await TrackPlayer.reset();
+      await TrackPlayer.reset();
+      await TrackPlayer.add({
+        id: "local-track",
+        // url: localTrack,
+        // url: apiAsset+data[0]?.Voice,
+        url: apiAsset+link,
+        // url: require('@assets/images/audio_2021-11-02_15-04-15.mp3'),
+        title: "Ketanic",
+        artwork: "https://i.picsum.photos/id/500/200/200.jpg",
+        // duration: 10
+      });
+    //   TrackPlayer.updateOptions({
+    //     stopWithApp: true
+    // });
+      await TrackPlayer.play();
+    }
+    else{
+
+      if(isplay)
+     { await TrackPlayer.pause()
+setPlay(false)}
+else{
+
+await TrackPlayer.play()
+setPlay(true)
+}
+    }
+
+
+    // }
+  }
+  async function stop() {
+if(isplay)
+     { await TrackPlayer.pause()
+setPlay(false)}
+else{
+
+await TrackPlayer.play()
+setPlay(true)
+}
+
+    // }
+  }
 return (
    <ScrollView>
       <View style={{display:'flex',justifyContent:'center',alignContent:'center',alignItems:'center'}} >
@@ -56,7 +114,17 @@ return (
         </TouchableOpacity>
       </View>
       {/* player Code is Here */}
-      
+      <View style={{padding:responsiveWidth(5),alignItems:'center'}} >
+                <Player
+        // onNext={skipToNext}
+        style={{ marginTop: 10}}
+        // onPrevious={skipToPrevious}
+        onTogglePlayback={togglePlayback}
+        stop={stop}
+        isplay={isplay}
+
+      />
+                  </View>
       <TouchableOpacity onPress={toggleModal2} style={{marginTop:50,marginLeft:100,}}>
         <Icon name={'access-time'} size={35}/>
       </TouchableOpacity>
@@ -237,6 +305,7 @@ const styles = StyleSheet.create({
     resizeMode:'contain'
   },btnBoxTxt:{
     ...myFontStyle.bookWriter3,
+    color:"#000"
   },btnBox:{
     borderLeftColor:'#c1c1c1',
     borderLeftWidth:1,
