@@ -188,9 +188,21 @@ index+1>item.item.Rate?
                 <Icon name={'headset'} color={'#111'} size={22}/>
                 </View>
                 <View>
-                    <Text style={styles.price}>
-                        {item.item.Cost} تومان
-                    </Text>
+                {
+          item.item.SpecialCost?
+<>
+      <Text style={styles.priceRed}>
+      {item.item.SpecialCost}ت
+    </Text>
+    <Text style={styles.priceStroke}>
+    {item.item.Cost}ت
+    </Text>
+    </>
+          :
+<Text style={styles.bookName}>
+      {item.item.Cost}ت
+      </Text>
+        }
                 </View>
             </View>
         </View>
@@ -382,6 +394,17 @@ const styles = StyleSheet.create({
       color:'#373635',
       ...myFontStyle.bookTitle,
   }
+  ,priceRed:{
+    color:'#dc3545',
+    ...myFontStyle.normalRegular,
+    marginTop:responsiveHeight(0.5),
+},priceStroke:{
+...myFontStyle.normalRegular,
+color:'#111',
+textDecorationLine: 'line-through',
+marginTop:responsiveHeight(0.5),
+marginRight:4,
+},
   });
 
   export default SelectedNews;

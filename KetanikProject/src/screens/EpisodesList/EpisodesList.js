@@ -1,4 +1,4 @@
-import React, {useState,useRef} from 'react';
+import React, {useState,useEffect} from 'react';
 import {View, TextInput, Text, TouchableOpacity,Image,ScrollView} from 'react-native';
 
 
@@ -9,7 +9,9 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 // import Drawer from 'react-native-drawer'
 // import DrawerContent from './drewerContent/DrawerContent';
 import { myFontStyle } from "@assets/Constance";
-
+import AsyncStorage from  '@react-native-async-storage/async-storage';
+import axios from 'axios';
+import { apiUrl ,apiAsset} from "@commons/inFormTypes";
 // create a component
 
 
@@ -25,8 +27,38 @@ export const truncate = (str, len) => {
     return str;
   };
 
- const EpisodesList = ({navigation }) => {
+ const EpisodesList = ({navigation,route }) => {
+    const [data,setData]=useState([]);
+    useEffect(() => {
   
+      mutLogin();
+  
+  
+  }, []);
+  const {id} = route?.params ?? {};
+
+    const  mutLogin=async()=> {
+      axios.post(apiUrl+'SubBookShow',{BookID:id})
+      .then(function (response) {
+        const message = response.data;
+        const result = response.data.result;
+        console.log(777);
+        console.log(message);
+   
+        if(result == "true"){
+          setData(response.data.GroupData)
+  
+          // navigation.navigate("ChangePass",{mobile:user,verify:response.data.Data})
+                          }else{
+  
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  
+  
+      };
 
 return (
     <View style={{backgroundColor:'#fff',flex:1}}>
@@ -41,7 +73,7 @@ return (
     <View style={styles.topBar}>
 
     <View style={{flex : 2,textAlign:"right"}}>
-          <Text style={styles.menuTitle}>سایه و استخوان (30 اپیزود)</Text>
+          <Text style={styles.menuTitle}>{data[0]?.BookName} ({data.length} اپیزود)</Text>
           </View>
     
         
@@ -53,17 +85,21 @@ return (
     </View>
   <ScrollView>
   <View style={styles.container}>
-    <View style={styles.episodeList}>
+      {
+          data.map((item,index)=>{
+              return(
+
+    <TouchableOpacity onPress={()=>navigation.navigate("ListenBookMain",{id:id,num:index})} style={styles.episodeList}>
        <View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center',flex:1}}>
        <View>
             <Icon name={'headset'} color={'#111'} size={40}/>
         </View>
         <View style={{display:'flex',flexDirection:'column',marginRight:responsiveWidth(3)}}>
             <Text style={styles.episodeName}>
-                مقدمه
+                {item.Title}
             </Text>
             <Text style={styles.episodeTime}>
-                2 دقیقه _3 مگابایت
+            {item.Size} دقیقه _{item.Time} مگابایت
             </Text>
         </View>
        </View>
@@ -72,147 +108,11 @@ return (
            <Icon name={'south'} color={Colors.darkGreen} size={20}/>
        </View>
       </TouchableOpacity>
-    </View>
-    <View style={styles.episodeList}>
-       <View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center',flex:1}}>
-       <View>
-            <Icon name={'headset'} color={'#111'} size={40}/>
-        </View>
-        <View style={{display:'flex',flexDirection:'column',marginRight:responsiveWidth(3)}}>
-            <Text style={styles.episodeName}>
-                فصل اول
-            </Text>
-            <Text style={styles.episodeTime}>
-                2 دقیقه _3 مگابایت
-            </Text>
-        </View>
-       </View>
-      <TouchableOpacity>
-      <View style={styles.downloadView}>
-           <Icon name={'south'} color={Colors.darkGreen} size={20}/>
-       </View>
-      </TouchableOpacity>
-    </View>
-    <View style={styles.episodeList}>
-       <View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center',flex:1}}>
-       <View>
-            <Icon name={'headset'} color={'#111'} size={40}/>
-        </View>
-        <View style={{display:'flex',flexDirection:'column',marginRight:responsiveWidth(3)}}>
-            <Text style={styles.episodeName}>
-               فصل دوم
-            </Text>
-            <Text style={styles.episodeTime}>
-                2 دقیقه _3 مگابایت
-            </Text>
-        </View>
-       </View>
-      <TouchableOpacity>
-      <View style={styles.downloadView}>
-           <Icon name={'south'} color={Colors.darkGreen} size={20}/>
-       </View>
-      </TouchableOpacity>
-    </View>
-    <View style={styles.episodeList}>
-       <View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center',flex:1}}>
-       <View>
-            <Icon name={'headset'} color={'#111'} size={40}/>
-        </View>
-        <View style={{display:'flex',flexDirection:'column',marginRight:responsiveWidth(3)}}>
-            <Text style={styles.episodeName}>
-                فصل سوم
-            </Text>
-            <Text style={styles.episodeTime}>
-                2 دقیقه _3 مگابایت
-            </Text>
-        </View>
-       </View>
-      <TouchableOpacity>
-      <View style={styles.downloadView}>
-           <Icon name={'south'} color={Colors.darkGreen} size={20}/>
-       </View>
-      </TouchableOpacity>
-    </View>
-    <View style={styles.episodeList}>
-       <View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center',flex:1}}>
-       <View>
-            <Icon name={'headset'} color={'#111'} size={40}/>
-        </View>
-        <View style={{display:'flex',flexDirection:'column',marginRight:responsiveWidth(3)}}>
-            <Text style={styles.episodeName}>
-               فصل چهارم
-            </Text>
-            <Text style={styles.episodeTime}>
-                2 دقیقه _3 مگابایت
-            </Text>
-        </View>
-       </View>
-      <TouchableOpacity>
-      <View style={styles.downloadView}>
-           <Icon name={'south'} color={Colors.darkGreen} size={20}/>
-       </View>
-      </TouchableOpacity>
-    </View>
-    <View style={styles.episodeList}>
-       <View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center',flex:1}}>
-       <View>
-            <Icon name={'headset'} color={'#111'} size={40}/>
-        </View>
-        <View style={{display:'flex',flexDirection:'column',marginRight:responsiveWidth(3)}}>
-            <Text style={styles.episodeName}>
-                فصل پنجم
-            </Text>
-            <Text style={styles.episodeTime}>
-                2 دقیقه _3 مگابایت
-            </Text>
-        </View>
-       </View>
-      <TouchableOpacity>
-      <View style={styles.downloadView}>
-           <Icon name={'south'} color={Colors.darkGreen} size={20}/>
-       </View>
-      </TouchableOpacity>
-    </View>
-    <View style={styles.episodeList}>
-       <View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center',flex:1}}>
-       <View>
-            <Icon name={'headset'} color={'#111'} size={40}/>
-        </View>
-        <View style={{display:'flex',flexDirection:'column',marginRight:responsiveWidth(3)}}>
-            <Text style={styles.episodeName}>
-                فصل ششم
-            </Text>
-            <Text style={styles.episodeTime}>
-                2 دقیقه _3 مگابایت
-            </Text>
-        </View>
-       </View>
-      <TouchableOpacity>
-      <View style={styles.downloadView}>
-           <Icon name={'south'} color={Colors.darkGreen} size={20}/>
-       </View>
-      </TouchableOpacity>
-    </View>
-    <View style={styles.episodeList}>
-       <View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center',flex:1}}>
-       <View>
-            <Icon name={'headset'} color={'#111'} size={40}/>
-        </View>
-        <View style={{display:'flex',flexDirection:'column',marginRight:responsiveWidth(3)}}>
-            <Text style={styles.episodeName}>
-                فصل هفتم
-            </Text>
-            <Text style={styles.episodeTime}>
-                2 دقیقه _3 مگابایت
-            </Text>
-        </View>
-       </View>
-      <TouchableOpacity>
-      <View style={styles.downloadView}>
-           <Icon name={'south'} color={Colors.darkGreen} size={20}/>
-       </View>
-      </TouchableOpacity>
-    </View>
+    </TouchableOpacity>
+              )
+          })
+      }
+    
    </View>
   </ScrollView>
     </View>

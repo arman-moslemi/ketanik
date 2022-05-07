@@ -1,5 +1,5 @@
-import React, {useState,useRef} from 'react';
-import {View,Text, TouchableOpacity,Image,ScrollView,TextInput} from 'react-native';
+import React, {useState,useEffect} from 'react';
+import {View,Text, TouchableOpacity,Image,ScrollView,TextInput,FlatList} from 'react-native';
 
 import { StyleSheet } from 'react-native';
 import { responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
@@ -9,7 +9,9 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 // import Drawer from 'react-native-drawer'
 // import DrawerContent from './drewerContent/DrawerContent';
 import { myFontStyle } from "@assets/Constance";
-
+import AsyncStorage from  '@react-native-async-storage/async-storage';
+import axios from 'axios';
+import { apiUrl ,apiAsset} from "@commons/inFormTypes";
 // create a component
 
 
@@ -26,7 +28,137 @@ export const truncate = (str, len) => {
   };
 
  const Cart = ({navigation }) => {
+    const [data,setData]=useState([]);
+    const [cost,setCost]=useState(0);
+    const [discount,setDis]=useState("");
+    useEffect(() => {
+  
+      mutLogin();
+  
+  
+  }, []);
+  const  mutLogin=async()=> {
+    const state = await AsyncStorage.getItem("@user");
 
+    
+    axios.post(apiUrl+'ShoppingBasketView',{CustomerID:state})
+    .then(function (response) {
+      const message = response.data;
+      const result = response.data.result;
+      console.log(message);
+    
+      if(result == "true"){
+          
+        setData(response.data.Data)
+    var ss=0;
+    response.data.Data.map((item)=>{
+        ss+=parseInt(item.Cost)
+    })
+    setCost(ss)
+        // navigation.navigate("ChangePass",{mobile:user,verify:response.data.Data})
+                        }else{
+    
+      }
+    })
+    .catch(function (error) {
+      console.log(error);
+    })
+   
+      
+          };
+  const  mutDel=async(id)=> {
+
+    
+    axios.post(apiUrl+'ShoppingBasketDelete',{ShoppingBasketID:id})
+    .then(function (response) {
+      const message = response.data;
+      const result = response.data.result;
+      console.log(message);
+    
+      if(result == "true"){
+mutLogin()    
+        // navigation.navigate("ChangePass",{mobile:user,verify:response.data.Data})
+                        }else{
+    
+      }
+    })
+    .catch(function (error) {
+      console.log(error);
+    })
+   
+      
+          };
+  const  dis=async()=> {
+    const state = await AsyncStorage.getItem("@user");
+
+    console.log(discount);
+    console.log(state);
+    console.log(cost);
+
+    axios.post(apiUrl+'SetDiscount',{CustomerID:state,CostTotal:cost,Text:discount})
+    .then(function (response) {
+      const message = response.data;
+      const result = response.data.result;
+      console.log(message);
+    
+      if(result == "true"){
+          setCost(response.data.Data)
+        // navigation.navigate("ChangePass",{mobile:user,verify:response.data.Data})
+                        }else{
+    alert(response.data.message)
+      }
+    })
+    .catch(function (error) {
+      console.log(error);
+    })
+   
+      
+          };
+        const keyExtractor = item => {
+            return item.BookID;
+          };
+  const _render = (item) => {
+    console.log(item.item.BookName)
+    return (
+        <View style={styles.bookRow}>
+        <Image source={{uri:apiAsset+item.item.Pic}} style={styles.bookImg}/>
+        <View style={{marginRight:responsiveWidth(3)}}>
+            <Text style={styles.bookTitle}>
+            {truncate(item.item.BookName,20)}
+           {/* { item.item.BookName} */}
+            </Text>
+            <Text style={styles.bookWriter}>
+            {truncate(item.item.Writer,20)}
+            </Text>
+            <Text style={styles.bookWriter}>
+            {truncate("ناشر :"+item.item.Publisher,30)}
+            </Text>
+            <View style={{display:'flex',flexDirection:'row-reverse'}}>
+            {[...new Array(5)].map((index)=>{
+                    return(
+index+1>item.item.Rate?
+<Icon name={'star'} color={Colors.darkGreen} size={15}/>
+:
+<Icon name={'star'} color={"#fff"} size={15}/>
+
+)
+})
+}
+            </View>
+        </View>
+        <View style={{display:"flex",flexDirection:'column',alignContent:'flex-end',justifyContent:'space-between'}}>
+        <TouchableOpacity onPress={()=>mutDel(item.item.ShoppingBasketID)}>
+       <Image source={require('@assets/images/delete.png')} style={styles.deleteImg}/>
+       </TouchableOpacity>
+            <View>
+                <Text style={styles.price}>
+                    {item.item.Cost} تومان
+                </Text>
+            </View>
+        </View>
+    </View>
+    );
+  };
 return (
     <View style={{backgroundColor:'#fff',flex:1}}>
 
@@ -42,7 +174,7 @@ return (
     <View style={{flex : 2,textAlign:"right",display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>
           <Text style={styles.menuTitle}>سبد خرید</Text>
           <View style={styles.badget}>
-              <Text style={styles.badgetText}>5</Text>
+              <Text style={styles.badgetText}>{data.length}</Text>
           </View>
           </View>
     
@@ -56,100 +188,15 @@ return (
   <ScrollView>
   <View style={styles.container}>
   
-    <View style={styles.bookRow}>
-    <Image source={require('@assets/images/book1.jpg')} style={styles.bookImg}/>
-    <View style={{marginRight:responsiveWidth(3),display:"flex",flexDirection:'column',flex:1}}>
-        <Text style={styles.bookTitle}>
-        {truncate("صد سال تنهایی",20)}
-        </Text>
-        <Text style={styles.bookWriter}>
-        {truncate("گابریل گارسیا",20)}
-        </Text>
-        <Text style={styles.bookWriter}>
-        {truncate("ناشر : انتشارات پندار تابان",30)}
-        </Text>
-        <View style={{display:'flex',flexDirection:'row-reverse'}}>
-            <Icon name={'star'} size={20} color={'#ffc93d'} style={{marginLeft:2}}/>
-            <Icon name={'star'} size={20} color={'#ffc93d'} style={{marginLeft:2}}/>
-            <Icon name={'star'} size={20} color={'#ffc93d'} style={{marginLeft:2}}/>
-            <Icon name={'star'} size={20} color={'#ffc93d'} style={{marginLeft:2}}/>
-            <Icon name={'star'} size={20} color={'#ffc93d'} style={{marginLeft:2}}/>
-        </View>
-    </View>
-    <View style={{display:"flex",flexDirection:'column',alignContent:'flex-end',justifyContent:'space-between'}}>
-        
-    <TouchableOpacity>
-       <Image source={require('@assets/images/delete.png')} style={styles.deleteImg}/>
-       </TouchableOpacity>
-        <View>
-            <Text style={styles.price}>
-                25.000 تومان
-            </Text>
-        </View>
-    </View>
-</View>
-<View style={styles.bookRow}>
-    <Image source={require('@assets/images/book2.jpg')} style={styles.bookImg}/>
-    <View style={{marginRight:responsiveWidth(3),display:"flex",flexDirection:'column',flex:1}}>
-    <Text style={styles.bookTitle}>
-        {truncate("صد سال تنهایی",20)}
-        </Text>
-        <Text style={styles.bookWriter}>
-        {truncate("گابریل گارسیا",20)}
-        </Text>
-        <Text style={styles.bookWriter}>
-        {truncate("ناشر : انتشارات پندار تابان",30)}
-        </Text>
-        <View style={{display:'flex',flexDirection:'row-reverse'}}>
-            <Icon name={'star'} size={20} color={'#ffc93d'} style={{marginLeft:2}}/>
-            <Icon name={'star'} size={20} color={'#ffc93d'} style={{marginLeft:2}}/>
-            <Icon name={'star'} size={20} color={'#ffc93d'} style={{marginLeft:2}}/>
-            <Icon name={'star'} size={20} color={'#ffc93d'} style={{marginLeft:2}}/>
-            <Icon name={'star'} size={20} color={'#ffc93d'} style={{marginLeft:2}}/>
-        </View>
-    </View>
-    <View style={{display:"flex",flexDirection:'column',alignContent:'flex-end',justifyContent:'space-between'}}>
-    <TouchableOpacity>
-       <Image source={require('@assets/images/delete.png')} style={styles.deleteImg}/>
-       </TouchableOpacity>
-        <View>
-            <Text style={styles.price}>
-                25.000 تومان
-            </Text>
-        </View>
-    </View>
-</View>
-<View style={styles.bookRow}>
-    <Image source={require('@assets/images/book3.jpg')} style={styles.bookImg}/>
-    <View style={{marginRight:responsiveWidth(3),display:"flex",flexDirection:'column',flex:1}}>
-    <Text style={styles.bookTitle}>
-        {truncate("صد سال تنهایی",20)}
-        </Text>
-        <Text style={styles.bookWriter}>
-        {truncate("گابریل گارسیا",20)}
-        </Text>
-        <Text style={styles.bookWriter}>
-        {truncate("ناشر : انتشارات پندار تابان",30)}
-        </Text>
-        <View style={{display:'flex',flexDirection:'row-reverse'}}>
-            <Icon name={'star'} size={20} color={'#ffc93d'} style={{marginLeft:2}}/>
-            <Icon name={'star'} size={20} color={'#ffc93d'} style={{marginLeft:2}}/>
-            <Icon name={'star'} size={20} color={'#ffc93d'} style={{marginLeft:2}}/>
-            <Icon name={'star'} size={20} color={'#ffc93d'} style={{marginLeft:2}}/>
-            <Icon name={'star'} size={20} color={'#ffc93d'} style={{marginLeft:2}}/>
-        </View>
-    </View>
-    <View style={{display:"flex",flexDirection:'column',alignContent:'flex-end',justifyContent:'space-between'}}>
-    <TouchableOpacity>
-       <Image source={require('@assets/images/delete.png')} style={styles.deleteImg}/>
-       </TouchableOpacity>
-        <View>
-            <Text style={styles.price}>
-                25.000 تومان
-            </Text>
-        </View>
-    </View>
-</View>
+  <FlatList
+ 
+keyExtractor={keyExtractor}
+data={data}
+renderItem={_render}
+// style={{marginTop:responsiveHeight(7),marginLeft:responsiveWidth(2),marginBottom:responsiveHeight(20)}}
+          // ListFooterComponent={listFooter}
+// onEndReached={fetchNextCharityPage}
+/>
 <View style={styles.takhfifRow}>
     <View>
         <Image source={require('@assets/images/discount.png')} style={styles.discountImg}/>
@@ -160,16 +207,16 @@ return (
         </Text>
     </View>
     <View>
-        <TextInput placeholder="" style={styles.discountInput} />
+        <TextInput onChangeText={(ee)=>setDis(ee)} placeholder="" style={styles.discountInput} />
     </View>
     <View>
-    <TouchableOpacity style={styles.loginBtn}>
+    <TouchableOpacity onPress={()=>dis()} style={styles.loginBtn}>
        <Text style={styles.btnText}>ثبت</Text>
      </TouchableOpacity>
     </View>
 </View>
-<TouchableOpacity style={styles.purchaseBtn}>
-       <Text style={styles.purchaseBtnText}>پرداخت | 78.000</Text>
+<TouchableOpacity onPress={()=>navigation.navigate("Factor")} style={styles.purchaseBtn}>
+       <Text style={styles.purchaseBtnText}>پرداخت | {cost}</Text>
      </TouchableOpacity>
    </View>
   </ScrollView>
@@ -179,8 +226,8 @@ return (
 
 const styles = StyleSheet.create({
     container: {
-        paddingRight:responsiveWidth(5),
-        paddingLeft:responsiveWidth(5),
+        paddingRight:responsiveWidth(3),
+        paddingLeft:responsiveWidth(3),
         paddingBottom:responsiveHeight(2),
         alignItems:"flex-end",
         marginTop:responsiveHeight(5),
@@ -250,30 +297,42 @@ const styles = StyleSheet.create({
       paddingBottom:responsiveHeight(0.5),
       paddingLeft:responsiveWidth(1),
       paddingRight:responsiveWidth(4),
-  },bookImg:{
-      width:100,
-      resizeMode:'cover',
-      height:120,
-      borderRadius:15,
-      marginTop:responsiveHeight(-2),
-      marginRight:responsiveWidth(3),
-  },bookTitle:{
-      ...myFontStyle.bookWriter2,
-      color:'#111',
-  },bookWriter:{
-    ...myFontStyle.bookWriter3,
+  },bookRow:{
+    display:'flex',
+    flexDirection:'row-reverse',
+    backgroundColor:Colors.lightGreen,
+    height:responsiveHeight(14),
+    marginTop:responsiveHeight(4),
+    width:"100%",
+    borderRadius:10,
+    paddingTop:responsiveHeight(0.5),
+    paddingBottom:responsiveHeight(0.5),
+    paddingLeft:responsiveWidth(0),
+    paddingRight:responsiveWidth(3),
+},bookImg:{
+  height:responsiveHeight(14.25),
+  width:responsiveWidth(28),
+    resizeMode:'cover',
+    borderRadius:15,
+    marginTop:responsiveHeight(-2),
+    marginRight:responsiveWidth(3),
+},bookTitle:{
+    ...myFontStyle.largBold,
     color:'#111',
-  },headphone:{
-      backgroundColor:'#fff',
-      height:35,
-      width:35,
-      borderRadius:50,
-      alignItems:'center',
-      alignContent:'center',
-      display:'flex',
-      justifyContent:'center',
-      marginTop:responsiveHeight(1),
-  },price:{
+},bookWriter:{
+  ...myFontStyle.mediumRegular,
+  color:'#111',
+},headphone:{
+    backgroundColor:'#fff',
+    height:35,
+    width:35,
+    borderRadius:50,
+    alignItems:'center',
+    alignContent:'center',
+    display:'flex',
+    justifyContent:'center',
+    marginTop:responsiveHeight(1),
+},price:{
       ...myFontStyle.largBold,
       color:Colors.darkGreen,
   },moreBtn:{
@@ -306,7 +365,7 @@ const styles = StyleSheet.create({
       alignItems:'center'
   },badgetText:{
       color:'#fff',
-      ...myFontStyle.UltraBold,
+      ...myFontStyle.largBold,
   },deleteImg:{
       width:responsiveWidth(7),
       resizeMode:'contain',
@@ -315,7 +374,7 @@ const styles = StyleSheet.create({
       width:30,
       height:30,
   },discountText:{
-      ...myFontStyle.bookWriter,
+      ...myFontStyle.largBold,
       color:'#343434',
       marginRight:responsiveWidth(2),
   },takhfifRow:{
@@ -324,6 +383,7 @@ const styles = StyleSheet.create({
       alignItems:'center',
       marginTop:responsiveHeight(5),
       paddingBottom:responsiveHeight(2),
+      paddingHorizontal:responsiveWidth(3),
       borderBottomColor:'#e3e3e3',
       borderBottomWidth:1,
   },discountInput:{
@@ -355,7 +415,7 @@ const styles = StyleSheet.create({
     height:responsiveHeight(8),
     alignContent:'center',
     alignItems:'center',
-    paddingTop:responsiveHeight(2),
+justifyContent:'center',
     borderRadius:15,
     marginRight:'auto',
     marginLeft:'auto',

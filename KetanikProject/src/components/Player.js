@@ -4,7 +4,8 @@ import TrackPlayer, {
 //   useTrackPlayerProgress,
   useProgress,
   usePlaybackState,
-  useTrackPlayerEvents
+  useTrackPlayerEvents,
+  Event
 } from "react-native-track-player";
 import {
   Image,
@@ -16,21 +17,49 @@ import {
 } from "react-native";
 import { Colors } from "@assets/Colors";
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import Slider from '@react-native-community/slider';
+import { responsiveFontSize, responsiveHeight, responsiveScreenWidth, responsiveWidth } from 'react-native-responsive-dimensions';
+import { myFontStyle } from "@assets/Constance";
 
 function ProgressBar() {
     const progress = useProgress();
 
   return (
-    <View style={styles.progress}>
-      <View style={{ flex: progress.position, backgroundColor:"#D3D3D3",height:2, }} />
+    <>
+    <Slider
+    style={styles.container}
+    value={progress.position}
+    minimumValue={0}
+    maximumValue={progress.duration}
+    thumbTintColor={Colors.darkGreen}
+    
+    minimumTrackTintColor={Colors.darkGreen}
+    maximumTrackTintColor="#D3D3D3"
+    onSlidingComplete={value => {
+      TrackPlayer.seekTo(value);
+    }}
+  />
+   <View style={styles.labelContainer}>
+        <Text style={styles.labelText}>
+          {new Date(progress.position * 1000).toISOString().slice(14, 19)}
+        </Text>
+        <Text style={styles.labelText}>
+          {new Date((progress.duration - progress.position) * 1000)
+            .toISOString()
+            .slice(14, 19)}
+        </Text>
+      </View>
+    {/* <View style={styles.progress}>
+      <View style={{ flex: progress.position, backgroundColor: Colors.darkGreen,height:3, }} />
       <View
         style={{
-            height:2,
+            height:3,
           flex: progress.duration - progress.position,
-          backgroundColor: Colors.darkGreen
+          backgroundColor:"#D3D3D3"
         }}
       />
-    </View>
+    </View> */}
+    </>
   );
 }
 
@@ -46,23 +75,44 @@ ControlButton.propTypes = {
   title: PropTypes.string.isRequired,
   onPress: PropTypes.func.isRequired
 };
+async function seeks(type) {
+  const currentTrack = await TrackPlayer.getPosition();
+  const currentTrack2 = await TrackPlayer.getDuration();
 
+console.log(currentTrack-10)
+  if(type=="prev"){
+    TrackPlayer.seekTo(currentTrack-10)
+  }
+  else{
+    if(currentTrack+30<currentTrack2)
+    {
+
+      TrackPlayer.seekTo(await TrackPlayer.getPosition()+30)
+    }
+  }
+}
 export default function Player(props) {
   const playbackState = usePlaybackState();
   const [trackTitle, setTrackTitle] = useState("");
   const [trackArtwork, setTrackArtwork] = useState();
   const [trackArtist, setTrackArtist] = useState("");
+  const { style, onNext, onPrevious, onTogglePlayback,stop,isplay,setPlay,setIndex,index,type } = props;
   useTrackPlayerEvents(["playback-track-changed"], async event => {
-    if (event.type === TrackPlayer.TrackPlayerEvents.PLAYBACK_TRACK_CHANGED) {
-      const track = await TrackPlayer.getTrack(event.nextTrack);
-      const { title, artist, artwork } = track || {};
-      setTrackTitle(title);
-      setTrackArtist(artist);
-      setTrackArtwork(artwork);
-    }
+    console.log(8956)
+    console.log(index)
+    setPlay(false)
+  //   if(type=="main")
+  //  { setIndex(index+1)
+  //   onTogglePlayback()
+  // }
+    // if (event.type === TrackPlayer.TrackPlayerEvents.PLAYBACK_TRACK_CHANGED) {
+    //   const track = await TrackPlayer.getTrack(event.nextTrack);
+    //   const { title, artist, artwork } = track || {};
+    //   setTrackTitle(title);
+    //   setTrackArtist(artist);
+    //   setTrackArtwork(artwork);
+    // }
   });
-
-  const { style, onNext, onPrevious, onTogglePlayback,stop,isplay } = props;
 
   var middleButtonText = "Play";
 
@@ -72,7 +122,6 @@ export default function Player(props) {
   ) {
     middleButtonText = "Pause";
   }
-
   return (
     <View style={[styles.card, style]}>
       {/* <Image style={styles.cover} source={{ uri: trackArtwork }} /> */}
@@ -82,20 +131,30 @@ export default function Player(props) {
       <View style={styles.controls}>
         {/* <ControlButton title={"<<"} onPress={onPrevious} /> */}
         {/* <ControlButton title={middleButtonText} onPress={onTogglePlayback} /> */}
+        <TouchableOpacity onPress={()=> seeks("prev")}  style={{flexDirection:'row'}}>
+
+        <Icon name={"refresh"} size={40} color={Colors.darkGreen} style={{transform: [{rotateY: '180deg'}],marginHorizontal:responsiveWidth(5)}}/>
+        <Text style={styles.prevSec}>10</Text>
+
+</TouchableOpacity>
         {
             isplay?
             // <TouchableOpacity onPress={stop} style={{borderRadius:50,backgroundColor:Colors.white}}>
-            <TouchableOpacity onPress={onTogglePlayback} style={{borderRadius:50,backgroundColor:Colors.darkGreen}}>
+            <TouchableOpacity onPress={onTogglePlayback} >
 
-<Icon name={"pause-circle-filled"} size={40} color={"#fff"}/>
+<Icon name={"pause-circle-filled"} size={50} color={Colors.darkGreen}/>
 </TouchableOpacity>
 :
-<TouchableOpacity onPress={onTogglePlayback} style={{borderRadius:50,backgroundColor:Colors.darkGreen}}>
+<TouchableOpacity onPress={onTogglePlayback}>
 
-<Icon name={"play-circle-filled"} size={40} color={"#fff"}/>
+<Icon name={"play-circle-filled"} size={50} color={Colors.darkGreen}/>
 </TouchableOpacity>
         }
+<TouchableOpacity onPress={()=> seeks("next")} style={{flexDirection:'row'}}>
 
+<Icon name={"refresh"} size={45} color={Colors.darkGreen}style={{marginHorizontal:responsiveWidth(5)}} />
+<Text style={styles.nextSec}>30</Text>
+</TouchableOpacity>
 
         {/* <ControlButton title={">>"} onPress={onNext} /> */}
       </View>
@@ -115,8 +174,35 @@ export default function Player(props) {
 // };
 
 const styles = StyleSheet.create({
+  container: {
+    height: responsiveHeight(5),
+    width: responsiveWidth(100),
+    marginTop: 25,
+    flexDirection: 'row',
+  },
+  nextSec: {
+    color:Colors.darkGreen,
+    position:"absolute",
+  right:responsiveWidth(9.5),
+  top:responsiveHeight(2),
+   ...myFontStyle.smallRegular},
+  prevSec: {
+    color:Colors.darkGreen,
+    position:"absolute",
+  left:responsiveWidth(8.5),
+  top:responsiveHeight(1.9),
+   ...myFontStyle.smallRegular},
+  labelContainer: {
+    width: responsiveWidth(90),
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  labelText: {
+    color: '#000',
+    fontVariant: ['tabular-nums'],
+  },
   card: {
-    width: "80%",
+    // width: "80%",
     // elevation: 1,
     borderRadius: 4
     // shadowRadius: 2,
@@ -135,7 +221,7 @@ const styles = StyleSheet.create({
   },
   progress: {
     height: 1,
-    width: "90%",
+    // width: "100%",
     marginTop: 10,
     flexDirection: "row"
   },
@@ -148,7 +234,7 @@ const styles = StyleSheet.create({
   controls: {
     marginVertical: 20,
     flexDirection: "row"
-    ,alignItems:'center'
+    ,alignItems:'center',
   },
   controlButtonContainer: {
     flex: 1

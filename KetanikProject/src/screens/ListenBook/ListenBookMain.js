@@ -12,57 +12,81 @@ import TrackPlayer, { usePlaybackState } from "react-native-track-player";
 import Player from "@components/Player";
 import axios from 'axios';
 import { apiUrl ,apiAsset} from "@commons/inFormTypes";
-import AsyncStorage from  '@react-native-async-storage/async-storage';
-
- const ListenBook = ({navigation,route }) => {
-   
+ const ListenBookMain = ({navigation,route }) => {
+  const [data,setData]=useState([]);
+  const [track,setTrack]=useState([]);
   const [checked, setChecked] = React.useState('first');
   const [isModalVisible, setModalVisible] = useState(false); 
   const [isplay, setPlay] = useState(false);
-
+  
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
   };
   const [isModalVisible2, setModalVisible2] = useState(false);
-
+  
   const toggleModal2 = () => {
     setModalVisible2(!isModalVisible2);
   };
-  const {link,id,BookName,writer,image} = route?.params ?? {};
+  const {id,num} = route?.params ?? {};
+  const [index, setIndex] = useState(num);
 
+const  mutLogin=async()=> {
+  axios.post(apiUrl+'SubBookShow',{BookID:id})
+  .then(function (response) {
+    const message = response.data;
+    const result = response.data.result;
+    console.log(777);
+    console.log(message);
+
+    if(result == "true"){
+      setData(response.data.GroupData)
+      var ss=[]
+      response.data.GroupData.map((item,ii)=>{
+        ii>=num?
+        ss.push({
+          id: "local-track",
+          url: apiAsset+item?.Link,
+          title: "Ketanic",
+          artwork: "https://i.picsum.photos/id/500/200/200.jpg",
+        })
+        :
+        null
+      })
+      setTrack(ss)
+      // togglePlayback()
+      // navigation.navigate("ChangePass",{mobile:user,verify:response.data.Data})
+                      }else{
+
+    }
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+
+
+  };
+  useEffect(() => {
+
+    mutLogin();
+    // togglePlayback()
+
+}, []);
   async function togglePlayback() {
     const currentTrack = await TrackPlayer.getPosition();
     const currentTrack2 = await TrackPlayer.getDuration();
     console.log(444)
-    console.log(currentTrack.toFixed(1))
-    console.log(currentTrack2)
-
+    console.log(index)
+    // console.log(num)
+    // console.log(currentTrack.toFixed(1))
+    // console.log(currentTrack2)
     if (currentTrack.toFixed(1) == currentTrack2.toFixed(1)) {
       console.log(775)
-
-      setPlay(true)
-      // await TrackPlayer.reset();
+      console.log(index)
+      
+      // setPlay(true)
       await TrackPlayer.reset();
-      // await TrackPlayer.destroy();
-      await TrackPlayer.add({
-        id: "local-track",
-        // url: localTrack,
-        url: apiAsset+link,
-        // url: require('@assets/images/audio_2021-11-02_15-04-15.mp3'),
-        title: "Ketanic",
-        artwork: "https://i.picsum.photos/id/500/200/200.jpg",
-        // duration: 10
-      }
-      // ,{
-      //   id: "local-track2",
-      //   url: apiAsset+link,
-      //   title: "Ketanic",
-      //   artwork: "https://i.picsum.photos/id/500/200/200.jpg",
-      // }]
-      );
-    //   TrackPlayer.updateOptions({
-    //     stopWithApp: true
-    // });
+      await TrackPlayer.add(track);
+
       await TrackPlayer.play();
     }
     else{
@@ -92,6 +116,13 @@ setPlay(true)
 
     // }
   }
+  // TrackPlayer.addEventListener(Event.RemoteNext, () => {
+  //   TrackPlayer.skipToNext();
+  // });
+
+  // TrackPlayer.addEventListener(Event.RemotePrevious, () => {
+  //   TrackPlayer.skipToPrevious();
+  // });
   async function seeks(type) {
     const currentTrack = await TrackPlayer.getPosition();
     const currentTrack2 = await TrackPlayer.getDuration();
@@ -111,7 +142,7 @@ setPlay(true)
 return (
    <ScrollView>
       <View style={{display:'flex',justifyContent:'center',alignContent:'center',alignItems:'center'}} >
-        <Image source={{uri:apiAsset+image}} style={styles.backgroundImage}  blurRadius={5}/>
+        <Image source={{uri:apiAsset+data[0]?.Pic}} style={styles.backgroundImage}  blurRadius={5}/>
         <View style={styles.backView}>
          <TouchableOpacity>
       <Icon name={'west'} size={30} color={'#fff'} style={{}}/>
@@ -119,11 +150,11 @@ return (
      </TouchableOpacity>
       
      </View>
-        <Image source={{uri:apiAsset+image}} style={styles.overImg}/>
+        <Image source={{uri:apiAsset+data[0]?.Pic}} style={styles.overImg}/>
       </View>
       <View style={styles.whiteBack}>
-      <Text style={styles.eachBookName}>{BookName}</Text>
-      <Text style={styles.eachBookDetail}>{writer}</Text>
+      <Text style={styles.eachBookName}>{data[0]?.BookName}</Text>
+      <Text style={styles.eachBookDetail}>{data[0]?.Writer}</Text>
       <View style={{display:'flex',flexDirection:'row-reverse',marginRight:'auto',marginLeft:'auto',marginTop:responsiveHeight(5)}}>
         <TouchableOpacity style={styles.btnBox}>
           <Image source={require('@assets/images/speed.png')} style={styles.btnBoxImg}/>
@@ -152,31 +183,30 @@ return (
         stop={stop}
         isplay={isplay}
         setPlay={setPlay}
+        setIndex={setIndex}
+        index={index}
+        type="main"
 
       />
                   </View>
       <TouchableOpacity onPress={toggleModal2} style={{marginTop:50,marginLeft:100,}}>
         <Icon name={'access-time'} size={35}/>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.loginBtn}>
-       <Text style={styles.btnText}>دریافت نسخه کامل</Text>
-     </TouchableOpacity>
+  
       </View>
       <Modal isVisible={isModalVisible} onBackdropPress={() => setModalVisible(false)} >
  <View style={styles.editModal}>
    <Text style={styles.modalTitle}>
      حالت ماشین
    </Text>
-  <View style={{display:'flex',justifyContent:'center',alignContent:'center',alignItems:'center'}}>
-
+   <View style={{display:'flex',justifyContent:'center',alignContent:'center',alignItems:'center'}}>
     <TouchableOpacity onPress={()=>togglePlayback()} style={styles.playBtn}>
     {
             isplay?
             <Icon name={'pause-circle-filled'} color={Colors.darkGreen} size={90} />
             :
             <Icon name={'play-circle-filled'} color={Colors.darkGreen} size={90} />
-    }
-    </TouchableOpacity>
+    }    </TouchableOpacity>
     <View style={{display:'flex',flexDirection:'row-reverse',marginTop:responsiveHeight(5)}}>
       <TouchableOpacity onPress={()=> seeks("prev")} style={{padding:responsiveHeight(2),borderLeftColor:'#c1c1c1',borderLeftWidth:1}}>
         <Image source={require('@assets/images/15after.png')} style={styles.after}/>
@@ -387,7 +417,7 @@ const styles = StyleSheet.create({
     marginTop:responsiveHeight(1),
 
   },playBtn:{
-    // backgroundColor:Colors.darkGreen,
+    backgroundColor:Colors.darkGreen,
     height:120,
     width:120,
     borderRadius:100,
@@ -419,6 +449,6 @@ const styles = StyleSheet.create({
   }
   });
 
-  export default ListenBook;
+  export default ListenBookMain;
 
 //make this component available to the <app></app>

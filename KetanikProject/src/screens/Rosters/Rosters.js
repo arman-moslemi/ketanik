@@ -37,7 +37,7 @@ export const truncate = (str, len) => {
   const {id} = route?.params ?? {};
 
     const  mutLogin=async()=> {
-      axios.post(apiUrl+'SubBookShow',{BookID:2})
+      axios.post(apiUrl+'SubBookShow',{BookID:id})
       .then(function (response) {
         const message = response.data;
         const result = response.data.result;

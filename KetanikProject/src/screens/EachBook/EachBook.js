@@ -289,6 +289,29 @@ if(state==""){
 
 
     };
+    const  buy=async()=> {
+      const state = await AsyncStorage.getItem("@user");
+
+      axios.post(apiUrl+'ShoppingBasketAdd',{CustomerID:state,BookID:id,Cost:data.SpecialCost?data.SpecialCost:data.Cost})
+      .then(function (response) {
+        const message = response.data;
+        const result = response.data.result;
+        console.log(333);
+        
+        console.log(message);
+        
+        if(result == "true"){
+          alert("با موفیت به سبدخرید شد")
+                          }else{
+  
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  
+  
+      };
   const FirstRoute = () => (
     <ScrollView>
       <View style={styles.commentView}>
@@ -639,10 +662,10 @@ return (
 </View>
 </View>
 <View style={styles.btnRow}>
-<TouchableOpacity style={styles.loginBtn}>
+<TouchableOpacity onPress={()=>buy()} style={styles.loginBtn}>
        <Text style={styles.btnText}>خرید</Text>
      </TouchableOpacity>
-     <TouchableOpacity onPress={()=>navigation.navigate("ListenBook",{id:data.BookID,link:data.Link})} style={styles.whiteBtn}>
+     <TouchableOpacity onPress={()=>navigation.navigate("ListenBook",{id:data.BookID,link:data.Link,image:data?.Pic,BookName:data.BookName,writer:data.Writer})} style={styles.whiteBtn}>
        <Text style={styles.btnText2}>نسخه نمونه</Text>
      </TouchableOpacity>
      <TouchableOpacity style={styles.greenBtn2} onPress={toggleModal}>
@@ -671,7 +694,7 @@ return (
     </Text>
   </View>
 </View>
-<TouchableOpacity onPress={()=>navigation.navigate("Rosters")} style={{borderTopWidth:0.5,borderTopColor:'#c1c1c1',display:'flex',justifyContent:'space-between',alignItems:'center',flexDirection:'row-reverse',paddingTop:responsiveHeight(2),paddingBottom:responsiveHeight(2)}}>
+<TouchableOpacity onPress={()=>navigation.navigate("Rosters",{id:data.BookID})} style={{borderTopWidth:0.5,borderTopColor:'#c1c1c1',display:'flex',justifyContent:'space-between',alignItems:'center',flexDirection:'row-reverse',paddingTop:responsiveHeight(2),paddingBottom:responsiveHeight(2)}}>
 <View>
 <Text style={styles.eachBookDetail3}>
      فهرست کتاب

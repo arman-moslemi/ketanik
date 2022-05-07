@@ -139,7 +139,7 @@ return (
 لطفا توجه داشته باشید امکان استرداد مبلغ واریز شده وجود ندارد
   </Text>
   </View>
-  <TouchableOpacity style={styles.editProfileBtn2}>
+  <TouchableOpacity onPress={()=>navigation.navigate("Factor")} style={styles.editProfileBtn2}>
       <View style={{display:'flex',flexDirection:'row-reverse'}}>
         
         <Text style={styles.btnText3}>مشاهده سابقه تراکنش های موفق</Text>
@@ -291,7 +291,7 @@ flexDirection:'row-reverse',
 },editProfileBtn2:{
   display:'flex',
   justifyContent:'space-between',
-  alignItems:'flex-start',
+  alignItems:'center',
   flexDirection:'row-reverse',
   paddingRight:responsiveWidth(0),
   paddingLeft:responsiveWidth(0),
@@ -299,7 +299,7 @@ flexDirection:'row-reverse',
   paddingBottom:responsiveHeight(1),
  marginTop:responsiveHeight(3),
 },btnText3:{
-  ...myFontStyle.episodeName,
+  ...myFontStyle.largeRegular,
   color:'#111',
   marginRight:responsiveWidth(2),
 }

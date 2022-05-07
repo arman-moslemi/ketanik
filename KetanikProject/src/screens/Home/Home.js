@@ -74,9 +74,23 @@ export const truncate = (str, len) => {
       {truncate(item.item.BookName,20)}
       </Text>
       <View style={{display:'flex',flexDirection:'row-reverse',justifyContent:'space-between'}}>
-      <Text style={styles.bookName}>
+        {
+          item.item.SpecialCost?
+<>
+      <Text style={styles.priceRed}>
+      {item.item.SpecialCost}ت
+    </Text>
+    <Text style={styles.priceStroke}>
+    {item.item.Cost}ت
+    </Text>
+    </>
+          :
+<Text style={styles.bookName}>
       {item.item.Cost}ت
       </Text>
+        }
+
+
       <View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>
       <Text style={styles.bookName}>
 {item.item.Rate}      </Text>
@@ -111,7 +125,7 @@ return (
     
         
         <View style={{flex : 2,textAlign:"left",display:'flex',flexDirection:'row-reverse',alignItems:'flex-start',justifyContent:'flex-end'}}>
-        <TouchableOpacity onPress={()=>navigation.goBack()} style={{display:'flex',flexDirection:'row-reverse'}}>
+        <TouchableOpacity onPress={()=>navigation.navigate("Cart")} style={{display:'flex',flexDirection:'row-reverse'}}>
           <View style={styles.badget2}>
               
           </View>
@@ -291,7 +305,7 @@ const styles = StyleSheet.create({
 },cardBox:{
     backgroundColor:'#f1f5ec',
     height:responsiveHeight(19),
-    width:responsiveWidth(34),
+    width:responsiveWidth(36),
     borderRadius:10,
     textAlign:'center',
     padding:responsiveHeight(1),

@@ -28,6 +28,7 @@ import { responsiveHeight, responsiveWidth } from 'react-native-responsive-dimen
 import EachBook from '@screens/EachBook/EachBook';
 import Rosters from '@screens/Rosters/Rosters';
 import ListenBook from '@screens/ListenBook/ListenBook';
+import ListenBookMain from '@screens/ListenBook/ListenBookMain';
 import Wallet from '@screens/Wallet/Wallet';
 import Factor from '@screens/Factor/Factor';
 import Search from "@screens/Search/Search";
@@ -53,7 +54,7 @@ activeColor={Colors.darkGreen}
    name="Library" component={StackNavigatorsLibrary}
    options={{          tabBarLabel: 'کتابخانه',    tabBarIcon: ({ color }) => (    <Icon name="library-books" color={Colors.darkGreen} style={{height:responsiveHeight(13),width:responsiveWidth(8)}} size={29} />         ),           }}      />
 <Tab.Screen
-   name="Search" component={StackNavigatorsSearch}
+   name="Searchs" component={StackNavigatorsSearch}
    options={{          tabBarLabel: 'جستجو',    tabBarIcon: ({ color }) => (    <Icon name="search" color={Colors.darkGreen} style={{height:responsiveHeight(13),width:responsiveWidth(8)}} size={30} />         ),           }}      />
 
   
@@ -87,6 +88,9 @@ const StackNavigatorsHome = () => {
         <Stack.Screen name="SelectedNews" component={SelectedNews} />
         <Stack.Screen name="EachBook" component={EachBook} />
         <Stack.Screen name="ListenBook" component={ListenBook} />
+        <Stack.Screen name="ListenBookMain" component={ListenBookMain} />
+        <Stack.Screen name="Wallet" component={Wallet} /> 
+        <Stack.Screen name="Factor" component={Factor} /> 
     </Stack.Navigator>
   );
  }
@@ -142,7 +146,6 @@ const StackNavigatorsProfile = () => {
                <Stack.Screen name="Share" component={Share} />
         <Stack.Screen name="AboutUs" component={AboutUs} />
         <Stack.Screen name="EditPassword" component={EditPassword} /> 
-        <Stack.Screen name="wallet" component={Wallet} /> 
     </Stack.Navigator>
   );
  }
@@ -160,13 +163,11 @@ export default function App() {
 
          <Stack.Screen name="TabBar" component={TabStack} />
   
-        {/* <Stack.Screen name="SelectedNews" component={SelectedNews} />  */}
    
 
         <Stack.Screen name="Home" component={Home} />
     
-         {/* <Stack.Screen name="Factor" component={Factor} /> */}
-       {/* <Stack.Screen name="Search" component={Search} />  */}
+
       </Stack.Navigator>
     </NavigationContainer>
   );

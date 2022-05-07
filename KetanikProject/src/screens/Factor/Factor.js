@@ -1,4 +1,4 @@
-import React, {useState,useRef} from 'react';
+import React, {useState,useEffect} from 'react';
 import {View, TextInput, Text, TouchableOpacity,Image,ScrollView,ImageBackground} from 'react-native';
 
 
@@ -9,26 +9,46 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 // import Drawer from 'react-native-drawer'
 // import DrawerContent from './drewerContent/DrawerContent';
 import { myFontStyle } from "@assets/Constance";
-import { RadioButton } from 'react-native-paper';
+import AsyncStorage from  '@react-native-async-storage/async-storage';
+import axios from 'axios';
+import { apiUrl ,apiAsset} from "@commons/inFormTypes"
 
-// create a component
-
-
-// export const truncate = (str, len) => {
-//     // console.log("truncate", str, str.length, len);
-//     if (str.length > len && str.length > 0) {
-//       let new_str = str + " ";
-//       new_str = str.substr(0, len);
-//       new_str = str.substr(0, new_str.lastIndexOf(" "));
-//       new_str = new_str.length > 0 ? new_str : str.substr(0, len);
-//       return new_str + "...";
-//     }
-//     return str;
-//   };
 
  const Factor = ({navigation }) => {
   
-   
+  const [data,setData]=useState([]);
+
+  useEffect(() => {
+
+    mutLogin();
+
+
+}, []);
+const  mutLogin=async()=> {
+  const state = await AsyncStorage.getItem("@user");
+
+  
+  axios.post(apiUrl+'FactorCustomer',{CustomerID:state})
+  .then(function (response) {
+    const message = response.data;
+    const result = response.data.result;
+    console.log(message);
+  
+    if(result == "true"){
+        
+      setData(response.data.GroupData)
+ 
+      // navigation.navigate("ChangePass",{mobile:user,verify:response.data.Data})
+                      }else{
+  
+    }
+  })
+  .catch(function (error) {
+    console.log(error);
+  })
+ 
+    
+        };
   const [checked, setChecked] = React.useState('first');
 return (
     <View style={{backgroundColor:'#fff',flex:1}}>
@@ -58,12 +78,12 @@ return (
 <Image source={require('@assets/images/logo.png')} style={styles.backgroundImg}/>
     <View style={styles.tableBorder}>
     <View style={{display:'flex',flexDirection:'row-reverse'}}>
-      <View style={{width:responsiveWidth(20),padding:5,borderLeftColor:'#d3d3d3',borderLeftWidth:0.5}}>
+      <View style={{width:responsiveWidth(25),padding:5,borderLeftColor:'#d3d3d3',borderLeftWidth:0.5}}>
         <Text style={styles.tableHeader}>
           تاریخ
         </Text>
       </View>
-      <View style={{width:responsiveWidth(25),padding:5,borderLeftColor:'#d3d3d3',borderLeftWidth:0.5}}>
+      <View style={{width:responsiveWidth(20),padding:5,borderLeftColor:'#d3d3d3',borderLeftWidth:0.5}}>
         <Text style={styles.tableHeader}>
          واریز/برداشت
         </Text>
@@ -79,15 +99,18 @@ return (
         </Text>
       </View>
     </View>
-    <View style={{display:'flex',flexDirection:'row-reverse',borderTopColor:'#d3d3d3',borderTopWidth:0.5,alignItems:'center'}}>
-      <View style={{width:responsiveWidth(20),padding:5,borderLeftColor:'#d3d3d3',borderLeftWidth:0.5}}>
-        <Text style={styles.tableContent}>
-        1400/05/29
-        </Text>
+    {
+      data?.map((item)=>{
+        return(
+
+    <View style={{flexDirection:'row-reverse',borderTopColor:'#d3d3d3',borderTopWidth:0.5,alignItems:'center'}}>
+      <View style={{width:responsiveWidth(25),borderLeftColor:'#d3d3d3',borderLeftWidth:0.5}}>
+        <Text style={styles.tableContentDate}>
+{item.Date}        </Text>
       </View>
-      <View style={{width:responsiveWidth(25),padding:5,borderLeftColor:'#d3d3d3',borderLeftWidth:0.5}}>
+      <View style={{width:responsiveWidth(20),padding:5,borderLeftColor:'#d3d3d3',borderLeftWidth:0.5}}>
         <Text style={styles.tableContentGreen}>
-         12048 تومان
+         {item.Cost} تومان
         </Text>
       </View>
       <View style={{width:responsiveWidth(25),padding:5,borderLeftColor:'#d3d3d3',borderLeftWidth:0.5}}>
@@ -95,105 +118,23 @@ return (
          خرید
         </Text>
         <Text style={styles.tableContent}>
-        "شیوه گرگ"
+       {item.BookName}
         </Text>
       </View>
-      <View style={{width:responsiveWidth(20),padding:5}}>
+      <View style={{width:responsiveWidth(20),padding:5}}> 
         <Text style={styles.tableContent}>
-          کیف پول
+          {/* کیف پول */}
+          آنلاین
         </Text>
         <Text style={styles.tableContentGreen}>
          موفق
         </Text>
       </View>
     </View>
-    <View style={{display:'flex',flexDirection:'row-reverse',borderTopColor:'#d3d3d3',borderTopWidth:0.5,alignItems:'center'}}>
-      <View style={{width:responsiveWidth(20),padding:5,borderLeftColor:'#d3d3d3',borderLeftWidth:0.5}}>
-        <Text style={styles.tableContent}>
-        1400/05/29
-        </Text>
-      </View>
-      <View style={{width:responsiveWidth(25),padding:5,borderLeftColor:'#d3d3d3',borderLeftWidth:0.5}}>
-        <Text style={styles.tableContentGreen}>
-         12048 تومان
-        </Text>
-        
-      </View>
-      <View style={{width:responsiveWidth(25),padding:5,borderLeftColor:'#d3d3d3',borderLeftWidth:0.5}}>
-        <Text style={styles.tableContent}>
-         خرید
-        </Text>
-        <Text style={styles.tableContent}>
-        "شیوه گرگ"
-        </Text>
-      </View>
-      <View style={{width:responsiveWidth(20),padding:5,alignContent:'center',display:'flex',alignItems:'center',justifyContent:'center'}}>
-        <Text style={styles.tableContent}>
-          کیف پول
-        </Text>
-        <Text style={styles.tableContentGreen}>
-         موفق
-        </Text>
-      </View>
-    </View>
-    <View style={{display:'flex',flexDirection:'row-reverse',borderTopColor:'#d3d3d3',borderTopWidth:0.5,alignItems:'center'}}>
-      <View style={{width:responsiveWidth(20),padding:5,borderLeftColor:'#d3d3d3',borderLeftWidth:0.5}}>
-        <Text style={styles.tableContent}>
-        1400/05/29
-        </Text>
-      </View>
-      <View style={{width:responsiveWidth(25),padding:5,borderLeftColor:'#d3d3d3',borderLeftWidth:0.5}}>
-        <Text style={styles.tableContentGreen}>
-         12048 تومان
-        </Text>
-        
-      </View>
-      <View style={{width:responsiveWidth(25),padding:5,borderLeftColor:'#d3d3d3',borderLeftWidth:0.5}}>
-        <Text style={styles.tableContent}>
-         خرید
-        </Text>
-        <Text style={styles.tableContent}>
-        "شیوه گرگ"
-        </Text>
-      </View>
-      <View style={{width:responsiveWidth(20),padding:5,alignContent:'center',display:'flex',alignItems:'center',justifyContent:'center'}}>
-        <Text style={styles.tableContent}>
-         پرداخت آنلاین
-        </Text>
-        <Text style={styles.tableContentGreen}>
-         موفق
-        </Text>
-      </View>
-    </View>
-    <View style={{display:'flex',flexDirection:'row-reverse',borderTopColor:'#d3d3d3',borderTopWidth:0.5,alignItems:'center'}}>
-      <View style={{width:responsiveWidth(20),padding:5,borderLeftColor:'#d3d3d3',borderLeftWidth:0.5}}>
-        <Text style={styles.tableContent}>
-        1400/05/29
-        </Text>
-      </View>
-      <View style={{width:responsiveWidth(25),padding:5,borderLeftColor:'#d3d3d3',borderLeftWidth:0.5}}>
-        <Text style={styles.tableContentGreen}>
-         12048 تومان
-        </Text>
-        
-      </View>
-      <View style={{width:responsiveWidth(25),padding:5,borderLeftColor:'#d3d3d3',borderLeftWidth:0.5}}>
-        <Text style={styles.tableContent}>
-         خرید
-        </Text>
-        <Text style={styles.tableContent}>
-        "شیوه گرگ"
-        </Text>
-      </View>
-      <View style={{width:responsiveWidth(20),padding:5,alignContent:'center',display:'flex',alignItems:'center',justifyContent:'center'}}>
-        <Text style={styles.tableContent}>
-         پرداخت آنلاین
-        </Text>
-        <Text style={styles.tableContentGreen}>
-         موفق
-        </Text>
-      </View>
-    </View>
+        ) 
+      })
+    }
+  
     </View>
  
   </View>
@@ -206,8 +147,8 @@ return (
 
 const styles = StyleSheet.create({
     container: {
-        paddingRight:responsiveWidth(3),
-        paddingLeft:responsiveWidth(3),
+        paddingRight:responsiveWidth(2),
+        paddingLeft:responsiveWidth(2),
         paddingBottom:responsiveHeight(2),
         alignItems:"flex-end",
         marginTop:responsiveHeight(4),
@@ -360,14 +301,20 @@ flexDirection:'row-reverse',
   marginTop:responsiveHeight(5),
   width:responsiveWidth(90),
 },tableHeader:{
-  ...myFontStyle.largeRegular,
+  ...myFontStyle.normalRegular,
   color:'#111',
   textAlign:'center'
 },tableContent:{
   ...myFontStyle.normalRegular,
   color:'#111',
   textAlign:'center',
-},tableContentGreen:{
+},
+tableContentDate:{
+  ...myFontStyle.normalRegular,
+  color:'#111',
+  textAlign:'left',
+},
+tableContentGreen:{
   ...myFontStyle.normalRegular,
   color:'#28a745',
   textAlign:'center',

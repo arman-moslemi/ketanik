@@ -1,6 +1,6 @@
 import React, { useState,useEffect } from 'react';
 import { myFontStyle } from "@assets/Constance";
-import { View, Text , StyleSheet,Image, TouchableOpacity,Button} from 'react-native';
+import { View, Text , StyleSheet,Image, TouchableOpacity,Button,FlatList} from 'react-native';
 import { TabView, SceneMap,TabBar } from 'react-native-tab-view';
 import { responsiveFontSize, responsiveHeight, responsiveScreenWidth, responsiveWidth } from 'react-native-responsive-dimensions';
 import { Colors} from "@assets/Colors";
@@ -8,183 +8,157 @@ import {Input} from '@components/Input';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Modal from "react-native-modal";
 import { ScrollView } from 'react-native-web';
+import AsyncStorage from  '@react-native-async-storage/async-storage';
+import axios from 'axios';
+import { apiUrl ,apiAsset} from "@commons/inFormTypes";
+import { useNavigation } from '@react-navigation/native';
+
 // create a component
 // const [showBox, setShowBox] = useState(false);
 // const onClick = () => setShowBox(true);
 
 
+
 const FirstRoute = () => (
- 
-   <View style={{display:'flex',flexDirection:'row-reverse'}}>
-     <View style={styles.lightGreenBack}>
-        <View style={styles.greenCircle}>
-          <Image source={require('@assets/images/category2.png')} style={styles.miniImg}/>
-        </View>
-        <Text style={styles.largeText}>
-          23
-        </Text>
-        <Text style={styles.miniText}>
-          ژانر خوانده شده
-        </Text>
-        
-     </View>
-     <View style={styles.lightGreenBack}>
-     <View style={styles.greenCircle}>
-          <Image source={require('@assets/images/hour.png')} style={styles.miniImg}/>
-        </View>
-        <Text style={styles.largeText}>
-          23
-        </Text>
-        <Text style={styles.miniText}>
-          ساعت کتاب خوانده شده
-        </Text>
+  
+  <View style={{display:'flex',flexDirection:'row-reverse'}}>
+    <View style={styles.lightGreenBack}>
+       <View style={styles.greenCircle}>
+         <Image source={require('@assets/images/category2.png')} style={styles.miniImg}/>
+       </View>
+       <Text style={styles.largeText}>
+         23
+       </Text>
+       <Text style={styles.miniText}>
+         ژانر خوانده شده
+       </Text>
+       
+    </View>
+    <View style={styles.lightGreenBack}>
+    <View style={styles.greenCircle}>
+         <Image source={require('@assets/images/hour.png')} style={styles.miniImg}/>
+       </View>
+       <Text style={styles.largeText}>
+         23
+       </Text>
+       <Text style={styles.miniText}>
+         ساعت کتاب خوانده شده
+       </Text>
 </View>
 <View style={styles.lightGreenBack}>
 <View style={styles.greenCircle}>
-          <Image source={require('@assets/images/book.png')} style={styles.miniImg}/>
-        
-        </View>
-        <Text style={styles.largeText}>
-          23
-        </Text>
-        <Text style={styles.miniText}>
-          کتاب خوانده شده
-        </Text>
+         <Image source={require('@assets/images/book.png')} style={styles.miniImg}/>
+       
+       </View>
+       <Text style={styles.largeText}>
+         23
+       </Text>
+       <Text style={styles.miniText}>
+         کتاب خوانده شده
+       </Text>
 </View>
-   </View>
- 
-);
+  </View>
 
-const SecondRoute = () => (
- 
-  <View style={{ flex: 1}}>
+);
+const keyExtractor = item => {
+  return item.BookID;
+};
+
+
+const SecondRoute = ({show,setShow,data,setRole,roleName,setRoleName,navigation}) => {
+  const _render = ({item}) => {
+    console.log(item.BookName)
+  
+    return (
+      <TouchableOpacity onPress={()=>navigation.navigate("EpisodesList",{id:item.BookID})} style={styles.libraryBox}>
+      {/* <TouchableOpacity style={styles.littleBtn}>
+      <Icon name={"more-vert"} color={Colors.darkGreen} size={25}/>
     
-    <View  style={{position:'relative'}}>
-      <TouchableOpacity style={{display:'flex',flexDirection:'row-reverse',marginTop:responsiveHeight(2)}} onClick={()=>onClick()} >
-      <Icon name={"notes"} color={'#707070'} size={30} style={{transform: [{rotateY: '180deg'}]}}/>
-        <Text style={styles.pageTitleText}>
-            در حال مطالعه
-        </Text>
       </TouchableOpacity>
-     
-      <View style={styles.greenBox}>
-        <TouchableOpacity style={styles.greenBoxBtn}>
-          <Text style={styles.greenBoxText}>
-            در حال مطالعه
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.greenBoxBtn}>
-          <Text style={styles.greenBoxText}>
-            آخرین بازدید شده ها
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.greenBoxBtn}>
-          <Text style={styles.greenBoxText}>
-            خوانده شده ها
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.greenBoxBtn}>
-          <Text style={styles.greenBoxText}>
-           همه کتاب ها
-          </Text>
-        </TouchableOpacity>
-      </View>
-   
-    </View>
-    <View style={{display:'flex',flexDirection:'row-reverse'}}>
-      <View style={styles.libraryBox}>
-        <TouchableOpacity style={styles.littleBtn}>
-        <Icon name={"more-vert"} color={Colors.darkGreen} size={25}/>
-     
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.littleBtn2}>
-        <Icon name={"headset"} color={Colors.darkGreen} size={20}/>
-     
-        </TouchableOpacity>
-        <Image source={require('@assets/images/book1.jpg')} style={styles.libraryBook}/>
-      </View>
-      <View style={styles.libraryBox}>
-      <TouchableOpacity style={styles.littleBtn}>
-        <Icon name={"more-vert"} color={Colors.darkGreen} size={25}/>
-     
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.littleBtn2}>
-        <Icon name={"headset"} color={Colors.darkGreen} size={20}/>
-     
-        </TouchableOpacity>
-        <Image source={require('@assets/images/book1.jpg')} style={styles.libraryBook}/>
-      </View>
-      <View style={styles.libraryBox}>
-      <TouchableOpacity style={styles.littleBtn}>
-        <Icon name={"more-vert"} color={Colors.darkGreen} size={25}/>
-     
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.littleBtn2}>
-        <Icon name={"headset"} color={Colors.darkGreen} size={20}/>
-     
-        </TouchableOpacity>
-        <Image source={require('@assets/images/book1.jpg')} style={styles.libraryBook}/>
-      </View>
-      </View>   
-      
-    <View style={{display:'flex',flexDirection:'row-reverse'}}>
-      <View style={styles.libraryBox}>
-      <TouchableOpacity style={styles.littleBtn}>
-        <Icon name={"more-vert"} color={Colors.darkGreen} size={25}/>
-     
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.littleBtn2}>
-        <Icon name={"headset"} color={Colors.darkGreen} size={20}/>
-     
-        </TouchableOpacity>
-        <Image source={require('@assets/images/book1.jpg')} style={styles.libraryBook}/>
-      </View>
-      <View style={styles.libraryBox}>
-      <TouchableOpacity style={styles.littleBtn}>
-        <Icon name={"more-vert"} color={Colors.darkGreen} size={25}/>
-     
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.littleBtn2}>
-        <Icon name={"headset"} color={Colors.darkGreen} size={20}/>
-     
-        </TouchableOpacity>
-        <Image source={require('@assets/images/book1.jpg')} style={styles.libraryBook}/>
-      </View>
-      <View style={styles.libraryBox}>
-      <TouchableOpacity style={styles.littleBtn}>
-        <Icon name={"more-vert"} color={Colors.darkGreen} size={25}/>
-     
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.littleBtn2}>
-        <Icon name={"headset"} color={Colors.darkGreen} size={20}/>
-     
-        </TouchableOpacity>
-        <Image source={require('@assets/images/book1.jpg')} style={styles.libraryBook}/>
-      </View>
-      </View>  
-      {/* <Button title="Show modal" onPress={toggleModal} />
+      <TouchableOpacity style={styles.littleBtn2}>
+      <Icon name={"headset"} color={Colors.darkGreen} size={20}/>
+    
+      </TouchableOpacity> */}
+      <Image source={{uri:apiAsset+item.Pic}} style={styles.libraryBook}/>
+      <Text style={styles.moreText}>{item.RoleName}</Text>
+    </TouchableOpacity>
+    );
+    };
+return(
+ <View style={{ flex: 1}}>
 
-<Modal isVisible={isModalVisible}>
-  <View style={{ flex: 1 }}>
-    <Text>Hello!</Text>
+   <View  style={{position:'relative'}}>
+     <TouchableOpacity style={{display:'flex',flexDirection:'row-reverse',marginTop:responsiveHeight(2)}} onPress={()=>setShow(!show)} >
+     <Icon name={"notes"} color={'#707070'} size={30} style={{transform: [{rotateY: '180deg'}]}}/>
+       <Text style={styles.pageTitleText}>
+           {roleName}
+       </Text>
+     </TouchableOpacity>
+   {
+     show?
+    
+     <View style={styles.greenBox}>
+       <TouchableOpacity onPress={()=>{setRole(1);setRoleName("در حال مطالعه");setShow(false)}} style={styles.greenBoxBtn}>
+         <Text style={styles.greenBoxText}>
+           در حال مطالعه
+         </Text>
+       </TouchableOpacity>
+       <TouchableOpacity onPress={()=>{setRole(2);setRoleName("خوانده نشده ها");setShow(false)}} style={styles.greenBoxBtn}>
+         <Text style={styles.greenBoxText}>
+         خوانده نشده ها
+         </Text>
+       </TouchableOpacity>
+       <TouchableOpacity onPress={()=>{setRole(3);setRoleName("خوانده شده ها");setShow(false)}} style={styles.greenBoxBtn}>
+         <Text style={styles.greenBoxText}>
+           خوانده شده ها
+         </Text>
+       </TouchableOpacity>
+       <TouchableOpacity onPress={()=>{setRole(4);setRoleName("همه کتاب ها");setShow(false)}} style={styles.greenBoxBtn}>
+         <Text style={styles.greenBoxText}>
+          همه کتاب ها
+         </Text>
+       </TouchableOpacity>
+     </View>
+  
+  :
+  null
+}
+</View>
 
-    <Button title="Hide modal" onPress={toggleModal} />
-  </View>
-</Modal> */}
-     
-  </View>
-);
+     <FlatList
+ 
+ keyExtractor={keyExtractor}
+ data={data}
+ renderItem={_render}
+ numColumns={2}
+ navigation={navigation}
 
-const renderScene = SceneMap({
-  library: SecondRoute,
-  status: FirstRoute,
-});
+ columnWrapperStyle={styles.charityList}
+ // style={{marginTop:responsiveHeight(7),marginLeft:responsiveWidth(2),marginBottom:responsiveHeight(20)}}
+           // ListFooterComponent={listFooter}
+ // onEndReached={fetchNextCharityPage}
+ />
+
+ </View>
+)};
+
+
+
  const Library = ({navigation }) => {
-  // const [showSearch, setshowSearch] = useState(false);
-  // const onClick = () =>{
-  //   setshowSearch(!showSearch);
-  // };
+  const [show,setShow]=useState(false);
+  const [roleName,setRoleName]=useState("همه کتاب ها");
+
   const [index, setIndex] = React.useState(0);
+  const renderScene = ({ route }) => {
+    switch (route.key) {
+      case 'status':
+        return <FirstRoute  />;
+      case 'library':
+        return <SecondRoute navigation={navigation} show={show} setShow={setShow} data={data} setRole={setRole} setRoleName={setRoleName} roleName={roleName} />;
+      default:
+        return null;
+    }
+    };;
   const [routes] = React.useState([
     { key: 'status', title: 'وضعیت' },
     { key: 'library', title: 'کتابخانه' },
@@ -205,7 +179,40 @@ const renderScene = SceneMap({
       }
     />
   );
-  
+  const [data,setData]=useState([]);
+  const [role,setRole]=useState(null);
+  const [slider,setSlider]=useState([]);
+  useEffect(() => {
+
+    mutLogin();
+
+
+}, [role]);
+
+  const  mutLogin=async()=> {
+    const state = await AsyncStorage.getItem("@user");
+
+    axios.post(apiUrl+'Library',{CustomerID:state,RoleID:role})
+    .then(function (response) {
+      const message = response.data;
+      const result = response.data.result;
+      console.log(message);
+
+      if(result == "true"){
+        setData(response.data.GroupData)
+
+
+        // navigation.navigate("ChangePass",{mobile:user,verify:response.data.Data})
+                        }else{
+
+      }
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+
+
+    };
 return (
   
     <View style={{ flex: 1,padding:0}}>
@@ -240,6 +247,12 @@ return (
 };
 
 const styles = StyleSheet.create({
+  charityList: {
+    marginTop: responsiveHeight(2),
+  
+    justifyContent: 'center'
+    ,marginBottom:responsiveHeight(3),
+  },
 loginImg:{
   width:responsiveWidth(100),
   resizeMode:'contain',
@@ -313,18 +326,18 @@ indicatorStyle:{
   color:'#3495fe',
   ...myFontStyle.largBold,
 },libraryBook:{
-    width:"100%",
-    height:responsiveHeight(18),
+    // width:"100%",
+    height:responsiveHeight(19),
     resizeMode:'cover',
     borderRadius:10,
     
 },libraryBox:{
-  height:responsiveHeight(18),
-  width:responsiveWidth(27),
+  height:responsiveHeight(19),
+  width:responsiveWidth(37.5),
   marginRight:'auto',
   marginLeft:'auto',
-  position:'relative',
-  
+  // position:'relative',
+  // alignItems:'center',
   marginTop:responsiveHeight(5),
 },pageTitleText:{
   color:'#343434',
@@ -412,7 +425,11 @@ indicatorStyle:{
 },miniText:{
   ...myFontStyle.mediumRegular,
   color:'#111'
-}
+},
+moreText:{
+  color:'#000',
+  ...myFontStyle.normalRegular,
+},
   });
 
   export default Library;

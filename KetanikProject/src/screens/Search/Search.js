@@ -13,7 +13,17 @@ import { RadioButton } from 'react-native-paper';
 import axios from 'axios';
 import { apiUrl ,apiAsset} from "@commons/inFormTypes";
 import { Input } from '@components/Input';
-
+export const truncate = (str, len) => {
+  // console.log("truncate", str, str.length, len);
+  if (str.length > len && str.length > 0) {
+    let new_str = str + " ";
+    new_str = str.substr(0, len);
+    new_str = str.substr(0, new_str.lastIndexOf(" "));
+    new_str = new_str.length > 0 ? new_str : str.substr(0, len);
+    return new_str + "...";
+  }
+  return str;
+};
 
  const Search = ({navigation }) => {
   const [name,setName]=useState("");
@@ -41,7 +51,7 @@ import { Input } from '@components/Input';
         console.log(message);
       
         if(result == "true"){
-          setData(response.data.Data)
+          setData(response.data.GroupData)
       
           // navigation.navigate("ChangePass",{mobile:user,verify:response.data.Data})
                           }else{

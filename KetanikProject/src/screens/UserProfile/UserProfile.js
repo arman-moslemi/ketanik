@@ -89,7 +89,7 @@ return (
    
     </View>
   <ScrollView>
-  <TouchableOpacity style={styles.editProfileBtn} onPress={()=>navigation.navigate("wallet")}>
+  <TouchableOpacity style={styles.editProfileBtn} onPress={()=>navigation.navigate("Wallet")}>
       <View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>
         <Image source={require('@assets/images/wallet.png')} style={styles.btnImg2}/>
         <Text style={styles.btnText}>کیف پول</Text>
