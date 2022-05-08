@@ -20,7 +20,9 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import Slider from '@react-native-community/slider';
 import { responsiveFontSize, responsiveHeight, responsiveScreenWidth, responsiveWidth } from 'react-native-responsive-dimensions';
 import { myFontStyle } from "@assets/Constance";
-
+import AsyncStorage from  '@react-native-async-storage/async-storage';
+import axios from 'axios';
+import { apiUrl ,apiAsset} from "@commons/inFormTypes";
 function ProgressBar() {
     const progress = useProgress();
 
@@ -96,15 +98,26 @@ export default function Player(props) {
   const [trackTitle, setTrackTitle] = useState("");
   const [trackArtwork, setTrackArtwork] = useState();
   const [trackArtist, setTrackArtist] = useState("");
-  const { style, onNext, onPrevious, onTogglePlayback,stop,isplay,setPlay,setIndex,index,type } = props;
+  function convertHMS(value) {
+    const sec = parseInt(value, 10); // convert value to number if it's string
+    let hours   = Math.floor(sec / 3600); // get hours
+    let minutes = Math.floor((sec - (hours * 3600)) / 60); // get minutes
+    let seconds = sec - (hours * 3600) - (minutes * 60); //  get seconds
+    // add 0 if value < 10; Example: 2 => 02
+    if (hours   < 10) {hours   = "0"+hours;}
+    if (minutes < 10) {minutes = "0"+minutes;}
+    if (seconds < 10) {seconds = "0"+seconds;}
+    return hours+':'+minutes+':'+seconds; // Return is HH : MM : SS
+}
+  const { style, onNext, onPrevious, onTogglePlayback,stop,isplay,setPlay,setIndex,index,type,id } = props;
   useTrackPlayerEvents(["playback-track-changed"], async event => {
     console.log(8956)
     console.log(index)
     setPlay(false)
-  //   if(type=="main")
-  //  { setIndex(index+1)
-  //   onTogglePlayback()
-  // }
+    if(type=="main")
+   { 
+    //  setIndex(index+1)
+mutLogin()  }
     // if (event.type === TrackPlayer.TrackPlayerEvents.PLAYBACK_TRACK_CHANGED) {
     //   const track = await TrackPlayer.getTrack(event.nextTrack);
     //   const { title, artist, artwork } = track || {};
@@ -122,6 +135,32 @@ export default function Player(props) {
   ) {
     middleButtonText = "Pause";
   }
+  const  mutLogin=async()=> {
+    const state = await AsyncStorage.getItem("@user");
+    const currentTrack2 = await TrackPlayer.getDuration();
+
+    axios.post(apiUrl+'ReadCustomerWrite',{BookID:id,CustomerID:state,ReadTime:convertHMS(currentTrack2)})
+    .then(function (response) {
+      const message = response.data;
+      const result = response.data.result;
+      console.log(12345);
+      console.log(currentTrack2);
+      console.log(message);
+  
+      if(result == "true"){
+      
+        // togglePlayback()
+        // navigation.navigate("ChangePass",{mobile:user,verify:response.data.Data})
+                        }else{
+  
+      }
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  
+  
+    };
   return (
     <View style={[styles.card, style]}>
       {/* <Image style={styles.cover} source={{ uri: trackArtwork }} /> */}

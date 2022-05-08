@@ -74,6 +74,7 @@ export const truncate = (str, len) => {
   const [pub, setPub] = useState();
   const [writer, setWriter] = useState();
   const [grid, setGrid] = useState();
+  const [lib, setlib] = useState();
 
   useEffect(() => {
 
@@ -109,7 +110,9 @@ const _render = (item, index) => {
 const {id} = route?.params ?? {};
 
   const  mutLogin=async()=> {
-    axios.post(apiUrl+'SingleBook',{BookID:id})
+    const state = await AsyncStorage.getItem("@user");
+
+    axios.post(apiUrl+'SingleBook',{BookID:id,CustomerID:state})
     .then(function (response) {
       const message = response.data;
       const result = response.data.result;
@@ -125,8 +128,9 @@ const {id} = route?.params ?? {};
         setTrans(response.data.GroupData.Translator)
         setPub(response.data.GroupData.Publisher)
         setGrid(response.data.GroupData.GroupID)
+        setlib(response.data.LibData)
         console.log(896);
-        console.log(response.data.GroupData.Writer);
+        console.log(response.data.LibData);
         axios.post(apiUrl+'LastRelatedBook',{GroupID:response.data.GroupData.GroupID})
         .then(function (response2) {
   
@@ -661,6 +665,20 @@ return (
 <Icon name={'star'} color={'#ffc93d'} size={20}/>
 </View>
 </View>
+{
+  lib==true?
+<View style={styles.btnRow}>
+<TouchableOpacity onPress={()=>navigation.navigate("EpisodesList",{id:data.BookID})} style={[styles.loginBtn,{marginLeft:5}]}>
+       <Text style={styles.btnText}>مطالعه</Text>
+     </TouchableOpacity>
+     {/* <TouchableOpacity onPress={()=>navigation.navigate("ListenBook",{id:data.BookID,link:data.Link,image:data?.Pic,BookName:data.BookName,writer:data.Writer})} style={styles.whiteBtn}>
+       <Text style={styles.btnText2}>نسخه نمونه</Text>
+     </TouchableOpacity> */}
+     <TouchableOpacity style={styles.greenBtn2} onPress={toggleModal}>
+      <Icon name={'keyboard-control'} size={30} color={'#fff'}/>
+     </TouchableOpacity>
+</View>
+  :
 <View style={styles.btnRow}>
 <TouchableOpacity onPress={()=>buy()} style={styles.loginBtn}>
        <Text style={styles.btnText}>خرید</Text>
@@ -672,6 +690,7 @@ return (
       <Icon name={'keyboard-control'} size={30} color={'#fff'}/>
      </TouchableOpacity>
 </View>
+}
 <View>
 <TouchableOpacity onPress={()=>setModalVisibleCom(true)} style={styles.comBtn}>
        <Text style={styles.btnText}>نظر دهید</Text>

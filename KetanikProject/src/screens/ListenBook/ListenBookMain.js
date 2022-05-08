@@ -32,7 +32,7 @@ import AsyncStorage from  '@react-native-async-storage/async-storage';
   const {id,num} = route?.params ?? {};
   const [index, setIndex] = useState(num);
 
-const  mutLogin=async()=> {
+  const  mutLogin=async()=> {
   const state = await AsyncStorage.getItem("@user");
 
   axios.post(apiUrl+'SubBookShow',{BookID:id,CustomerID:state})
@@ -75,6 +75,7 @@ const  mutLogin=async()=> {
     // togglePlayback()
 
 }, []);
+
   async function togglePlayback() {
     const currentTrack = await TrackPlayer.getPosition();
     const currentTrack2 = await TrackPlayer.getDuration();
@@ -148,7 +149,7 @@ return (
       <View style={{display:'flex',justifyContent:'center',alignContent:'center',alignItems:'center'}} >
         <Image source={{uri:apiAsset+data[0]?.Pic}} style={styles.backgroundImage}  blurRadius={5}/>
         <View style={styles.backView}>
-         <TouchableOpacity>
+         <TouchableOpacity onPress={()=>navigation.goBack()}>
       <Icon name={'west'} size={30} color={'#fff'} style={{}}/>
    
      </TouchableOpacity>
@@ -190,6 +191,7 @@ return (
         setIndex={setIndex}
         index={index}
         type="main"
+        id={id}
 
       />
                   </View>

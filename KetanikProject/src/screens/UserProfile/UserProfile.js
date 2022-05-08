@@ -119,7 +119,7 @@ return (
         <Icon name={'chevron-left'} size={20} color={'#111'}/>
       </View>
     </TouchableOpacity>
-    <TouchableOpacity style={styles.editProfileBtn}>
+    {/* <TouchableOpacity style={styles.editProfileBtn}>
       <View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>
         <Image source={require('@assets/images/comment.png')} style={styles.btnImg}/>
         <Text style={styles.btnText}>نظرات من</Text>
@@ -127,7 +127,7 @@ return (
       <View>
         <Icon name={'chevron-left'} size={20} color={'#111'}/>
       </View>
-    </TouchableOpacity>
+    </TouchableOpacity> */}
     <TouchableOpacity style={styles.editProfileBtn}>
       <View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>
         <Image source={require('@assets/images/night.png')} style={styles.btnImg}/>
