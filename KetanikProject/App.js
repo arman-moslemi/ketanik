@@ -32,6 +32,8 @@ import ListenBookMain from '@screens/ListenBook/ListenBookMain';
 import Wallet from '@screens/Wallet/Wallet';
 import Factor from '@screens/Factor/Factor';
 import Search from "@screens/Search/Search";
+import { ThemeProvider} from './theme/theme-context';
+
 const Stack = createNativeStackNavigator();
 const Tab = createMaterialBottomTabNavigator();
 
@@ -151,6 +153,8 @@ const StackNavigatorsProfile = () => {
  }
 export default function App() {
   return (
+    <ThemeProvider>
+
     <NavigationContainer>
        <Stack.Navigator screenOptions={{
        headerShown: false,
@@ -170,5 +174,6 @@ export default function App() {
 
       </Stack.Navigator>
     </NavigationContainer>
+    </ThemeProvider>
   );
 }

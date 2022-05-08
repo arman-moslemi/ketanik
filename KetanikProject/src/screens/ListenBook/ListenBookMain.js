@@ -12,6 +12,8 @@ import TrackPlayer, { usePlaybackState } from "react-native-track-player";
 import Player from "@components/Player";
 import axios from 'axios';
 import { apiUrl ,apiAsset} from "@commons/inFormTypes";
+import AsyncStorage from  '@react-native-async-storage/async-storage';
+
  const ListenBookMain = ({navigation,route }) => {
   const [data,setData]=useState([]);
   const [track,setTrack]=useState([]);
@@ -31,7 +33,9 @@ import { apiUrl ,apiAsset} from "@commons/inFormTypes";
   const [index, setIndex] = useState(num);
 
 const  mutLogin=async()=> {
-  axios.post(apiUrl+'SubBookShow',{BookID:id})
+  const state = await AsyncStorage.getItem("@user");
+
+  axios.post(apiUrl+'SubBookShow',{BookID:id,CustomerID:state})
   .then(function (response) {
     const message = response.data;
     const result = response.data.result;

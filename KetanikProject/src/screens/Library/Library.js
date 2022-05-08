@@ -12,15 +12,41 @@ import AsyncStorage from  '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import { apiUrl ,apiAsset} from "@commons/inFormTypes";
 import { useNavigation } from '@react-navigation/native';
+import {
+  BarChart,
+  LineChart
 
+} from "react-native-chart-kit";
 // create a component
 // const [showBox, setShowBox] = useState(false);
 // const onClick = () => setShowBox(true);
 
 
-
+const data2 = {
+  labels: ["January", "February", "March", "April", "May", "June"],
+  datasets: [
+    {
+      data: [20, 45, 28, 80, 99, 43],
+      color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})`, // optional
+      strokeWidth: 2 // optional
+    }
+  ],
+  legend: ["Rainy Days"] // optional
+};
+const chartConfig = {
+  backgroundGradientFrom: "#F4F4F4",
+  backgroundGradientFromOpacity: 10,
+  backgroundGradientTo: "#F4F4F4",
+  // backgroundGradientToOpacity: 0.1,
+  color: (opacity = 1) => `rgba(22, 178, 245, 1)`,
+  strokeWidth: 30, // optional, default 3
+  barPercentage: 1,
+  labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+  // decimalPlaces: 1,
+  useShadowColorFromDataset: false  // optional
+};
 const FirstRoute = () => (
-  
+  <View>
   <View style={{display:'flex',flexDirection:'row-reverse'}}>
     <View style={styles.lightGreenBack}>
        <View style={styles.greenCircle}>
@@ -57,8 +83,19 @@ const FirstRoute = () => (
          کتاب خوانده شده
        </Text>
 </View>
-  </View>
 
+  </View>
+  <View>
+<LineChart
+  data={data2}
+  width={responsiveWidth(100)}
+  height={256}
+  verticalLabelRotation={30}
+  chartConfig={chartConfig}
+  bezier
+/>
+</View>
+</View>
 );
 const keyExtractor = item => {
   return item.BookID;

@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState,useEffect,useContext  } from 'react';
 import { myFontStyle } from "@assets/Constance";
 
 import { responsiveFontSize, responsiveHeight, responsiveScreenWidth, responsiveWidth } from 'react-native-responsive-dimensions';
@@ -10,6 +10,8 @@ import { apiUrl ,apiAsset} from "@commons/inFormTypes";
 import axios from 'axios';
 import Spinner from '@components/Spinner';
 import AsyncStorage from  '@react-native-async-storage/async-storage';
+import { ThemeContext } from '../../../theme/theme-context';
+
  const UserProfile = ({navigation }) => {
   const [isSwitchOn, setIsSwitchOn] = useState(false);
   const [data,setData]=useState([]);
@@ -61,7 +63,8 @@ setEmail(response.data.Data.Email)
 
 
     };
- 
+    const { dark, theme, toggle } = useContext(ThemeContext);
+
 return (
     <View style={{ padding:0,justifyContent:'flex-start',alignContent:'flex-start',alignSelf:'flex-start'}}>
        <Image source={require('@assets/images/userProfileTop.png')} style={styles.topImg}/>
@@ -131,8 +134,12 @@ return (
         <Text style={styles.btnText}>حالت شب</Text>
       </View>
       <View>
-      <Switch value={isSwitchOn} onValueChange={onToggleSwitch} color={Colors.darkGreen} />
-      </View>
+      {/* <Switch value={isSwitchOn} onValueChange={onToggleSwitch} color={Colors.darkGreen} /> */}
+      <Switch 
+                 trackColor={{ false: "#767577", true: "#ccc" }}
+                 thumbColor={dark ? "#fff" : "#f4f3f4"}
+                 onChange={toggle} value = {dark} />
+                       </View>
     </TouchableOpacity>
     <TouchableOpacity style={styles.editProfileBtn}>
       <View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>

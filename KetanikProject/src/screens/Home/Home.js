@@ -1,4 +1,4 @@
-import React, {useState,useRef,useEffect} from 'react';
+import React, {useState,useContext ,useEffect} from 'react';
 import {View, TextInput, Text, TouchableOpacity,Image,ScrollView,FlatList} from 'react-native';
 
 
@@ -12,6 +12,7 @@ import { myFontStyle } from "@assets/Constance";
 import ViewSlider from 'react-native-view-slider';
 import axios from 'axios';
 import { apiUrl ,apiAsset} from "@commons/inFormTypes";
+import { ThemeContext } from '../../../theme/theme-context';
 
 // create a component
 
@@ -29,6 +30,8 @@ export const truncate = (str, len) => {
   };
 
  const Home = ({navigation }) => {
+  const {  theme} = useContext(ThemeContext);
+
   const [data,setData]=useState([]);
   const [best,setBest]=useState([]);
   const [slider,setSlider]=useState([]);
@@ -101,7 +104,8 @@ export const truncate = (str, len) => {
     );
   };
 return (
-    <View style={{backgroundColor:'#fff',flex:1}}>
+    // <View style={{backgroundColor:'#fff',flex:1}}>
+    <View style={{backgroundColor:theme.backgroundColor,flex:1}}>
 
 
 
