@@ -137,6 +137,8 @@ mutLogin()  }
   }
   const  mutLogin=async()=> {
     const state = await AsyncStorage.getItem("@user");
+    AsyncStorage.setItem('@bookid',id.toString())
+    AsyncStorage.setItem('@epid',index.toString())
     const currentTrack2 = await TrackPlayer.getDuration();
 
     axios.post(apiUrl+'ReadCustomerWrite',{BookID:id,CustomerID:state,ReadTime:convertHMS(currentTrack2)})

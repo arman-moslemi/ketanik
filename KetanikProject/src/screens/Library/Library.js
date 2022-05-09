@@ -40,7 +40,7 @@ function convertHourstoMinute(time) {
 var minute = time.split(':')[1];
 return parseInt(hour) + Number((minute / 60));
   }
-const FirstRoute = ({dataShow,date,setDate}) => {
+const FirstRoute = ({dataShow,date,setDate,book,episode,navigation}) => {
   console.log(dataShow.Data)
   console.log(555)
   console.log(date)
@@ -77,7 +77,7 @@ const FirstRoute = ({dataShow,date,setDate}) => {
     // legend: ["Rainy Days"] // optional
   };
   return(
-    <View>
+    <ScrollView>
     <View style={{display:'flex',flexDirection:'row-reverse'}}>
       <View style={styles.lightGreenBack}>
          <View style={styles.greenCircle}>
@@ -147,7 +147,24 @@ const FirstRoute = ({dataShow,date,setDate}) => {
 
       </ScrollView>
   </View>
+  <View style={{paddingHorizontal:responsiveWidth(8)}}>
+    {
+      book?
+
+    <TouchableOpacity onPress={()=>navigation.navigate("ListenBookMain",{id:book,num:episode})} style={{borderRadius:10,backgroundColor:Colors.lightGreen,flexDirection:'row-reverse',height:responsiveHeight(10)}}>
+    <Image source={{uri:apiAsset+book.Pic}} style={styles.imageBook}/>
+    <View>
+
+      <Text style={styles.miniText}>{book.BookName}</Text>
+      <Text style={styles.miniText}>درحال مطالعه</Text>
+      </View>
+      {/* <Text style={styles.miniText}>درحال مطالعه</Text> */}
+    </TouchableOpacity>
+      :
+      null
+    }
   </View>
+  </ScrollView>
   )
 }
  
@@ -244,7 +261,7 @@ return(
   const renderScene = ({ route }) => {
     switch (route.key) {
       case 'status':
-        return <FirstRoute date={date} time={time} setDate={setDate} dataShow={dataShow}/>;
+        return <FirstRoute navigation={navigation} episode={episode} book={book} date={date} time={time} setDate={setDate} dataShow={dataShow}/>;
       case 'library':
         return <SecondRoute navigation={navigation} show={show} setShow={setShow} data={data} setRole={setRole} setRoleName={setRoleName} roleName={roleName} />;
       default:
@@ -277,11 +294,13 @@ return(
   const [time,setTime]=useState([]);
   const [main,setMain]=useState([]);
   const [role,setRole]=useState(null);
-  const [slider,setSlider]=useState([]);
+  const [book,setBook]=useState(null);
+  const [episode,setEpisode]=useState();
   useEffect(() => {
 
     mutLogin();
     mutShow();
+    GetBook();
 
 }, [role,date]);
 
@@ -296,6 +315,33 @@ return(
 
       if(result == "true"){
         setData(response.data.GroupData)
+
+
+        // navigation.navigate("ChangePass",{mobile:user,verify:response.data.Data})
+                        }else{
+
+      }
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+
+
+    };
+  const  GetBook=async()=> {
+    const state = await AsyncStorage.getItem("@user");
+    const books = await AsyncStorage.getItem("@bookid");
+    const episode = await AsyncStorage.getItem("@epid");
+
+    axios.post(apiUrl+'SingleBook',{CustomerID:state,BookID:books})
+    .then(function (response) {
+      const message = response.data;
+      const result = response.data.result;
+      console.log(message);
+
+      if(result == "true"){
+        setBook(response.data.GroupData)
+        setEpisode(episode)
 
 
         // navigation.navigate("ChangePass",{mobile:user,verify:response.data.Data})
@@ -455,13 +501,24 @@ indicatorStyle:{
 },forgetPassBtnText:{
   color:'#3495fe',
   ...myFontStyle.largBold,
-},libraryBook:{
+}
+,
+libraryBook:{
     // width:"100%",
     height:responsiveHeight(19),
     resizeMode:'cover',
     borderRadius:10,
     
-},libraryBox:{
+},
+imageBook:{
+  width:responsiveWidth(15),
+  height:"100%",
+  resizeMode:'cover',
+  borderRadius:10,
+  marginLeft:10
+  
+},
+libraryBox:{
   height:responsiveHeight(19),
   width:responsiveWidth(37.5),
   marginRight:'auto',
