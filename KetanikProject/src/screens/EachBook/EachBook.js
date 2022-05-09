@@ -1052,13 +1052,13 @@ marginTop:responsiveHeight(10),
   
 },eachBookDetail3:{
   ...myFontStyle.bookWriter3,
-  color:theme.textTitle,
+  color:'#111',
   textAlign:'right',
   
   
 },eachBookDetail4:{
   ...myFontStyle.UltraBold,
-  color:theme.textTitle,
+  color:'#111',
   textAlign:'right',
   
   
@@ -1120,7 +1120,7 @@ cardBox:{
   marginTop:responsiveHeight(-4),
   borderRadius:10,
 },bookName:{
-  color:theme.textTitle2,
+  color:'#111',
   ...myFontStyle.normalRegular,
   marginTop:responsiveHeight(0.5),
 },priceRed:{
@@ -1135,10 +1135,10 @@ marginTop:responsiveHeight(0.5),
 marginRight:4,
 },rowTitle:{
   ...myFontStyle.largBold,
-  color:theme.textTitle2,
+  color:theme.textTitle,
 },seeAll:{
   ...myFontStyle.largeRegular,
-  color:theme.textTitle2,
+  color:theme.textTitle,
 },
 dotContainer: {
 backgroundColor: 'transparent',
@@ -1193,7 +1193,7 @@ height: "100%",
   paddingTop:responsiveHeight(1),
   borderRadius:10,
 },bookDescription:{
-  color:theme.textTitle2,
+  color:'#111',
   ...myFontStyle.bookWriter3,
   marginTop:responsiveHeight(2),
   
@@ -1229,7 +1229,7 @@ height: "100%",
     marginRight:10,
   }
   ,table2:{
-    color:theme.textTitle2,
+    color:theme.textTitle,
     ...myFontStyle.largBold,
     textAlign:'right',
   },moreModal:{
@@ -1258,7 +1258,7 @@ height: "100%",
     alignItems:'center'
   },textRate:{
     ...myFontStyle.rate,
-    color:theme.textTitle2,
+    color:theme.textTitle,
     textAlign:'center'
   },lineBack:{
     width:'85%',

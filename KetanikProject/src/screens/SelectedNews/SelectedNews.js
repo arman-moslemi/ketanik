@@ -1,4 +1,4 @@
-import React, {useState,useEffect} from 'react';
+import React, {useState,useEffect,useContext} from 'react';
 import {View, TextInput, Text, TouchableOpacity,Image,ScrollView,FlatList} from 'react-native';
 
 
@@ -11,6 +11,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import { myFontStyle } from "@assets/Constance";
 import axios from 'axios';
 import { apiUrl ,apiAsset} from "@commons/inFormTypes";
+import { ThemeContext } from '../../../theme/theme-context';
 
 // create a component
 
@@ -28,6 +29,7 @@ export const truncate = (str, len) => {
   };
 
  const SelectedNews = ({navigation,route }) => {
+  const {  theme } = useContext(ThemeContext);
     const [data,setData]=useState([]);
     useEffect(() => {
   
@@ -157,17 +159,17 @@ axios.post(apiUrl+'RelatedBook',{GroupID:GroupID})
       const _render = (item) => {
         console.log(item.item.BookName)
         return (
-            <View style={styles.bookRow}>
-            <Image source={{uri:apiAsset+item.item.Pic}} style={styles.bookImg}/>
+            <View style={styles(theme).bookRow}>
+            <Image source={{uri:apiAsset+item.item.Pic}} style={styles(theme).bookImg}/>
             <View style={{marginRight:responsiveWidth(3)}}>
-                <Text style={styles.bookTitle}>
+                <Text style={styles(theme).bookTitle}>
                 {truncate(item.item.BookName,20)}
                {/* { item.item.BookName} */}
                 </Text>
-                <Text style={styles.bookWriter}>
+                <Text style={styles(theme).bookWriter}>
                 {truncate(item.item.Writer,20)}
                 </Text>
-                <Text style={styles.bookWriter}>
+                <Text style={styles(theme).bookWriter}>
                 {truncate("ناشر :"+item.item.Publisher,30)}
                 </Text>
                 <View style={{display:'flex',flexDirection:'row-reverse'}}>
@@ -184,22 +186,22 @@ index+1>item.item.Rate?
                 </View>
             </View>
             <View style={{display:"flex",flexDirection:'column',alignContent:'flex-end',justifyContent:'space-between'}}>
-                <View style={styles.headphone}>
+                <View style={styles(theme).headphone}>
                 <Icon name={'headset'} color={'#111'} size={22}/>
                 </View>
                 <View>
                 {
           item.item.SpecialCost?
 <>
-      <Text style={styles.priceRed}>
+      <Text style={styles(theme).priceRed}>
       {item.item.SpecialCost}ت
     </Text>
-    <Text style={styles.priceStroke}>
+    <Text style={styles(theme).priceStroke}>
     {item.item.Cost}ت
     </Text>
     </>
           :
-<Text style={styles.bookName}>
+<Text style={styles(theme).bookName}>
       {item.item.Cost}ت
       </Text>
         }
@@ -210,35 +212,35 @@ index+1>item.item.Rate?
       };
 
 return (
-    <View style={{backgroundColor:'#fff',flex:1}}>
+    <View style={{backgroundColor:theme.backgroundColor,flex:1}}>
 
 
 
 
-    <View style={styles.customRow}>
+    <View style={styles(theme).customRow}>
         
     
     </View>
-    <View style={styles.topBar}>
+    <View style={styles(theme).topBar}>
 
     <View style={{flex : 2,textAlign:"right"}}>
     {type=="writer"?
-        <Text style={styles.menuTitle}>کتابهای {writer}</Text>
+        <Text style={styles(theme).menuTitle}>کتابهای {writer}</Text>
      
     : type=="publisher"?
-    <Text style={styles.menuTitle}>انتشارات {publisher}</Text>
+    <Text style={styles(theme).menuTitle}>انتشارات {publisher}</Text>
  
 : type=="translator"?
-<Text style={styles.menuTitle}>کتابهای {translator}</Text>
+<Text style={styles(theme).menuTitle}>کتابهای {translator}</Text>
 
 : type=="translator"?
-<Text style={styles.menuTitle}>پرفروش ترین ها</Text>
+<Text style={styles(theme).menuTitle}>پرفروش ترین ها</Text>
 
 :type=="group"?
-<Text style={styles.menuTitle}>{GroupName}</Text>
+<Text style={styles(theme).menuTitle}>{GroupName}</Text>
 
 :
-    <Text style={styles.menuTitle}>تازه های برگزیده</Text>
+    <Text style={styles(theme).menuTitle}>تازه های برگزیده</Text>
     }
           </View>
     
@@ -250,7 +252,7 @@ return (
           </View>
     </View>
   <ScrollView>
-  <View style={styles.container}>
+  <View style={styles(theme).container}>
  
 
 <FlatList
@@ -262,8 +264,8 @@ return (
                     // ListFooterComponent={listFooter}
           // onEndReached={fetchNextCharityPage}
         />
-{/* <TouchableOpacity style={styles.moreBtn}>
-    <Text style={styles.moreText}>
+{/* <TouchableOpacity style={styles(theme).moreBtn}>
+    <Text style={styles(theme).moreText}>
         بیشتر
     </Text>
     <Icon name={'expand-more'} color={'#373635'} size={25}/>
@@ -274,7 +276,7 @@ return (
 );
 };
 
-const styles = StyleSheet.create({
+const styles = (theme) =>  StyleSheet.create({
     container: {
         paddingRight:responsiveWidth(5),
         paddingLeft:responsiveWidth(5),
@@ -286,7 +288,7 @@ const styles = StyleSheet.create({
 
     menuTitle:{
 ...myFontStyle.UltraBold,
-      color:Colors.darkGreen,
+      color:theme.textTitle2,
       zIndex:10000,
     },
 
@@ -298,7 +300,7 @@ const styles = StyleSheet.create({
     top:responsiveHeight(0),
     paddingRight:responsiveWidth(5),
     paddingLeft:responsiveWidth(5),
-    backgroundColor:'#fff',
+    backgroundColor:theme.topRowBack,
     marginTop:responsiveHeight(-13),
     height : responsiveHeight(25),
     width : '100%',
@@ -330,7 +332,7 @@ const styles = StyleSheet.create({
       paddingBottom:responsiveHeight(1),
     
   },pageTitleText:{
-    color:'#343434',
+    color:theme.textTitle,
     ...myFontStyle.largeRegular,
     marginRight:responsiveWidth(2)
   },viewPageTitle:{
@@ -357,10 +359,10 @@ const styles = StyleSheet.create({
       marginRight:responsiveWidth(3),
   },bookTitle:{
       ...myFontStyle.largBold,
-      color:'#111',
+      color:theme.textTitle,
   },bookWriter:{
     ...myFontStyle.mediumRegular,
-    color:'#111',
+    color:theme.textTitle,
   },headphone:{
       backgroundColor:'#fff',
       height:35,

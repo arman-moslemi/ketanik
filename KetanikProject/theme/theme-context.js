@@ -21,7 +21,7 @@ const themes = {
     borderColor:"#192434",
     },
     light: {
-        textTitle2:'#fff',
+        textTitle2:'#32655c',
         borderColor:"#cacaca",
         greenBack:'#f1f5ec',
         menuTitle:'#32655c',

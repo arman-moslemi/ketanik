@@ -1,4 +1,4 @@
-import React, {useState,useRef} from 'react';
+import React, {useState,useRef,useContext} from 'react';
 import {View, TextInput, Text, TouchableOpacity,Image,ScrollView} from 'react-native';
 
 
@@ -9,6 +9,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 // import Drawer from 'react-native-drawer'
 // import DrawerContent from './drewerContent/DrawerContent';
 import { myFontStyle } from "@assets/Constance";
+import { ThemeContext } from '../../../theme/theme-context';
 
 // create a component
 
@@ -26,22 +27,22 @@ export const truncate = (str, len) => {
   };
 
  const EachSelectedNews = ({navigation }) => {
-  
+    const {  theme } = useContext(ThemeContext);
 
 return (
-    <View style={{backgroundColor:'#fff',flex:1}}>
+    <View style={{backgroundColor:theme.backgroundColor,flex:1}}>
 
 
 
 
-    <View style={styles.customRow}>
+    <View style={styles(theme).customRow}>
         
     
     </View>
-    <View style={styles.topBar}>
+    <View style={styles(theme).topBar}>
 
     <View style={{flex : 2,textAlign:"right"}}>
-          <Text style={styles.menuTitle}>تازه های برگزیده</Text>
+          <Text style={styles(theme).menuTitle}>تازه های برگزیده</Text>
           </View>
     
         
@@ -51,18 +52,18 @@ return (
           </TouchableOpacity>
           </View>
     </View>
-    <View style={styles.container}>
+    <View style={styles(theme).container}>
  
-    <View style={styles.bookRow}>
-    <Image source={require('@assets/images/book1.jpg')} style={styles.bookImg}/>
+    <View style={styles(theme).bookRow}>
+    <Image source={require('@assets/images/book1.jpg')} style={styles(theme).bookImg}/>
     <View style={{marginRight:responsiveWidth(3),display:"flex",flexDirection:'column',flex:1}}>
-        <Text style={styles.bookTitle}>
+        <Text style={styles(theme).bookTitle}>
         {truncate("صد سال تنهایی",20)}
         </Text>
-        <Text style={styles.bookWriter}>
+        <Text style={styles(theme).bookWriter}>
         {truncate("گابریل گارسیا",20)}
         </Text>
-        <Text style={styles.bookWriter}>
+        <Text style={styles(theme).bookWriter}>
         {truncate("ناشر : انتشارات پندار تابان",30)}
         </Text>
         <View style={{display:'flex',flexDirection:'row-reverse'}}>
@@ -74,11 +75,11 @@ return (
         </View>
     </View>
     <View style={{display:"flex",flexDirection:'column',alignContent:'flex-end',justifyContent:'space-between'}}>
-        <View style={styles.headphone}>
+        <View style={styles(theme).headphone}>
         <Icon name={'headset'} color={'#111'} size={22}/>
         </View>
         <View>
-            <Text style={styles.price}>
+            <Text style={styles(theme).price}>
                 25.000 تومان
             </Text>
         </View>
@@ -87,69 +88,69 @@ return (
 
    </View>
   <ScrollView>
- <View style={styles.container}>
- <View style={styles.episodeList}>
-      <Text style={styles.episodeText}>
+ <View style={styles(theme).container}>
+ <View style={styles(theme).episodeList}>
+      <Text style={styles(theme).episodeText}>
           جلد
       </Text>
   </View>
-  <View style={styles.episodeList}>
-      <Text style={styles.episodeText}>
+  <View style={styles(theme).episodeList}>
+      <Text style={styles(theme).episodeText}>
           تحسین های اثر مرکب
       </Text>
   </View>
-  <View style={styles.episodeList}>
-      <Text style={styles.episodeText}>
+  <View style={styles(theme).episodeList}>
+      <Text style={styles(theme).episodeText}>
           پیام ویژه از آنتونی رابینز
       </Text>
   </View>
-  <View style={styles.episodeList}>
-      <Text style={styles.episodeText}>
+  <View style={styles(theme).episodeList}>
+      <Text style={styles(theme).episodeText}>
          مقدمه
       </Text>
   </View>
-  <View style={styles.episodeList}>
-      <Text style={styles.episodeText}>
+  <View style={styles(theme).episodeList}>
+      <Text style={styles(theme).episodeText}>
          فصل اول : اثر مرکب در عمل
       </Text>
   </View>
-  <View style={styles.episodeList}>
-      <Text style={styles.episodeText}>
+  <View style={styles(theme).episodeList}>
+      <Text style={styles(theme).episodeText}>
           فصل دوم : انتخاب ها
       </Text>
   </View>
-  <View style={styles.episodeList}>
-      <Text style={styles.episodeText}>
+  <View style={styles(theme).episodeList}>
+      <Text style={styles(theme).episodeText}>
          فصل سوم : عادت ها
       </Text>
   </View>
-  <View style={styles.episodeList}>
-      <Text style={styles.episodeText}>
+  <View style={styles(theme).episodeList}>
+      <Text style={styles(theme).episodeText}>
           فصل چهارم : تکانش
       </Text>
   </View>
-  <View style={styles.episodeList}>
-      <Text style={styles.episodeText}>
+  <View style={styles(theme).episodeList}>
+      <Text style={styles(theme).episodeText}>
          فصل پنجم : تاثیرات
       </Text>
   </View>
-  <View style={styles.episodeList}>
-      <Text style={styles.episodeText}>
+  <View style={styles(theme).episodeList}>
+      <Text style={styles(theme).episodeText}>
           فصل ششم : تاب بخشی
       </Text>
   </View>
-  <View style={styles.episodeList}>
-      <Text style={styles.episodeText}>
+  <View style={styles(theme).episodeList}>
+      <Text style={styles(theme).episodeText}>
          نتیجه گیری
       </Text>
   </View>
-  <View style={styles.episodeList}>
-      <Text style={styles.episodeText}>
+  <View style={styles(theme).episodeList}>
+      <Text style={styles(theme).episodeText}>
          ضمیمه ها
       </Text>
   </View>
-  <View style={styles.episodeList}>
-      <Text style={styles.episodeText}>
+  <View style={styles(theme).episodeList}>
+      <Text style={styles(theme).episodeText}>
          ضمیمه 1 : پرسشنامه ارزیابی قدردانی
       </Text>
   </View>
@@ -159,7 +160,7 @@ return (
 );
 };
 
-const styles = StyleSheet.create({
+const styles = (theme) => StyleSheet.create({
     container: {
         paddingRight:responsiveWidth(5),
         paddingLeft:responsiveWidth(5),
@@ -181,7 +182,7 @@ const styles = StyleSheet.create({
     top:responsiveHeight(0),
     paddingRight:responsiveWidth(5),
     paddingLeft:responsiveWidth(5),
-    backgroundColor:'#fff',
+    backgroundColor:theme.topRowBack,
     marginTop:responsiveHeight(-13),
     height : responsiveHeight(25),
     width : '100%',
@@ -224,10 +225,10 @@ const styles = StyleSheet.create({
       marginRight:responsiveWidth(3),
   },bookTitle:{
       ...myFontStyle.bookTitle,
-      color:'#111',
+      color:theme.textTitle,
   },bookWriter:{
     ...myFontStyle.bookWriter,
-    color:'#111',
+    color:theme.textTitle,
   },headphone:{
       backgroundColor:'#fff',
       height:35,
@@ -240,7 +241,7 @@ const styles = StyleSheet.create({
       marginTop:responsiveHeight(1),
   },price:{
       ...myFontStyle.largBold,
-      color:Colors.darkGreen,
+      color:theme.textTitle2,
   },episodeList:{
     borderBottomColor:'#c6c6c6',
     borderBottomWidth:1,
@@ -249,7 +250,7 @@ const styles = StyleSheet.create({
     width:'100%',
   },episodeText:{
       ...myFontStyle.UltraBold,
-      color:'#343434',
+      color:theme.textTitle,
   }
   });
 

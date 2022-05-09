@@ -1,4 +1,4 @@
-import React, {useState,useRef} from 'react';
+import React, {useState,useRef,useContext} from 'react';
 import {View,Text, TouchableOpacity,Image,ScrollView,TextInput} from 'react-native';
 
 import { StyleSheet } from 'react-native';
@@ -13,6 +13,7 @@ import { Input } from '@components/Input';
 import { apiUrl ,apiAsset} from "@commons/inFormTypes";
 import axios from 'axios';
 import AsyncStorage from  '@react-native-async-storage/async-storage';
+import { ThemeContext } from '../../../theme/theme-context';
 
 
 export const truncate = (str, len) => {
@@ -28,6 +29,7 @@ export const truncate = (str, len) => {
   };
 
  const EditPassword = ({navigation }) => {
+  const {  theme } = useContext(ThemeContext);
   const [oldPass,setOldPass]=useState("");
   const [newPass,setNewPass]=useState("");
   const [againPass,setAginPass]=useState("");
@@ -63,56 +65,56 @@ else if(againPass!=newPass){
 
   }
 return (
-    <View style={{backgroundColor:'#fff',flex:1}}>
+    <View style={{backgroundColor:theme.backgroundColor,flex:1}}>
 
 
 
 
-    <View style={styles.customRow}>
+    <View style={styles(theme).customRow}>
         
     
     </View>
-    <View style={styles.topBar}>
+    <View style={styles(theme).topBar}>
 
     <View style={{flex : 2,textAlign:"right",display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>
-          <Text style={styles.menuTitle}>تغییر رمز عبور</Text>
+          <Text style={styles(theme).menuTitle}>تغییر رمز عبور</Text>
           
           </View>
     
         
         <View style={{flex :0.5}}>
           <TouchableOpacity onPress={()=>navigation.goBack()} style={{}}>
-            <Icon name={"arrow-back"} color={'#111'} size={30}/>
+            <Icon name={"arrow-back"} color={theme.iconWhite} size={30}/>
           </TouchableOpacity>
           </View>
     </View>
   <ScrollView>
-  <View style={styles.container}>
+  <View style={styles(theme).container}>
   
-<View style={styles.takhfifRow}>
+<View style={styles(theme).takhfifRow}>
   
     <View>
-        <Input onChangeText={(ss)=>setOldPass(ss)} placeholder="رمز عبور فعلی" style={styles.discountInput} />
+        <Input onChangeText={(ss)=>setOldPass(ss)} placeholder="رمز عبور فعلی" style={styles(theme).discountInput} />
     </View>
     <View>
-        <Input onChangeText={(ss)=>setNewPass(ss)} placeholder="رمز عبور جدید" style={styles.discountInput} />
+        <Input onChangeText={(ss)=>setNewPass(ss)} placeholder="رمز عبور جدید" style={styles(theme).discountInput} />
     </View>
     <View>
-        <Input onChangeText={(ss)=>setAginPass(ss)} placeholder="تکرار رمز عبور جدید" style={styles.discountInput} />
+        <Input onChangeText={(ss)=>setAginPass(ss)} placeholder="تکرار رمز عبور جدید" style={styles(theme).discountInput} />
     </View>
     <View>
    
     </View>
 </View>
-<View style={styles.btnRow}>
-    <View style={styles.btnBox}>
-    <TouchableOpacity onPress={()=>mutEdit()} style={styles.purchaseBtn}>
-       <Text style={styles.purchaseBtnText}>ذخیره تغییرات</Text>
+<View style={styles(theme).btnRow}>
+    <View style={styles(theme).btnBox}>
+    <TouchableOpacity onPress={()=>mutEdit()} style={styles(theme).purchaseBtn}>
+       <Text style={styles(theme).purchaseBtnText}>ذخیره تغییرات</Text>
      </TouchableOpacity>
     </View>
-    <View style={styles.btnBox}>
-    <TouchableOpacity style={styles.purchaseBtn2}>
-       <Text style={styles.purchaseBtnText2}>انصراف</Text>
+    <View style={styles(theme).btnBox}>
+    <TouchableOpacity style={styles(theme).purchaseBtn2}>
+       <Text style={styles(theme).purchaseBtnText2}>انصراف</Text>
      </TouchableOpacity>
     </View>
 </View>
@@ -123,7 +125,7 @@ return (
 );
 };
 
-const styles = StyleSheet.create({
+const styles = (theme) => StyleSheet.create({
     container: {
         paddingRight:responsiveWidth(5),
         paddingLeft:responsiveWidth(5),
@@ -134,7 +136,7 @@ const styles = StyleSheet.create({
 
     menuTitle:{
 ...myFontStyle.UltraBold,
-      color:Colors.darkGreen,
+color:theme.menuTitle,
       zIndex:10000,
     },
 
@@ -146,7 +148,7 @@ const styles = StyleSheet.create({
     top:responsiveHeight(0),
     paddingRight:responsiveWidth(5),
     paddingLeft:responsiveWidth(5),
-    backgroundColor:'#fff',
+    backgroundColor:theme.topRowBack,
     marginTop:responsiveHeight(-13),
     height : responsiveHeight(25),
     width : '100%',

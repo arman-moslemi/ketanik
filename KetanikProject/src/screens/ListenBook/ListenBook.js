@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState,useEffect,useContext } from 'react';
 import { myFontStyle } from "@assets/Constance";
 
 import { responsiveFontSize, responsiveHeight, responsiveScreenWidth, responsiveWidth } from 'react-native-responsive-dimensions';
@@ -13,9 +13,10 @@ import Player from "@components/Player";
 import axios from 'axios';
 import { apiUrl ,apiAsset} from "@commons/inFormTypes";
 import AsyncStorage from  '@react-native-async-storage/async-storage';
+import { ThemeContext } from '../../../theme/theme-context';
 
  const ListenBook = ({navigation,route }) => {
-   
+  const {  theme } = useContext(ThemeContext);
   const [checked, setChecked] = React.useState('first');
   const [isModalVisible, setModalVisible] = useState(false); 
   const [isplay, setPlay] = useState(false);
@@ -111,35 +112,35 @@ setPlay(true)
 return (
    <ScrollView>
       <View style={{display:'flex',justifyContent:'center',alignContent:'center',alignItems:'center'}} >
-        <Image source={{uri:apiAsset+image}} style={styles.backgroundImage}  blurRadius={5}/>
-        <View style={styles.backView}>
+        <Image source={{uri:apiAsset+image}} style={styles(theme).backgroundImage}  blurRadius={5}/>
+        <View style={styles(theme).backView}>
          <TouchableOpacity onPress={()=>navigation.goBack()}>
       <Icon name={'west'} size={30} color={'#fff'} style={{}}/>
    
      </TouchableOpacity>
       
      </View>
-        <Image source={{uri:apiAsset+image}} style={styles.overImg}/>
+        <Image source={{uri:apiAsset+image}} style={styles(theme).overImg}/>
       </View>
-      <View style={styles.whiteBack}>
-      <Text style={styles.eachBookName}>{BookName}</Text>
-      <Text style={styles.eachBookDetail}>{writer}</Text>
+      <View style={styles(theme).whiteBack}>
+      <Text style={styles(theme).eachBookName}>{BookName}</Text>
+      <Text style={styles(theme).eachBookDetail}>{writer}</Text>
       <View style={{display:'flex',flexDirection:'row-reverse',marginRight:'auto',marginLeft:'auto',marginTop:responsiveHeight(5)}}>
-        <TouchableOpacity style={styles.btnBox}>
-          <Image source={require('@assets/images/speed.png')} style={styles.btnBoxImg}/>
-          <Text style={styles.btnBoxTxt}>سرعت</Text>
+        <TouchableOpacity style={styles(theme).btnBox}>
+          <Image source={require('@assets/images/speed.png')} style={styles(theme).btnBoxImg}/>
+          <Text style={styles(theme).btnBoxTxt}>سرعت</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.btnBox}>
-          <Image source={require('@assets/images/share.png')} style={styles.btnBoxImg}/>
-          <Text style={styles.btnBoxTxt}>اشتراک گذاری</Text>
+        <TouchableOpacity style={styles(theme).btnBox}>
+          <Image source={require('@assets/images/share.png')} style={styles(theme).btnBoxImg}/>
+          <Text style={styles(theme).btnBoxTxt}>اشتراک گذاری</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.btnBox}>
-          <Image source={require('@assets/images/save.png')} style={styles.btnBoxImg}/>
-          <Text style={styles.btnBoxTxt}>نشان کردن</Text>
+        <TouchableOpacity style={styles(theme).btnBox}>
+          <Image source={require('@assets/images/save.png')} style={styles(theme).btnBoxImg}/>
+          <Text style={styles(theme).btnBoxTxt}>نشان کردن</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.btnBox} onPress={toggleModal} >
-          <Image source={require('@assets/images/car.png')} style={styles.btnBoxImg}/>
-          <Text style={styles.btnBoxTxt}>حالت ماشین</Text>
+        <TouchableOpacity style={styles(theme).btnBox} onPress={toggleModal} >
+          <Image source={require('@assets/images/car.png')} style={styles(theme).btnBoxImg}/>
+          <Text style={styles(theme).btnBoxTxt}>حالت ماشین</Text>
         </TouchableOpacity>
       </View>
       {/* player Code is Here */}
@@ -158,18 +159,18 @@ return (
       <TouchableOpacity onPress={toggleModal2} style={{marginTop:50,marginLeft:100,}}>
         <Icon name={'access-time'} size={35}/>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.loginBtn}>
-       <Text style={styles.btnText}>دریافت نسخه کامل</Text>
+      <TouchableOpacity style={styles(theme).loginBtn}>
+       <Text style={styles(theme).btnText}>دریافت نسخه کامل</Text>
      </TouchableOpacity>
       </View>
       <Modal isVisible={isModalVisible} onBackdropPress={() => setModalVisible(false)} >
- <View style={styles.editModal}>
-   <Text style={styles.modalTitle}>
+ <View style={styles(theme).editModal}>
+   <Text style={styles(theme).modalTitle}>
      حالت ماشین
    </Text>
   <View style={{display:'flex',justifyContent:'center',alignContent:'center',alignItems:'center'}}>
 
-    <TouchableOpacity onPress={()=>togglePlayback()} style={styles.playBtn}>
+    <TouchableOpacity onPress={()=>togglePlayback()} style={styles(theme).playBtn}>
     {
             isplay?
             <Icon name={'pause-circle-filled'} color={Colors.darkGreen} size={90} />
@@ -179,120 +180,120 @@ return (
     </TouchableOpacity>
     <View style={{display:'flex',flexDirection:'row-reverse',marginTop:responsiveHeight(5)}}>
       <TouchableOpacity onPress={()=> seeks("prev")} style={{padding:responsiveHeight(2),borderLeftColor:'#c1c1c1',borderLeftWidth:1}}>
-        <Image source={require('@assets/images/15after.png')} style={styles.after}/>
+        <Image source={require('@assets/images/15after.png')} style={styles(theme).after}/>
       </TouchableOpacity>
       <TouchableOpacity onPress={()=> seeks("next")} style={{padding:responsiveHeight(2)}}>
-      <Image source={require('@assets/images/15before.png')} style={styles.after}/>
+      <Image source={require('@assets/images/15before.png')} style={styles(theme).after}/>
       </TouchableOpacity>
     </View>
   </View>
  </View>
  </Modal>
  <Modal isVisible={isModalVisible2} onBackdropPress={() => setModalVisible2(false)} >
- <View style={styles.editModal}>
-   <Text style={styles.modalTitle}>
+ <View style={styles(theme).editModal}>
+   <Text style={styles(theme).modalTitle}>
      زمان سنج توقف
    </Text>
-   <View style={styles.radioRow}>
-  <View style={styles.radioView}>
+   <View style={styles(theme).radioRow}>
+  <View style={styles(theme).radioView}>
   <RadioButton
         value="first"
         status={ checked === 'first' ? 'checked' : 'unchecked' }
         onPress={() => setChecked('first')}
         color={Colors.darkGreen}
       />
-  <Text style={styles.radionText}>
+  <Text style={styles(theme).radionText}>
     خاموش
   </Text>
       </View>
   </View>
-  <View style={styles.radioRow}>
-  <View style={styles.radioView}>
+  <View style={styles(theme).radioRow}>
+  <View style={styles(theme).radioView}>
   <RadioButton
         value="second"
         status={ checked === 'second' ? 'checked' : 'unchecked' }
         onPress={() => setChecked('second')}
         color={Colors.darkGreen}
       />
-  <Text style={styles.radionText}>
+  <Text style={styles(theme).radionText}>
    تا پایان اپیزود
   </Text>
       </View>
   </View>
-  <View style={styles.radioRow}>
-  <View style={styles.radioView}>
+  <View style={styles(theme).radioRow}>
+  <View style={styles(theme).radioView}>
   <RadioButton
         value="third"
         status={ checked === 'third' ? 'checked' : 'unchecked' }
         onPress={() => setChecked('third')}
         color={Colors.darkGreen}
       />
-  <Text style={styles.radionText}>
+  <Text style={styles(theme).radionText}>
  دقیقه 5
   </Text>
       </View>
   </View>
-  <View style={styles.radioRow}>
-  <View style={styles.radioView}>
+  <View style={styles(theme).radioRow}>
+  <View style={styles(theme).radioView}>
   <RadioButton
         value="four"
         status={ checked === 'four' ? 'checked' : 'unchecked' }
         onPress={() => setChecked('four')}
         color={Colors.darkGreen}
       />
-  <Text style={styles.radionText}>
+  <Text style={styles(theme).radionText}>
     دقیقه 10
   </Text>
       </View>
   </View>
-  <View style={styles.radioRow}>
-  <View style={styles.radioView}>
+  <View style={styles(theme).radioRow}>
+  <View style={styles(theme).radioView}>
   <RadioButton
         value="five"
         status={ checked === 'five' ? 'checked' : 'unchecked' }
         onPress={() => setChecked('five')}
         color={Colors.darkGreen}
       />
-  <Text style={styles.radionText}>
+  <Text style={styles(theme).radionText}>
     دقیقه 15
   </Text>
       </View>
   </View>
-  <View style={styles.radioRow}>
-  <View style={styles.radioView}>
+  <View style={styles(theme).radioRow}>
+  <View style={styles(theme).radioView}>
   <RadioButton
         value="six"
         status={ checked === 'six' ? 'checked' : 'unchecked' }
         onPress={() => setChecked('six')}
         color={Colors.darkGreen}
       />
-  <Text style={styles.radionText}>
+  <Text style={styles(theme).radionText}>
     دقیقه 30
   </Text>
       </View>
   </View>
-  <View style={styles.radioRow}>
-  <View style={styles.radioView}>
+  <View style={styles(theme).radioRow}>
+  <View style={styles(theme).radioView}>
   <RadioButton
         value="seven"
         status={ checked === 'seven' ? 'checked' : 'unchecked' }
         onPress={() => setChecked('seven')}
         color={Colors.darkGreen}
       />
-  <Text style={styles.radionText}>
+  <Text style={styles(theme).radionText}>
     دقیقه 45
   </Text>
       </View>
   </View>
-  <View style={styles.radioRow}>
-  <View style={styles.radioView}>
+  <View style={styles(theme).radioRow}>
+  <View style={styles(theme).radioView}>
   <RadioButton
         value="eight"
         status={ checked === 'eight' ? 'checked' : 'unchecked' }
         onPress={() => setChecked('eight')}
         color={Colors.darkGreen}
       />
-  <Text style={styles.radionText}>
+  <Text style={styles(theme).radionText}>
     دقیقه 60
   </Text>
       </View>
@@ -304,7 +305,10 @@ return (
 );
 };
 
-const styles = StyleSheet.create({
+const styles = (theme) => StyleSheet.create({
+  whiteBack:{
+    backgroundColor:theme.backgroundColor,
+  },
   backgroundImage:{
     height:responsiveHeight(50),
     width:responsiveWidth(100),
@@ -326,12 +330,12 @@ const styles = StyleSheet.create({
       flex:1,
     },eachBookName:{
       ...myFontStyle.UltraBold,
-      color:'#000',
+      color:theme.textTitle,
       textAlign:'center',
       marginTop:responsiveHeight(2),
   },eachBookDetail:{
     ...myFontStyle.bookWriter3,
-    color:'#000',
+    color:theme.textTitle,
     textAlign:'center',
     
     
@@ -341,7 +345,7 @@ const styles = StyleSheet.create({
     resizeMode:'contain'
   },btnBoxTxt:{
     ...myFontStyle.bookWriter3,
-    color:"#000"
+    color:theme.textTitle,
   },btnBox:{
     borderLeftColor:'#c1c1c1',
     borderLeftWidth:1,

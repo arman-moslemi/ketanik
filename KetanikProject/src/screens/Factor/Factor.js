@@ -1,4 +1,4 @@
-import React, {useState,useEffect} from 'react';
+import React, {useState,useEffect,useContext} from 'react';
 import {View, TextInput, Text, TouchableOpacity,Image,ScrollView,ImageBackground} from 'react-native';
 
 
@@ -12,10 +12,11 @@ import { myFontStyle } from "@assets/Constance";
 import AsyncStorage from  '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import { apiUrl ,apiAsset} from "@commons/inFormTypes"
+import { ThemeContext } from '../../../theme/theme-context';
 
 
  const Factor = ({navigation }) => {
-  
+  const {  theme } = useContext(ThemeContext);
   const [data,setData]=useState([]);
 
   useEffect(() => {
@@ -51,16 +52,16 @@ const  mutLogin=async()=> {
         };
   const [checked, setChecked] = React.useState('first');
 return (
-    <View style={{backgroundColor:'#fff',flex:1}}>
+    <View style={{backgroundColor:theme.backgroundColor,flex:1}}>
 
-<View style={styles.customRow}>
+<View style={styles(theme).customRow}>
         
     
     </View>
-    <View style={styles.topBar}>
+    <View style={styles(theme).topBar}>
 
     <View style={{flex : 2,textAlign:"right"}}>
-          <Text style={styles.menuTitle}>تراکنش های موفق</Text>
+          <Text style={styles(theme).menuTitle}>تراکنش های موفق</Text>
           </View>
     
         
@@ -72,29 +73,29 @@ return (
     </View>
      
   <ScrollView>
- <View style={styles.container}>
+ <View style={styles(theme).container}>
  
-  <View style={styles.aboutView}>
-<Image source={require('@assets/images/logo.png')} style={styles.backgroundImg}/>
-    <View style={styles.tableBorder}>
+  <View style={styles(theme).aboutView}>
+<Image source={require('@assets/images/logo.png')} style={styles(theme).backgroundImg}/>
+    <View style={styles(theme).tableBorder}>
     <View style={{display:'flex',flexDirection:'row-reverse'}}>
       <View style={{width:responsiveWidth(25),padding:5,borderLeftColor:'#d3d3d3',borderLeftWidth:0.5}}>
-        <Text style={styles.tableHeader}>
+        <Text style={styles(theme).tableHeader}>
           تاریخ
         </Text>
       </View>
       <View style={{width:responsiveWidth(20),padding:5,borderLeftColor:'#d3d3d3',borderLeftWidth:0.5}}>
-        <Text style={styles.tableHeader}>
+        <Text style={styles(theme).tableHeader}>
          واریز/برداشت
         </Text>
       </View>
       <View style={{width:responsiveWidth(25),padding:5,borderLeftColor:'#d3d3d3',borderLeftWidth:0.5}}>
-        <Text style={styles.tableHeader}>
+        <Text style={styles(theme).tableHeader}>
          توضیحات
         </Text>
       </View>
       <View style={{width:responsiveWidth(20),padding:5}}>
-        <Text style={styles.tableHeader}>
+        <Text style={styles(theme).tableHeader}>
           وضعیت
         </Text>
       </View>
@@ -105,28 +106,28 @@ return (
 
     <View style={{flexDirection:'row-reverse',borderTopColor:'#d3d3d3',borderTopWidth:0.5,alignItems:'center'}}>
       <View style={{width:responsiveWidth(25),borderLeftColor:'#d3d3d3',borderLeftWidth:0.5}}>
-        <Text style={styles.tableContentDate}>
+        <Text style={styles(theme).tableContentDate}>
 {item.Date}        </Text>
       </View>
       <View style={{width:responsiveWidth(20),padding:5,borderLeftColor:'#d3d3d3',borderLeftWidth:0.5}}>
-        <Text style={styles.tableContentGreen}>
+        <Text style={styles(theme).tableContentGreen}>
          {item.Cost} تومان
         </Text>
       </View>
       <View style={{width:responsiveWidth(25),padding:5,borderLeftColor:'#d3d3d3',borderLeftWidth:0.5}}>
-        <Text style={styles.tableContent}>
+        <Text style={styles(theme).tableContent}>
          خرید
         </Text>
-        <Text style={styles.tableContent}>
+        <Text style={styles(theme).tableContent}>
        {item.BookName}
         </Text>
       </View>
       <View style={{width:responsiveWidth(20),padding:5}}> 
-        <Text style={styles.tableContent}>
+        <Text style={styles(theme).tableContent}>
           {/* کیف پول */}
           آنلاین
         </Text>
-        <Text style={styles.tableContentGreen}>
+        <Text style={styles(theme).tableContentGreen}>
          موفق
         </Text>
       </View>
@@ -145,7 +146,7 @@ return (
 );
 };
 
-const styles = StyleSheet.create({
+const styles =(theme) => StyleSheet.create({
     container: {
         paddingRight:responsiveWidth(2),
         paddingLeft:responsiveWidth(2),
@@ -156,7 +157,7 @@ const styles = StyleSheet.create({
 
     menuTitle:{
 ...myFontStyle.UltraBold,
-      color:Colors.darkGreen,
+color:theme.menuTitle,
       zIndex:10000,
     },
 
@@ -168,7 +169,7 @@ const styles = StyleSheet.create({
     top:responsiveHeight(0),
     paddingRight:responsiveWidth(5),
     paddingLeft:responsiveWidth(5),
-    backgroundColor:'#fff',
+    backgroundColor:theme.topRowBack,
     marginTop:responsiveHeight(-13),
     height : responsiveHeight(25),
     width : '100%',
@@ -204,12 +205,12 @@ const styles = StyleSheet.create({
   }
   ,aboutText:{
     ...myFontStyle.largeRegular,
-    color:'#111',
+    color:theme.textTitle,
     textAlign:'justify',
     lineHeight:30,
   },aboutTitle:{
   ...myFontStyle.bookTitle,
-  color:'#111',
+  color:theme.textTitle,
   marginBottom:responsiveHeight(2),
   marginTop:responsiveHeight(2),
 },radioView:{
@@ -224,7 +225,7 @@ const styles = StyleSheet.create({
   borderBottomWidth:0.5,
 } ,viewRadio: {flexDirection:'row',alignItems:'center'},
 radionText: {
-  color: '#111',
+  color:theme.textTitle,
   ...myFontStyle.episodeName,
   // lineHeight:responsiveHeight(3)
 
@@ -302,16 +303,16 @@ flexDirection:'row-reverse',
   width:responsiveWidth(90),
 },tableHeader:{
   ...myFontStyle.normalRegular,
-  color:'#111',
+  color:theme.textTitle,
   textAlign:'center'
 },tableContent:{
   ...myFontStyle.normalRegular,
-  color:'#111',
+  color:theme.textTitle,
   textAlign:'center',
 },
 tableContentDate:{
   ...myFontStyle.normalRegular,
-  color:'#111',
+  color:theme.textTitle,
   textAlign:'left',
 },
 tableContentGreen:{

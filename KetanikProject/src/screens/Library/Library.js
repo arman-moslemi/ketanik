@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState,useEffect ,useContext} from 'react';
 import { myFontStyle } from "@assets/Constance";
 import { View, Text , StyleSheet,Image, TouchableOpacity,Button,FlatList,ScrollView} from 'react-native';
 import { TabView, SceneMap,TabBar } from 'react-native-tab-view';
@@ -17,6 +17,8 @@ import {
   LineChart
 
 } from "react-native-chart-kit";
+import { ThemeContext } from '../../../theme/theme-context';
+
 // create a component
 // const [showBox, setShowBox] = useState(false);
 // const onClick = () => setShowBox(true);
@@ -40,7 +42,8 @@ function convertHourstoMinute(time) {
 var minute = time.split(':')[1];
 return parseInt(hour) + Number((minute / 60));
   }
-const FirstRoute = ({dataShow,date,setDate,book,episode,navigation}) => {
+const FirstRoute = ({dataShow,date,setDate,book,episode,navigation,theme}) => {
+
   console.log(dataShow.Data)
   console.log(555)
   console.log(date)
@@ -77,42 +80,42 @@ const FirstRoute = ({dataShow,date,setDate,book,episode,navigation}) => {
     // legend: ["Rainy Days"] // optional
   };
   return(
-    <ScrollView>
+    <ScrollView >
     <View style={{display:'flex',flexDirection:'row-reverse'}}>
-      <View style={styles.lightGreenBack}>
-         <View style={styles.greenCircle}>
-           <Image source={require('@assets/images/category2.png')} style={styles.miniImg}/>
+      <View style={styles(theme).lightGreenBack}>
+         <View style={styles(theme).greenCircle}>
+           <Image source={require('@assets/images/category2.png')} style={styles(theme).miniImg}/>
          </View>
-         <Text style={styles.largeText}>
+         <Text style={styles(theme).largeText}>
            {dataShow?.NumberGroupData}
          </Text>
-         <Text style={styles.miniText}>
+         <Text style={styles(theme).miniText}>
            ژانر خوانده شده
          </Text>
          
       </View>
-      <View style={styles.lightGreenBack}>
-      <View style={styles.greenCircle}>
-           <Image source={require('@assets/images/hour.png')} style={styles.miniImg}/>
+      <View style={styles(theme).lightGreenBack}>
+      <View style={styles(theme).greenCircle}>
+           <Image source={require('@assets/images/hour.png')} style={styles(theme).miniImg}/>
          </View>
-         <Text style={styles.largeText}>
+         <Text style={styles(theme).largeText}>
          {dataShow?.TimeData}
 
          </Text>
-         <Text style={styles.miniText}>
+         <Text style={styles(theme).miniText}>
            ساعت  خوانده شده
          </Text>
   </View>
-  <View style={styles.lightGreenBack}>
-  <View style={styles.greenCircle}>
-           <Image source={require('@assets/images/book.png')} style={styles.miniImg}/>
+  <View style={styles(theme).lightGreenBack}>
+  <View style={styles(theme).greenCircle}>
+           <Image source={require('@assets/images/book.png')} style={styles(theme).miniImg}/>
          
          </View>
-         <Text style={styles.largeText}>
+         <Text style={styles(theme).largeText}>
          {dataShow?.NumberBookData}
 
          </Text>
-         <Text style={styles.miniText}>
+         <Text style={styles(theme).miniText}>
            کتاب خوانده شده
          </Text>
   </View>
@@ -124,7 +127,7 @@ const FirstRoute = ({dataShow,date,setDate,book,episode,navigation}) => {
 
       <Icon name={"keyboard-arrow-left"} color={'#111'} size={30}/>
       </TouchableOpacity>
-        <Text style={styles.largeText}>{month[date-1]}</Text>
+        <Text style={styles(theme).largeText}>{month[date-1]}</Text>
         <TouchableOpacity onPress={()=>setDate(parseInt(date)<12?parseInt(date)<9?"0"+(parseInt(date)+1):parseInt(date)+1:null)}>
 
         <Icon name={"keyboard-arrow-right"} color={'#111'} size={30}/>
@@ -152,13 +155,13 @@ const FirstRoute = ({dataShow,date,setDate,book,episode,navigation}) => {
       book?
 
     <TouchableOpacity onPress={()=>navigation.navigate("ListenBookMain",{id:book,num:episode})} style={{borderRadius:10,backgroundColor:Colors.lightGreen,flexDirection:'row-reverse',height:responsiveHeight(10)}}>
-    <Image source={{uri:apiAsset+book.Pic}} style={styles.imageBook}/>
+    <Image source={{uri:apiAsset+book.Pic}} style={styles(theme).imageBook}/>
     <View>
 
-      <Text style={styles.miniText}>{book.BookName}</Text>
-      <Text style={styles.miniText}>درحال مطالعه</Text>
+      <Text style={styles(theme).miniText}>{book.BookName}</Text>
+      <Text style={styles(theme).miniText}>درحال مطالعه</Text>
       </View>
-      {/* <Text style={styles.miniText}>درحال مطالعه</Text> */}
+      {/* <Text style={styles(theme).miniText}>درحال مطالعه</Text> */}
     </TouchableOpacity>
       :
       null
@@ -174,22 +177,22 @@ const keyExtractor = item => {
 };
 
 
-const SecondRoute = ({show,setShow,data,setRole,roleName,setRoleName,navigation}) => {
+const SecondRoute = ({show,setShow,data,setRole,roleName,setRoleName,navigation,theme}) => {
   const _render = ({item}) => {
     console.log(item.BookName)
   
     return (
-      <TouchableOpacity onPress={()=>navigation.navigate("EpisodesList",{id:item.BookID})} style={styles.libraryBox}>
-      {/* <TouchableOpacity style={styles.littleBtn}>
+      <TouchableOpacity onPress={()=>navigation.navigate("EpisodesList",{id:item.BookID})} style={styles(theme).libraryBox}>
+      {/* <TouchableOpacity style={styles(theme).littleBtn}>
       <Icon name={"more-vert"} color={Colors.darkGreen} size={25}/>
     
       </TouchableOpacity>
-      <TouchableOpacity style={styles.littleBtn2}>
+      <TouchableOpacity style={styles(theme).littleBtn2}>
       <Icon name={"headset"} color={Colors.darkGreen} size={20}/>
     
       </TouchableOpacity> */}
-      <Image source={{uri:apiAsset+item.Pic}} style={styles.libraryBook}/>
-      <Text style={styles.moreText}>{item.RoleName}</Text>
+      <Image source={{uri:apiAsset+item.Pic}} style={styles(theme).libraryBook}/>
+      <Text style={styles(theme).moreText}>{item.RoleName}</Text>
     </TouchableOpacity>
     );
     };
@@ -199,31 +202,31 @@ return(
    <View  style={{position:'relative'}}>
      <TouchableOpacity style={{display:'flex',flexDirection:'row-reverse',marginTop:responsiveHeight(2)}} onPress={()=>setShow(!show)} >
      <Icon name={"notes"} color={'#707070'} size={30} style={{transform: [{rotateY: '180deg'}]}}/>
-       <Text style={styles.pageTitleText}>
+       <Text style={styles(theme).pageTitleText}>
            {roleName}
        </Text>
      </TouchableOpacity>
    {
      show?
     
-     <View style={styles.greenBox}>
-       <TouchableOpacity onPress={()=>{setRole(1);setRoleName("در حال مطالعه");setShow(false)}} style={styles.greenBoxBtn}>
-         <Text style={styles.greenBoxText}>
+     <View style={styles(theme).greenBox}>
+       <TouchableOpacity onPress={()=>{setRole(1);setRoleName("در حال مطالعه");setShow(false)}} style={styles(theme).greenBoxBtn}>
+         <Text style={styles(theme).greenBoxText}>
            در حال مطالعه
          </Text>
        </TouchableOpacity>
-       <TouchableOpacity onPress={()=>{setRole(2);setRoleName("خوانده نشده ها");setShow(false)}} style={styles.greenBoxBtn}>
-         <Text style={styles.greenBoxText}>
+       <TouchableOpacity onPress={()=>{setRole(2);setRoleName("خوانده نشده ها");setShow(false)}} style={styles(theme).greenBoxBtn}>
+         <Text style={styles(theme).greenBoxText}>
          خوانده نشده ها
          </Text>
        </TouchableOpacity>
-       <TouchableOpacity onPress={()=>{setRole(3);setRoleName("خوانده شده ها");setShow(false)}} style={styles.greenBoxBtn}>
-         <Text style={styles.greenBoxText}>
+       <TouchableOpacity onPress={()=>{setRole(3);setRoleName("خوانده شده ها");setShow(false)}} style={styles(theme).greenBoxBtn}>
+         <Text style={styles(theme).greenBoxText}>
            خوانده شده ها
          </Text>
        </TouchableOpacity>
-       <TouchableOpacity onPress={()=>{setRole(4);setRoleName("همه کتاب ها");setShow(false)}} style={styles.greenBoxBtn}>
-         <Text style={styles.greenBoxText}>
+       <TouchableOpacity onPress={()=>{setRole(4);setRoleName("همه کتاب ها");setShow(false)}} style={styles(theme).greenBoxBtn}>
+         <Text style={styles(theme).greenBoxText}>
           همه کتاب ها
          </Text>
        </TouchableOpacity>
@@ -242,7 +245,7 @@ return(
  numColumns={2}
  navigation={navigation}
 
- columnWrapperStyle={styles.charityList}
+ columnWrapperStyle={styles(theme).charityList}
  // style={{marginTop:responsiveHeight(7),marginLeft:responsiveWidth(2),marginBottom:responsiveHeight(20)}}
            // ListFooterComponent={listFooter}
  // onEndReached={fetchNextCharityPage}
@@ -254,16 +257,18 @@ return(
 
 
  const Library = ({navigation }) => {
+  const {  theme } = useContext(ThemeContext);
   const [show,setShow]=useState(false);
   const [roleName,setRoleName]=useState("همه کتاب ها");
 
   const [index, setIndex] = React.useState(0);
   const renderScene = ({ route }) => {
+
     switch (route.key) {
       case 'status':
-        return <FirstRoute navigation={navigation} episode={episode} book={book} date={date} time={time} setDate={setDate} dataShow={dataShow}/>;
+        return <FirstRoute theme={theme} navigation={navigation} episode={episode} book={book} date={date} time={time} setDate={setDate} dataShow={dataShow}/>;
       case 'library':
-        return <SecondRoute navigation={navigation} show={show} setShow={setShow} data={data} setRole={setRole} setRoleName={setRoleName} roleName={roleName} />;
+        return <SecondRoute theme={theme} navigation={navigation} show={show} setShow={setShow} data={data} setRole={setRole} setRoleName={setRoleName} roleName={roleName} />;
       default:
         return null;
     }
@@ -276,14 +281,14 @@ return(
   const renderTabBar = props => (
     <TabBar
       {...props}
-      indicatorStyle={styles.indicatorStyle}
-      style={styles.tabBar}
+      indicatorStyle={styles(theme).indicatorStyle}
+      style={styles(theme).tabBar}
       getLabelText={({route}) => route.title}
       renderLabel={({route, focused, color}) =>
         focused ? (
-          <Text style={styles.tabBarText}>{route.title}</Text>
+          <Text style={styles(theme).tabBarText}>{route.title}</Text>
         ) : (
-          <Text style={styles.tabBarText2}>{route.title}</Text>
+          <Text style={styles(theme).tabBarText2}>{route.title}</Text>
         )
       }
     />
@@ -392,7 +397,7 @@ return(
 return (
   
     <View style={{ flex: 1,padding:0}}>
-          <View style={styles.topBar}>
+          <View style={styles(theme).topBar}>
 
 
 <TouchableOpacity onPress={()=>navigation.goBack()} style={{}}>
@@ -407,7 +412,7 @@ return (
       </TouchableOpacity>
       
 </View>
-      <View style={styles.tabViewBox}>
+      <View style={styles(theme).tabViewBox}>
       <TabView
       renderTabBar={renderTabBar}
       navigationState={{ index, routes }}
@@ -422,7 +427,7 @@ return (
 );
 };
 
-const styles = StyleSheet.create({
+const styles = (theme) =>  StyleSheet.create({
   charityList: {
     marginTop: responsiveHeight(2),
   

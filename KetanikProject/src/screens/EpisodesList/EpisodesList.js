@@ -1,4 +1,4 @@
-import React, {useState,useEffect} from 'react';
+import React, {useState,useEffect,useContext} from 'react';
 import {View, TextInput, Text, TouchableOpacity,Image,ScrollView} from 'react-native';
 
 
@@ -13,6 +13,7 @@ import AsyncStorage from  '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import { apiUrl ,apiAsset} from "@commons/inFormTypes";
 // create a component
+import { ThemeContext } from '../../../theme/theme-context';
 
 
 export const truncate = (str, len) => {
@@ -28,6 +29,7 @@ export const truncate = (str, len) => {
   };
 
  const EpisodesList = ({navigation,route }) => {
+  const {  theme } = useContext(ThemeContext);
     const [data,setData]=useState([]);
     useEffect(() => {
   
@@ -61,19 +63,19 @@ export const truncate = (str, len) => {
       };
 
 return (
-    <View style={{backgroundColor:'#fff',flex:1}}>
+    <View style={{backgroundColor:theme.backgroundColor,flex:1}}>
 
 
 
 
-    <View style={styles.customRow}>
+    <View style={styles(theme).customRow}>
         
     
     </View>
-    <View style={styles.topBar}>
+    <View style={styles(theme).topBar}>
 
     <View style={{flex : 2,textAlign:"right"}}>
-          <Text style={styles.menuTitle}>{data[0]?.BookName} ({data.length} اپیزود)</Text>
+          <Text style={styles(theme).menuTitle}>{data[0]?.BookName} ({data.length} اپیزود)</Text>
           </View>
     
         
@@ -84,27 +86,27 @@ return (
           </View>
     </View>
   <ScrollView>
-  <View style={styles.container}>
+  <View style={styles(theme).container}>
       {
           data.map((item,index)=>{
               return(
 
-    <TouchableOpacity onPress={()=>navigation.navigate("ListenBookMain",{id:id,num:index})} style={styles.episodeList}>
+    <TouchableOpacity onPress={()=>navigation.navigate("ListenBookMain",{id:id,num:index})} style={styles(theme).episodeList}>
        <View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center',flex:1}}>
        <View>
             <Icon name={'headset'} color={'#111'} size={40}/>
         </View>
         <View style={{display:'flex',flexDirection:'column',marginRight:responsiveWidth(3)}}>
-            <Text style={styles.episodeName}>
+            <Text style={styles(theme).episodeName}>
                 {item.Title}
             </Text>
-            <Text style={styles.episodeTime}>
+            <Text style={styles(theme).episodeTime}>
             {item.Size} دقیقه _{item.Time} مگابایت
             </Text>
         </View>
        </View>
       <TouchableOpacity>
-      <View style={styles.downloadView}>
+      <View style={styles(theme).downloadView}>
            <Icon name={'south'} color={Colors.darkGreen} size={20}/>
        </View>
       </TouchableOpacity>
@@ -119,7 +121,7 @@ return (
 );
 };
 
-const styles = StyleSheet.create({
+const styles =  (theme) => StyleSheet.create({
     container: {
         paddingRight:responsiveWidth(5),
         paddingLeft:responsiveWidth(5),
@@ -130,7 +132,7 @@ const styles = StyleSheet.create({
 
     menuTitle:{
 ...myFontStyle.UltraBold,
-      color:Colors.darkGreen,
+      color:theme.textTitle2,
       zIndex:10000,
     },
 
@@ -142,7 +144,7 @@ const styles = StyleSheet.create({
     top:responsiveHeight(0),
     paddingRight:responsiveWidth(5),
     paddingLeft:responsiveWidth(5),
-    backgroundColor:'#fff',
+    backgroundColor:theme.topRowBack,
     marginTop:responsiveHeight(-13),
     height : responsiveHeight(25),
     width : '100%',
@@ -176,7 +178,7 @@ const styles = StyleSheet.create({
       paddingTop:responsiveHeight(2)
   },episodeName:{
       ...myFontStyle.episodeName,
-      color:Colors.darkGreen,
+      color:theme.textTitle2,
   },episodeTime:{
     ...myFontStyle.episodeName,
     color:'#929292',

@@ -1,4 +1,4 @@
-import React, {useState,useEffect} from 'react';
+import React, {useState,useEffect,useContext} from 'react';
 import {View,Text, TouchableOpacity,Image,ScrollView,TextInput,FlatList} from 'react-native';
 
 import { StyleSheet } from 'react-native';
@@ -13,6 +13,7 @@ import AsyncStorage from  '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import { apiUrl ,apiAsset} from "@commons/inFormTypes";
 // create a component
+import { ThemeContext } from '../../../theme/theme-context';
 
 
 export const truncate = (str, len) => {
@@ -28,6 +29,8 @@ export const truncate = (str, len) => {
   };
 
  const Cart = ({navigation }) => {
+  const {  theme } = useContext(ThemeContext);
+
     const [data,setData]=useState([]);
     const [cost,setCost]=useState(0);
     const [discount,setDis]=useState("");
@@ -120,17 +123,17 @@ mutLogin()
   const _render = (item) => {
     console.log(item.item.BookName)
     return (
-        <View style={styles.bookRow}>
-        <Image source={{uri:apiAsset+item.item.Pic}} style={styles.bookImg}/>
+        <View style={styles(theme).bookRow}>
+        <Image source={{uri:apiAsset+item.item.Pic}} style={styles(theme).bookImg}/>
         <View style={{marginRight:responsiveWidth(3)}}>
-            <Text style={styles.bookTitle}>
+            <Text style={styles(theme).bookTitle}>
             {truncate(item.item.BookName,20)}
            {/* { item.item.BookName} */}
             </Text>
-            <Text style={styles.bookWriter}>
+            <Text style={styles(theme).bookWriter}>
             {truncate(item.item.Writer,20)}
             </Text>
-            <Text style={styles.bookWriter}>
+            <Text style={styles(theme).bookWriter}>
             {truncate("ناشر :"+item.item.Publisher,30)}
             </Text>
             <View style={{display:'flex',flexDirection:'row-reverse'}}>
@@ -148,10 +151,10 @@ index+1>item.item.Rate?
         </View>
         <View style={{display:"flex",flexDirection:'column',alignContent:'flex-end',justifyContent:'space-between'}}>
         <TouchableOpacity onPress={()=>mutDel(item.item.ShoppingBasketID)}>
-       <Image source={require('@assets/images/delete.png')} style={styles.deleteImg}/>
+       <Image source={require('@assets/images/delete.png')} style={styles(theme).deleteImg}/>
        </TouchableOpacity>
             <View>
-                <Text style={styles.price}>
+                <Text style={styles(theme).price}>
                     {item.item.Cost} تومان
                 </Text>
             </View>
@@ -160,21 +163,21 @@ index+1>item.item.Rate?
     );
   };
 return (
-    <View style={{backgroundColor:'#fff',flex:1}}>
+    <View style={{backgroundColor:theme.backgroundColor,flex:1}}>
 
 
 
 
-    <View style={styles.customRow}>
+    <View style={styles(theme).customRow}>
         
     
     </View>
-    <View style={styles.topBar}>
+    <View style={styles(theme).topBar}>
 
     <View style={{flex : 2,textAlign:"right",display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>
-          <Text style={styles.menuTitle}>سبد خرید</Text>
-          <View style={styles.badget}>
-              <Text style={styles.badgetText}>{data.length}</Text>
+          <Text style={styles(theme).menuTitle}>سبد خرید</Text>
+          <View style={styles(theme).badget}>
+              <Text style={styles(theme).badgetText}>{data.length}</Text>
           </View>
           </View>
     
@@ -186,7 +189,7 @@ return (
           </View>
     </View>
   <ScrollView>
-  <View style={styles.container}>
+  <View style={styles(theme).container}>
   
   <FlatList
  
@@ -197,26 +200,26 @@ renderItem={_render}
           // ListFooterComponent={listFooter}
 // onEndReached={fetchNextCharityPage}
 />
-<View style={styles.takhfifRow}>
+<View style={styles(theme).takhfifRow}>
     <View>
-        <Image source={require('@assets/images/discount.png')} style={styles.discountImg}/>
+        <Image source={require('@assets/images/discount.png')} style={styles(theme).discountImg}/>
     </View>
     <View>
-        <Text style={styles.discountText}>
+        <Text style={styles(theme).discountText}>
             کد تخفیف : 
         </Text>
     </View>
     <View>
-        <TextInput onChangeText={(ee)=>setDis(ee)} placeholder="" style={styles.discountInput} />
+        <TextInput onChangeText={(ee)=>setDis(ee)} placeholder="" style={styles(theme).discountInput} />
     </View>
     <View>
-    <TouchableOpacity onPress={()=>dis()} style={styles.loginBtn}>
-       <Text style={styles.btnText}>ثبت</Text>
+    <TouchableOpacity onPress={()=>dis()} style={styles(theme).loginBtn}>
+       <Text style={styles(theme).btnText}>ثبت</Text>
      </TouchableOpacity>
     </View>
 </View>
-<TouchableOpacity onPress={()=>navigation.navigate("Factor")} style={styles.purchaseBtn}>
-       <Text style={styles.purchaseBtnText}>پرداخت | {cost}</Text>
+<TouchableOpacity onPress={()=>navigation.navigate("Factor")} style={styles(theme).purchaseBtn}>
+       <Text style={styles(theme).purchaseBtnText}>پرداخت | {cost}</Text>
      </TouchableOpacity>
    </View>
   </ScrollView>
@@ -224,7 +227,7 @@ renderItem={_render}
 );
 };
 
-const styles = StyleSheet.create({
+const styles = (theme) => StyleSheet.create({
     container: {
         paddingRight:responsiveWidth(3),
         paddingLeft:responsiveWidth(3),
@@ -235,7 +238,7 @@ const styles = StyleSheet.create({
 
     menuTitle:{
 ...myFontStyle.UltraBold,
-      color:Colors.darkGreen,
+      color:theme.textTitle2,
       zIndex:10000,
     },
 
@@ -247,7 +250,7 @@ const styles = StyleSheet.create({
     top:responsiveHeight(0),
     paddingRight:responsiveWidth(5),
     paddingLeft:responsiveWidth(5),
-    backgroundColor:'#fff',
+    backgroundColor:theme.topRowBack,
     marginTop:responsiveHeight(-13),
     height : responsiveHeight(25),
     width : '100%',
@@ -375,7 +378,7 @@ const styles = StyleSheet.create({
       height:30,
   },discountText:{
       ...myFontStyle.largBold,
-      color:'#343434',
+      color:theme.textTitle,
       marginRight:responsiveWidth(2),
   },takhfifRow:{
       display:'flex',
@@ -402,7 +405,7 @@ const styles = StyleSheet.create({
     alignContent:'center',
     alignItems:'center',
    justifyContent:'center',
-    borderRadius:15,
+    borderRadius:10,
     display:'flex',
   },btnText:{
     ...myFontStyle.largBold,
@@ -412,11 +415,11 @@ const styles = StyleSheet.create({
     backgroundColor:Colors.darkGreen,
     width:responsiveWidth(75),
     marginTop:responsiveHeight(2),
-    height:responsiveHeight(8),
+    height:responsiveHeight(7),
     alignContent:'center',
     alignItems:'center',
 justifyContent:'center',
-    borderRadius:15,
+    borderRadius:10,
     marginRight:'auto',
     marginLeft:'auto',
   },purchaseBtnText:{
