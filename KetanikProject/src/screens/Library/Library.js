@@ -1,13 +1,13 @@
 import React, { useState,useEffect } from 'react';
 import { myFontStyle } from "@assets/Constance";
-import { View, Text , StyleSheet,Image, TouchableOpacity,Button,FlatList} from 'react-native';
+import { View, Text , StyleSheet,Image, TouchableOpacity,Button,FlatList,ScrollView} from 'react-native';
 import { TabView, SceneMap,TabBar } from 'react-native-tab-view';
 import { responsiveFontSize, responsiveHeight, responsiveScreenWidth, responsiveWidth } from 'react-native-responsive-dimensions';
 import { Colors} from "@assets/Colors";
 import {Input} from '@components/Input';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Modal from "react-native-modal";
-import { ScrollView } from 'react-native-web';
+// import { ScrollView } from 'react-native-web';
 import AsyncStorage from  '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import { apiUrl ,apiAsset} from "@commons/inFormTypes";
@@ -22,81 +22,153 @@ import {
 // const onClick = () => setShowBox(true);
 
 
-const data2 = {
-  labels: ["January", "February", "March", "April", "May", "June"],
-  datasets: [
-    {
-      data: [20, 45, 28, 80, 99, 43],
-      color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})`, // optional
-      strokeWidth: 2 // optional
-    }
-  ],
-  legend: ["Rainy Days"] // optional
-};
+
 const chartConfig = {
   backgroundGradientFrom: "#F4F4F4",
   backgroundGradientFromOpacity: 10,
   backgroundGradientTo: "#F4F4F4",
   // backgroundGradientToOpacity: 0.1,
-  color: (opacity = 1) => `rgba(22, 178, 245, 1)`,
+  color: (opacity = 1) => `rgba(50, 101, 92, 1)`,
   strokeWidth: 30, // optional, default 3
-  barPercentage: 1,
+  barPercentage: 0,
   labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
   // decimalPlaces: 1,
   useShadowColorFromDataset: false  // optional
 };
-const FirstRoute = () => (
-  <View>
-  <View style={{display:'flex',flexDirection:'row-reverse'}}>
-    <View style={styles.lightGreenBack}>
-       <View style={styles.greenCircle}>
-         <Image source={require('@assets/images/category2.png')} style={styles.miniImg}/>
-       </View>
-       <Text style={styles.largeText}>
-         23
-       </Text>
-       <Text style={styles.miniText}>
-         ژانر خوانده شده
-       </Text>
-       
-    </View>
-    <View style={styles.lightGreenBack}>
-    <View style={styles.greenCircle}>
-         <Image source={require('@assets/images/hour.png')} style={styles.miniImg}/>
-       </View>
-       <Text style={styles.largeText}>
-         23
-       </Text>
-       <Text style={styles.miniText}>
-         ساعت کتاب خوانده شده
-       </Text>
-</View>
-<View style={styles.lightGreenBack}>
-<View style={styles.greenCircle}>
-         <Image source={require('@assets/images/book.png')} style={styles.miniImg}/>
-       
-       </View>
-       <Text style={styles.largeText}>
-         23
-       </Text>
-       <Text style={styles.miniText}>
-         کتاب خوانده شده
-       </Text>
-</View>
+function convertHourstoMinute(time) {
+  var hour = time.split(':')[0]; //Split returns an array
+var minute = time.split(':')[1];
+return parseInt(hour) + Number((minute / 60));
+  }
+const FirstRoute = ({dataShow,date,setDate,book,episode,navigation}) => {
+  console.log(dataShow.Data)
+  console.log(555)
+  console.log(date)
+  var ss=[0]
+    var dd=[0]
+  var month=["فروردین","اردیبهشت","خرداد","تیر","مرداد","شهریور","مهر","آبان","آذر","دی","بهمن","اسفند"]
+  const data2 = {
+    labels: ["January", "February", "March", "April", "May", "June"],
+    datasets: [
+      {
+        data: [20, 45, 28, 80, 99, 43],
+        color: (opacity = 1) => `rgba(50, 101, 92 ${opacity})`, // optional
+        strokeWidth: 2 // optional
+      }
+    ],
+    // legend: ["Rainy Days"] // optional
+  };
+  dataShow.Data?.map((item,index)=>{
+   if( index>15){
 
+     dd.push(date+"/"+index)
+     ss.push(convertHourstoMinute(item))
+   }
+  })
+  const data3 = {
+    labels: dd,
+    datasets: [
+      {
+        data: ss,
+        color: (opacity = 1) => `rgba(50, 101, 92, ${opacity})`, // optional
+        strokeWidth: 2 // optional
+      }
+    ],
+    // legend: ["Rainy Days"] // optional
+  };
+  return(
+    <ScrollView>
+    <View style={{display:'flex',flexDirection:'row-reverse'}}>
+      <View style={styles.lightGreenBack}>
+         <View style={styles.greenCircle}>
+           <Image source={require('@assets/images/category2.png')} style={styles.miniImg}/>
+         </View>
+         <Text style={styles.largeText}>
+           {dataShow?.NumberGroupData}
+         </Text>
+         <Text style={styles.miniText}>
+           ژانر خوانده شده
+         </Text>
+         
+      </View>
+      <View style={styles.lightGreenBack}>
+      <View style={styles.greenCircle}>
+           <Image source={require('@assets/images/hour.png')} style={styles.miniImg}/>
+         </View>
+         <Text style={styles.largeText}>
+         {dataShow?.TimeData}
+
+         </Text>
+         <Text style={styles.miniText}>
+           ساعت  خوانده شده
+         </Text>
   </View>
-  <View>
-<LineChart
-  data={data2}
-  width={responsiveWidth(100)}
-  height={256}
-  verticalLabelRotation={30}
-  chartConfig={chartConfig}
-  bezier
-/>
-</View>
-</View>
-);
+  <View style={styles.lightGreenBack}>
+  <View style={styles.greenCircle}>
+           <Image source={require('@assets/images/book.png')} style={styles.miniImg}/>
+         
+         </View>
+         <Text style={styles.largeText}>
+         {dataShow?.NumberBookData}
+
+         </Text>
+         <Text style={styles.miniText}>
+           کتاب خوانده شده
+         </Text>
+  </View>
+  
+    </View>
+    <View style={{marginTop:30,alignItems:'center'}}>
+      <View style={{marginBottom:10,flexDirection:'row'}}>
+      <TouchableOpacity onPress={()=>setDate(parseInt(date)>1?parseInt(date)<11?"0"+(parseInt(date)-1):parseInt(date)-1:null)}>
+
+      <Icon name={"keyboard-arrow-left"} color={'#111'} size={30}/>
+      </TouchableOpacity>
+        <Text style={styles.largeText}>{month[date-1]}</Text>
+        <TouchableOpacity onPress={()=>setDate(parseInt(date)<12?parseInt(date)<9?"0"+(parseInt(date)+1):parseInt(date)+1:null)}>
+
+        <Icon name={"keyboard-arrow-right"} color={'#111'} size={30}/>
+        </TouchableOpacity>
+
+      </View>
+      <ScrollView 
+        horizontal={true}
+        showsHorizontalScrollIndicator={false}>
+  <LineChart
+    // data={date.length>0?date:data2}
+    data={data3}
+    width={responsiveWidth(180)}
+    height={responsiveHeight(30)}
+    verticalLabelRotation={0}
+    chartConfig={chartConfig}
+    bezier
+    withHorizontalLines={false}
+  />
+
+      </ScrollView>
+  </View>
+  <View style={{paddingHorizontal:responsiveWidth(8)}}>
+    {
+      book?
+
+    <TouchableOpacity onPress={()=>navigation.navigate("ListenBookMain",{id:book,num:episode})} style={{borderRadius:10,backgroundColor:Colors.lightGreen,flexDirection:'row-reverse',height:responsiveHeight(10)}}>
+    <Image source={{uri:apiAsset+book.Pic}} style={styles.imageBook}/>
+    <View>
+
+      <Text style={styles.miniText}>{book.BookName}</Text>
+      <Text style={styles.miniText}>درحال مطالعه</Text>
+      </View>
+      {/* <Text style={styles.miniText}>درحال مطالعه</Text> */}
+    </TouchableOpacity>
+      :
+      null
+    }
+  </View>
+  </ScrollView>
+  )
+}
+ 
+
 const keyExtractor = item => {
   return item.BookID;
 };
@@ -189,7 +261,7 @@ return(
   const renderScene = ({ route }) => {
     switch (route.key) {
       case 'status':
-        return <FirstRoute  />;
+        return <FirstRoute navigation={navigation} episode={episode} book={book} date={date} time={time} setDate={setDate} dataShow={dataShow}/>;
       case 'library':
         return <SecondRoute navigation={navigation} show={show} setShow={setShow} data={data} setRole={setRole} setRoleName={setRoleName} roleName={roleName} />;
       default:
@@ -217,14 +289,20 @@ return(
     />
   );
   const [data,setData]=useState([]);
+  const [dataShow,setDataShow]=useState([]);
+  const [date,setDate]=useState();
+  const [time,setTime]=useState([]);
+  const [main,setMain]=useState([]);
   const [role,setRole]=useState(null);
-  const [slider,setSlider]=useState([]);
+  const [book,setBook]=useState(null);
+  const [episode,setEpisode]=useState();
   useEffect(() => {
 
     mutLogin();
+    mutShow();
+    GetBook();
 
-
-}, [role]);
+}, [role,date]);
 
   const  mutLogin=async()=> {
     const state = await AsyncStorage.getItem("@user");
@@ -250,6 +328,67 @@ return(
 
 
     };
+  const  GetBook=async()=> {
+    const state = await AsyncStorage.getItem("@user");
+    const books = await AsyncStorage.getItem("@bookid");
+    const episode = await AsyncStorage.getItem("@epid");
+
+    axios.post(apiUrl+'SingleBook',{CustomerID:state,BookID:books})
+    .then(function (response) {
+      const message = response.data;
+      const result = response.data.result;
+      console.log(message);
+
+      if(result == "true"){
+        setBook(response.data.GroupData)
+        setEpisode(episode)
+
+
+        // navigation.navigate("ChangePass",{mobile:user,verify:response.data.Data})
+                        }else{
+
+      }
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+
+
+    };
+    function convertHourstoMinute(time) {
+      var hour = time.split(':')[0]; //Split returns an array
+   var minute = time.split(':')[1];
+   return parseInt(hour) + Number((minute / 60));
+      }
+    const  mutShow=async()=> {
+      const state = await AsyncStorage.getItem("@user");
+      axios.post(apiUrl+'ReadCustomer',{CustomerID:state,Month:date?date:null})
+      .then(function (response) {
+        const message = response.data;
+        const result = response.data.result;
+        console.log(987);
+        console.log(date)
+        console.log(message);
+        console.log(response.data.Data);
+        console.log(response.data.Month);
+  
+        if(result == "true"){
+          setDataShow(response.data)
+          var dd=[]
+          var ss=[]
+          var mm=[]
+          setDate(response.data.Month)
+          // navigation.navigate("ChangePass",{mobile:user,verify:response.data.Data})
+                          }else{
+  
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  
+  
+      };
 return (
   
     <View style={{ flex: 1,padding:0}}>
@@ -362,13 +501,24 @@ indicatorStyle:{
 },forgetPassBtnText:{
   color:'#3495fe',
   ...myFontStyle.largBold,
-},libraryBook:{
+}
+,
+libraryBook:{
     // width:"100%",
     height:responsiveHeight(19),
     resizeMode:'cover',
     borderRadius:10,
     
-},libraryBox:{
+},
+imageBook:{
+  width:responsiveWidth(15),
+  height:"100%",
+  resizeMode:'cover',
+  borderRadius:10,
+  marginLeft:10
+  
+},
+libraryBox:{
   height:responsiveHeight(19),
   width:responsiveWidth(37.5),
   marginRight:'auto',

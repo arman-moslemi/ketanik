@@ -156,7 +156,7 @@ return (
        <Image source={require('@assets/images/userProfileTop.png')} style={styles(theme).topImg}/>
    
      <View style={styles(theme).backView}>
-     <TouchableOpacity>
+     <TouchableOpacity onPress={()=>navigation.goBack()}>
      <Icon name={'west'} size={40} color={'#111'} style={{}}/>
    
      </TouchableOpacity>

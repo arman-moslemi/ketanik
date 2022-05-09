@@ -113,7 +113,7 @@ return (
       <View style={{display:'flex',justifyContent:'center',alignContent:'center',alignItems:'center'}} >
         <Image source={{uri:apiAsset+image}} style={styles.backgroundImage}  blurRadius={5}/>
         <View style={styles.backView}>
-         <TouchableOpacity>
+         <TouchableOpacity onPress={()=>navigation.goBack()}>
       <Icon name={'west'} size={30} color={'#fff'} style={{}}/>
    
      </TouchableOpacity>
