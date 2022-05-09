@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState,useEffect ,useContext} from 'react';
 import { myFontStyle } from "@assets/Constance";
 import { View, Text , StyleSheet,Image, TouchableOpacity,Button,ScrollView,FlatList} from 'react-native';
 import { TabView, SceneMap,TabBar } from 'react-native-tab-view';
@@ -15,6 +15,8 @@ import AsyncStorage from  '@react-native-async-storage/async-storage';
 // create a component
 // const [showBox, setShowBox] = useState(false);
 // const onClick = () => setShowBox(true);
+import { ThemeContext } from '../../../theme/theme-context';
+
 export const truncate = (str, len) => {
   if (str.length > len && str.length > 0) {
     let new_str = str + " ";
@@ -34,6 +36,7 @@ export const truncate = (str, len) => {
  
 // });
  const EachBook = ({navigation,route }) => {
+  const {  theme } = useContext(ThemeContext);
 
   const [page,setPage]=useState(0);
 
@@ -48,14 +51,14 @@ export const truncate = (str, len) => {
   // const renderTabBar = props => (
   //   <TabBar
   //     {...props}
-  //     indicatorStyle={styles.indicatorStyle}
-  //     style={styles.tabBar}
+  //     indicatorStyle={styles(theme).indicatorStyle}
+  //     style={styles(theme).tabBar}
   //     getLabelText={({route}) => route.title}
   //     renderLabel={({route, focused, color}) =>
   //       focused ? (
-  //         <Text style={styles.tabBarText}>{route.title}</Text>
+  //         <Text style={styles(theme).tabBarText}>{route.title}</Text>
   //       ) : (
-  //         <Text style={styles.tabBarText2}>{route.title}</Text>
+  //         <Text style={styles(theme).tabBarText2}>{route.title}</Text>
   //       )
   //     }
   //   />
@@ -87,17 +90,17 @@ const keyExtractor = item => {
 // const data=[1,2,3,4,5]
 const _render = (item, index) => {
   return (
-    <TouchableOpacity onPress={()=>navigation.navigate("EachBook",{id:item.item.BookID})} style={styles.cardBox}>
-    <Image source={{uri:apiAsset+item.item.Pic}} style={styles.bookImg}/>
-    <Text style={styles.bookName}>
+    <TouchableOpacity onPress={()=>navigation.navigate("EachBook",{id:item.item.BookID})} style={styles(theme).cardBox}>
+    <Image source={{uri:apiAsset+item.item.Pic}} style={styles(theme).bookImg}/>
+    <Text style={styles(theme).bookName}>
     {truncate(item.item.BookName,20)}
     </Text>
     <View style={{display:'flex',flexDirection:'row-reverse',justifyContent:'space-between'}}>
-    <Text style={styles.bookName}>
+    <Text style={styles(theme).bookName}>
     {item.item.Cost}ت
     </Text>
     <View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>
-    <Text style={styles.bookName}>
+    <Text style={styles(theme).bookName}>
     {item.item.Rate}
     </Text>
     <Icon name={'star'} size={15} color={'#ffc93d'} style={{}}/>
@@ -314,54 +317,54 @@ if(state==""){
       };
   const FirstRoute = () => (
     <ScrollView>
-      <View style={styles.commentView}>
+      <View style={styles(theme).commentView}>
      
      <View style={{width:responsiveWidth(65),marginLeft:responsiveWidth(5)}}>
        <View style={{display:'flex',flexDirection:'row',alignItems:'center',}}>
-         <Text style={styles.rateNum}>5</Text>
+         <Text style={styles(theme).rateNum}>5</Text>
          <Icon name={'star'} color={'#ffc93d'} size={20}/>
-         <View style={styles.lineBack}>
-           <View style={[styles.lineFront1,{width:rate[0]?.Five==0?0:""+parseInt(rate[0]?.Five)/parseInt(rate[0]?.Number)*100+"%"}]}>
+         <View style={styles(theme).lineBack}>
+           <View style={[styles(theme).lineFront1,{width:rate[0]?.Five==0?0:""+parseInt(rate[0]?.Five)/parseInt(rate[0]?.Number)*100+"%"}]}>
    
            </View>
          </View>
        </View>
        <View style={{display:'flex',flexDirection:'row',alignItems:'center'}}>
-       <Text style={styles.rateNum}>4</Text>
+       <Text style={styles(theme).rateNum}>4</Text>
 
          <Icon name={'star'} color={'#ffc93d'} size={20}/>
-         <View style={styles.lineBack}>
-         <View style={[styles.lineFront1,{width:rate[0]?.Four==0?0:""+parseInt(rate[0]?.Four)/parseInt(rate[0]?.Number)*100+"%"}]}>
+         <View style={styles(theme).lineBack}>
+         <View style={[styles(theme).lineFront1,{width:rate[0]?.Four==0?0:""+parseInt(rate[0]?.Four)/parseInt(rate[0]?.Number)*100+"%"}]}>
    
            </View>
          </View>
        </View>
        <View style={{display:'flex',flexDirection:'row',alignItems:'center'}}>
-       <Text style={styles.rateNum}>3</Text>
+       <Text style={styles(theme).rateNum}>3</Text>
 
          <Icon name={'star'} color={'#ffc93d'} size={20}/>
-         <View style={styles.lineBack}>
-         <View style={[styles.lineFront1,{width:rate[0]?.Three==0?0:""+parseInt(rate[0]?.Three)/parseInt(rate[0]?.Number)*100+"%"}]}>
+         <View style={styles(theme).lineBack}>
+         <View style={[styles(theme).lineFront1,{width:rate[0]?.Three==0?0:""+parseInt(rate[0]?.Three)/parseInt(rate[0]?.Number)*100+"%"}]}>
    
            </View>
          </View>
        </View>
        <View style={{display:'flex',flexDirection:'row',alignItems:'center'}}>
-       <Text style={styles.rateNum}>2</Text>
+       <Text style={styles(theme).rateNum}>2</Text>
 
          <Icon name={'star'} color={'#ffc93d'} size={20}/>
-         <View style={styles.lineBack}>
-         <View style={[styles.lineFront1,{width:rate[0]?.Two==0?0:""+parseInt(rate[0]?.Two)/parseInt(rate[0]?.Number)*100+"%"}]}>
+         <View style={styles(theme).lineBack}>
+         <View style={[styles(theme).lineFront1,{width:rate[0]?.Two==0?0:""+parseInt(rate[0]?.Two)/parseInt(rate[0]?.Number)*100+"%"}]}>
    
            </View>
          </View>
        </View>
        <View style={{display:'flex',flexDirection:'row',alignItems:'center'}}>
-       <Text style={styles.rateNum}>1</Text>
+       <Text style={styles(theme).rateNum}>1</Text>
 
          <Icon name={'star'} color={'#ffc93d'} size={20}/>
-         <View style={styles.lineBack}>
-         <View style={[styles.lineFront1,{width:rate[0]?.One==0?0:""+parseInt(rate[0]?.One)/parseInt(rate[0]?.Number)*100+"%"}]}>
+         <View style={styles(theme).lineBack}>
+         <View style={[styles(theme).lineFront1,{width:rate[0]?.One==0?0:""+parseInt(rate[0]?.One)/parseInt(rate[0]?.Number)*100+"%"}]}>
    
            </View>
          </View>
@@ -369,7 +372,7 @@ if(state==""){
        
      </View>
      <View style={{width:responsiveWidth(20)}}>
-       <Text style={styles.textRate}>
+       <Text style={styles(theme).textRate}>
         {rate[0]?.Average}
        </Text>
        <View style={{display:'flex',flexDirection:'row-reverse',justifyContent:'flex-end',marginTop:responsiveHeight(-1),marginBottom:responsiveHeight(1)}}>
@@ -388,7 +391,7 @@ index+1>rate[0]?.Average?
        </View>
        <View style={{display:'flex',flexDirection:'row-reverse'}}>
          <Icon name={'person'} color={'#1a1a1a'} size={25}/>
-         <Text style={styles.eachBookDetail3}>
+         <Text style={styles(theme).eachBookDetail3}>
            نظر ({comment.length})
          </Text>
        </View>
@@ -398,13 +401,13 @@ index+1>rate[0]?.Average?
         comment.map((item)=>{
           return(
 
-      <View style={styles.commentGreenBox}>
+      <View style={styles(theme).commentGreenBox}>
          <View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>
            <View>
-           <Image source={{uri:apiAsset+data?.Pic}} style={styles.writerImg}/>
+           <Image source={{uri:apiAsset+data?.Pic}} style={styles(theme).writerImg}/>
            </View>
            <View>
-             <Text style={styles.eachBookDetail5}>{item.Username}</Text>
+             <Text style={styles(theme).eachBookDetail5}>{item.Username}</Text>
             <View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>
             <View style={{display:'flex',flexDirection:'row-reverse',justifyContent:'flex-end',marginTop:responsiveHeight(1),marginBottom:responsiveHeight(1)}}>
             {[...new Array(5)].map((item2,index)=>{
@@ -419,17 +422,17 @@ index+1>item?.Rate?
 }
         
        </View>
-       <Text style={styles.eachBookDetail3}>{item.Date}</Text>
+       <Text style={styles(theme).eachBookDetail3}>{item.Date}</Text>
             </View>
            </View>
          </View>
-         <Text style={styles.bookDescription}>
+         <Text style={styles(theme).bookDescription}>
       {item.Text}
          </Text>
          <TouchableOpacity onPress={()=>mutLike(item.CommentBookID)} style={{display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>
            
            <View>
-           <Text style={styles.bookDescription}>{item?.Likee} <Icon name={like==item.CommentBookID?'favorite':'favorite-border'} color={'red'} size={20}/></Text>
+           <Text style={styles(theme).bookDescription}>{item?.Likee} <Icon name={like==item.CommentBookID?'favorite':'favorite-border'} color={'red'} size={20}/></Text>
            </View>
          </TouchableOpacity>
        </View>
@@ -447,160 +450,160 @@ index+1>item?.Rate?
    
         {/* <View style={{display:'flex',flexDirection:'row-reverse',marginTop:responsiveHeight(5),justifyContent:"space-between",marginBottom:responsiveHeight(5)}}>
           <View style={{display:'flex',flexDirection:'row-reverse',flex:0.5,alignItems:'center'}}>
-             <Image source={require('@assets/images/book1.jpg')} style={styles.writerImg}/>
+             <Image source={require('@assets/images/book1.jpg')} style={styles(theme).writerImg}/>
              <View>
-               <Text style={styles.writerName}>
+               <Text style={styles(theme).writerName}>
                  {data.Writer}
                </Text>
-               <Text style={styles.writerName2}>
+               <Text style={styles(theme).writerName2}>
             نویسنده
                </Text>
              </View>
           </View>
           <View style={{display:'flex',flexDirection:'row-reverse',flex:0.5,alignItems:'center'}}>
-             <Image source={require('@assets/images/book2.jpg')} style={styles.writerImg}/>
+             <Image source={require('@assets/images/book2.jpg')} style={styles(theme).writerImg}/>
              <View>
-               <Text style={styles.writerName}>
+               <Text style={styles(theme).writerName}>
 {data.Translator}               </Text>
-               <Text style={styles.writerName2}>
+               <Text style={styles(theme).writerName2}>
    مترجم            </Text>
              </View>
           </View>
         </View> */}
-        <View style={styles.bookDetilTable}>
+        <View style={styles(theme).bookDetilTable}>
           <View style={{display:'flex',flexDirection:'row-reverse',flex:0.5,alignItems:'center'}}>
             <Icon name={'fiber-manual-record'} color={Colors.darkGreen} size={10}/>
-            <Text style={styles.table1}>
+            <Text style={styles(theme).table1}>
               نام کتاب
             </Text>
           </View>
           <View style={{flex:0.5}}>
-          <Text style={styles.table2}>
+          <Text style={styles(theme).table2}>
 {data.BookName}          </Text>
           </View>
         </View>
-        <View style={styles.bookDetilTable}>
+        <View style={styles(theme).bookDetilTable}>
           <View style={{display:'flex',flexDirection:'row-reverse',flex:0.5,alignItems:'center'}}>
             <Icon name={'fiber-manual-record'} color={Colors.darkGreen} size={10}/>
-            <Text style={styles.table1}>
+            <Text style={styles(theme).table1}>
              نویسنده
             </Text>
           </View>
           <View style={{flex:0.5}}>
-          <Text style={styles.table2}>
+          <Text style={styles(theme).table2}>
           {data.Writer}          </Text>
           </View>
         </View>
-        <View style={styles.bookDetilTable}>
+        <View style={styles(theme).bookDetilTable}>
           <View style={{display:'flex',flexDirection:'row-reverse',flex:0.5,alignItems:'center'}}>
             <Icon name={'fiber-manual-record'} color={Colors.darkGreen} size={10}/>
-            <Text style={styles.table1}>
+            <Text style={styles(theme).table1}>
              مترجم
             </Text>
           </View>
           <View style={{flex:0.5}}>
-          <Text style={styles.table2}>
+          <Text style={styles(theme).table2}>
 {data.Translator}          </Text>
           </View>
         </View>
-        <View style={styles.bookDetilTable}>
+        <View style={styles(theme).bookDetilTable}>
           <View style={{display:'flex',flexDirection:'row-reverse',flex:0.5,alignItems:'center'}}>
             <Icon name={'fiber-manual-record'} color={Colors.darkGreen} size={10}/>
-            <Text style={styles.table1}>
+            <Text style={styles(theme).table1}>
             ناشر
             </Text>
           </View>
           <View style={{flex:0.5}}>
-          <Text style={styles.table2}>
+          <Text style={styles(theme).table2}>
 {data.Publisher}          </Text>
           </View>
         </View>
-        <View style={styles.bookDetilTable}>
+        <View style={styles(theme).bookDetilTable}>
           <View style={{display:'flex',flexDirection:'row-reverse',flex:0.5,alignItems:'center'}}>
             <Icon name={'fiber-manual-record'} color={Colors.darkGreen} size={10}/>
-            <Text style={styles.table1}>
+            <Text style={styles(theme).table1}>
              دسته
             </Text>
           </View>
           <View style={{flex:0.5}}>
-          <Text style={styles.table2}>
+          <Text style={styles(theme).table2}>
            {data.Title}
           </Text>
           </View>
         </View>
-        <View style={styles.bookDetilTable}>
+        <View style={styles(theme).bookDetilTable}>
           <View style={{display:'flex',flexDirection:'row-reverse',flex:0.5,alignItems:'center'}}>
             <Icon name={'fiber-manual-record'} color={Colors.darkGreen} size={10}/>
-            <Text style={styles.table1}>
+            <Text style={styles(theme).table1}>
             تعداد صفحات
             </Text>
           </View>
           <View style={{flex:0.5}}>
-          <Text style={styles.table2}>
+          <Text style={styles(theme).table2}>
             {data.Pages}
           </Text>
           </View>
         </View>
-        <View style={styles.bookDetilTable}>
+        <View style={styles(theme).bookDetilTable}>
           <View style={{display:'flex',flexDirection:'row-reverse',flex:0.5,alignItems:'center'}}>
             <Icon name={'fiber-manual-record'} color={Colors.darkGreen} size={10}/>
-            <Text style={styles.table1}>
+            <Text style={styles(theme).table1}>
            زبان
             </Text>
           </View>
           <View style={{flex:0.5}}>
-          <Text style={styles.table2}>
+          <Text style={styles(theme).table2}>
            {data.Language}
           </Text>
           </View>
         </View>
-        <View style={styles.bookDetilTable}>
+        <View style={styles(theme).bookDetilTable}>
           <View style={{display:'flex',flexDirection:'row-reverse',flex:0.5,alignItems:'center'}}>
             <Icon name={'fiber-manual-record'} color={Colors.darkGreen} size={10}/>
-            <Text style={styles.table1}>
+            <Text style={styles(theme).table1}>
             سایز
             </Text>
           </View>
           <View style={{flex:0.5}}>
-          <Text style={styles.table2}>
+          <Text style={styles(theme).table2}>
          {data.Size}MB
           </Text>
           </View>
         </View>
-        <View style={styles.bookDetilTable}>
+        <View style={styles(theme).bookDetilTable}>
           <View style={{display:'flex',flexDirection:'row-reverse',flex:0.5,alignItems:'center'}}>
             <Icon name={'fiber-manual-record'} color={Colors.darkGreen} size={10}/>
-            <Text style={styles.table1}>
+            <Text style={styles(theme).table1}>
             تاریخ انتشار
             </Text>
           </View>
           <View style={{flex:0.5}}>
-          <Text style={styles.table2}>
+          <Text style={styles(theme).table2}>
           {data.Date}
           </Text>
           </View>
         </View>
-        <View style={styles.bookDetilTable}>
+        <View style={styles(theme).bookDetilTable}>
           <View style={{display:'flex',flexDirection:'row-reverse',flex:0.5,alignItems:'center'}}>
             <Icon name={'fiber-manual-record'} color={Colors.darkGreen} size={10}/>
-            <Text style={styles.table1}>
+            <Text style={styles(theme).table1}>
              شابک
             </Text>
           </View>
           <View style={{flex:0.5}}>
-          <Text style={styles.table2}>
+          <Text style={styles(theme).table2}>
 {data.ISBN}          </Text>
           </View>
         </View>
-        <View style={styles.bookDetilTable}>
+        <View style={styles(theme).bookDetilTable}>
           <View style={{display:'flex',flexDirection:'row-reverse',flex:0.5,alignItems:'center'}}>
             <Icon name={'fiber-manual-record'} color={Colors.darkGreen} size={10}/>
-            <Text style={styles.table1}>
+            <Text style={styles(theme).table1}>
             راوی
             </Text>
           </View>
           <View style={{flex:0.5}}>
-          <Text style={styles.table2}>
+          <Text style={styles(theme).table2}>
 {data.Narrator}          </Text>
           </View>
         </View>
@@ -609,8 +612,8 @@ index+1>item?.Rate?
    );
    const ThirdRoute = () => (
    <ScrollView>
-   <View style={styles.bookDescriptionBox}>
-     <Text style={styles.bookDescription}>
+   <View style={styles(theme).bookDescriptionBox}>
+     <Text style={styles(theme).bookDescription}>
    {data.Description}
      </Text>
    
@@ -625,23 +628,23 @@ index+1>item?.Rate?
   };
 return (
  
-<ScrollView style={{ flex: 1,padding:0,backgroundColor:'#fff'}}>
-    <View style={styles.greenBack}>
-    <View style={styles.topBar}>
+<ScrollView style={{ flex: 1,padding:0,backgroundColor:theme.backgroundColor}}>
+    <View style={styles(theme).greenBack}>
+    <View style={styles(theme).topBar}>
 
 
-    {/* <View style={styles.rightCol}>
+    {/* <View style={styles(theme).rightCol}>
     <TouchableOpacity onPress={()=>alert(55)}>
-    <Image source={require('@assets/images/save.png')} style={styles.saveBtn}/>
+    <Image source={require('@assets/images/save.png')} style={styles(theme).saveBtn}/>
       </TouchableOpacity>
       
       <TouchableOpacity>
-        <Image source={require('@assets/images/share.png')} style={styles.saveBtn}/>
+        <Image source={require('@assets/images/share.png')} style={styles(theme).saveBtn}/>
       </TouchableOpacity>
     </View> */}
-    {/* <View style={styles.leftCol}>
+    {/* <View style={styles(theme).leftCol}>
     <TouchableOpacity>
-        <Image source={require('@assets/images/back.png')} style={styles.saveBtn}/>
+        <Image source={require('@assets/images/back.png')} style={styles(theme).saveBtn}/>
       </TouchableOpacity>
      
 </View> */}
@@ -651,93 +654,93 @@ return (
 
     </View>
     
-    <View style={styles.bookDetailBox}>
-<Image source={{uri:apiAsset+data?.Pic}} style={styles.bookImg2}/>
-<Text style={styles.eachBookName}>{data.BookName}</Text>
-<Text style={styles.eachBookDetail}>{data.Writer}</Text>
-<Text style={styles.eachBookDetail}>{data.Cost} تومان</Text>
-<View style={styles.rateRow}>
-<Text style={styles.eachBookDetail2}>{rate[0]?.Average}</Text>
+    <View style={styles(theme).bookDetailBox}>
+<Image source={{uri:apiAsset+data?.Pic}} style={styles(theme).bookImg2}/>
+<Text style={styles(theme).eachBookName}>{data.BookName}</Text>
+<Text style={styles(theme).eachBookDetail}>{data.Writer}</Text>
+<Text style={styles(theme).eachBookDetail}>{data.Cost} تومان</Text>
+<View style={styles(theme).rateRow}>
+<Text style={styles(theme).eachBookDetail2}>{rate[0]?.Average}</Text>
 <Icon name={'star'} color={'#ffc93d'} size={20}/>
 </View>
 </View>
-<View style={styles.btnRow}>
-<TouchableOpacity onPress={()=>buy()} style={styles.loginBtn}>
-       <Text style={styles.btnText}>خرید</Text>
+<View style={styles(theme).btnRow}>
+<TouchableOpacity onPress={()=>buy()} style={styles(theme).loginBtn}>
+       <Text style={styles(theme).btnText}>خرید</Text>
      </TouchableOpacity>
-     <TouchableOpacity onPress={()=>navigation.navigate("ListenBook",{id:data.BookID,link:data.Link,image:data?.Pic,BookName:data.BookName,writer:data.Writer})} style={styles.whiteBtn}>
-       <Text style={styles.btnText2}>نسخه نمونه</Text>
+     <TouchableOpacity onPress={()=>navigation.navigate("ListenBook",{id:data.BookID,link:data.Link,image:data?.Pic,BookName:data.BookName,writer:data.Writer})} style={styles(theme).whiteBtn}>
+       <Text style={styles(theme).btnText2}>نسخه نمونه</Text>
      </TouchableOpacity>
-     <TouchableOpacity style={styles.greenBtn2} onPress={toggleModal}>
+     <TouchableOpacity style={styles(theme).greenBtn2} onPress={toggleModal}>
       <Icon name={'keyboard-control'} size={30} color={'#fff'}/>
      </TouchableOpacity>
 </View>
 <View>
-<TouchableOpacity onPress={()=>setModalVisibleCom(true)} style={styles.comBtn}>
-       <Text style={styles.btnText}>نظر دهید</Text>
+<TouchableOpacity onPress={()=>setModalVisibleCom(true)} style={styles(theme).comBtn}>
+       <Text style={styles(theme).btnText}>نظر دهید</Text>
      </TouchableOpacity>
 
 </View>
 <Modal isVisible={isModalVisible} onBackdropPress={() => setModalVisible(false)} >
- <View style={styles.moreModal}>
+ <View style={styles(theme).moreModal}>
  
 <View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center',marginBottom:responsiveHeight(5)}}>
   <View>
-  <Image source={{uri:apiAsset+data.Pic}} style={styles.modalImg}/>
+  <Image source={{uri:apiAsset+data.Pic}} style={styles(theme).modalImg}/>
   </View>
   <View>
-    <Text style={styles.eachBookDetail4}>
+    <Text style={styles(theme).eachBookDetail4}>
     {data.BookName}
     </Text>
-    <Text style={styles.eachBookDetail3}>
+    <Text style={styles(theme).eachBookDetail3}>
     {data.Writer}
     </Text>
   </View>
 </View>
 <TouchableOpacity onPress={()=>navigation.navigate("Rosters",{id:data.BookID})} style={{borderTopWidth:0.5,borderTopColor:'#c1c1c1',display:'flex',justifyContent:'space-between',alignItems:'center',flexDirection:'row-reverse',paddingTop:responsiveHeight(2),paddingBottom:responsiveHeight(2)}}>
 <View>
-<Text style={styles.eachBookDetail3}>
+<Text style={styles(theme).eachBookDetail3}>
      فهرست کتاب
     </Text>
 </View>
 <View>
-  <Image source={require('@assets/images/detail.png')} style={styles.miniIcon}/>
+  <Image source={require('@assets/images/detail.png')} style={styles(theme).miniIcon}/>
 </View>
 </TouchableOpacity>
 {/* <TouchableOpacity style={{borderTopWidth:0.5,borderTopColor:'#c1c1c1',display:'flex',justifyContent:'space-between',alignItems:'center',flexDirection:'row-reverse',paddingTop:responsiveHeight(2),paddingBottom:responsiveHeight(2)}}>
 <View>
-<Text style={styles.eachBookDetail3}>
+<Text style={styles(theme).eachBookDetail3}>
      ارسال هدیه
     </Text>
 </View>
 <View>
-  <Image source={require('@assets/images/gift.png')} style={styles.miniIcon}/>
+  <Image source={require('@assets/images/gift.png')} style={styles(theme).miniIcon}/>
 </View>
 </TouchableOpacity> */}
 <TouchableOpacity onPress={()=>mutSave()} style={{borderTopWidth:0.5,borderTopColor:'#c1c1c1',display:'flex',justifyContent:'space-between',alignItems:'center',flexDirection:'row-reverse',paddingTop:responsiveHeight(2),paddingBottom:responsiveHeight(2)}}>
 <View>
-<Text style={styles.eachBookDetail3}>
+<Text style={styles(theme).eachBookDetail3}>
     افزودن به کتاب های دلخواه
     </Text>
 </View>
 <View>
-  <Image source={require('@assets/images/save.png')} style={styles.miniIcon}/>
+  <Image source={require('@assets/images/save.png')} style={styles(theme).miniIcon}/>
 </View>
 </TouchableOpacity>
 <TouchableOpacity style={{borderTopWidth:0.5,borderTopColor:'#c1c1c1',display:'flex',justifyContent:'space-between',alignItems:'center',flexDirection:'row-reverse',paddingTop:responsiveHeight(2),paddingBottom:responsiveHeight(2)}}>
 <View>
-<Text style={styles.eachBookDetail3}>
+<Text style={styles(theme).eachBookDetail3}>
      اشتراک گذاری
     </Text>
 </View>
 <View>
-  <Image source={require('@assets/images/share.png')} style={styles.miniIcon}/>
+  <Image source={require('@assets/images/share.png')} style={styles(theme).miniIcon}/>
 </View>
 </TouchableOpacity>
  </View>
  </Modal>
 
-      <View style={styles.tabViewBox}>
+      <View style={styles(theme).tabViewBox}>
       {/* <TabView
       renderTabBar={renderTabBar}
       navigationState={{ index, routes }}
@@ -745,19 +748,19 @@ return (
       onIndexChange={setIndex}
       initialLayout={{ width:responsiveWidth(90) }}
     /> */}
-      <View style={styles.viwTab}>
-      <TouchableOpacity onPress={()=>setPage(2)} style={page==2?styles.tab:styles.tabINActive}>
-        <Text style={styles.tabBarText}>
+      <View style={styles(theme).viwTab}>
+      <TouchableOpacity onPress={()=>setPage(2)} style={page==2?styles(theme).tab:styles(theme).tabINActive}>
+        <Text style={styles(theme).tabBarText}>
          نظرات
         </Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={()=>setPage(1)} style={page==1?styles.tab:styles.tabINActive}>
-        <Text style={styles.tabBarText}>
+      <TouchableOpacity onPress={()=>setPage(1)} style={page==1?styles(theme).tab:styles(theme).tabINActive}>
+        <Text style={styles(theme).tabBarText}>
         جزییات
         </Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={()=>setPage(0)} style={page==0?styles.tab:styles.tabINActive}>
-        <Text style={styles.tabBarText}>
+      <TouchableOpacity onPress={()=>setPage(0)} style={page==0?styles(theme).tab:styles(theme).tabINActive}>
+        <Text style={styles(theme).tabBarText}>
         معرفی کتاب
         </Text>
       </TouchableOpacity>
@@ -774,7 +777,7 @@ return (
       }
       </View>
       <Modal isVisible={isModalVisibleCom} onBackdropPress={() => setModalVisibleCom(false)} >
- <View style={styles.moreModal}>
+ <View style={styles(theme).moreModal}>
  
 <View style={{display:'flex',alignItems:'center',justifyContent:'center',marginBottom:responsiveHeight(2)}}>
 <Rating
@@ -794,22 +797,22 @@ return (
 <Input multiline={true} onChangeText={(ss)=>setIncome(ss)}  placeholder="نظر" inputStyle={{marginTop:responsiveHeight(2)}}  />
 
 </View>
-<TouchableOpacity onPress={()=>mutComment()} style={styles.comBtn}>
-       <Text style={styles.btnText}>ثبت</Text>
+<TouchableOpacity onPress={()=>mutComment()} style={styles(theme).comBtn}>
+       <Text style={styles(theme).btnText}>ثبت</Text>
      </TouchableOpacity>
  </View>
  </Modal>
- <View style={styles.container}>
+ <View style={styles(theme).container}>
 
  <View style={{display:'flex',flexDirection:'row-reverse',justifyContent:'space-between',marginBottom:responsiveHeight(5),marginTop:responsiveHeight(5)}}>
      <View style={{flex:1}}>
-     <Text style={styles.rowTitle}>
+     <Text style={styles(theme).rowTitle}>
          کتاب های مرتبط
       </Text>
      </View>
       <View>
       <TouchableOpacity onPress={()=>navigation.navigate('SelectedNews',{type:"group",GroupID:grid,GroupName:data.Title})}>
-      <Text style={styles.seeAll}>
+      <Text style={styles(theme).seeAll}>
          مشاهده همه
       </Text>
       </TouchableOpacity>
@@ -827,13 +830,13 @@ return (
    </View>
  <View style={{display:'flex',flexDirection:'row-reverse',justifyContent:'space-between',marginBottom:responsiveHeight(5),marginTop:responsiveHeight(5)}}>
      <View style={{flex:1}}>
-     <Text style={styles.rowTitle}>
+     <Text style={styles(theme).rowTitle}>
          دیگر کتاب های {data.Writer}
       </Text>
      </View>
       <View>
       <TouchableOpacity onPress={()=>navigation.navigate("SelectedNews",{type:"writer",writer:writer})}>
-      <Text style={styles.seeAll}>
+      <Text style={styles(theme).seeAll}>
          مشاهده همه
       </Text>
       </TouchableOpacity>
@@ -853,13 +856,13 @@ return (
 
  <View style={{display:'flex',flexDirection:'row-reverse',justifyContent:'space-between',marginBottom:responsiveHeight(5),marginTop:responsiveHeight(5)}}>
      <View style={{flex:1}}>
-     <Text style={styles.rowTitle}>
+     <Text style={styles(theme).rowTitle}>
          دیگر کتاب های {data.Publisher}
       </Text>
      </View>
       <View>
       <TouchableOpacity onPress={()=>navigation.navigate("SelectedNews",{type:"publisher",publisher:pub})}>
-      <Text style={styles.seeAll}>
+      <Text style={styles(theme).seeAll}>
 
          مشاهده همه
       </Text>
@@ -880,13 +883,13 @@ return (
 
  <View style={{display:'flex',flexDirection:'row-reverse',justifyContent:'space-between',marginBottom:responsiveHeight(5),marginTop:responsiveHeight(5)}}>
      <View style={{flex:1}}>
-     <Text style={styles.rowTitle}>
+     <Text style={styles(theme).rowTitle}>
          دیگر کتاب های مترجم
       </Text>
      </View>
       <View>
       <TouchableOpacity onPress={()=>navigation.navigate("SelectedNews",{type:"translator",translator:trans})}>
-      <Text style={styles.seeAll}>
+      <Text style={styles(theme).seeAll}>
          مشاهده همه
       </Text>
       </TouchableOpacity>
@@ -910,7 +913,7 @@ return (
 );
 };
 
-const styles = StyleSheet.create({
+const styles = (theme) => StyleSheet.create({
   container: {
     paddingRight:responsiveWidth(5),
     paddingLeft:responsiveWidth(5),
@@ -936,22 +939,22 @@ topBar:{
 
 menuTitle:{
 ...myFontStyle.UltraBold,
-  color:Colors.darkGreen,
+color:theme.menuTitle,
   zIndex:10000,
 },
 tabBar:{
   backgroundColor:"transparent",
   elevation: 0,
   paddingBottom:responsiveHeight(2),
-  borderBottomColor:Colors.borderColor,
+  borderBottomColor:theme.borderColor,
   borderBottomWidth:2
 },
 tabBarText:{
-  color: Colors.darkGreen,
+  color: theme.textTitle2,
   ...myFontStyle.largBold
 },
 tabBarText2:{
-  color:Colors.darkGreen,
+  color:theme.textTitle2,
   ...myFontStyle.largBold
 },
 indicatorStyle:{
@@ -970,7 +973,7 @@ indicatorStyle:{
   marginLeft:'auto'
 },
 greenBack:{
-  backgroundColor:'#f1f5ec',
+  backgroundColor:theme.greenBack,
    flexDirection:"row-reverse",
   justifyContent:'flex-start',
     position:"absolute",
@@ -1000,17 +1003,17 @@ greenBack:{
     resizeMode:'contain',
   marginLeft:responsiveWidth(5),
 },bookImg2:{
-  width:responsiveWidth(45),
-  height:responsiveHeight(23),
+  width:responsiveWidth(40),
+  height:responsiveHeight(25),
   zIndex:2000,
 marginRight:'auto',
 marginLeft:'auto',
 marginTop:responsiveHeight(10),
-  resizeMode:'contain',
-  borderRadius:20,
+  resizeMode:'cover',
+  borderRadius:10,
 },eachBookName:{
     ...myFontStyle.UltraBold,
-    color:'#000',
+    color:theme.textTitle,
     textAlign:'center',
     marginTop:responsiveHeight(2),
 },bookDetailBox:{
@@ -1018,25 +1021,25 @@ marginTop:responsiveHeight(10),
   textAlign:'center',
 },eachBookDetail:{
   ...myFontStyle.bookWriter3,
-  color:'#000',
+  color:theme.textTitle,
   textAlign:'center',
   
   
 },eachBookDetail2:{
   ...myFontStyle.UltraBold,
-  color:'#000',
+  color:theme.textTitle,
   textAlign:'center',
   
   
 },eachBookDetail3:{
   ...myFontStyle.bookWriter3,
-  color:'#000',
+  color:theme.textTitle,
   textAlign:'right',
   
   
 },eachBookDetail4:{
   ...myFontStyle.UltraBold,
-  color:'#000',
+  color:theme.textTitle,
   textAlign:'right',
   
   
@@ -1098,7 +1101,7 @@ cardBox:{
   marginTop:responsiveHeight(-4),
   borderRadius:10,
 },bookName:{
-  color:'#111',
+  color:theme.textTitle2,
   ...myFontStyle.normalRegular,
   marginTop:responsiveHeight(0.5),
 },priceRed:{
@@ -1113,10 +1116,10 @@ marginTop:responsiveHeight(0.5),
 marginRight:4,
 },rowTitle:{
   ...myFontStyle.largBold,
-  color:'#111',
+  color:theme.textTitle2,
 },seeAll:{
   ...myFontStyle.largeRegular,
-  color:'#111',
+  color:theme.textTitle2,
 },
 dotContainer: {
 backgroundColor: 'transparent',
@@ -1171,29 +1174,29 @@ height: "100%",
   paddingTop:responsiveHeight(1),
   borderRadius:10,
 },bookDescription:{
-  color:'#1a1a1a',
+  color:theme.textTitle2,
   ...myFontStyle.bookWriter3,
   marginTop:responsiveHeight(2),
   
   },
   rateNum:{
-    color:'#1a1a1a',
+    color:theme.textTitle2,
     ...myFontStyle.bookWriter3,
     
     },
   writerName:{
-    color:'#1a1a1a',
+    color:theme.textTitle2,
     ...myFontStyle.largBold,
   },writerName2:{
     ...myFontStyle.normalRegular,
-    color:'#1a1a1a'
+    color:theme.textTitle2
   },writerImg:{
     height:60,
     width:60,
     borderRadius:200,
     marginLeft:10,
   },bookDetilTable:{
-    borderBottomColor:'#c1c1c1',
+    borderBottomColor:theme.borderColor,
     borderBottomWidth:1,
     display:'flex',
     flexDirection:'row-reverse',
@@ -1202,12 +1205,12 @@ height: "100%",
     paddingBottom:responsiveHeight(1),
   }
   ,table1:{
-    color:Colors.darkGreen,
+    color:theme.textTitle2,
     ...myFontStyle.largBold,
     marginRight:10,
   }
   ,table2:{
-    color:'#1a1a1a',
+    color:theme.textTitle2,
     ...myFontStyle.largBold,
     textAlign:'right',
   },moreModal:{
@@ -1236,7 +1239,7 @@ height: "100%",
     alignItems:'center'
   },textRate:{
     ...myFontStyle.rate,
-    color:'#1a1a1a',
+    color:theme.textTitle2,
     textAlign:'center'
   },lineBack:{
     width:'85%',

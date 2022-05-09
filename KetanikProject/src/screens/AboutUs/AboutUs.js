@@ -1,4 +1,4 @@
-import React, {useState,useRef} from 'react';
+import React, {useState,useRef,useContext} from 'react';
 import {View, TextInput, Text, TouchableOpacity,Image,ScrollView} from 'react-native';
 
 
@@ -9,6 +9,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 // import Drawer from 'react-native-drawer'
 // import DrawerContent from './drewerContent/DrawerContent';
 import { myFontStyle } from "@assets/Constance";
+import { ThemeContext } from '../../../theme/theme-context';
 
 // create a component
 
@@ -26,37 +27,38 @@ import { myFontStyle } from "@assets/Constance";
 //   };
 
  const AboutUs = ({navigation }) => {
+  const {  theme } = useContext(ThemeContext);
   
 
 return (
-    <View style={{backgroundColor:'#fff',flex:1}}>
+    <View style={{backgroundColor:theme.backgroundColor,flex:1}}>
 
-<View style={styles.customRow}>
+<View style={styles(theme).customRow}>
         
     
         </View>
 
-    <View style={styles.topBar}>
+    <View style={styles(theme).topBar}>
 
     <View style={{flex : 2,textAlign:"right"}}>
-          <Text style={styles.menuTitle}>درباره ما</Text>
+          <Text style={styles(theme).menuTitle}>درباره ما</Text>
           </View>
     
         
         <View style={{flex :0.5}}>
           <TouchableOpacity onPress={()=>navigation.goBack()} style={{}}>
-            <Icon name={"arrow-back"} color={'#111'} size={30}/>
+            <Icon name={"arrow-back"} color={theme.iconWhite} size={30}/>
           </TouchableOpacity>
           </View>
     </View>
      
   <ScrollView>
- <View style={styles.container}>
-  <View style={styles.aboutView}>
-    <Text style={styles.aboutTitle}>
+ <View style={styles(theme).container}>
+  <View style={styles(theme).aboutView}>
+    <Text style={styles(theme).aboutTitle}>
       درباره ما بیشتر بخوانید !
     </Text>
-    <Text style={styles.aboutText}>
+    <Text style={styles(theme).aboutText}>
     لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است، و برای شرایط فعلی تکنولوژی مورد نیاز، و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد، کتابهای زیادی در شصت و سه درصد گذشته حال و آینده، شناخت فراوان جامعه و متخصصان را می طلبد، تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی، و فرهنگ پیشرو در زبان فارسی ایجاد کرد، در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها، و شرایط سخت تایپ به پایان رسد و زمان مورد نیاز شامل حروفچینی دستاوردهای اصلی، و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است، و برای شرایط فعلی تکنولوژی مورد نیاز، و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد، کتابهای زیادی در شصت و سه درصد گذشته حال و آینده، شناخت فراوان جامعه و متخصصان را می طلبد، تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی، و فرهنگ پیشرو در زبان فارسی ایجاد کرد، در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها، و شرایط سخت تایپ به پایان رسد و زمان مورد نیاز شامل حروفچینی دستاوردهای اصلی، و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.
     </Text>
   </View>
@@ -67,7 +69,7 @@ return (
 );
 };
 
-const styles = StyleSheet.create({
+const styles = (theme) =>  StyleSheet.create({
     container: {
         paddingRight:responsiveWidth(5),
         paddingLeft:responsiveWidth(5),
@@ -78,7 +80,7 @@ const styles = StyleSheet.create({
 
     menuTitle:{
 ...myFontStyle.UltraBold,
-      color:Colors.darkGreen,
+color:theme.menuTitle,
       zIndex:10000,
     },
 
@@ -90,7 +92,7 @@ const styles = StyleSheet.create({
     top:responsiveHeight(0),
     paddingRight:responsiveWidth(5),
     paddingLeft:responsiveWidth(5),
-    backgroundColor:'#fff',
+    backgroundColor:theme.topRowBack,
     marginTop:responsiveHeight(-13),
     height : responsiveHeight(25),
     width : '100%',
@@ -121,12 +123,12 @@ const styles = StyleSheet.create({
   }
   ,aboutText:{
     ...myFontStyle.largeRegular,
-    color:'#111',
+    color:theme.textTitle,
     textAlign:'justify',
     lineHeight:30,
   },aboutTitle:{
   ...myFontStyle.bookTitle,
-  color:'#111',
+  color:theme.textTitle,
   marginBottom:responsiveHeight(2),
 }
   });

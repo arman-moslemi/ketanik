@@ -1,4 +1,4 @@
-import React, {useState,useRef} from 'react';
+import React, {useState,useRef,useContext} from 'react';
 import {View, TextInput, Text, TouchableOpacity,Image,ScrollView} from 'react-native';
 
 
@@ -9,7 +9,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 // import Drawer from 'react-native-drawer'
 // import DrawerContent from './drewerContent/DrawerContent';
 import { myFontStyle } from "@assets/Constance";
-
+import { ThemeContext } from '../../../theme/theme-context';
 // create a component
 
 
@@ -26,46 +26,46 @@ import { myFontStyle } from "@assets/Constance";
 //   };
 
  const Share = ({navigation }) => {
-  
+  const {  theme } = useContext(ThemeContext);
 
 return (
-    <View style={{backgroundColor:'#fff',flex:1}}>
-<View style={styles.customRow}>
+    <View style={{backgroundColor:theme.backgroundColor,flex:1}}>
+<View style={styles(theme).customRow}>
         
     
         </View>
 
-    <View style={styles.topBar}>
+    <View style={styles(theme).topBar}>
 
     <View style={{flex : 2,textAlign:"right"}}>
-          <Text style={styles.menuTitle}>معرفی به دوستان</Text>
+          <Text style={styles(theme).menuTitle}>معرفی به دوستان</Text>
           </View>
     
         
         <View style={{flex :0.5}}>
           <TouchableOpacity onPress={()=>navigation.goBack()} style={{}}>
-            <Icon name={"arrow-back"} color={'#111'} size={30}/>
+            <Icon name={"arrow-back"} color={theme.iconWhite} size={30}/>
           </TouchableOpacity>
           </View>
     </View>
      
   <ScrollView>
- <View style={styles.container}>
-  <View style={styles.aboutView}>
-    <Text style={styles.aboutText}>
+ <View style={styles(theme).container}>
+  <View style={styles(theme).aboutView}>
+    <Text style={styles(theme).aboutText}>
       لینک اختصاصی خود را از بخش زیر کپی کنید و آن را برای دوستان و آشنایان خود ارسال نمایید.هنگامی که دوستان شما به این لینک وارد شوند و ثبت نام کنند برای اولین خرید خود کد تخفیف 50 درصدی دریافت می کنند و پس از اولین خرید شما نیز یک کد تخفیف 50 درصدی هدیه می گیرید
     </Text>
   </View>
-  <View style={styles.takhfifRow}>
+  <View style={styles(theme).takhfifRow}>
     
-    <View style={styles.discountInput}>
-      <Text style={styles.textCode}>
+    <View style={styles(theme).discountInput}>
+      <Text style={styles(theme).textCode}>
       ketab.com/user/237864
       </Text>
     </View>
     <View>
-    <TouchableOpacity style={styles.loginBtn}>
-       <Text style={styles.btnText}>کپی</Text>
+    <TouchableOpacity style={styles(theme).loginBtn}>
+       <Text style={styles(theme).btnText}>کپی</Text>
      </TouchableOpacity>
     </View>
 </View>
@@ -75,7 +75,7 @@ return (
 );
 };
 
-const styles = StyleSheet.create({
+const styles= (theme) => StyleSheet.create({
     container: {
         paddingRight:responsiveWidth(5),
         paddingLeft:responsiveWidth(5),
@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
 
     menuTitle:{
 ...myFontStyle.UltraBold,
-      color:Colors.darkGreen,
+      color:theme.menuTitle,
       zIndex:10000,
     },
 
@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
     top:responsiveHeight(0),
     paddingRight:responsiveWidth(5),
     paddingLeft:responsiveWidth(5),
-    backgroundColor:'#fff',
+    backgroundColor:theme.topRowBack,
     marginTop:responsiveHeight(-13),
     height : responsiveHeight(25),
     width : '100%',
@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
   }
   ,aboutText:{
     ...myFontStyle.largeRegular,
-    color:'#111',
+    color:theme.textTitle,
     textAlign:'center',
     lineHeight:30,
   },takhfifRow:{
@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
     width:responsiveWidth(60),
     marginRight:responsiveWidth(4),
     height:responsiveHeight(6),
-    color:'#111',
+    color:theme.textTitle,
     textAlign:'center',
     display:'flex',
     alignItems:'center',
@@ -167,7 +167,7 @@ const styles = StyleSheet.create({
 },textCode:{
   ...myFontStyle.largeRegular,
   marginTop:responsiveHeight(1),
-  color:'#111',
+  color:theme.textTitle,
 }
   });
 

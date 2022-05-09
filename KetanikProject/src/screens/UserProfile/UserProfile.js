@@ -13,6 +13,7 @@ import AsyncStorage from  '@react-native-async-storage/async-storage';
 import { ThemeContext } from '../../../theme/theme-context';
 
  const UserProfile = ({navigation }) => {
+  
   const [isSwitchOn, setIsSwitchOn] = useState(false);
   const [data,setData]=useState([]);
   const [name,setName]=useState();
@@ -66,72 +67,72 @@ setEmail(response.data.Data.Email)
     const { dark, theme, toggle } = useContext(ThemeContext);
 
 return (
-    <View style={{ padding:0,justifyContent:'flex-start',alignContent:'flex-start',alignSelf:'flex-start'}}>
-       <Image source={require('@assets/images/userProfileTop.png')} style={styles.topImg}/>
+    <View style={{ padding:0,justifyContent:'flex-start',alignContent:'flex-start',alignSelf:'flex-start',backgroundColor:theme.backgroundColor}}>
+       <Image source={require('@assets/images/userProfileTop.png')} style={styles(theme).topImg}/>
   
-     {/* <View style={styles.backView}>
+     {/* <View style={styles(theme).backView}>
      <TouchableOpacity>
      <Icon name={'west'} size={40} color={'#111'} style={{}}/>
    
      </TouchableOpacity>
       
      </View> */}
-     <Image source={pic?{uri:apiAsset+pic}:require('@assets/images/profile.jpg')} style={styles.profile2}/>
-    <View style={{padding:15,borderBottomColor:'#E8EAE6',borderBottomWidth:20,}}>
+     <Image source={pic?{uri:apiAsset+pic}:require('@assets/images/profile.jpg')} style={styles(theme).profile2}/>
+    <View style={{padding:15,borderBottomColor:theme.borderB,borderBottomWidth:20}}>
 
     <View style={{display:'flex',justifyContent:'center',flexDirection:'column'}}>
-      <Text style={styles.userName}>{name}</Text>
-      <Text style={styles.userEmail}>{email}</Text>
+      <Text style={styles(theme).userName}>{name}</Text>
+      <Text style={styles(theme).userEmail}>{email}</Text>
     </View>
-    <View style={styles.edit}>
+    <View style={styles(theme).edit}>
       <TouchableOpacity onPress={()=>navigation.navigate("EditProfile")} style={{display:'flex',flexDirection:'row-reverse',alignItems:'center',justifyContent:'flex-end'}}>
       <Icon name={'mode-edit'} size={20} color={'#007bff'} />
-      <Text style={styles.btnEdit}>ویرایش حساب کاربری</Text>
+      <Text style={styles(theme).btnEdit}>ویرایش حساب کاربری</Text>
       </TouchableOpacity>
     </View>
    
     </View>
   <ScrollView>
-  <TouchableOpacity style={styles.editProfileBtn} onPress={()=>navigation.navigate("Wallet")}>
+  <TouchableOpacity style={styles(theme).editProfileBtn} onPress={()=>navigation.navigate("Wallet")}>
       <View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>
-        <Image source={require('@assets/images/wallet.png')} style={styles.btnImg2}/>
-        <Text style={styles.btnText}>کیف پول</Text>
+        <Image source={require('@assets/images/wallet.png')} style={styles(theme).btnImg2}/>
+        <Text style={styles(theme).btnText}>کیف پول</Text>
       </View>
       <View>
-        <Icon name={'chevron-left'} size={20} color={'#111'}/>
+        <Icon name={'chevron-left'} size={20} color={theme.textTitle}/>
       </View>
     </TouchableOpacity>
-    <TouchableOpacity style={styles.editProfileBtn}>
+    <TouchableOpacity style={styles(theme).editProfileBtn}>
       <View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>
-        <Image source={require('@assets/images/takhfif.png')} style={styles.btnImg}/>
-        <Text style={styles.btnText}>بن های تخفیف</Text>
+        <Image source={require('@assets/images/takhfif.png')} style={styles(theme).btnImg}/>
+        <Text style={styles(theme).btnText}>بن های تخفیف</Text>
       </View>
       <View>
-        <Icon name={'chevron-left'} size={20} color={'#111'}/>
+        <Icon name={'chevron-left'} size={20} color={theme.textTitle}/>
       </View>
     </TouchableOpacity>
-    <TouchableOpacity style={styles.editProfileBtn}>
+    <TouchableOpacity style={styles(theme).editProfileBtn}>
       <View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>
-        <Image source={require('@assets/images/bookmark.png')} style={styles.btnImg}/>
-        <Text style={styles.btnText}>کتاب های نشان شده</Text>
+        <Image source={require('@assets/images/bookmark.png')} style={styles(theme).btnImg}/>
+        <Text style={styles(theme).btnText}>کتاب های نشان شده</Text>
       </View>
       <View>
-        <Icon name={'chevron-left'} size={20} color={'#111'}/>
+        <Icon name={'chevron-left'} size={20} color={theme.textTitle}/>
       </View>
     </TouchableOpacity>
-    <TouchableOpacity style={styles.editProfileBtn}>
+    <TouchableOpacity style={styles(theme).editProfileBtn}>
       <View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>
-        <Image source={require('@assets/images/comment.png')} style={styles.btnImg}/>
-        <Text style={styles.btnText}>نظرات من</Text>
+        <Image source={require('@assets/images/comment.png')} style={styles(theme).btnImg}/>
+        <Text style={styles(theme).btnText}>نظرات من</Text>
       </View>
       <View>
-        <Icon name={'chevron-left'} size={20} color={'#111'}/>
+        <Icon name={'chevron-left'} size={20} color={theme.textTitle}/>
       </View>
     </TouchableOpacity>
-    <TouchableOpacity style={styles.editProfileBtn}>
+    <TouchableOpacity style={styles(theme).editProfileBtn}>
       <View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>
-        <Image source={require('@assets/images/night.png')} style={styles.btnImg}/>
-        <Text style={styles.btnText}>حالت شب</Text>
+        <Image source={require('@assets/images/night.png')} style={styles(theme).btnImg}/>
+        <Text style={styles(theme).btnText}>حالت شب</Text>
       </View>
       <View>
       {/* <Switch value={isSwitchOn} onValueChange={onToggleSwitch} color={Colors.darkGreen} /> */}
@@ -141,45 +142,45 @@ return (
                  onChange={toggle} value = {dark} />
                        </View>
     </TouchableOpacity>
-    <TouchableOpacity style={styles.editProfileBtn}>
+    <TouchableOpacity style={styles(theme).editProfileBtn}>
       <View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>
-        <Image source={require('@assets/images/language.png')} style={styles.btnImg}/>
-        <Text style={styles.btnText}>زبان</Text>
+        <Image source={require('@assets/images/language.png')} style={styles(theme).btnImg}/>
+        <Text style={styles(theme).btnText}>زبان</Text>
       </View>
       <View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>
-      <Text style={styles.btnText}>فارسی</Text>
-        <Icon name={'chevron-left'} size={20} color={'#111'}/>
+      <Text style={styles(theme).btnText}>فارسی</Text>
+        <Icon name={'chevron-left'} size={20} color={theme.textTitle}/>
       </View>
     </TouchableOpacity>
-    <TouchableOpacity style={styles.editProfileBtn}>
+    <TouchableOpacity style={styles(theme).editProfileBtn}>
       <View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>
-        <Image source={require('@assets/images/guide.png')} style={styles.btnImg}/>
-        <Text style={styles.btnText}>راهنمایی و پشتیبانی</Text>
+        <Image source={require('@assets/images/guide.png')} style={styles(theme).btnImg}/>
+        <Text style={styles(theme).btnText}>راهنمایی و پشتیبانی</Text>
       </View>
       <View>
-        <Icon name={'chevron-left'} size={20} color={'#111'}/>
+        <Icon name={'chevron-left'} size={20} color={theme.textTitle}/>
       </View>
     </TouchableOpacity>
-    <TouchableOpacity style={styles.editProfileBtn} onPress={()=>navigation.navigate("AboutUs")}>
+    <TouchableOpacity style={styles(theme).editProfileBtn} onPress={()=>navigation.navigate("AboutUs")}>
       <View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>
-        <Image source={require('@assets/images/about.png')} style={styles.btnImg}/>
-        <Text style={styles.btnText}>درباره ما</Text>
+        <Image source={require('@assets/images/about.png')} style={styles(theme).btnImg}/>
+        <Text style={styles(theme).btnText}>درباره ما</Text>
       </View>
       <View>
-        <Icon name={'chevron-left'} size={20} color={'#111'}/>
+        <Icon name={'chevron-left'} size={20} color={theme.textTitle}/>
       </View>
     </TouchableOpacity>
-    <TouchableOpacity onPress={()=>navigation.navigate("Share")} style={styles.editProfileBtn}>
+    <TouchableOpacity onPress={()=>navigation.navigate("Share")} style={styles(theme).editProfileBtn}>
       <View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>
-        <Image source={require('@assets/images/friend.png')} style={styles.btnImg}/>
-        <Text style={styles.btnText}>دعوت از دوستان</Text>
+        <Image source={require('@assets/images/friend.png')} style={styles(theme).btnImg}/>
+        <Text style={styles(theme).btnText}>دعوت از دوستان</Text>
       </View>
    
     </TouchableOpacity>
-    <TouchableOpacity onPress={()=> LogOut()} style={styles.editProfileBtn}>
+    <TouchableOpacity onPress={()=> LogOut()} style={styles(theme).editProfileBtn}>
       <View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>
-        <Image source={require('@assets/images/exit.png')} style={styles.btnImg}/>
-        <Text style={styles.btnText}>خروج از حساب</Text>
+        <Image source={require('@assets/images/exit.png')} style={styles(theme).btnImg}/>
+        <Text style={styles(theme).btnText}>خروج از حساب</Text>
       </View>
       
     </TouchableOpacity>
@@ -188,7 +189,7 @@ return (
 );
 };
 
-const styles = StyleSheet.create({
+const styles =(theme) => StyleSheet.create({
   topImg:{
         resizeMode:'stretch',
         height:responsiveHeight(16),
@@ -220,11 +221,11 @@ const styles = StyleSheet.create({
       marginLeft:responsiveWidth(5),
     },userName:{
       ...myFontStyle.bookTitle,
-      color:'#111',
+      color:theme.textTitle,
       textAlign:'center',
     },userEmail:{
       ...myFontStyle.bookWriter,
-      color:'#111',
+      color:theme.textTitle,
       textAlign:'center',
     },btnImg:{
       width:30,
@@ -238,11 +239,11 @@ const styles = StyleSheet.create({
       paddingLeft:responsiveWidth(5),
       paddingTop:responsiveHeight(1),
       paddingBottom:responsiveHeight(1),
-      borderBottomColor:'#eaeaea',
+      borderBottomColor:theme.borderB,
       borderBottomWidth:2,
     },btnText:{
       ...myFontStyle.largeRegular,
-      color:'#111',
+      color:theme.textTitle,
       marginRight:responsiveWidth(2),
     },btnImg2:{
       resizeMode:'contain',

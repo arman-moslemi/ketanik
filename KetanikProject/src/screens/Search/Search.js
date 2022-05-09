@@ -1,4 +1,4 @@
-import React, {useState,useEffect} from 'react';
+import React, {useState,useEffect,useContext} from 'react';
 import {View, TextInput, Text, TouchableOpacity,Image,ScrollView,FlatList} from 'react-native';
 
 
@@ -13,6 +13,8 @@ import { RadioButton } from 'react-native-paper';
 import axios from 'axios';
 import { apiUrl ,apiAsset} from "@commons/inFormTypes";
 import { Input } from '@components/Input';
+import { ThemeContext } from '../../../theme/theme-context';
+
 export const truncate = (str, len) => {
   // console.log("truncate", str, str.length, len);
   if (str.length > len && str.length > 0) {
@@ -26,6 +28,7 @@ export const truncate = (str, len) => {
 };
 
  const Search = ({navigation }) => {
+  const {  theme } = useContext(ThemeContext);
   const [name,setName]=useState("");
 
    
@@ -67,17 +70,17 @@ null
   const _render = (item) => {
     console.log(item.item.BookName)
     return (
-        <View style={styles.bookRow}>
-        <Image source={{uri:apiAsset+item.item.Pic}} style={styles.bookImg}/>
+        <View style={styles(theme).bookRow}>
+        <Image source={{uri:apiAsset+item.item.Pic}} style={styles(theme).bookImg}/>
         <View style={{marginRight:responsiveWidth(3)}}>
-            <Text style={styles.bookTitle}>
+            <Text style={styles(theme).bookTitle}>
             {truncate(item.item.BookName,20)}
            {/* { item.item.BookName} */}
             </Text>
-            <Text style={styles.bookWriter}>
+            <Text style={styles(theme).bookWriter}>
             {truncate(item.item.Writer,20)}
             </Text>
-            <Text style={styles.bookWriter}>
+            <Text style={styles(theme).bookWriter}>
             {truncate("ناشر :"+item.item.Publisher,30)}
             </Text>
             <View style={{display:'flex',flexDirection:'row-reverse'}}>
@@ -94,11 +97,11 @@ index+1>item.item.Rate?
             </View>
         </View>
         <View style={{display:"flex",flexDirection:'column',alignContent:'flex-end',justifyContent:'space-between'}}>
-            <View style={styles.headphone}>
+            <View style={styles(theme).headphone}>
             <Icon name={'headset'} color={'#111'} size={22}/>
             </View>
             <View>
-                <Text style={styles.price}>
+                <Text style={styles(theme).price}>
                     {item.item.Cost} تومان
                 </Text>
             </View>
@@ -107,16 +110,16 @@ index+1>item.item.Rate?
     );
   };
 return (
-    <View style={{backgroundColor:'#fff',flex:1}}>
+    <View style={{backgroundColor:theme.backgroundColor,flex:1}}>
 
-<View style={styles.customRow}>
+<View style={styles(theme).customRow}>
         
     
     </View>
-    <View style={styles.topBar}>
+    <View style={styles(theme).topBar}>
 
     <View style={{flex : 2,textAlign:"right"}}>
-          <Text style={styles.menuTitle}>جستجو</Text>
+          <Text style={styles(theme).menuTitle}>جستجو</Text>
           </View>
     
         
@@ -128,26 +131,26 @@ return (
     </View>
      
   <ScrollView>
- <View style={styles.container}>
+ <View style={styles(theme).container}>
  
-  <View style={styles.aboutView}>
-    <View style={styles.lightGreenBack}>
+  <View style={styles(theme).aboutView}>
+    <View style={styles(theme).lightGreenBack}>
 <View>
   <Icon name={'search'} size={40} color={'#c1c1c1'}/>
 </View>
 <View>
-  <Input onChangeText={(ss)=>setName(ss)} placeholder='جستجو کتاب،نویسنده و ناشر...' inputStyle={styles.searchInput}/>
+  <Input onChangeText={(ss)=>setName(ss)} placeholder='جستجو کتاب،نویسنده و ناشر...' inputStyle={styles(theme).searchInput}/>
 </View>
     </View>
     {/* <View style={{display:'flex',justifyContent:'space-between',alignItems:'center',flexDirection:'row-reverse',marginTop:responsiveHeight(3),marginBottom:responsiveHeight(3)}}>
       <View>
-        <Text style={styles.headText}>
+        <Text style={styles(theme).headText}>
           تاریخچه
         </Text>
       </View>
       <View>
         <TouchableOpacity style={{display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>
-          <Text style={styles.delText}>پاک کردن</Text>
+          <Text style={styles(theme).delText}>پاک کردن</Text>
           <Icon name={'delete'} size={25} color={'#dc3545'}/>
         </TouchableOpacity>
       </View>
@@ -164,30 +167,30 @@ renderItem={_render}
 />
    {/* <View style={{display:'flex',flexDirection:'column'}}>
       
-      <View style={styles.searchList}>
+      <View style={styles(theme).searchList}>
         <View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>
           <TouchableOpacity>
             <Icon name={'clear'} color={'#c1c1c1'} size={20}/>
           </TouchableOpacity>
-          <Text style={styles.searchResult}>
+          <Text style={styles(theme).searchResult}>
             صد سال تنهایی
           </Text>
         </View>
         <View style={{}}>
-          <Image source={require('@assets/images/book1.jpg')} style={styles.imageSearch}/>
+          <Image source={require('@assets/images/book1.jpg')} style={styles(theme).imageSearch}/>
         </View>
       </View>
-      <View style={styles.searchList}>
+      <View style={styles(theme).searchList}>
         <View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>
           <TouchableOpacity>
             <Icon name={'clear'} color={'#c1c1c1'} size={20}/>
           </TouchableOpacity>
-          <Text style={styles.searchResult}>
+          <Text style={styles(theme).searchResult}>
             صد سال تنهایی
           </Text>
         </View>
         <View style={{}}>
-          <Image source={require('@assets/images/book1.jpg')} style={styles.imageSearch}/>
+          <Image source={require('@assets/images/book1.jpg')} style={styles(theme).imageSearch}/>
         </View>
       </View>
   
@@ -201,7 +204,7 @@ renderItem={_render}
 );
 };
 
-const styles = StyleSheet.create({
+const styles = (theme) => StyleSheet.create({
     container: {
         paddingRight:responsiveWidth(3),
         paddingLeft:responsiveWidth(3),
@@ -212,7 +215,7 @@ const styles = StyleSheet.create({
 
     menuTitle:{
 ...myFontStyle.UltraBold,
-      color:Colors.darkGreen,
+color:theme.menuTitle,
       zIndex:10000,
     },
 
@@ -224,7 +227,7 @@ const styles = StyleSheet.create({
     top:responsiveHeight(0),
     paddingRight:responsiveWidth(5),
     paddingLeft:responsiveWidth(5),
-    backgroundColor:'#fff',
+    backgroundColor:theme.topRowBack,
     marginTop:responsiveHeight(-13),
     height : responsiveHeight(25),
     width : '100%',

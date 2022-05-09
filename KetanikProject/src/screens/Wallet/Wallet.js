@@ -1,4 +1,4 @@
-import React, {useState,useRef} from 'react';
+import React, {useState,useRef,useContext} from 'react';
 import {View, TextInput, Text, TouchableOpacity,Image,ScrollView} from 'react-native';
 
 
@@ -10,6 +10,8 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 // import DrawerContent from './drewerContent/DrawerContent';
 import { myFontStyle } from "@assets/Constance";
 import { RadioButton } from 'react-native-paper';
+import { ThemeContext } from '../../../theme/theme-context';
+
 // create a component
 
 
@@ -26,123 +28,123 @@ import { RadioButton } from 'react-native-paper';
 //   };
 
  const Wallet = ({navigation }) => {
-  
+  const {  theme } = useContext(ThemeContext);
    
   const [checked, setChecked] = React.useState('first');
 return (
-    <View style={{backgroundColor:'#fff',flex:1}}>
+    <View style={{backgroundColor:theme.backgroundColor,flex:1}}>
 
-<View style={styles.customRow}>
+<View style={styles(theme).customRow}>
         
     
     </View>
-    <View style={styles.topBar}>
+    <View style={styles(theme).topBar}>
 
     <View style={{flex : 2,textAlign:"right"}}>
-          <Text style={styles.menuTitle}>شارژ کیف پول</Text>
+          <Text style={styles(theme).menuTitle}>شارژ کیف پول</Text>
           </View>
     
         
         <View style={{flex :0.5}}>
           <TouchableOpacity onPress={()=>navigation.goBack()} style={{}}>
-            <Icon name={"arrow-back"} color={'#111'} size={30}/>
+            <Icon name={"arrow-back"} color={theme.iconWhite} size={30}/>
           </TouchableOpacity>
           </View>
     </View>
      
   <ScrollView>
- <View style={styles.container}>
-  <View style={styles.aboutView}>
-    <Text style={styles.aboutTitle}>
+ <View style={styles(theme).container}>
+  <View style={styles(theme).aboutView}>
+    <Text style={styles(theme).aboutTitle}>
      مبلغ فعلی کیف پول : 0
     </Text>
-    <View style={styles.radioRow}>
-  <View style={styles.radioView}>
+    <View style={styles(theme).radioRow}>
+  <View style={styles(theme).radioView}>
   <RadioButton
         value="first"
         status={ checked === 'first' ? 'checked' : 'unchecked' }
         onPress={() => setChecked('first')}
         color={Colors.darkGreen}
       />
-  <Text style={styles.radionText}>
+  <Text style={styles(theme).radionText}>
      10 یورو
   </Text>
       </View>
   </View>
-  <View style={styles.radioRow}>
-  <View style={styles.radioView}>
+  <View style={styles(theme).radioRow}>
+  <View style={styles(theme).radioView}>
   <RadioButton
         value="second"
         status={ checked === 'second' ? 'checked' : 'unchecked' }
         onPress={() => setChecked('second')}
         color={Colors.darkGreen}
       />
-  <Text style={styles.radionText}>
+  <Text style={styles(theme).radionText}>
      20 یورو
   </Text>
       </View>
   </View>
-  <View style={styles.radioRow}>
-  <View style={styles.radioView}>
+  <View style={styles(theme).radioRow}>
+  <View style={styles(theme).radioView}>
   <RadioButton
         value="third"
         status={ checked === 'third' ? 'checked' : 'unchecked' }
         onPress={() => setChecked('third')}
         color={Colors.darkGreen}
       />
-  <Text style={styles.radionText}>
+  <Text style={styles(theme).radionText}>
     50 یورو
   </Text>
       </View>
   </View>
-  <View style={styles.radioRow}>
-  <View style={styles.radioView}>
+  <View style={styles(theme).radioRow}>
+  <View style={styles(theme).radioView}>
   <RadioButton
         value="four"
         status={ checked === 'four' ? 'checked' : 'unchecked' }
         onPress={() => setChecked('four')}
         color={Colors.darkGreen}
       />
-  <Text style={styles.radionText}>
+  <Text style={styles(theme).radionText}>
      100 یورو
   </Text>
       </View>
   </View>
-  <View style={styles.radioRow}>
-  <View style={styles.radioView}>
+  <View style={styles(theme).radioRow}>
+  <View style={styles(theme).radioView}>
   <RadioButton
         value="five"
         status={ checked === 'five' ? 'checked' : 'unchecked' }
         onPress={() => setChecked('five')}
         color={Colors.darkGreen}
       />
-  <Text style={styles.radionText}>
+  <Text style={styles(theme).radionText}>
      200 یورو
   </Text>
       </View>
   </View>
   <View style={{display:'flex',flexDirection:'row-reverse',marginTop:responsiveHeight(5),justifyContent:'space-between'}}>
    
-    <TouchableOpacity style={styles.payBtn}>
-       <Text style={styles.btnText}>پرداخت</Text>
+    <TouchableOpacity style={styles(theme).payBtn}>
+       <Text style={styles(theme).btnText}>پرداخت</Text>
      </TouchableOpacity>
     
 
-    <TouchableOpacity style={styles.cancelBtn}>
-       <Text style={styles.btnText2}>انصراف</Text>
+    <TouchableOpacity style={styles(theme).cancelBtn}>
+       <Text style={styles(theme).btnText2}>انصراف</Text>
      </TouchableOpacity>
    
   </View>
-  <View style={styles.greenBack}>
+  <View style={styles(theme).greenBack}>
 <Icon name={'error'} color={'#dc3545'} size={30}/>
-<Text style={styles.alertText}>
+<Text style={styles(theme).alertText}>
 لطفا توجه داشته باشید امکان استرداد مبلغ واریز شده وجود ندارد
   </Text>
   </View>
-  <TouchableOpacity onPress={()=>navigation.navigate("Factor")} style={styles.editProfileBtn2}>
+  <TouchableOpacity onPress={()=>navigation.navigate("Factor")} style={styles(theme).editProfileBtn2}>
       <View style={{display:'flex',flexDirection:'row-reverse'}}>
         
-        <Text style={styles.btnText3}>مشاهده سابقه تراکنش های موفق</Text>
+        <Text style={styles(theme).btnText3}>مشاهده سابقه تراکنش های موفق</Text>
       </View>
       <View>
         <Icon name={'chevron-left'} size={20} color={'#111'}/>
@@ -156,7 +158,7 @@ return (
 );
 };
 
-const styles = StyleSheet.create({
+const styles = (theme) =>  StyleSheet.create({
     container: {
         paddingRight:responsiveWidth(3),
         paddingLeft:responsiveWidth(3),
@@ -167,7 +169,7 @@ const styles = StyleSheet.create({
 
     menuTitle:{
 ...myFontStyle.UltraBold,
-      color:Colors.darkGreen,
+      color:theme.menuTitle,
       zIndex:10000,
     },
 
@@ -179,7 +181,7 @@ const styles = StyleSheet.create({
     top:responsiveHeight(0),
     paddingRight:responsiveWidth(5),
     paddingLeft:responsiveWidth(5),
-    backgroundColor:'#fff',
+    backgroundColor:theme.topRowBack,
     marginTop:responsiveHeight(-13),
     height : responsiveHeight(25),
     width : '100%',
@@ -211,12 +213,12 @@ const styles = StyleSheet.create({
   }
   ,aboutText:{
     ...myFontStyle.largeRegular,
-    color:'#111',
+    color:theme.textTitle,
     textAlign:'justify',
     lineHeight:30,
   },aboutTitle:{
   ...myFontStyle.bookTitle,
-  color:'#111',
+  color:theme.textTitle,
   marginBottom:responsiveHeight(2),
   marginTop:responsiveHeight(2),
 },radioView:{
@@ -231,7 +233,7 @@ const styles = StyleSheet.create({
   borderBottomWidth:0.5,
 } ,viewRadio: {flexDirection:'row',alignItems:'center'},
 radionText: {
-  color: '#111',
+  color: theme.textTitle,
   ...myFontStyle.episodeName,
   // lineHeight:responsiveHeight(3)
 

@@ -1,27 +1,44 @@
 import React, { createContext, useState } from 'react';
 const themes = {
     dark: {
-        backgroundColor:"#000",
-
+        backgroundColor:"#191A1F",
+            textTitle:'#fff',
+            textTitle2:'#fff',
         appColor: "#16B1F4",
     appColorDarker: "#0385BC",
     text: "#311944",
     darkGreen: "#32655c",
-    borderColor:"#cacaca",
+   
     lightGreen:'#f1f5ec',
     gray:'#E8EAE6',
-    white:'#fff'
+    white:'#fff',
+    topRowBack:'#111',
+    iconWhite:'#fff',
+    cardBack:'#f1f5ec',
+    borderB:'#192434',
+    menuTitle:'#fff',
+    greenBack:'#303135',
+    borderColor:"#192434",
     },
     light: {
-        backgroundColor:"#f4f4f4",
+        textTitle2:'#fff',
+        borderColor:"#cacaca",
+        greenBack:'#f1f5ec',
+        menuTitle:'#32655c',
+        borderB:'#E8EAE6',
+        cardBack:'#f1f5ec',
+        iconWhite:'#111',
+        topRowBack:'#fff',
+        textTitle:'#111',
+        backgroundColor:"#fcfcfc",
         appColor: "#16B1F4",
         appColorDarker: "#0385BC",
         text: "#311944",
-        darkGreen: "#32655c",
+        darkGreen: "#f1f5ec",
         borderColor:"#cacaca",
         lightGreen:'#f1f5ec',
         gray:'#E8EAE6',
-        white:'#fff'
+        white:'#111',
     }
 }
 

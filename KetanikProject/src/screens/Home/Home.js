@@ -28,10 +28,10 @@ export const truncate = (str, len) => {
     }
     return str;
   };
-
+ 
  const Home = ({navigation }) => {
+  
   const {  theme} = useContext(ThemeContext);
-
   const [data,setData]=useState([]);
   const [best,setBest]=useState([]);
   const [slider,setSlider]=useState([]);
@@ -71,31 +71,31 @@ export const truncate = (str, len) => {
   const _render = (item, index) => {
     console.log(item)
     return (
-      <TouchableOpacity onPress={()=>navigation.navigate("EachBook",{id:item.item.BookID})} style={styles.cardBox}>
-      <Image source={{uri:apiAsset+item.item.Pic}} style={styles.bookImg}/>
-      <Text style={styles.bookName}>
+      <TouchableOpacity onPress={()=>navigation.navigate("EachBook",{id:item.item.BookID})} style={styles(theme).cardBox}>
+      <Image source={{uri:apiAsset+item.item.Pic}} style={styles(theme).bookImg}/>
+      <Text style={styles(theme).bookName}>
       {truncate(item.item.BookName,20)}
       </Text>
       <View style={{display:'flex',flexDirection:'row-reverse',justifyContent:'space-between'}}>
         {
           item.item.SpecialCost?
 <>
-      <Text style={styles.priceRed}>
+      <Text style={styles(theme).priceRed}>
       {item.item.SpecialCost}ت
     </Text>
-    <Text style={styles.priceStroke}>
+    <Text style={styles(theme).priceStroke}>
     {item.item.Cost}ت
     </Text>
     </>
           :
-<Text style={styles.bookName}>
+<Text style={styles(theme).bookName}>
       {item.item.Cost}ت
       </Text>
         }
 
 
       <View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>
-      <Text style={styles.bookName}>
+      <Text style={styles(theme).bookName}>
 {item.item.Rate}      </Text>
       <Icon name={'star'} size={15} color={'#ffc93d'} style={{}}/>
       </View>
@@ -110,19 +110,19 @@ return (
 
 
 
-    <View style={styles.customRow}>
+    <View style={styles(theme).customRow}>
         
     
     </View>
-    <View style={styles.topBar}>
+    <View style={styles(theme).topBar}>
 
     <View style={{flex : 2,textAlign:"right",display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>
          
           <TouchableOpacity onPress={()=>navigation.goBack()} style={{display:'flex',flexDirection:'row-reverse'}}>
-          <View style={styles.badget}>
+          <View style={styles(theme).badget}>
               
           </View>
-          <Icon name={"notifications"} color={'#111'} size={30} />
+          <Icon name={"notifications"} color={theme.iconWhite} size={30} />
           
           </TouchableOpacity>
           </View>
@@ -130,10 +130,10 @@ return (
         
         <View style={{flex : 2,textAlign:"left",display:'flex',flexDirection:'row-reverse',alignItems:'flex-start',justifyContent:'flex-end'}}>
         <TouchableOpacity onPress={()=>navigation.navigate("Cart")} style={{display:'flex',flexDirection:'row-reverse'}}>
-          <View style={styles.badget2}>
+          <View style={styles(theme).badget2}>
               
           </View>
-          <Icon name={"shopping-cart"} color={'#111'} size={30} />
+          <Icon name={"shopping-cart"} color={theme.iconWhite} size={30} />
           
           </TouchableOpacity>
           </View>
@@ -141,36 +141,36 @@ return (
      {/* <ViewSlider
         renderSlides = {
           <>
-            <TouchableOpacity onPress={()=>Linking.openURL(data?.Link1)} style={styles.viewBox}>
-            <Image source={{uri:apiAsset+slider[0]?.Slider1}} resizeMode={"stretch"} style={styles.imageSlider}/>
+            <TouchableOpacity onPress={()=>Linking.openURL(data?.Link1)} style={styles(theme).viewBox}>
+            <Image source={{uri:apiAsset+slider[0]?.Slider1}} resizeMode={"stretch"} style={styles(theme).imageSlider}/>
             </TouchableOpacity>
-            <TouchableOpacity onPress={()=>Linking.openURL(data?.Link3)} style={styles.viewBox}><Image source={{uri:apiAsset+slider[0]?.Slider2}}  resizeMode={"stretch"} style={styles.imageSlider}></Image></TouchableOpacity>
-            <TouchableOpacity onPress={()=>Linking.openURL(data?.Link4)} style={styles.viewBox}><Image source={{uri:apiAsset+slider[0]?.Slider3}}  resizeMode={"stretch"} style={styles.imageSlider}></Image></TouchableOpacity>
+            <TouchableOpacity onPress={()=>Linking.openURL(data?.Link3)} style={styles(theme).viewBox}><Image source={{uri:apiAsset+slider[0]?.Slider2}}  resizeMode={"stretch"} style={styles(theme).imageSlider}></Image></TouchableOpacity>
+            <TouchableOpacity onPress={()=>Linking.openURL(data?.Link4)} style={styles(theme).viewBox}><Image source={{uri:apiAsset+slider[0]?.Slider3}}  resizeMode={"stretch"} style={styles(theme).imageSlider}></Image></TouchableOpacity>
 
             </>
       }
-      style={styles.slider}     //Main slider container style
+      style={styles(theme).slider}     //Main slider container style
       height = {responsiveHeight(25)}    //Height of your slider
       slideCount = {4}    //How many views you are adding to slide
       dots = {true}     // Pagination dots visibility true for visibile
       dotActiveColor = '#FFCC00'     //Pagination dot active color
       dotInactiveColor = '#fff'    // Pagination do inactive color
-      dotsContainerStyle={styles.dotContainer}     // Container style of the pagination dots
+      dotsContainerStyle={styles(theme).dotContainer}     // Container style of the pagination dots
       autoSlide = {true}    //The views will slide automatically
       slideInterval = {5000}    //In Miliseconds
      />  */}
      
        <ScrollView>
-  <View style={styles.container}>
+  <View style={styles(theme).container}>
   <View style={{display:'flex',flexDirection:'row-reverse',justifyContent:'space-between',marginBottom:responsiveHeight(5)}}>
      <View style={{flex:1}}>
-     <Text style={styles.rowTitle}>
+     <Text style={styles(theme).rowTitle}>
           تازه های برگزیده
       </Text>
      </View>
       <View>
       <TouchableOpacity onPress={()=>navigation.navigate("SelectedNews")}>
-      <Text style={styles.seeAll}>
+      <Text style={styles(theme).seeAll}>
          مشاهده همه
       </Text>
       </TouchableOpacity>
@@ -192,13 +192,13 @@ return (
   
    <View style={{display:'flex',flexDirection:'row-reverse',justifyContent:'space-between',marginBottom:responsiveHeight(5),marginTop:responsiveHeight(5)}}>
      <View style={{flex:1}}>
-     <Text style={styles.rowTitle}>
+     <Text style={styles(theme).rowTitle}>
          پر فروش ترین ها
       </Text>
      </View>
       <View>
       <TouchableOpacity>
-      <Text style={styles.seeAll}>
+      <Text style={styles(theme).seeAll}>
          مشاهده همه
       </Text>
       </TouchableOpacity>
@@ -222,7 +222,9 @@ return (
 );
 };
 
-const styles = StyleSheet.create({
+
+const styles =(theme) =>  StyleSheet.create({
+  
     container: {
         paddingRight:responsiveWidth(5),
         paddingLeft:responsiveWidth(5),
@@ -245,7 +247,7 @@ const styles = StyleSheet.create({
     top:responsiveHeight(0),
     paddingRight:responsiveWidth(5),
     paddingLeft:responsiveWidth(5),
-    backgroundColor:'#fff',
+    backgroundColor:theme.topRowBack,
     marginTop:responsiveHeight(-13),
     height : responsiveHeight(25),
     width : '100%',
@@ -307,7 +309,7 @@ const styles = StyleSheet.create({
     alignItems:'center',
     
 },cardBox:{
-    backgroundColor:'#f1f5ec',
+    backgroundColor:theme.cardBack,
     height:responsiveHeight(19),
     width:responsiveWidth(36),
     borderRadius:10,
@@ -340,10 +342,10 @@ marginTop:responsiveHeight(0.5),
 marginRight:4,
 },rowTitle:{
     ...myFontStyle.largBold,
-    color:'#111',
+    color:theme.textTitle,
 },seeAll:{
     ...myFontStyle.largeRegular,
-    color:'#111',
+    color:theme.textTitle,
 },
 dotContainer: {
   backgroundColor: 'transparent',

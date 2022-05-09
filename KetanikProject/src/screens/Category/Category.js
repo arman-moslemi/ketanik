@@ -1,4 +1,4 @@
-import React, {useState,useEffect} from 'react';
+import React, {useState,useEffect,useContext} from 'react';
 import {View, TextInput, Text, TouchableOpacity,Image,ScrollView,FlatList} from 'react-native';
 
 
@@ -10,6 +10,7 @@ import { myFontStyle } from "@assets/Constance";
 import axios from 'axios';
 import { apiUrl ,apiAsset} from "@commons/inFormTypes";
 import { isMessageIgnored } from 'react-native/Libraries/LogBox/Data/LogBoxData';
+import { ThemeContext } from '../../../theme/theme-context';
 
 // create a component
 
@@ -27,6 +28,8 @@ import { isMessageIgnored } from 'react-native/Libraries/LogBox/Data/LogBoxData'
 //   };
 
  const Category = ({navigation }) => {
+  const {  theme } = useContext(ThemeContext);
+
   const [data,setData]=useState([]);
   useEffect(() => {
 
@@ -61,12 +64,12 @@ import { isMessageIgnored } from 'react-native/Libraries/LogBox/Data/LogBoxData'
     const _render = (item, index) => {
       console.log(item.item)
       return (
-        // <View style={styles.categoryRow}>
-        <TouchableOpacity onPress={()=>navigation.navigate("SelectedNews",{type:"group",GroupID:item.item.GroupID,GroupName:item.item.Title})} style={item.item.GroupID==1?styles.categoryBox:item.item.GroupID==2?styles.categoryBox2:item.item.GroupID==3?styles.categoryBox3:
-          item.item.GroupID==4?styles.categoryBox4:item.item.GroupID==5?styles.categoryBox5:item.item.GroupID==6?styles.categoryBox6:item.item.GroupID==7?styles.categoryBox7:styles.categoryBox8
+        // <View style={styles(theme).categoryRow}>
+        <TouchableOpacity onPress={()=>navigation.navigate("SelectedNews",{type:"group",GroupID:item.item.GroupID,GroupName:item.item.Title})} style={item.item.GroupID==1?styles(theme).categoryBox:item.item.GroupID==2?styles(theme).categoryBox2:item.item.GroupID==3?styles(theme).categoryBox3:
+          item.item.GroupID==4?styles(theme).categoryBox4:item.item.GroupID==5?styles(theme).categoryBox5:item.item.GroupID==6?styles(theme).categoryBox6:item.item.GroupID==7?styles(theme).categoryBox7:styles(theme).categoryBox8
         }>
-        <Image source={{uri:apiAsset+item.item.Pic}} style={styles.bookImg}/>
-         <Text style={styles.cateTitle}>
+        <Image source={{uri:apiAsset+item.item.Pic}} style={styles(theme).bookImg}/>
+         <Text style={styles(theme).cateTitle}>
           {item.item.Title}
          </Text>
         </TouchableOpacity>
@@ -75,38 +78,38 @@ import { isMessageIgnored } from 'react-native/Libraries/LogBox/Data/LogBoxData'
       );
     };
 return (
-    <View style={{backgroundColor:'#fff',flex:1}}>
+    <View style={{backgroundColor:theme.backgroundColor,flex:1}}>
 
-<View style={styles.customRow}>
+<View style={styles(theme).customRow}>
         
     
         </View>
-    <View style={styles.topBar}>
+    <View style={styles(theme).topBar}>
 
     <View style={{flex : 2,textAlign:"right"}}>
-          <Text style={styles.menuTitle}>دسته بندی</Text>
+          <Text style={styles(theme).menuTitle}>دسته بندی</Text>
           </View>
     
         
         <View style={{flex :0.5}}>
           <TouchableOpacity onPress={()=>navigation.goBack()} style={{}}>
-            <Icon name={"arrow-back"} color={'#111'} size={30}/>
+            <Icon name={"arrow-back"} color={theme.iconWhite} size={30}/>
           </TouchableOpacity>
           </View>
     </View>
      
   <ScrollView>
- <View style={styles.container}>
-     {/* <View style={styles.categoryRow}>
-         <View style={styles.categoryBox}>
-         <Image source={require('@assets/images/book1.jpg')} style={styles.bookImg}/>
-          <Text style={styles.cateTitle}>
+ <View style={styles(theme).container}>
+     {/* <View style={styles(theme).categoryRow}>
+         <View style={styles(theme).categoryBox}>
+         <Image source={require('@assets/images/book1.jpg')} style={styles(theme).bookImg}/>
+          <Text style={styles(theme).cateTitle}>
             کتاب های صوتی
           </Text>
          </View>
-         <View style={styles.categoryBox2}>
-         <Image source={require('@assets/images/book2.jpg')} style={styles.bookImg}/>
-         <Text style={styles.cateTitle}>
+         <View style={styles(theme).categoryBox2}>
+         <Image source={require('@assets/images/book2.jpg')} style={styles(theme).bookImg}/>
+         <Text style={styles(theme).cateTitle}>
             کتاب های رایگان
           </Text>
          </View>
@@ -114,7 +117,7 @@ return (
   
      <FlatList
           numColumns={2}
-          columnWrapperStyle={styles.charityList}
+          columnWrapperStyle={styles(theme).charityList}
           keyExtractor={keyExtractor}
           data={data}
           renderItem={_render}
@@ -128,7 +131,7 @@ return (
 );
 };
 
-const styles = StyleSheet.create({
+const styles = (theme) => StyleSheet.create({
     container: {
         paddingRight:responsiveWidth(1),
         paddingLeft:responsiveWidth(1),
@@ -143,7 +146,7 @@ const styles = StyleSheet.create({
     },
     menuTitle:{
 ...myFontStyle.UltraBold,
-      color:Colors.darkGreen,
+color:theme.menuTitle,
       zIndex:10000,
     },
 
@@ -155,7 +158,7 @@ const styles = StyleSheet.create({
     top:responsiveHeight(0),
     paddingRight:responsiveWidth(5),
     paddingLeft:responsiveWidth(5),
-    backgroundColor:'#fff',
+    backgroundColor:theme.topRowBack,
     marginTop:responsiveHeight(-13),
     height : responsiveHeight(25),
     width : '100%',
@@ -184,7 +187,7 @@ const styles = StyleSheet.create({
     marginBottom:responsiveHeight(1),
       flex:1,
   },categoryBox:{
-      height:responsiveHeight(11),
+      height:responsiveHeight(10),
       // flex:0.5,
       backgroundColor:'#e43299',
       borderRadius:10,
@@ -195,7 +198,7 @@ const styles = StyleSheet.create({
       alignContent:'center',
       alignItems:'center',
   },categoryBox2:{
-    height:responsiveHeight(11),
+    height:responsiveHeight(10),
       // flex:0.5,
     backgroundColor:'#e0ad5c',
     borderRadius:10,
@@ -206,7 +209,7 @@ const styles = StyleSheet.create({
     alignContent:'center',
     alignItems:'center',
   },categoryBox3:{
-    height:responsiveHeight(11),
+    height:responsiveHeight(10),
       // flex:0.5,
     backgroundColor:'#bad259',
     borderRadius:10,
@@ -217,7 +220,7 @@ const styles = StyleSheet.create({
     alignContent:'center',
     alignItems:'center',
   },categoryBox4:{
-    height:responsiveHeight(11),
+    height:responsiveHeight(10),
       // flex:0.5,
     backgroundColor:'#e35831',
     borderRadius:10,
@@ -229,7 +232,7 @@ const styles = StyleSheet.create({
     alignItems:'center',
   },
   categoryBox5:{
-    height:responsiveHeight(11),
+    height:responsiveHeight(10),
       // flex:0.5,
     backgroundColor:'#dfab58',
     borderRadius:10,
@@ -241,7 +244,7 @@ const styles = StyleSheet.create({
     alignItems:'center',
   },
   categoryBox6:{
-    height:responsiveHeight(11),
+    height:responsiveHeight(10),
       // flex:0.5,
     backgroundColor:'#6c6263',
     borderRadius:10,
@@ -253,7 +256,7 @@ const styles = StyleSheet.create({
     alignItems:'center',
   },
   categoryBox7:{
-    height:responsiveHeight(11),
+    height:responsiveHeight(10),
       // flex:0.5,
     backgroundColor:'#262d5b',
     borderRadius:10,
@@ -265,7 +268,7 @@ const styles = StyleSheet.create({
     alignItems:'center',
   },
   categoryBox8:{
-    height:responsiveHeight(11),
+    height:responsiveHeight(10),
       // flex:0.5,
     backgroundColor:'#b1cfad',
     borderRadius:10,
@@ -277,7 +280,7 @@ const styles = StyleSheet.create({
     alignItems:'center',
   },
   categoryBox9:{
-    height:responsiveHeight(11),
+    height:responsiveHeight(10),
       // flex:0.5,
     backgroundColor:'#95a8b6',
     borderRadius:10,
@@ -289,7 +292,7 @@ const styles = StyleSheet.create({
     alignItems:'center',
   },
   categoryBox10:{
-    height:responsiveHeight(11),
+    height:responsiveHeight(10),
       // flex:0.5,
     backgroundColor:'#a485ae',
     borderRadius:10,
@@ -301,7 +304,7 @@ const styles = StyleSheet.create({
     alignItems:'center',
   },
   categoryBox11:{
-    height:responsiveHeight(11),
+    height:responsiveHeight(10),
       // flex:0.5,
     backgroundColor:'#6e6365',
     borderRadius:10,
@@ -313,7 +316,7 @@ const styles = StyleSheet.create({
     alignItems:'center',
   },
   categoryBox12:{
-    height:responsiveHeight(11),
+    height:responsiveHeight(10),
       // flex:0.5,
     backgroundColor:'#e48921',
     borderRadius:10,
@@ -325,7 +328,7 @@ const styles = StyleSheet.create({
     alignItems:'center',
   },
   categoryBox13:{
-    height:responsiveHeight(11),
+    height:responsiveHeight(10),
       // flex:0.5,
     backgroundColor:'#4f86d6',
     borderRadius:10,
@@ -337,7 +340,7 @@ const styles = StyleSheet.create({
     alignItems:'center',
   },
   categoryBox14:{
-    height:responsiveHeight(11),
+    height:responsiveHeight(10),
       // flex:0.5,
     backgroundColor:'#d91c2e',
     borderRadius:10,
