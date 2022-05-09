@@ -161,7 +161,7 @@ axios.post(apiUrl+'RelatedBook',{GroupID:GroupID})
         return (
             <View style={styles(theme).bookRow}>
             <Image source={{uri:apiAsset+item.item.Pic}} style={styles(theme).bookImg}/>
-            <View style={{marginRight:responsiveWidth(3)}}>
+            <View style={{marginRight:responsiveWidth(-20)}}>
                 <Text style={styles(theme).bookTitle}>
                 {truncate(item.item.BookName,20)}
                {/* { item.item.BookName} */}
@@ -176,9 +176,9 @@ axios.post(apiUrl+'RelatedBook',{GroupID:GroupID})
                 {[...new Array(5)].map((index)=>{
                         return(
 index+1>item.item.Rate?
-<Icon name={'star'} color={Colors.darkGreen} size={15}/>
+<Icon name={'star'} color={'#ffb921'} size={15}/>
 :
-<Icon name={'star'} color={"#fff"} size={15}/>
+<Icon name={'star'} color={Colors.darkGreen} size={15}/>
 
 )
 })
@@ -247,7 +247,7 @@ return (
         
         <View style={{flex :0.5}}>
           <TouchableOpacity onPress={()=>navigation.goBack()} style={{}}>
-            <Icon name={"arrow-back"} color={'#111'} size={30}/>
+            <Icon name={"arrow-back"} color={theme.iconWhite} size={30}/>
           </TouchableOpacity>
           </View>
     </View>
@@ -341,10 +341,11 @@ const styles = (theme) =>  StyleSheet.create({
   },bookRow:{
       display:'flex',
       flexDirection:'row-reverse',
+      justifyContent:'space-between',
       backgroundColor:Colors.lightGreen,
       height:responsiveHeight(14),
       marginTop:responsiveHeight(4),
-      width:"100%",
+      width:responsiveWidth(90),
       borderRadius:10,
       paddingTop:responsiveHeight(0.5),
       paddingBottom:responsiveHeight(0.5),
@@ -359,10 +360,11 @@ const styles = (theme) =>  StyleSheet.create({
       marginRight:responsiveWidth(3),
   },bookTitle:{
       ...myFontStyle.largBold,
-      color:theme.textTitle,
+      color:'#111',
+      textAlign:'right',
   },bookWriter:{
     ...myFontStyle.mediumRegular,
-    color:theme.textTitle,
+    color:'#111',
   },headphone:{
       backgroundColor:'#fff',
       height:35,

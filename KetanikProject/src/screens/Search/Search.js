@@ -96,7 +96,7 @@ index+1>item.item.Rate?
 }
             </View>
         </View>
-        <View style={{display:"flex",flexDirection:'column',alignContent:'flex-end',justifyContent:'space-between'}}>
+        <View style={{display:"flex",flexDirection:'column',alignContent:'flex-start'}}>
             <View style={styles(theme).headphone}>
             <Icon name={'headset'} color={'#111'} size={22}/>
             </View>

@@ -71,6 +71,10 @@ export const myFontStyle = {
   },episodeName: {
     fontFamily: myFontFamily.Medium,
     fontSize: RFPercentage(2.5),
+  }
+  ,menu: {
+    fontFamily: myFontFamily.Medium,
+    fontSize: RFPercentage(1.5),
   },
   smallUltraLight: {
     fontFamily: myFontFamily.UltraLight,
