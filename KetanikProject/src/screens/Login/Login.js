@@ -1,6 +1,6 @@
 import React, { useState,useEffect } from 'react';
 import { myFontStyle } from "@assets/Constance";
-import { View, Text , StyleSheet,Image, TouchableOpacity} from 'react-native';
+import { View, Text , StyleSheet,Image, TouchableOpacity,KeyboardAvoidingView} from 'react-native';
 import { TabView, SceneMap,TabBar } from 'react-native-tab-view';
 import { responsiveFontSize, responsiveHeight, responsiveScreenWidth, responsiveWidth } from 'react-native-responsive-dimensions';
 import { Colors} from "@assets/Colors";
@@ -23,7 +23,7 @@ const [eror2,SetEror2]=useState(false);
 const [erorReg,SetErorReg]=useState(false);
 const [erorReg2,SetErorReg2]=useState(false);
 const [page,setPage]=useState(0);
-const keyboardVerticalOffset = responsiveHeight(5)
+const keyboardVerticalOffset = responsiveHeight(1)
   const  mutLogin=async()=> {
     setLoading(true);
 if(user=="" || pass==""){
@@ -178,7 +178,7 @@ alert("کاربر با این ایمیل وجود دارد")
      signup: FirstRoute,
      login: SecondRoute,
    });
-  
+
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
     { key: 'signup', title: 'ثبت نام' },
@@ -201,6 +201,8 @@ alert("کاربر با این ایمیل وجود دارد")
   );
 return (
     <View style={{ flex: 1,padding:0,alignItems:'center'}}>
+                  <KeyboardAvoidingView behavior='position' keyboardVerticalOffset={keyboardVerticalOffset}>
+
       <Image source={require('@assets/images/login.png')} style={styles.loginImg} />
       <View style={styles.tabViewBox}>
       {/* <TabView
@@ -225,6 +227,7 @@ return (
 {
   page==0?
           <View style={{ flex: 1}}>
+
      <View style={{flex:1,alignItems:'center'}}>
      
      <Input onChangeText={(ss)=>setUser(ss)}  placeholder="yasaman@yahoo.com" inputStyle={{marginTop:responsiveHeight(5)}}  />
@@ -239,10 +242,10 @@ return (
         :<Text style={styles.btnText}>ورود</Text>}
         </TouchableOpacity>
      </View>
-         
    </View>
   :
   <View style={{ flex: 1}}>
+
   <View style={{flex:1,alignItems:'center'}}>
   <Input onChangeText={(ss)=>setName(ss)}  placeholder="نام کاربری" inputStyle={{marginTop:responsiveHeight(5)}} />
   <Input onChangeText={(ss)=>setEmail(ss)} placeholder="yasaman@yahoo.com" inputStyle={{marginTop:responsiveHeight(2)}} />
@@ -255,12 +258,12 @@ return (
   </TouchableOpacity>
       }
   </View>
-      
 </View>
 }
 
       </View>
-     
+      </KeyboardAvoidingView>
+
   
   </View>
 );
@@ -296,7 +299,7 @@ indicatorStyle:{
     borderRadius:5
 },tabViewBox:{
   flex:1,
-  width:responsiveWidth(80),
+  // width:responsiveWidth(100),
   marginTop:responsiveHeight(-4),
 },loginBtn:{
   backgroundColor:Colors.darkGreen,
@@ -316,7 +319,7 @@ indicatorStyle:{
   textAlign:'left',
   
   alignSelf:'flex-start',
-  paddingLeft:responsiveWidth(3),
+  paddingLeft:responsiveWidth(14),
   marginTop:responsiveHeight(2),
   marginBottom:responsiveHeight(2),
 },forgetPassBtnText:{

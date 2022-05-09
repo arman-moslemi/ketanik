@@ -159,7 +159,7 @@ axios.post(apiUrl+'RelatedBook',{GroupID:GroupID})
       const _render = (item) => {
         console.log(item.item.BookName)
         return (
-            <View style={styles(theme).bookRow}>
+          <TouchableOpacity onPress={()=>navigation.navigate("EachBook",{id:item.item.BookID})}  style={styles(theme).bookRow}>
             <Image source={{uri:apiAsset+item.item.Pic}} style={styles(theme).bookImg}/>
             <View style={{marginRight:responsiveWidth(3)}}>
                 <Text style={styles(theme).bookTitle}>
@@ -207,7 +207,7 @@ index+1>item.item.Rate?
         }
                 </View>
             </View>
-        </View>
+        </TouchableOpacity>
         );
       };
 
@@ -238,6 +238,10 @@ return (
 
 :type=="group"?
 <Text style={styles(theme).menuTitle}>{GroupName}</Text>
+
+
+:type=="best"?
+<Text style={styles(theme).menuTitle}>پرفروش ترین ها</Text>
 
 :
     <Text style={styles(theme).menuTitle}>تازه های برگزیده</Text>

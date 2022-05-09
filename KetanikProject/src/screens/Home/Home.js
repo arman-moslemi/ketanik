@@ -160,7 +160,7 @@ return (
       slideInterval = {5000}    //In Miliseconds
      />  */}
      
-       <ScrollView>
+       <ScrollView >
   <View style={styles(theme).container}>
   <View style={{display:'flex',flexDirection:'row-reverse',justifyContent:'space-between',marginBottom:responsiveHeight(5)}}>
      <View style={{flex:1}}>
@@ -182,7 +182,7 @@ return (
           data={data}
           renderItem={_render}
           horizontal={true}
-          style={{marginTop:responsiveHeight(1),marginBottom:responsiveHeight(1)}}
+          style={{marginTop:responsiveHeight(1),marginBottom:responsiveHeight(1), transform: [{ scaleX: -1 }] }}
           
         />
           
@@ -197,7 +197,7 @@ return (
       </Text>
      </View>
       <View>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={()=>navigation.navigate("SelectedNews",{type:"best"})}>
       <Text style={styles(theme).seeAll}>
          مشاهده همه
       </Text>
@@ -210,7 +210,7 @@ return (
           data={best}
           renderItem={_render}
           horizontal={true}
-          style={{marginTop:responsiveHeight(1),marginBottom:responsiveHeight(1)}}
+          style={{marginTop:responsiveHeight(1),marginBottom:responsiveHeight(1), transform: [{ scaleX: -1 }] }}
           
         />
    </View>
@@ -317,6 +317,7 @@ const styles =(theme) =>  StyleSheet.create({
     padding:responsiveHeight(1),
     marginLeft:responsiveWidth(3),
     marginTop:responsiveHeight(3)
+    , transform: [{ scaleX: -1 }] 
 
 },bookImg:{
     height:responsiveHeight(14),

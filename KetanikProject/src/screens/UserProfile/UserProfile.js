@@ -111,7 +111,7 @@ return (
         <Icon name={'chevron-left'} size={20} color={theme.textTitle}/>
       </View>
     </TouchableOpacity>
-    <TouchableOpacity style={styles(theme).editProfileBtn}>
+    <TouchableOpacity onPress={()=>navigation.navigate("BookSaved")} style={styles(theme).editProfileBtn}>
       <View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>
         <Image source={require('@assets/images/bookmark.png')} style={styles(theme).btnImg}/>
         <Text style={styles(theme).btnText}>کتاب های نشان شده</Text>

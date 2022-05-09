@@ -225,7 +225,7 @@ return(
            خوانده شده ها
          </Text>
        </TouchableOpacity>
-       <TouchableOpacity onPress={()=>{setRole(4);setRoleName("همه کتاب ها");setShow(false)}} style={styles(theme).greenBoxBtn}>
+       <TouchableOpacity onPress={()=>{setRole();setRoleName("همه کتاب ها");setShow(false)}} style={styles(theme).greenBoxBtn}>
          <Text style={styles(theme).greenBoxText}>
           همه کتاب ها
          </Text>

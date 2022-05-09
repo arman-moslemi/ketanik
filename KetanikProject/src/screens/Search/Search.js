@@ -70,9 +70,9 @@ null
   const _render = (item) => {
     console.log(item.item.BookName)
     return (
-        <View style={styles(theme).bookRow}>
+      <TouchableOpacity onPress={()=>navigation.navigate("EachBook",{id:item.item.BookID})}  style={styles(theme).bookRow}>
         <Image source={{uri:apiAsset+item.item.Pic}} style={styles(theme).bookImg}/>
-        <View style={{marginRight:responsiveWidth(3)}}>
+        <View style={{marginRight:responsiveWidth(3),width:responsiveWidth(35)}}>
             <Text style={styles(theme).bookTitle}>
             {truncate(item.item.BookName,20)}
            {/* { item.item.BookName} */}
@@ -96,17 +96,29 @@ index+1>item.item.Rate?
 }
             </View>
         </View>
-        <View style={{display:"flex",flexDirection:'column',alignContent:'flex-end',justifyContent:'space-between'}}>
-            <View style={styles(theme).headphone}>
+        <View style={{display:"flex",flexDirection:'column',alignContent:'flex-end',justifyContent:'flex-end'}}>
+            {/* <View style={styles(theme).headphone}>
             <Icon name={'headset'} color={'#111'} size={22}/>
-            </View>
+            </View> */}
             <View>
-                <Text style={styles(theme).price}>
-                    {item.item.Cost} تومان
-                </Text>
+            {
+          item.item.SpecialCost?
+<>
+      <Text style={styles(theme).priceRed}>
+      {item.item.SpecialCost}ت
+    </Text>
+    <Text style={styles(theme).priceStroke}>
+    {item.item.Cost}ت
+    </Text>
+    </>
+          :
+<Text style={styles(theme).bookName}>
+      {item.item.Cost}ت
+      </Text>
+        }
             </View>
         </View>
-    </View>
+    </TouchableOpacity>
     );
   };
 return (
@@ -205,6 +217,17 @@ renderItem={_render}
 };
 
 const styles = (theme) => StyleSheet.create({
+  priceRed:{
+    color:'#dc3545',
+    ...myFontStyle.normalRegular,
+    marginTop:responsiveHeight(0.5),
+},priceStroke:{
+...myFontStyle.normalRegular,
+color:'#111',
+textDecorationLine: 'line-through',
+marginTop:responsiveHeight(0.5),
+marginRight:4,
+},
     container: {
         paddingRight:responsiveWidth(3),
         paddingLeft:responsiveWidth(3),

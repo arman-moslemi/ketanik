@@ -81,6 +81,7 @@ import AsyncStorage from  '@react-native-async-storage/async-storage';
     const currentTrack2 = await TrackPlayer.getDuration();
     console.log(444)
     console.log(index)
+    
     // console.log(num)
     // console.log(currentTrack.toFixed(1))
     // console.log(currentTrack2)
@@ -161,10 +162,10 @@ return (
       <Text style={styles.eachBookName}>{data[0]?.BookName}</Text>
       <Text style={styles.eachBookDetail}>{data[0]?.Writer}</Text>
       <View style={{display:'flex',flexDirection:'row-reverse',marginRight:'auto',marginLeft:'auto',marginTop:responsiveHeight(5)}}>
-        <TouchableOpacity style={styles.btnBox}>
+        {/* <TouchableOpacity onPress={()=>tra} style={styles.btnBox}>
           <Image source={require('@assets/images/speed.png')} style={styles.btnBoxImg}/>
           <Text style={styles.btnBoxTxt}>سرعت</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         <TouchableOpacity style={styles.btnBox}>
           <Image source={require('@assets/images/share.png')} style={styles.btnBoxImg}/>
           <Text style={styles.btnBoxTxt}>اشتراک گذاری</Text>
@@ -212,7 +213,8 @@ return (
             <Icon name={'pause-circle-filled'} color={Colors.darkGreen} size={90} />
             :
             <Icon name={'play-circle-filled'} color={Colors.darkGreen} size={90} />
-    }    </TouchableOpacity>
+    }  
+      </TouchableOpacity>
     <View style={{display:'flex',flexDirection:'row-reverse',marginTop:responsiveHeight(5)}}>
       <TouchableOpacity onPress={()=> seeks("prev")} style={{padding:responsiveHeight(2),borderLeftColor:'#c1c1c1',borderLeftWidth:1}}>
         <Image source={require('@assets/images/15after.png')} style={styles.after}/>
@@ -423,7 +425,7 @@ const styles = StyleSheet.create({
     marginTop:responsiveHeight(1),
 
   },playBtn:{
-    backgroundColor:Colors.darkGreen,
+    // backgroundColor:Colors.darkGreen,
     height:120,
     width:120,
     borderRadius:100,

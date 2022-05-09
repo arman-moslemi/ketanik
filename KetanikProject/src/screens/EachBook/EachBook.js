@@ -806,7 +806,8 @@ return (
                     // showRating
 
                     ratingTextColor={'#fff'}
-                    ratingColor={'#FFC444'}
+                    ratingColor='#FFC444'
+                    ratingBackgroundColor='#000000'
                     onFinishRating={(ss)=>setRateNum(ss)}
                     // style={{transform: [{rotateY: '180deg'}]}}
                     style={{backgroundColor:Colors.darkGreen}}
@@ -843,7 +844,7 @@ return (
           data={rel}
           renderItem={_render}
           horizontal={true}
-          style={{marginTop:responsiveHeight(1),marginBottom:responsiveHeight(1)}}
+          style={{marginTop:responsiveHeight(1),marginBottom:responsiveHeight(1),transform: [{ scaleX: -1 }] }}
           
         />
    </View>
@@ -867,7 +868,7 @@ return (
           data={relWri}
           renderItem={_render}
           horizontal={true}
-          style={{marginTop:responsiveHeight(1),marginBottom:responsiveHeight(1)}}
+          style={{marginTop:responsiveHeight(1),marginBottom:responsiveHeight(1),transform: [{ scaleX: -1 }] }}
           
         />
    </View>
@@ -894,7 +895,7 @@ return (
           data={relPub}
           renderItem={_render}
           horizontal={true}
-          style={{marginTop:responsiveHeight(1),marginBottom:responsiveHeight(1)}}
+          style={{marginTop:responsiveHeight(1),marginBottom:responsiveHeight(1),transform: [{ scaleX: -1 }] }}
           
         />
    </View>
@@ -920,7 +921,7 @@ return (
           data={relTran}
           renderItem={_render}
           horizontal={true}
-          style={{marginTop:responsiveHeight(1),marginBottom:responsiveHeight(1)}}
+          style={{marginTop:responsiveHeight(1),marginBottom:responsiveHeight(1),transform: [{ scaleX: -1 }] }}
           
         />
    </View>
@@ -1109,7 +1110,8 @@ cardBox:{
   textAlign:'center',
   padding:responsiveHeight(1),
   marginLeft:responsiveWidth(3),
-  marginTop:responsiveHeight(3)
+  marginTop:responsiveHeight(3),
+  transform: [{ scaleX: -1 }] 
 
 },bookImg:{
   height:responsiveHeight(14),
@@ -1233,7 +1235,8 @@ height: "100%",
     ...myFontStyle.largBold,
     textAlign:'right',
   },moreModal:{
-    backgroundColor:Colors.lightGreen,
+    // backgroundColor:Colors.lightGreen,
+    backgroundColor:Colors.white,
     bottom:0,
     borderRightColor:Colors.darkGreen,
     borderRightWidth:5,
