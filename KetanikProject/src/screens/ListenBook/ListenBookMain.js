@@ -34,7 +34,8 @@ import AsyncStorage from  '@react-native-async-storage/async-storage';
 
   const  mutLogin=async()=> {
   const state = await AsyncStorage.getItem("@user");
-
+console.log(state)
+console.log(id)
   axios.post(apiUrl+'SubBookShow',{BookID:id,CustomerID:state})
   .then(function (response) {
     const message = response.data;
@@ -92,7 +93,7 @@ import AsyncStorage from  '@react-native-async-storage/async-storage';
       // setPlay(true)
       await TrackPlayer.reset();
       await TrackPlayer.add(track);
-
+      
       await TrackPlayer.play();
       setPlay(true)
     }

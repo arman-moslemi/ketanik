@@ -1,6 +1,6 @@
 import React, { useState,useEffect,useRef} from 'react';
 import { myFontStyle } from "@assets/Constance";
-import { View, Text , StyleSheet,Image, TouchableOpacity,TextInput} from 'react-native';
+import { View, Text , StyleSheet,Image, TouchableOpacity,KeyboardAvoidingView} from 'react-native';
 import { TabView, SceneMap,TabBar } from 'react-native-tab-view';
 import { responsiveFontSize, responsiveHeight, responsiveScreenWidth, responsiveWidth } from 'react-native-responsive-dimensions';
 import { Colors} from "@assets/Colors";
@@ -110,7 +110,7 @@ console.log(545)
           };
 return (
     <View style={{ flex: 1,padding:0}}>
-                        <KeyboardAvoidingView behavior='position' keyboardVerticalOffset={keyboardVerticalOffset}>
+       {/* <KeyboardAvoidingView behavior='position' keyboardVerticalOffset={keyboardVerticalOffset}> */}
 
       <Image source={require('@assets/images/login.png')} style={styles.loginImg} />
       <View style={styles.verifyBox}>
@@ -156,7 +156,8 @@ return (
     
 
 </View>
-</KeyboardAvoidingView>
+{/* </KeyboardAvoidingView>
+ */}
       </View>
      
  
