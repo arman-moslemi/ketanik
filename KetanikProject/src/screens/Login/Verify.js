@@ -15,6 +15,8 @@ import axios from 'axios';
   const [ codeMain, setCodeMain ] = useState(code);
   const [ minutes, setMinutes ] = useState(1);
   const [seconds, setSeconds ] =  useState(59);
+  const keyboardVerticalOffset = responsiveHeight(1)
+
   useEffect(()=>{
   let myInterval = setInterval(() => {
           if (seconds > 0) {
@@ -108,6 +110,8 @@ console.log(545)
           };
 return (
     <View style={{ flex: 1,padding:0}}>
+                        <KeyboardAvoidingView behavior='position' keyboardVerticalOffset={keyboardVerticalOffset}>
+
       <Image source={require('@assets/images/login.png')} style={styles.loginImg} />
       <View style={styles.verifyBox}>
         <Text style={styles.verifyTitle}>
@@ -152,6 +156,7 @@ return (
     
 
 </View>
+</KeyboardAvoidingView>
       </View>
      
  

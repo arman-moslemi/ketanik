@@ -230,8 +230,8 @@ return (
 
      <View style={{flex:1,alignItems:'center'}}>
      
-     <Input onChangeText={(ss)=>setUser(ss)}  placeholder="yasaman@yahoo.com" inputStyle={{marginTop:responsiveHeight(5)}}  />
-     <Input onChangeText={(ss)=>setPass(ss)} ErrorText={eror?"لطفا موارد را وارد نمایید":eror2?"نام کاربری یا رمز عبور درست نیست":""}    placeholder="رمز عبور" inputStyle={{marginTop:responsiveHeight(2)}} />
+     <Input onChangeText={(ss)=>setUser(ss)}  placeholder="ٍEmail" inputStyle={{marginTop:responsiveHeight(5)}}  />
+     <Input onChangeText={(ss)=>setPass(ss)} placeholder="Password" ErrorText={eror?"لطفا موارد را وارد نمایید":eror2?"نام کاربری یا رمز عبور درست نیست":""}    inputStyle={{marginTop:responsiveHeight(2)}} />
      <TouchableOpacity onPress={()=>navigation.navigate("ForgetPassword")} style={styles.forgetPassBtn}>
           <Text style={styles.forgetPassBtnText}>رمز عبور خود را فراموش کرده اید ؟</Text>
         </TouchableOpacity>
@@ -247,9 +247,9 @@ return (
   <View style={{ flex: 1}}>
 
   <View style={{flex:1,alignItems:'center'}}>
-  <Input onChangeText={(ss)=>setName(ss)}  placeholder="نام کاربری" inputStyle={{marginTop:responsiveHeight(5)}} />
-  <Input onChangeText={(ss)=>setEmail(ss)} placeholder="yasaman@yahoo.com" inputStyle={{marginTop:responsiveHeight(2)}} />
-  <Input onChangeText={(ss)=>setPass2(ss)} ErrorText={erorReg?"لطفا موارد را وارد نمایید":erorReg2?"نام کاربری یا رمز عبور درست نیست":""}  placeholder="رمز عبور" inputStyle={{marginTop:responsiveHeight(2)}} />
+  <Input onChangeText={(ss)=>setName(ss)}  placeholder="Name" inputStyle={{marginTop:responsiveHeight(5)}} />
+  <Input onChangeText={(ss)=>setEmail(ss)} placeholder="ٍEmail" inputStyle={{marginTop:responsiveHeight(2)}} />
+  <Input onChangeText={(ss)=>setPass2(ss)} placeholder="Password" ErrorText={erorReg?"لطفا موارد را وارد نمایید":erorReg2?"نام کاربری یا رمز عبور درست نیست":""}   inputStyle={{marginTop:responsiveHeight(2)}} />
   {isLoading == true ?
           <Spinner size={50} color={"#fff"} />
         :   

@@ -117,6 +117,31 @@ mutLogin()
    
       
           };
+  const  buy=async()=> {
+    const state = await AsyncStorage.getItem("@user");
+
+    console.log(discount);
+    console.log(state);
+    console.log(cost);
+
+    axios.post(apiUrl+'InsertFactor',{CustomerID:state,Cost:cost,Status:2})
+    .then(function (response) {
+      const message = response.data;
+      const result = response.data.result;
+      console.log(message);
+    
+      if(result == "true"){
+        navigation.navigate("Factor")        // navigation.navigate("ChangePass",{mobile:user,verify:response.data.Data})
+                        }else{
+    alert(response.data.message)
+      }
+    })
+    .catch(function (error) {
+      console.log(error);
+    })
+   
+      
+          };
         const keyExtractor = item => {
             return item.BookID;
           };
@@ -218,7 +243,7 @@ renderItem={_render}
      </TouchableOpacity>
     </View>
 </View>
-<TouchableOpacity onPress={()=>navigation.navigate("Factor")} style={styles(theme).purchaseBtn}>
+<TouchableOpacity onPress={()=>{buy()}} style={styles(theme).purchaseBtn}>
        <Text style={styles(theme).purchaseBtnText}>پرداخت | {cost}</Text>
      </TouchableOpacity>
    </View>
@@ -293,7 +318,7 @@ const styles = (theme) => StyleSheet.create({
       flexDirection:'row-reverse',
       backgroundColor:Colors.lightGreen,
       height:responsiveHeight(15),
-      width:"100%",
+      width:responsiveWidth(90),
       borderRadius:10,
       marginTop:responsiveHeight(4),
       paddingTop:responsiveHeight(0.5),

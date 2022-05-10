@@ -229,7 +229,7 @@ if(state==""){
       
       
       if(result == "true"){
-        alert("با موفیت اضافه شد")
+        alert("با موفقیت اضافه شد")
         setModalVisibleCom(false)
         // navigation.navigate("ChangePass",{mobile:user,verify:response.data.Data})
                         }else{
@@ -259,7 +259,7 @@ if(state==""){
       console.log(message);
       
       if(result == "true"){
-        alert("با موفیت ذخیره شد")
+        alert("با موفقیت ذخیره شد")
         setModalVisibleCom(false)
         // navigation.navigate("ChangePass",{mobile:user,verify:response.data.Data})
                         }else{
@@ -285,7 +285,7 @@ if(state==""){
       console.log(message);
       
       if(result == "true"){
-        alert("با موفیت ذخیره شد")
+        alert("با موفقیت ذخیره شد")
                         }else{
 
       }
@@ -308,7 +308,7 @@ if(state==""){
         console.log(message);
         
         if(result == "true"){
-          alert("با موفیت به سبدخرید شد")
+          alert("با موفقیت به سبدخرید شد")
                           }else{
   
         }
@@ -686,7 +686,7 @@ return (
 <TouchableOpacity onPress={()=>buy()} style={styles(theme).loginBtn}>
        <Text style={styles(theme).btnText}>خرید</Text>
      </TouchableOpacity>
-     <TouchableOpacity onPress={()=>navigation.navigate("ListenBook",{id:data.BookID,link:data.Link,image:data?.Pic,BookName:data.BookName,writer:data.Writer})} style={styles(theme).whiteBtn}>
+     <TouchableOpacity onPress={()=>navigation.navigate("ListenBook",{id:data.BookID,link:data.Link,image:data?.Pic,BookName:data.BookName,writer:data.Writer,SpecialCost:data.SpecialCost,Cost:data.Cost})} style={styles(theme).whiteBtn}>
        <Text style={styles(theme).btnText2}>نسخه نمونه</Text>
      </TouchableOpacity>
      <TouchableOpacity style={styles(theme).greenBtn2} onPress={toggleModal}>

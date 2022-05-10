@@ -94,6 +94,7 @@ import AsyncStorage from  '@react-native-async-storage/async-storage';
       await TrackPlayer.add(track);
 
       await TrackPlayer.play();
+      setPlay(true)
     }
     else{
 
@@ -196,9 +197,9 @@ return (
 
       />
                   </View>
-      <TouchableOpacity onPress={toggleModal2} style={{marginTop:50,marginLeft:100,}}>
+      {/* <TouchableOpacity onPress={toggleModal2} style={{marginTop:50,marginLeft:100,}}>
         <Icon name={'access-time'} size={35}/>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
   
       </View>
       <Modal isVisible={isModalVisible} onBackdropPress={() => setModalVisible(false)} >

@@ -49,7 +49,7 @@ axios.get(apiUrl+'BestSellerBook')
   console.log(message);
 
   if(result == "true"){
-    setData(response.data.Data)
+    setData(response.data.BestSellerData)
 
     // navigation.navigate("ChangePass",{mobile:user,verify:response.data.Data})
                     }else{
@@ -358,6 +358,8 @@ const styles = (theme) =>  StyleSheet.create({
   },bookImg:{
     height:responsiveHeight(14.25),
     width:responsiveWidth(28),
+    marginLeft:responsiveWidth(11),
+
       resizeMode:'cover',
       borderRadius:15,
       marginTop:responsiveHeight(-2),

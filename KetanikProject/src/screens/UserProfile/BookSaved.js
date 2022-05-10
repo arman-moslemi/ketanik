@@ -65,7 +65,7 @@ export const truncate = (str, len) => {
       const _render = (item) => {
         console.log(item.item.BookName)
         return (
-            <View style={styles.bookRow}>
+            <TouchableOpacity onPress={()=>navigation.navigate("EachBook",{id:item.item.BookID})} style={styles.bookRow}>
             <Image source={{uri:apiAsset+item.item.Pic}} style={styles.bookImg}/>
             <View style={{marginRight:responsiveWidth(3)}}>
                 <Text style={styles.bookTitle}>
@@ -96,7 +96,7 @@ export const truncate = (str, len) => {
                     </Text>
                 </View>
             </View>
-        </View>
+        </TouchableOpacity>
         );
       };
 

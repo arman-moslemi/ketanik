@@ -131,7 +131,7 @@ if(result=="true"){
   console.log(222);
   
   console.log(response.data.result);
-  alert("",'عکس با موفقیت ثبت شد')
+  alert('عکس با موفقیت ثبت شد')
   AsyncStorage.setItem('@userPhoto',response.data.Data.Photo.toString())
 }
 

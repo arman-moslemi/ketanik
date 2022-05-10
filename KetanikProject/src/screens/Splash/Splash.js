@@ -66,9 +66,9 @@ return (
       <View style={styles.overlay} />
       <Image source={require('@assets/images/logo.png')} style={styles.logo} />
     <Text style={styles.splashText} >مرجع دانلود کتاب های صوتی</Text>
-    <TouchableOpacity style={styles.arrowRightBtn}>
+    {/* <TouchableOpacity style={styles.arrowRightBtn}>
     <Image source={require('@assets/images/right.png')} style={styles.rightImg}/>
-    </TouchableOpacity>
+    </TouchableOpacity> */}
   </View>
 );
 };

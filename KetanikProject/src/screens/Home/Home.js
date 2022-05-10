@@ -1,5 +1,5 @@
 import React, {useState,useContext ,useEffect} from 'react';
-import {View, TextInput, Text, TouchableOpacity,Image,ScrollView,FlatList} from 'react-native';
+import {View, TextInput, Text, TouchableOpacity,Image,ScrollView,FlatList,Linking} from 'react-native';
 
 
 import { StyleSheet } from 'react-native';
@@ -46,7 +46,7 @@ export const truncate = (str, len) => {
     .then(function (response) {
       const message = response.data;
       const result = response.data.result;
-      // console.log(message);
+      console.log(message);
 
       if(result == "true"){
         setData(response.data.Data)
@@ -69,7 +69,7 @@ export const truncate = (str, len) => {
   };
   // const data=[1,2,3,4,5]
   const _render = (item, index) => {
-    console.log(item)
+    // console.log(item)
     return (
       <TouchableOpacity onPress={()=>navigation.navigate("EachBook",{id:item.item.BookID})} style={styles(theme).cardBox}>
       <Image source={{uri:apiAsset+item.item.Pic}} style={styles(theme).bookImg}/>
@@ -138,27 +138,32 @@ return (
           </TouchableOpacity>
           </View>
     </View>
-     {/* <ViewSlider
+     <ViewSlider
         renderSlides = {
           <>
-            <TouchableOpacity onPress={()=>Linking.openURL(data?.Link1)} style={styles(theme).viewBox}>
-            <Image source={{uri:apiAsset+slider[0]?.Slider1}} resizeMode={"stretch"} style={styles(theme).imageSlider}/>
+            <TouchableOpacity onPress={()=>Linking.openURL(slider?.LinkSlider1)} style={styles(theme).viewBox}>
+            <Image source={{uri:apiAsset+slider.Slider1}} resizeMode={"stretch"} style={styles(theme).imageSlider}/>
             </TouchableOpacity>
-            <TouchableOpacity onPress={()=>Linking.openURL(data?.Link3)} style={styles(theme).viewBox}><Image source={{uri:apiAsset+slider[0]?.Slider2}}  resizeMode={"stretch"} style={styles(theme).imageSlider}></Image></TouchableOpacity>
-            <TouchableOpacity onPress={()=>Linking.openURL(data?.Link4)} style={styles(theme).viewBox}><Image source={{uri:apiAsset+slider[0]?.Slider3}}  resizeMode={"stretch"} style={styles(theme).imageSlider}></Image></TouchableOpacity>
+            <TouchableOpacity onPress={()=>Linking.openURL(data?.LinkSlider2)} style={styles(theme).viewBox}>
+              <Image source={{uri:apiAsset+slider?.Slider2}}  resizeMode={"stretch"} style={styles(theme).imageSlider}></Image>
+              </TouchableOpacity>
+            <TouchableOpacity onPress={()=>Linking.openURL(data?.LinkSlider3)} style={styles(theme).viewBox}>
+              <Image source={{uri:apiAsset+slider?.Slider3}}  resizeMode={"stretch"} style={styles(theme).imageSlider}>
+                </Image>
+                </TouchableOpacity>
 
             </>
       }
       style={styles(theme).slider}     //Main slider container style
       height = {responsiveHeight(25)}    //Height of your slider
-      slideCount = {4}    //How many views you are adding to slide
+      slideCount = {3}    //How many views you are adding to slide
       dots = {true}     // Pagination dots visibility true for visibile
       dotActiveColor = '#FFCC00'     //Pagination dot active color
       dotInactiveColor = '#fff'    // Pagination do inactive color
       dotsContainerStyle={styles(theme).dotContainer}     // Container style of the pagination dots
       autoSlide = {true}    //The views will slide automatically
       slideInterval = {5000}    //In Miliseconds
-     />  */}
+     /> 
      
        <ScrollView >
   <View style={styles(theme).container}>
@@ -230,7 +235,7 @@ const styles =(theme) =>  StyleSheet.create({
         paddingLeft:responsiveWidth(5),
         paddingBottom:responsiveHeight(2),
         alignItems:"flex-end",
-        marginTop:responsiveHeight(15),
+        marginTop:responsiveHeight(5),
     },
 
     menuTitle:{

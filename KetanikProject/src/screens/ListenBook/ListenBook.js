@@ -29,7 +29,7 @@ import { ThemeContext } from '../../../theme/theme-context';
   const toggleModal2 = () => {
     setModalVisible2(!isModalVisible2);
   };
-  const {link,id,BookName,writer,image} = route?.params ?? {};
+  const {link,id,BookName,writer,image,SpecialCost,Cost} = route?.params ?? {};
 
   async function togglePlayback() {
     const currentTrack = await TrackPlayer.getPosition();
@@ -109,6 +109,29 @@ setPlay(true)
       }
     }
   }
+  const  buy=async()=> {
+    const state = await AsyncStorage.getItem("@user");
+
+    axios.post(apiUrl+'ShoppingBasketAdd',{CustomerID:state,BookID:id,Cost:SpecialCost?SpecialCost:Cost})
+    .then(function (response) {
+      const message = response.data;
+      const result = response.data.result;
+      console.log(333);
+      
+      console.log(message);
+      
+      if(result == "true"){
+        alert("با موفقیت به سبدخرید شد")
+                        }else{
+
+      }
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+
+
+    };
 return (
    <ScrollView>
       <View style={{display:'flex',justifyContent:'center',alignContent:'center',alignItems:'center'}} >
@@ -126,10 +149,10 @@ return (
       <Text style={styles(theme).eachBookName}>{BookName}</Text>
       <Text style={styles(theme).eachBookDetail}>{writer}</Text>
       <View style={{display:'flex',flexDirection:'row-reverse',marginRight:'auto',marginLeft:'auto',marginTop:responsiveHeight(5)}}>
-        <TouchableOpacity style={styles(theme).btnBox}>
+        {/* <TouchableOpacity style={styles(theme).btnBox}>
           <Image source={require('@assets/images/speed.png')} style={styles(theme).btnBoxImg}/>
           <Text style={styles(theme).btnBoxTxt}>سرعت</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         <TouchableOpacity style={styles(theme).btnBox}>
           <Image source={require('@assets/images/share.png')} style={styles(theme).btnBoxImg}/>
           <Text style={styles(theme).btnBoxTxt}>اشتراک گذاری</Text>
@@ -156,10 +179,10 @@ return (
 
       />
                   </View>
-      <TouchableOpacity onPress={toggleModal2} style={{marginTop:50,marginLeft:100,}}>
+      {/* <TouchableOpacity onPress={toggleModal2} style={{marginTop:50,marginLeft:100,}}>
         <Icon name={'access-time'} size={35}/>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles(theme).loginBtn}>
+      </TouchableOpacity> */}
+      <TouchableOpacity onPress={()=>buy()} style={styles(theme).loginBtn}>
        <Text style={styles(theme).btnText}>دریافت نسخه کامل</Text>
      </TouchableOpacity>
       </View>
