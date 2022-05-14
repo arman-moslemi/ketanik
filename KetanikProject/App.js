@@ -18,6 +18,7 @@ import EditPassword from '@screens/EditPassword/EditPassword';
 import Home from '@screens/Home/Home';
 import UserProfile from '@screens/UserProfile/UserProfile';
 import EditProfile from '@screens/UserProfile/EditProfile';
+import BookSaved from '@screens/UserProfile/BookSaved';
 import GroupBook from '@screens/GroupBook/GroupBook';
 import Library from '@screens/Library/Library';
 import { Colors } from '@assets/Colors';
@@ -107,6 +108,8 @@ const StackNavigatorsLibrary = () => {
     }}>
      
         <Stack.Screen name="Library" component={Library} />
+        <Stack.Screen name="EachBook" component={EachBook} />
+
     </Stack.Navigator>
   );
  }
@@ -133,6 +136,8 @@ const StackNavigatorsCat = () => {
     
         <Stack.Screen name="Category" component={Category} />
         <Stack.Screen name="GroupBook" component={GroupBook} /> 
+        <Stack.Screen name="EachBook" component={EachBook} />
+
  
     </Stack.Navigator>
   );
@@ -147,6 +152,7 @@ const StackNavigatorsProfile = () => {
               <Stack.Screen name="UserProfile" component={UserProfile} />
 
         <Stack.Screen name="EditProfile" component={EditProfile}/>
+        <Stack.Screen name="BookSaved" component={BookSaved}/>
                <Stack.Screen name="Share" component={Share} />
         <Stack.Screen name="AboutUs" component={AboutUs} />
         <Stack.Screen name="EditPassword" component={EditPassword} /> 

@@ -7,7 +7,6 @@ import { Colors} from "@assets/Colors";
 import { View, Text , StyleSheet,Image, TouchableOpacity,ScrollView,TextInput} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Modal from 'react-native-modal';
-import { RadioButton } from 'react-native-paper';
 import TrackPlayer, { usePlaybackState } from "react-native-track-player";
 import Player from "@components/Player";
 import axios from 'axios';
@@ -17,18 +16,15 @@ import AsyncStorage from  '@react-native-async-storage/async-storage';
  const ListenBookMain = ({navigation,route }) => {
   const [data,setData]=useState([]);
   const [track,setTrack]=useState([]);
-  const [checked, setChecked] = React.useState('first');
   const [isModalVisible, setModalVisible] = useState(false); 
   const [isplay, setPlay] = useState(false);
   
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
   };
-  const [isModalVisible2, setModalVisible2] = useState(false);
+ 
   
-  const toggleModal2 = () => {
-    setModalVisible2(!isModalVisible2);
-  };
+
   const {id,num} = route?.params ?? {};
   const [index, setIndex] = useState(num);
 
@@ -93,7 +89,9 @@ console.log(id)
       // setPlay(true)
       await TrackPlayer.reset();
       await TrackPlayer.add(track);
-      
+          TrackPlayer.updateOptions({
+          stopWithApp: true
+      });
       await TrackPlayer.play();
       setPlay(true)
     }
@@ -147,6 +145,22 @@ setPlay(true)
       }
     }
   }
+  const [ minutes, setMinutes ] = useState(0);
+  const [seconds, setSeconds ] =  useState(0);
+  // useEffect(()=>{
+  //   let myInterval = setInterval(() => {
+  //           if (seconds < 60) {
+  //               setSeconds(seconds + 1);
+  //           }
+  //           if (seconds === 59) {
+            
+  //                   setMinutes(minutes + 1);
+  //                   setSeconds(0);
+                
+  //           } 
+  //       }, 1000)
+      
+  //   });
 return (
    <ScrollView>
       <View style={{display:'flex',justifyContent:'center',alignContent:'center',alignItems:'center'}} >
@@ -198,9 +212,7 @@ return (
 
       />
                   </View>
-      {/* <TouchableOpacity onPress={toggleModal2} style={{marginTop:50,marginLeft:100,}}>
-        <Icon name={'access-time'} size={35}/>
-      </TouchableOpacity> */}
+     
   
       </View>
       <Modal isVisible={isModalVisible} onBackdropPress={() => setModalVisible(false)} >
@@ -218,127 +230,17 @@ return (
     }  
       </TouchableOpacity>
     <View style={{display:'flex',flexDirection:'row-reverse',marginTop:responsiveHeight(5)}}>
-      <TouchableOpacity onPress={()=> seeks("prev")} style={{padding:responsiveHeight(2),borderLeftColor:'#c1c1c1',borderLeftWidth:1}}>
+      <TouchableOpacity  onPress={()=> seeks("next")} style={{padding:responsiveHeight(2),borderLeftColor:'#c1c1c1',borderLeftWidth:1}}>
         <Image source={require('@assets/images/15after.png')} style={styles.after}/>
       </TouchableOpacity>
-      <TouchableOpacity onPress={()=> seeks("next")} style={{padding:responsiveHeight(2)}}>
+      <TouchableOpacity onPress={()=> seeks("prev")}  style={{padding:responsiveHeight(2)}}>
       <Image source={require('@assets/images/15before.png')} style={styles.after}/>
       </TouchableOpacity>
     </View>
   </View>
  </View>
  </Modal>
- <Modal isVisible={isModalVisible2} onBackdropPress={() => setModalVisible2(false)} >
- <View style={styles.editModal}>
-   <Text style={styles.modalTitle}>
-     زمان سنج توقف
-   </Text>
-   <View style={styles.radioRow}>
-  <View style={styles.radioView}>
-  <RadioButton
-        value="first"
-        status={ checked === 'first' ? 'checked' : 'unchecked' }
-        onPress={() => setChecked('first')}
-        color={Colors.darkGreen}
-      />
-  <Text style={styles.radionText}>
-    خاموش
-  </Text>
-      </View>
-  </View>
-  <View style={styles.radioRow}>
-  <View style={styles.radioView}>
-  <RadioButton
-        value="second"
-        status={ checked === 'second' ? 'checked' : 'unchecked' }
-        onPress={() => setChecked('second')}
-        color={Colors.darkGreen}
-      />
-  <Text style={styles.radionText}>
-   تا پایان اپیزود
-  </Text>
-      </View>
-  </View>
-  <View style={styles.radioRow}>
-  <View style={styles.radioView}>
-  <RadioButton
-        value="third"
-        status={ checked === 'third' ? 'checked' : 'unchecked' }
-        onPress={() => setChecked('third')}
-        color={Colors.darkGreen}
-      />
-  <Text style={styles.radionText}>
- دقیقه 5
-  </Text>
-      </View>
-  </View>
-  <View style={styles.radioRow}>
-  <View style={styles.radioView}>
-  <RadioButton
-        value="four"
-        status={ checked === 'four' ? 'checked' : 'unchecked' }
-        onPress={() => setChecked('four')}
-        color={Colors.darkGreen}
-      />
-  <Text style={styles.radionText}>
-    دقیقه 10
-  </Text>
-      </View>
-  </View>
-  <View style={styles.radioRow}>
-  <View style={styles.radioView}>
-  <RadioButton
-        value="five"
-        status={ checked === 'five' ? 'checked' : 'unchecked' }
-        onPress={() => setChecked('five')}
-        color={Colors.darkGreen}
-      />
-  <Text style={styles.radionText}>
-    دقیقه 15
-  </Text>
-      </View>
-  </View>
-  <View style={styles.radioRow}>
-  <View style={styles.radioView}>
-  <RadioButton
-        value="six"
-        status={ checked === 'six' ? 'checked' : 'unchecked' }
-        onPress={() => setChecked('six')}
-        color={Colors.darkGreen}
-      />
-  <Text style={styles.radionText}>
-    دقیقه 30
-  </Text>
-      </View>
-  </View>
-  <View style={styles.radioRow}>
-  <View style={styles.radioView}>
-  <RadioButton
-        value="seven"
-        status={ checked === 'seven' ? 'checked' : 'unchecked' }
-        onPress={() => setChecked('seven')}
-        color={Colors.darkGreen}
-      />
-  <Text style={styles.radionText}>
-    دقیقه 45
-  </Text>
-      </View>
-  </View>
-  <View style={styles.radioRow}>
-  <View style={styles.radioView}>
-  <RadioButton
-        value="eight"
-        status={ checked === 'eight' ? 'checked' : 'unchecked' }
-        onPress={() => setChecked('eight')}
-        color={Colors.darkGreen}
-      />
-  <Text style={styles.radionText}>
-    دقیقه 60
-  </Text>
-      </View>
-  </View>
- </View>
- </Modal>
+ 
    </ScrollView>
    
 );
@@ -410,7 +312,8 @@ const styles = StyleSheet.create({
   },btnText:{
     ...myFontStyle.largBold,
     color:'#fff',
-  },editModal:{
+  },
+  editModal:{
     width:responsiveWidth(80),
     backgroundColor:Colors.lightGreen,
     

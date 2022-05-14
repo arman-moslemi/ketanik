@@ -358,12 +358,12 @@ const styles = (theme) =>  StyleSheet.create({
   },bookImg:{
     height:responsiveHeight(14.25),
     width:responsiveWidth(28),
-    marginLeft:responsiveWidth(11),
+    marginLeft:responsiveWidth(13),
 
       resizeMode:'cover',
       borderRadius:15,
       marginTop:responsiveHeight(-2),
-      marginRight:responsiveWidth(3),
+      marginRight:responsiveWidth(1),
   },bookTitle:{
       ...myFontStyle.largBold,
       color:'#111',

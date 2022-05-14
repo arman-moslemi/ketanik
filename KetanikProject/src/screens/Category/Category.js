@@ -11,6 +11,7 @@ import axios from 'axios';
 import { apiUrl ,apiAsset} from "@commons/inFormTypes";
 import { isMessageIgnored } from 'react-native/Libraries/LogBox/Data/LogBoxData';
 import { ThemeContext } from '../../../theme/theme-context';
+import AsyncStorage from  '@react-native-async-storage/async-storage';
 
 // create a component
 
@@ -31,6 +32,18 @@ import { ThemeContext } from '../../../theme/theme-context';
   const {  theme } = useContext(ThemeContext);
 
   const [data,setData]=useState([]);
+  const [book,setBook]=useState(null);
+  const [bookID,setBookID]=useState();
+  const [episode,setEpisode]=useState();
+  const  setNull=async()=> {
+    const books = await AsyncStorage.removeItem("@bookid");
+    const episode = await AsyncStorage.removeItem("@epid");
+setBook()
+  
+console.log(books)
+console.log(episode)
+
+    };
   useEffect(() => {
 
     mutLogin();
@@ -55,7 +68,29 @@ import { ThemeContext } from '../../../theme/theme-context';
     .catch(function (error) {
       console.log(error);
     });
+    const state = await AsyncStorage.getItem("@user");
+    const books = await AsyncStorage.getItem("@bookid");
+    const episode = await AsyncStorage.getItem("@epid");
 
+    axios.post(apiUrl+'SingleBook',{CustomerID:state,BookID:books})
+    .then(function (response) {
+      const message = response.data;
+      const result = response.data.result;
+      console.log(message);
+
+      if(result == "true"){
+        setBook(response.data.GroupData)
+        setEpisode(episode)
+        setBookID(books)
+
+
+        // navigation.navigate("ChangePass",{mobile:user,verify:response.data.Data})
+                        }else{
+
+      }  })
+      .catch(function (error) {
+        console.log(error);
+      });
 
     };
     const keyExtractor = item => {
@@ -127,6 +162,26 @@ return (
         />
  </View>
   </ScrollView>
+  <View >
+    {
+      book?
+
+    <TouchableOpacity onPress={()=>navigation.navigate("ListenBookMain",{id:bookID,num:episode})} style={{borderRadius:10,backgroundColor:Colors.lightGreen,flexDirection:'row-reverse',height:responsiveHeight(6),justifyContent:'space-between'}}>
+    <Image source={{uri:apiAsset+book.Pic}} style={styles(theme).imageBook}/>
+    <View>
+
+      <Text style={styles(theme).miniText}>{book.BookName}</Text>
+      <Text style={styles(theme).miniText}>درحال مطالعه</Text>
+      </View>
+      <TouchableOpacity onPress={()=>setNull()}> 
+      <Icon name={"close"} color={'#111'} style={{marginRight:responsiveWidth(30)}} size={30}/>
+</TouchableOpacity>
+      {/* <Text style={styles(theme).miniText}>درحال مطالعه</Text> */}
+    </TouchableOpacity>
+      :
+      null
+    }
+  </View>
     </View>
 );
 };
@@ -364,7 +419,18 @@ color:theme.menuTitle,
     ...myFontStyle.normalBold,
     marginRight:responsiveWidth(5),
     width:responsiveWidth(30),
+  },imageBook:{
+    width:responsiveWidth(15),
+    height:"100%",
+    resizeMode:'cover',
+    borderRadius:10,
+    marginLeft:10
+    
   }
+  ,miniText:{
+    ...myFontStyle.mediumRegular,
+    color:'#111'
+  },
   });
 
   export default Category;

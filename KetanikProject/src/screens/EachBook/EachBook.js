@@ -16,6 +16,7 @@ import AsyncStorage from  '@react-native-async-storage/async-storage';
 // const [showBox, setShowBox] = useState(false);
 // const onClick = () => setShowBox(true);
 import { ThemeContext } from '../../../theme/theme-context';
+import TrackPlayer, { usePlaybackState } from "react-native-track-player";
 
 export const truncate = (str, len) => {
   if (str.length > len && str.length > 0) {
@@ -113,6 +114,8 @@ const _render = (item, index) => {
 const {id} = route?.params ?? {};
 
   const  mutLogin=async()=> {
+    await TrackPlayer.destroy()
+
     const state = await AsyncStorage.getItem("@user");
 
     axios.post(apiUrl+'SingleBook',{BookID:id,CustomerID:state})

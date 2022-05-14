@@ -13,6 +13,7 @@ import ViewSlider from 'react-native-view-slider';
 import axios from 'axios';
 import { apiUrl ,apiAsset} from "@commons/inFormTypes";
 import { ThemeContext } from '../../../theme/theme-context';
+import AsyncStorage from  '@react-native-async-storage/async-storage';
 
 // create a component
 
@@ -35,6 +36,18 @@ export const truncate = (str, len) => {
   const [data,setData]=useState([]);
   const [best,setBest]=useState([]);
   const [slider,setSlider]=useState([]);
+  const [book,setBook]=useState(null);
+  const [bookID,setBookID]=useState();
+  const [episode,setEpisode]=useState();
+  const  setNull=async()=> {
+    const books = await AsyncStorage.removeItem("@bookid");
+    const episode = await AsyncStorage.removeItem("@epid");
+setBook()
+  
+console.log(books)
+console.log(episode)
+
+    };
   useEffect(() => {
 
     mutLogin();
@@ -46,7 +59,7 @@ export const truncate = (str, len) => {
     .then(function (response) {
       const message = response.data;
       const result = response.data.result;
-      console.log(message);
+      // console.log(message);
 
       if(result == "true"){
         setData(response.data.Data)
@@ -61,7 +74,34 @@ export const truncate = (str, len) => {
     .catch(function (error) {
       console.log(error);
     });
-
+  
+      const state = await AsyncStorage.getItem("@user");
+      const books = await AsyncStorage.getItem("@bookid");
+      const episode = await AsyncStorage.getItem("@epid");
+  
+      axios.post(apiUrl+'SingleBook',{CustomerID:state,BookID:books})
+      .then(function (response) {
+        const message = response.data;
+        const result = response.data.result;
+        console.log(message);
+  
+        if(result == "true"){
+          setBook(response.data.GroupData)
+          setEpisode(episode)
+          setBookID(books)
+  
+  
+          // navigation.navigate("ChangePass",{mobile:user,verify:response.data.Data})
+                          }else{
+  
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  
+  
+      
 
     };
   const keyExtractor = item => {
@@ -76,7 +116,8 @@ export const truncate = (str, len) => {
       <Text style={styles(theme).bookName}>
       {truncate(item.item.BookName,20)}
       </Text>
-      <View style={{display:'flex',flexDirection:'row-reverse',justifyContent:'space-between'}}>
+      <View style={{display:'flex',flexDirection:'row-reverse'}}>
+    
         {
           item.item.SpecialCost?
 <>
@@ -92,13 +133,13 @@ export const truncate = (str, len) => {
       {item.item.Cost}ت
       </Text>
         }
-
-
-      <View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>
+  <View style={{flexDirection:'row-reverse',alignItems:'center',width:"10%"}}>
       <Text style={styles(theme).bookName}>
 {item.item.Rate}      </Text>
       <Icon name={'star'} size={15} color={'#ffc93d'} style={{}}/>
       </View>
+
+     
       </View>
      </TouchableOpacity>
     );
@@ -223,6 +264,26 @@ return (
 
    </View>
   </ScrollView>
+  <View >
+    {
+      book?
+
+    <TouchableOpacity onPress={()=>navigation.navigate("ListenBookMain",{id:bookID,num:episode})} style={{borderRadius:10,backgroundColor:Colors.lightGreen,flexDirection:'row-reverse',height:responsiveHeight(6),justifyContent:'space-between'}}>
+    <Image source={{uri:apiAsset+book.Pic}} style={styles(theme).imageBook}/>
+    <View>
+
+      <Text style={styles(theme).miniText}>{book.BookName}</Text>
+      <Text style={styles(theme).miniText}>درحال مطالعه</Text>
+      </View>
+      <TouchableOpacity onPress={()=>setNull()}> 
+      <Icon name={"close"} color={'#111'} style={{marginRight:responsiveWidth(30)}} size={30}/>
+</TouchableOpacity>
+      {/* <Text style={styles(theme).miniText}>درحال مطالعه</Text> */}
+    </TouchableOpacity>
+      :
+      null
+    }
+  </View>
     </View>
 );
 };
@@ -376,7 +437,19 @@ dotContainer: {
   alignItems: 'center',
   height: "100%",
 
+},
+imageBook:{
+  width:responsiveWidth(15),
+  height:"100%",
+  resizeMode:'cover',
+  borderRadius:10,
+  marginLeft:10
+  
 }
+,miniText:{
+  ...myFontStyle.mediumRegular,
+  color:'#111'
+},
   });
 
   export default Home;

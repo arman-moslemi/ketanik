@@ -14,6 +14,7 @@ import axios from 'axios';
 import { apiUrl ,apiAsset} from "@commons/inFormTypes";
 // create a component
 import { ThemeContext } from '../../../theme/theme-context';
+import TrackPlayer, { usePlaybackState } from "react-native-track-player";
 
 
 export const truncate = (str, len) => {
@@ -40,6 +41,8 @@ export const truncate = (str, len) => {
   const {id} = route?.params ?? {};
 
     const  mutLogin=async()=> {
+      await TrackPlayer.destroy()
+
       axios.post(apiUrl+'SubBookShow',{BookID:id})
       .then(function (response) {
         const message = response.data;

@@ -34,6 +34,8 @@ export const truncate = (str, len) => {
     const [data,setData]=useState([]);
     const [cost,setCost]=useState(0);
     const [discount,setDis]=useState("");
+    const [discountID,setDisID]=useState();
+    const [discountDisable,setDisable]=useState(false);
     useEffect(() => {
   
       mutLogin();
@@ -60,7 +62,6 @@ export const truncate = (str, len) => {
     setCost(ss)
         // navigation.navigate("ChangePass",{mobile:user,verify:response.data.Data})
                         }else{
-    
       }
     })
     .catch(function (error) {
@@ -106,6 +107,8 @@ mutLogin()
     
       if(result == "true"){
           setCost(response.data.Data)
+          setDisID(response.data.DiscountData)
+          setDisable(true)
         // navigation.navigate("ChangePass",{mobile:user,verify:response.data.Data})
                         }else{
     alert(response.data.message)
@@ -124,7 +127,7 @@ mutLogin()
     console.log(state);
     console.log(cost);
 
-    axios.post(apiUrl+'InsertFactor',{CustomerID:state,Cost:cost,Status:2})
+    axios.post(apiUrl+'InsertFactor',{CustomerID:state,Cost:cost,Status:2,DiscountID:discountID})
     .then(function (response) {
       const message = response.data;
       const result = response.data.result;
@@ -238,7 +241,7 @@ renderItem={_render}
         <TextInput onChangeText={(ee)=>setDis(ee)} placeholder="" style={styles(theme).discountInput} />
     </View>
     <View>
-    <TouchableOpacity onPress={()=>dis()} style={styles(theme).loginBtn}>
+    <TouchableOpacity onPress={()=>dis()} disabled={discountDisable} style={styles(theme).loginBtn}>
        <Text style={styles(theme).btnText}>ثبت</Text>
      </TouchableOpacity>
     </View>

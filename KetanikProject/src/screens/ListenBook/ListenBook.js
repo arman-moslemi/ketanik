@@ -202,10 +202,10 @@ return (
     }
     </TouchableOpacity>
     <View style={{display:'flex',flexDirection:'row-reverse',marginTop:responsiveHeight(5)}}>
-      <TouchableOpacity onPress={()=> seeks("prev")} style={{padding:responsiveHeight(2),borderLeftColor:'#c1c1c1',borderLeftWidth:1}}>
+      <TouchableOpacity onPress={()=> seeks("next")} style={{padding:responsiveHeight(2),borderLeftColor:'#c1c1c1',borderLeftWidth:1}}>
         <Image source={require('@assets/images/15after.png')} style={styles(theme).after}/>
       </TouchableOpacity>
-      <TouchableOpacity onPress={()=> seeks("next")} style={{padding:responsiveHeight(2)}}>
+      <TouchableOpacity onPress={()=> seeks("prev")} style={{padding:responsiveHeight(2)}}>
       <Image source={require('@assets/images/15before.png')} style={styles(theme).after}/>
       </TouchableOpacity>
     </View>

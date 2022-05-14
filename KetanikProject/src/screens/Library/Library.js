@@ -42,14 +42,14 @@ function convertHourstoMinute(time) {
 var minute = time.split(':')[1];
 return parseInt(hour) + Number((minute / 60));
   }
-const FirstRoute = ({dataShow,date,setDate,book,episode,navigation,theme}) => {
+const FirstRoute = ({dataShow,date,setDate,book,episode,navigation,theme,setBook,bookID}) => {
 
   console.log(dataShow.Data)
   console.log(555)
   console.log(date)
   var ss=[0]
     var dd=[0]
-  var month=["فروردین","اردیبهشت","خرداد","تیر","مرداد","شهریور","مهر","آبان","آذر","دی","بهمن","اسفند"]
+  var month=["January", "February", "March", "April", "May", "June","July","August","September","October","November","December"]
   const data2 = {
     labels: ["January", "February", "March", "April", "May", "June"],
     datasets: [
@@ -79,6 +79,15 @@ const FirstRoute = ({dataShow,date,setDate,book,episode,navigation,theme}) => {
     ],
     // legend: ["Rainy Days"] // optional
   };
+  const  setNull=async()=> {
+    const books = await AsyncStorage.removeItem("@bookid");
+    const episode = await AsyncStorage.removeItem("@epid");
+setBook()
+  
+console.log(books)
+console.log(episode)
+
+    };
   return(
     <ScrollView >
     <View style={{display:'flex',flexDirection:'row-reverse'}}>
@@ -150,17 +159,21 @@ const FirstRoute = ({dataShow,date,setDate,book,episode,navigation,theme}) => {
 
       </ScrollView>
   </View>
-  <View style={{paddingHorizontal:responsiveWidth(8)}}>
+  {/* <View style={{paddingHorizontal:responsiveWidth(8)}}> */}
+  <View >
     {
       book?
 
-    <TouchableOpacity onPress={()=>navigation.navigate("ListenBookMain",{id:book,num:episode})} style={{borderRadius:10,backgroundColor:Colors.lightGreen,flexDirection:'row-reverse',height:responsiveHeight(10)}}>
+    <TouchableOpacity onPress={()=>navigation.navigate("ListenBookMain",{id:bookID,num:episode})} style={{borderRadius:10,backgroundColor:Colors.lightGreen,flexDirection:'row-reverse',height:responsiveHeight(10)}}>
     <Image source={{uri:apiAsset+book.Pic}} style={styles(theme).imageBook}/>
     <View>
 
       <Text style={styles(theme).miniText}>{book.BookName}</Text>
       <Text style={styles(theme).miniText}>درحال مطالعه</Text>
       </View>
+      <TouchableOpacity onPress={()=>setNull()}> 
+      <Icon name={"close"} color={'#111'} style={{marginRight:responsiveWidth(30)}} size={30}/>
+</TouchableOpacity>
       {/* <Text style={styles(theme).miniText}>درحال مطالعه</Text> */}
     </TouchableOpacity>
       :
@@ -266,7 +279,7 @@ return(
 
     switch (route.key) {
       case 'status':
-        return <FirstRoute theme={theme} navigation={navigation} episode={episode} book={book} date={date} time={time} setDate={setDate} dataShow={dataShow}/>;
+        return <FirstRoute theme={theme} navigation={navigation} episode={episode}bookID={bookID}setBook={setBook} book={book} date={date} time={time} setDate={setDate} dataShow={dataShow}/>;
       case 'library':
         return <SecondRoute theme={theme} navigation={navigation} show={show} setShow={setShow} data={data} setRole={setRole} setRoleName={setRoleName} roleName={roleName} />;
       default:
@@ -300,6 +313,7 @@ return(
   const [main,setMain]=useState([]);
   const [role,setRole]=useState(null);
   const [book,setBook]=useState(null);
+  const [bookID,setBookID]=useState();
   const [episode,setEpisode]=useState();
   useEffect(() => {
 
@@ -347,6 +361,7 @@ return(
       if(result == "true"){
         setBook(response.data.GroupData)
         setEpisode(episode)
+        setBookID(books)
 
 
         // navigation.navigate("ChangePass",{mobile:user,verify:response.data.Data})
@@ -360,6 +375,7 @@ return(
 
 
     };
+
     function convertHourstoMinute(time) {
       var hour = time.split(':')[0]; //Split returns an array
    var minute = time.split(':')[1];
