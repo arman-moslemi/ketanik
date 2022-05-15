@@ -51,10 +51,11 @@ shifting={false}
 activeColor={Colors.darkGreen}
 // tabBar={props => <TabBar {...props} />}
 >
-<Tab.Screen
-   name="Profile" component={StackNavigatorsProfile}
-   style={{...myFontStyle.UltraBold}}
-   options={{          tabBarLabel: <Text style={{...myFontStyle.menu}}>حساب کاربری</Text>,    tabBarIcon: ({ color }) => (    <Icon name="person-outline" color={Colors.darkGreen} size={25} />         ),           }}      />
+  <Tab.Screen
+    // name="home"
+    name={"StackNavigatorsHome"}
+    component={StackNavigatorsHome}
+    options={{          tabBarLabel:<Text style={{...myFontStyle.menu,marginTop:10,textAlign:'center'}}>خانه</Text>,  tabBarIcon: ({ color }) => (            <Icon name="home" color={Colors.darkGreen}  size={25} />          ),        }}      />
 <Tab.Screen
    name="Library" component={StackNavigatorsLibrary}
    options={{          tabBarLabel:<Text style={{...myFontStyle.menu}}>کتابخانه</Text>,    tabBarIcon: ({ color }) => (    <Icon name="library-books" color={Colors.darkGreen} size={25} />         ),           }}      />
@@ -69,11 +70,10 @@ activeColor={Colors.darkGreen}
        component={StackNavigatorsCat}
 
        options={{          tabBarLabel:<Text style={{...myFontStyle.menu}}>دسته بندی</Text>,          tabBarIcon: ({ color }) => (            <Icon name="apps" color={Colors.darkGreen} size={25} />          ),        }}      />
- <Tab.Screen
-   // name="home"
-   name={"StackNavigatorsHome"}
-   component={StackNavigatorsHome}
-   options={{          tabBarLabel:<Text style={{...myFontStyle.menu,marginTop:10,textAlign:'center'}}>خانه</Text>,  tabBarIcon: ({ color }) => (            <Icon name="home" color={Colors.darkGreen}  size={25} />          ),        }}      />
+<Tab.Screen
+   name="Profile" component={StackNavigatorsProfile}
+   style={{...myFontStyle.UltraBold}}
+   options={{          tabBarLabel: <Text style={{...myFontStyle.menu}}>حساب کاربری</Text>,    tabBarIcon: ({ color }) => (    <Icon name="person-outline" color={Colors.darkGreen} size={25} />         ),           }}      />
 
 </Tab.Navigator>
   );
@@ -137,6 +137,7 @@ const StackNavigatorsCat = () => {
         <Stack.Screen name="Category" component={Category} />
         <Stack.Screen name="GroupBook" component={GroupBook} /> 
         <Stack.Screen name="EachBook" component={EachBook} />
+        <Stack.Screen name="SelectedNews" component={SelectedNews} />
 
  
     </Stack.Navigator>

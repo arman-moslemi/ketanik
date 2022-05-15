@@ -1,5 +1,5 @@
 import React, {useState,useContext ,useEffect} from 'react';
-import {View, TextInput, Text, TouchableOpacity,Image,ScrollView,FlatList,Linking} from 'react-native';
+import {View, TextInput, Text, TouchableOpacity,Image,ScrollView,FlatList,Spinner} from 'react-native';
 
 
 import { StyleSheet } from 'react-native';
@@ -66,7 +66,6 @@ console.log(episode)
         setBest(response.data.BestSellerData)
         setSlider(response.data.SliderData)
 
-        // navigation.navigate("ChangePass",{mobile:user,verify:response.data.Data})
                         }else{
 
       }
@@ -145,6 +144,7 @@ console.log(episode)
     );
   };
 return (
+  data?
     // <View style={{backgroundColor:'#fff',flex:1}}>
     <View style={{backgroundColor:theme.backgroundColor,flex:1}}>
 
@@ -179,7 +179,7 @@ return (
           </TouchableOpacity>
           </View>
     </View>
-     {/* <ViewSlider
+     <ViewSlider
         renderSlides = {
           <>
             <TouchableOpacity onPress={()=>Linking.openURL(slider?.LinkSlider1)} style={styles(theme).viewBox}>
@@ -204,7 +204,7 @@ return (
       dotsContainerStyle={styles(theme).dotContainer}     // Container style of the pagination dots
       autoSlide = {true}    //The views will slide automatically
       slideInterval = {5000}    //In Miliseconds
-     />  */}
+     /> 
      
        <ScrollView >
   <View style={styles(theme).container}>
@@ -285,7 +285,9 @@ return (
     }
   </View>
     </View>
-);
+    :
+    <Spinner size={50} color={theme.textTitle} />
+    );
 };
 
 

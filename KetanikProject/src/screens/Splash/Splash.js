@@ -19,12 +19,16 @@ import AsyncStorage from  '@react-native-async-storage/async-storage';
     if(state!=null && state!="" && state!="false"){
 
     console.log(state)
-      navigation.navigate('TabBar')
-    }
+    navigation.reset({
+      index: 0,
+      routes: [{ name: 'TabBar' }]
+ })    }
     else{
 
-      navigation.navigate('Login');
-
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'Login' }]
+   })
 
     }
 
