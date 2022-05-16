@@ -132,6 +132,34 @@ setPlay(true)
 
 
     };
+    const  mutSave=async()=> {
+      const state = await AsyncStorage.getItem("@user");
+  
+  if(state==""){
+    alert("لطفا وارد شوید")
+  
+  }
+      axios.post(apiUrl+'SingleBookSave',{BookID:id,CustomerID:state})
+      .then(function (response) {
+        const message = response.data;
+        const result = response.data.result;
+        console.log(333);
+        
+        console.log(message);
+        
+        if(result == "true"){
+          alert("با موفقیت ذخیره شد")
+          // navigation.navigate("ChangePass",{mobile:user,verify:response.data.Data})
+                          }else{
+  
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  
+  
+      };
 return (
    <ScrollView>
       <View style={{display:'flex',justifyContent:'center',alignContent:'center',alignItems:'center'}} >
@@ -157,7 +185,7 @@ return (
           <Image source={require('@assets/images/share.png')} style={styles(theme).btnBoxImg}/>
           <Text style={styles(theme).btnBoxTxt}>اشتراک گذاری</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles(theme).btnBox}>
+        <TouchableOpacity onPress={()=>mutSave()} style={styles(theme).btnBox}>
           <Image source={require('@assets/images/save.png')} style={styles(theme).btnBoxImg}/>
           <Text style={styles(theme).btnBoxTxt}>نشان کردن</Text>
         </TouchableOpacity>
