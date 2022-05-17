@@ -14,6 +14,7 @@ import axios from 'axios';
 import { apiUrl ,apiAsset} from "@commons/inFormTypes";
 import { ThemeContext } from '../../../theme/theme-context';
 import AsyncStorage from  '@react-native-async-storage/async-storage';
+import TrackPlayer, { Capability  } from "react-native-track-player";
 
 // create a component
 
@@ -39,6 +40,10 @@ export const truncate = (str, len) => {
   const [book,setBook]=useState(null);
   const [bookID,setBookID]=useState();
   const [episode,setEpisode]=useState();
+  const [cart,setCart]=useState([]);
+  const [isplay, setPlay] = useState(false);
+  const [track,setTrack]=useState([]);
+
   const  setNull=async()=> {
     const books = await AsyncStorage.removeItem("@bookid");
     const episode = await AsyncStorage.removeItem("@epid");
@@ -73,8 +78,29 @@ console.log(episode)
     .catch(function (error) {
       console.log(error);
     });
-  
       const state = await AsyncStorage.getItem("@user");
+  
+      
+      axios.post(apiUrl+'ShoppingBasketView',{CustomerID:state})
+      .then(function (response) {
+        const message = response.data;
+        const result = response.data.result;
+        console.log(message);
+      
+        if(result == "true"){
+            
+          setCart(response.data.Data)
+   
+          // navigation.navigate("ChangePass",{mobile:user,verify:response.data.Data})
+                          }else{
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+      })
+     
+        
+          
       const books = await AsyncStorage.getItem("@bookid");
       const episode = await AsyncStorage.getItem("@epid");
   
@@ -99,7 +125,36 @@ console.log(episode)
         console.log(error);
       });
   
-  
+      axios.post(apiUrl+'SubBookShow',{BookID:books,CustomerID:state})
+      .then(function (response) {
+        const message = response.data;
+        const result = response.data.result;
+        console.log(777);
+        console.log(message);
+    
+        if(result == "true"){
+          var ss=[]
+          response.data.GroupData.map((item,ii)=>{
+            ii>=episode?
+            ss.push({
+              id: "local-track",
+              url: apiAsset+item?.Link,
+              title: "Ketanic",
+              artwork: "https://i.picsum.photos/id/500/200/200.jpg",
+            })
+            :
+            null
+          })
+          setTrack(ss)
+          // togglePlayback()
+          // navigation.navigate("ChangePass",{mobile:user,verify:response.data.Data})
+                          }else{
+    
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
       
 
     };
@@ -143,6 +198,56 @@ console.log(episode)
      </TouchableOpacity>
     );
   };
+  async function TogglePlayback() {
+    const currentTrack = await TrackPlayer.getPosition();
+    const currentTrack2 = await TrackPlayer.getDuration();
+    console.log(444)
+    
+    // console.log(num)
+    // console.log(currentTrack.toFixed(1))
+    // console.log(currentTrack2)
+    if (currentTrack.toFixed(1) == currentTrack2.toFixed(1)) {
+      console.log(775)
+      
+      // setPlay(true)
+      await TrackPlayer.reset();
+      await TrackPlayer.add(track);
+          TrackPlayer.updateOptions({
+          stopWithApp: true,
+          capabilities: [
+            Capability.Play,
+            Capability.Pause,
+            // Capability.SkipToNext,
+            // Capability.SkipToPrevious,
+            Capability.Stop,
+          ],
+          compactCapabilities: [
+            Capability.Play,
+            Capability.Pause,
+            // Capability.SkipToNext,
+            // Capability.SkipToPrevious,
+          ],
+      });
+ 
+      await TrackPlayer.play();
+      setPlay(true)
+    }
+    else{
+
+      if(isplay)
+     { await TrackPlayer.pause()
+setPlay(false)}
+else{
+
+await TrackPlayer.play()
+setPlay(true)
+}
+    }
+    
+
+
+    // }
+  }
 return (
   data?
     // <View style={{backgroundColor:'#fff',flex:1}}>
@@ -160,9 +265,9 @@ return (
     <View style={{flex : 2,textAlign:"right",display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>
          
           <TouchableOpacity onPress={()=>navigation.goBack()} style={{display:'flex',flexDirection:'row-reverse'}}>
-          <View style={styles(theme).badget}>
+          {/* <View style={styles(theme).badget}>
               
-          </View>
+          </View> */}
           <Icon name={"notifications"} color={theme.iconWhite} size={30} />
           
           </TouchableOpacity>
@@ -171,15 +276,21 @@ return (
         
         <View style={{flex : 2,textAlign:"left",display:'flex',flexDirection:'row-reverse',alignItems:'flex-start',justifyContent:'flex-end'}}>
         <TouchableOpacity onPress={()=>navigation.navigate("Cart")} style={{display:'flex',flexDirection:'row-reverse'}}>
+          {
+            cart.length>0?
+
           <View style={styles(theme).badget2}>
               
           </View>
+            :
+            null
+          }
           <Icon name={"shopping-cart"} color={theme.iconWhite} size={30} />
           
           </TouchableOpacity>
           </View>
     </View>
-     <ViewSlider
+     {/* <ViewSlider
         renderSlides = {
           <>
             <TouchableOpacity onPress={()=>Linking.openURL(slider?.LinkSlider1)} style={styles(theme).viewBox}>
@@ -204,7 +315,7 @@ return (
       dotsContainerStyle={styles(theme).dotContainer}     // Container style of the pagination dots
       autoSlide = {true}    //The views will slide automatically
       slideInterval = {5000}    //In Miliseconds
-     /> 
+     />  */}
      
        <ScrollView >
   <View style={styles(theme).container}>
@@ -267,8 +378,22 @@ return (
   <View >
     {
       book?
-
+  
     <TouchableOpacity onPress={()=>navigation.navigate("ListenBookMain",{id:bookID,num:episode})} style={{borderRadius:10,backgroundColor:Colors.lightGreen,flexDirection:'row-reverse',height:responsiveHeight(6),justifyContent:'space-between'}}>
+        {
+        isplay?
+        // <TouchableOpacity onPress={stop} style={{borderRadius:50,backgroundColor:Colors.white}}>
+        <TouchableOpacity onPress={TogglePlayback} >
+
+<Icon name={"pause-circle-filled"} size={50} color={Colors.darkGreen}/>
+</TouchableOpacity>
+:
+<TouchableOpacity onPress={TogglePlayback}>
+
+<Icon name={"play-circle-filled"} size={50} color={Colors.darkGreen}/>
+</TouchableOpacity>
+    }
+    
     <Image source={{uri:apiAsset+book.Pic}} style={styles(theme).imageBook}/>
     <View>
 

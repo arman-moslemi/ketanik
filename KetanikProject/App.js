@@ -157,6 +157,8 @@ const StackNavigatorsProfile = () => {
                <Stack.Screen name="Share" component={Share} />
         <Stack.Screen name="AboutUs" component={AboutUs} />
         <Stack.Screen name="EditPassword" component={EditPassword} /> 
+        <Stack.Screen name="Wallet" component={Wallet} /> 
+        <Stack.Screen name="Factor" component={Factor} /> 
     </Stack.Navigator>
   );
  }

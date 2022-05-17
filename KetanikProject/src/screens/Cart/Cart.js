@@ -34,7 +34,7 @@ export const truncate = (str, len) => {
     const [data,setData]=useState([]);
     const [cost,setCost]=useState(0);
     const [discount,setDis]=useState("");
-    const [discountID,setDisID]=useState();
+    const [discountID,setDisID]=useState(null);
     const [discountDisable,setDisable]=useState(false);
     useEffect(() => {
   
@@ -126,6 +126,7 @@ mutLogin()
     console.log(discount);
     console.log(state);
     console.log(cost);
+    console.log(discountID);
 
     axios.post(apiUrl+'InsertFactor',{CustomerID:state,Cost:cost,Status:2,DiscountID:discountID})
     .then(function (response) {

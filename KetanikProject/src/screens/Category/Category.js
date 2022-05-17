@@ -12,6 +12,7 @@ import { apiUrl ,apiAsset} from "@commons/inFormTypes";
 import { isMessageIgnored } from 'react-native/Libraries/LogBox/Data/LogBoxData';
 import { ThemeContext } from '../../../theme/theme-context';
 import AsyncStorage from  '@react-native-async-storage/async-storage';
+import TrackPlayer, { Capability  } from "react-native-track-player";
 
 // create a component
 
@@ -35,6 +36,9 @@ import AsyncStorage from  '@react-native-async-storage/async-storage';
   const [book,setBook]=useState(null);
   const [bookID,setBookID]=useState();
   const [episode,setEpisode]=useState();
+  const [track,setTrack]=useState([]);
+  const [isplay, setPlay] = useState(false);
+
   const  setNull=async()=> {
     const books = await AsyncStorage.removeItem("@bookid");
     const episode = await AsyncStorage.removeItem("@epid");
@@ -91,6 +95,36 @@ console.log(episode)
       .catch(function (error) {
         console.log(error);
       });
+      axios.post(apiUrl+'SubBookShow',{BookID:books,CustomerID:state})
+      .then(function (response) {
+        const message = response.data;
+        const result = response.data.result;
+        console.log(777);
+        console.log(message);
+    
+        if(result == "true"){
+          var ss=[]
+          response.data.GroupData.map((item,ii)=>{
+            ii>=episode?
+            ss.push({
+              id: "local-track",
+              url: apiAsset+item?.Link,
+              title: "Ketanic",
+              artwork: "https://i.picsum.photos/id/500/200/200.jpg",
+            })
+            :
+            null
+          })
+          setTrack(ss)
+          // togglePlayback()
+          // navigation.navigate("ChangePass",{mobile:user,verify:response.data.Data})
+                          }else{
+    
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
 
     };
     const keyExtractor = item => {
@@ -112,6 +146,56 @@ console.log(episode)
     // </View> 
       );
     };
+    async function TogglePlayback() {
+      const currentTrack = await TrackPlayer.getPosition();
+      const currentTrack2 = await TrackPlayer.getDuration();
+      console.log(444)
+      
+      // console.log(num)
+      // console.log(currentTrack.toFixed(1))
+      // console.log(currentTrack2)
+      if (currentTrack.toFixed(1) == currentTrack2.toFixed(1)) {
+        console.log(775)
+        
+        // setPlay(true)
+        await TrackPlayer.reset();
+        await TrackPlayer.add(track);
+            TrackPlayer.updateOptions({
+            stopWithApp: true,
+            capabilities: [
+              Capability.Play,
+              Capability.Pause,
+              // Capability.SkipToNext,
+              // Capability.SkipToPrevious,
+              Capability.Stop,
+            ],
+            compactCapabilities: [
+              Capability.Play,
+              Capability.Pause,
+              // Capability.SkipToNext,
+              // Capability.SkipToPrevious,
+            ],
+        });
+   
+        await TrackPlayer.play();
+        setPlay(true)
+      }
+      else{
+  
+        if(isplay)
+       { await TrackPlayer.pause()
+  setPlay(false)}
+  else{
+  
+  await TrackPlayer.play()
+  setPlay(true)
+  }
+      }
+      
+  
+  
+      // }
+    }
 return (
     <View style={{backgroundColor:theme.backgroundColor,flex:1}}>
 
@@ -163,10 +247,24 @@ return (
  </View>
   </ScrollView>
   <View >
-    {
+  {
       book?
-
+  
     <TouchableOpacity onPress={()=>navigation.navigate("ListenBookMain",{id:bookID,num:episode})} style={{borderRadius:10,backgroundColor:Colors.lightGreen,flexDirection:'row-reverse',height:responsiveHeight(6),justifyContent:'space-between'}}>
+        {
+        isplay?
+        // <TouchableOpacity onPress={stop} style={{borderRadius:50,backgroundColor:Colors.white}}>
+        <TouchableOpacity onPress={TogglePlayback} >
+
+<Icon name={"pause-circle-filled"} size={50} color={Colors.darkGreen}/>
+</TouchableOpacity>
+:
+<TouchableOpacity onPress={TogglePlayback}>
+
+<Icon name={"play-circle-filled"} size={50} color={Colors.darkGreen}/>
+</TouchableOpacity>
+    }
+    
     <Image source={{uri:apiAsset+book.Pic}} style={styles(theme).imageBook}/>
     <View>
 

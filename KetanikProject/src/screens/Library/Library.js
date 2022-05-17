@@ -18,12 +18,7 @@ import {
 
 } from "react-native-chart-kit";
 import { ThemeContext } from '../../../theme/theme-context';
-
-// create a component
-// const [showBox, setShowBox] = useState(false);
-// const onClick = () => setShowBox(true);
-
-
+import TrackPlayer, { Capability  } from "react-native-track-player";
 
 const chartConfig = {
   backgroundGradientFrom: "#F4F4F4",
@@ -42,11 +37,12 @@ function convertHourstoMinute(time) {
 var minute = time.split(':')[1];
 return parseInt(hour) + Number((minute / 60));
   }
-const FirstRoute = ({dataShow,date,setDate,book,episode,navigation,theme,setBook,bookID}) => {
+const FirstRoute = ({dataShow,date,setDate,book,episode,navigation,theme,setBook,bookID,TogglePlayback,isplay}) => {
 
   console.log(dataShow.Data)
   console.log(555)
   console.log(date)
+
   var ss=[0]
     var dd=[0]
   var month=["January", "February", "March", "April", "May", "June","July","August","September","October","November","December"]
@@ -82,6 +78,7 @@ const FirstRoute = ({dataShow,date,setDate,book,episode,navigation,theme,setBook
   const  setNull=async()=> {
     const books = await AsyncStorage.removeItem("@bookid");
     const episode = await AsyncStorage.removeItem("@epid");
+    
 setBook()
   
 console.log(books)
@@ -165,6 +162,19 @@ console.log(episode)
       book?
 
     <TouchableOpacity onPress={()=>navigation.navigate("ListenBookMain",{id:bookID,num:episode})} style={{borderRadius:10,backgroundColor:Colors.lightGreen,flexDirection:'row-reverse',height:responsiveHeight(10)}}>
+        {
+        isplay?
+        // <TouchableOpacity onPress={stop} style={{borderRadius:50,backgroundColor:Colors.white}}>
+        <TouchableOpacity onPress={TogglePlayback} >
+
+<Icon name={"pause-circle-filled"} size={50} color={Colors.darkGreen}/>
+</TouchableOpacity>
+:
+<TouchableOpacity onPress={TogglePlayback}>
+
+<Icon name={"play-circle-filled"} size={50} color={Colors.darkGreen}/>
+</TouchableOpacity>
+    }
     <Image source={{uri:apiAsset+book.Pic}} style={styles(theme).imageBook}/>
     <View>
 
@@ -279,7 +289,7 @@ return(
 
     switch (route.key) {
       case 'status':
-        return <FirstRoute theme={theme} navigation={navigation} episode={episode}bookID={bookID}setBook={setBook} book={book} date={date} time={time} setDate={setDate} dataShow={dataShow}/>;
+        return <FirstRoute theme={theme} navigation={navigation} TogglePlayback={TogglePlayback} isplay={isplay} episode={episode}bookID={bookID}setBook={setBook} book={book} date={date} time={time} setDate={setDate} dataShow={dataShow}/>;
       case 'library':
         return <SecondRoute theme={theme} navigation={navigation} show={show} setShow={setShow} data={data} setRole={setRole} setRoleName={setRoleName} roleName={roleName} />;
       default:
@@ -315,6 +325,8 @@ return(
   const [book,setBook]=useState(null);
   const [bookID,setBookID]=useState();
   const [episode,setEpisode]=useState();
+  const [track,setTrack]=useState([]);
+  const [isplay, setPlay] = useState(false);
   useEffect(() => {
 
     mutLogin();
@@ -409,7 +421,86 @@ return(
       });
   
   
+
+      axios.post(apiUrl+'SubBookShow',{BookID:books,CustomerID:state})
+      .then(function (response) {
+        const message = response.data;
+        const result = response.data.result;
+        console.log(777);
+        console.log(message);
+    
+        if(result == "true"){
+          var ss=[]
+          response.data.GroupData.map((item,ii)=>{
+            ii>=episode?
+            ss.push({
+              id: "local-track",
+              url: apiAsset+item?.Link,
+              title: "Ketanic",
+              artwork: "https://i.picsum.photos/id/500/200/200.jpg",
+            })
+            :
+            null
+          })
+          setTrack(ss)
+        }else{
+    
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
       };
+      async function TogglePlayback() {
+        const currentTrack = await TrackPlayer.getPosition();
+        const currentTrack2 = await TrackPlayer.getDuration();
+        console.log(444)
+        
+        // console.log(num)
+        // console.log(currentTrack.toFixed(1))
+        // console.log(currentTrack2)
+        if (currentTrack.toFixed(1) == currentTrack2.toFixed(1)) {
+          console.log(775)
+          
+          // setPlay(true)
+          await TrackPlayer.reset();
+          await TrackPlayer.add(track);
+              TrackPlayer.updateOptions({
+              stopWithApp: true,
+              capabilities: [
+                Capability.Play,
+                Capability.Pause,
+                // Capability.SkipToNext,
+                // Capability.SkipToPrevious,
+                Capability.Stop,
+              ],
+              compactCapabilities: [
+                Capability.Play,
+                Capability.Pause,
+                // Capability.SkipToNext,
+                // Capability.SkipToPrevious,
+              ],
+          });
+     
+          await TrackPlayer.play();
+          setPlay(true)
+        }
+        else{
+    
+          if(isplay)
+         { await TrackPlayer.pause()
+    setPlay(false)}
+    else{
+    
+    await TrackPlayer.play()
+    setPlay(true)
+    }
+        }
+        
+    
+    
+        // }
+      }
 return (
   
     <View style={{ flex: 1,padding:0}}>

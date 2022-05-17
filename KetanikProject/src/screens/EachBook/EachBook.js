@@ -114,7 +114,7 @@ const _render = (item, index) => {
 const {id} = route?.params ?? {};
 
   const  mutLogin=async()=> {
-    await TrackPlayer.destroy()
+    // await TrackPlayer.destroy()
 
     const state = await AsyncStorage.getItem("@user");
 
@@ -311,7 +311,7 @@ if(state==""){
         console.log(message);
         
         if(result == "true"){
-          alert("با موفقیت به سبدخرید شد")
+          alert("با موفقیت به سبدخریداضافه شد")
                           }else{
   
         }
