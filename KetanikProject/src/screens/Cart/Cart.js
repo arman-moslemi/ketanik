@@ -1,5 +1,5 @@
 import React, {useState,useEffect,useContext} from 'react';
-import {View,Text, TouchableOpacity,Image,ScrollView,TextInput,FlatList} from 'react-native';
+import {View,Text, TouchableOpacity,Image,ScrollView,TextInput,FlatList,BackHandler} from 'react-native';
 
 import { StyleSheet } from 'react-native';
 import { responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
@@ -36,10 +36,16 @@ export const truncate = (str, len) => {
     const [discount,setDis]=useState("");
     const [discountID,setDisID]=useState(null);
     const [discountDisable,setDisable]=useState(false);
+    const backAction = () => {
+ navigation.navigate("Splash")
+    }
     useEffect(() => {
   
       mutLogin();
-  
+      BackHandler.addEventListener("hardwareBackPress", backAction);
+
+    return () =>
+      BackHandler.removeEventListener("hardwareBackPress", backAction);
   
   }, []);
   const  mutLogin=async()=> {

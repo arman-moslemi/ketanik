@@ -151,7 +151,7 @@ return (
   <Icon name={'search'} size={40} color={'#c1c1c1'}/>
 </View>
 <View>
-  <Input onChangeText={(ss)=>setName(ss)} placeholder='جستجو کتاب،نویسنده و ناشر...' inputStyle={styles(theme).searchInput}/>
+  <Input onChangeText={(ss)=>setName(ss)} placeholder='جستجو کتاب،نویسنده و ناشر...' inputStyle={styles(theme).searchInput} />
 </View>
     </View>
     {/* <View style={{display:'flex',justifyContent:'space-between',alignItems:'center',flexDirection:'row-reverse',marginTop:responsiveHeight(3),marginBottom:responsiveHeight(3)}}>
@@ -274,7 +274,7 @@ color:theme.menuTitle,
       paddingLeft:responsiveWidth(7),
       zIndex:1000,
   },lightGreenBack:{
-    backgroundColor:Colors.lightGreen,
+    backgroundColor:theme.cardBack,
     height:responsiveHeight(8),
     padding:10,
     borderRadius:10,
@@ -291,7 +291,8 @@ color:theme.menuTitle,
     alignSelf:'center'
   },searchInput:{
     ...myFontStyle.normalRegular,
-    borderWidth:0
+    borderWidth:0,
+    // backgroundColor:theme.cardBack
   },headText:{
     ...myFontStyle.textOnImg,
     color:'#1a1a1a',

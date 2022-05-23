@@ -503,7 +503,7 @@ return(
       }
 return (
   
-    <View style={{ flex: 1,padding:0}}>
+    <View style={{ flex: 1,padding:0,backgroundColor:theme.backgroundColor}}>
           <View style={styles(theme).topBar}>
 
 

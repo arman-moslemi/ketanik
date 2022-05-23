@@ -8,7 +8,7 @@ import { View, Text , StyleSheet,Image, TouchableOpacity,ScrollView,TextInput} f
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Modal from 'react-native-modal';
 import { RadioButton } from 'react-native-paper';
-import TrackPlayer, { usePlaybackState } from "react-native-track-player";
+import TrackPlayer, {  Capability   } from "react-native-track-player";
 import Player from "@components/Player";
 import axios from 'axios';
 import { apiUrl ,apiAsset} from "@commons/inFormTypes";
@@ -61,9 +61,22 @@ import { ThemeContext } from '../../../theme/theme-context';
       //   artwork: "https://i.picsum.photos/id/500/200/200.jpg",
       // }]
       );
-    //   TrackPlayer.updateOptions({
-    //     stopWithApp: true
-    // });
+      TrackPlayer.updateOptions({
+        stopWithApp: true,
+        capabilities: [
+          Capability.Play,
+          Capability.Pause,
+          // Capability.SkipToNext,
+          // Capability.SkipToPrevious,
+          Capability.Stop,
+        ],
+        compactCapabilities: [
+          Capability.Play,
+          Capability.Pause,
+          // Capability.SkipToNext,
+          // Capability.SkipToPrevious,
+        ],
+    });
       await TrackPlayer.play();
     }
     else{

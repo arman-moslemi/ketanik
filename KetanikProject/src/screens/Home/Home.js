@@ -290,7 +290,7 @@ return (
           </TouchableOpacity>
           </View>
     </View>
-     {/* <ViewSlider
+     <ViewSlider
         renderSlides = {
           <>
             <TouchableOpacity onPress={()=>Linking.openURL(slider?.LinkSlider1)} style={styles(theme).viewBox}>
@@ -315,7 +315,7 @@ return (
       dotsContainerStyle={styles(theme).dotContainer}     // Container style of the pagination dots
       autoSlide = {true}    //The views will slide automatically
       slideInterval = {5000}    //In Miliseconds
-     />  */}
+     /> 
      
        <ScrollView >
   <View style={styles(theme).container}>

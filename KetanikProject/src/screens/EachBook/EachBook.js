@@ -215,6 +215,12 @@ const {id} = route?.params ?? {};
 
     
     };
+
+    const  gotoExample=async()=> {
+      await TrackPlayer.stop();
+      await TrackPlayer.destroy();
+      navigation.navigate("ListenBook",{id:data.BookID,link:data.Link,image:data?.Pic,BookName:data.BookName,writer:data.Writer,SpecialCost:data.SpecialCost,Cost:data.Cost})
+    }
   const  mutComment=async()=> {
     const state = await AsyncStorage.getItem("@user");
 if( rate==""|| income==""){
@@ -689,7 +695,7 @@ return (
 <TouchableOpacity onPress={()=>buy()} style={styles(theme).loginBtn}>
        <Text style={styles(theme).btnText}>خرید</Text>
      </TouchableOpacity>
-     <TouchableOpacity onPress={()=>navigation.navigate("ListenBook",{id:data.BookID,link:data.Link,image:data?.Pic,BookName:data.BookName,writer:data.Writer,SpecialCost:data.SpecialCost,Cost:data.Cost})} style={styles(theme).whiteBtn}>
+     <TouchableOpacity onPress={()=>gotoExample()} style={styles(theme).whiteBtn}>
        <Text style={styles(theme).btnText2}>نسخه نمونه</Text>
      </TouchableOpacity>
      <TouchableOpacity style={styles(theme).greenBtn2} onPress={toggleModal}>
@@ -996,7 +1002,7 @@ indicatorStyle:{
   marginLeft:'auto'
 },
 greenBack:{
-  backgroundColor:theme.greenBack,
+  backgroundColor:theme.cardBack,
    flexDirection:"row-reverse",
   justifyContent:'flex-start',
     position:"absolute",
