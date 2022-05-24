@@ -318,7 +318,10 @@ if(state==""){
         
         if(result == "true"){
           alert("با موفقیت به سبدخریداضافه شد")
-                          }else{
+          navigation.reset({
+            index: 0,
+            routes: [{ name: 'TabBar' }]
+       })                          }else{
   
         }
       })

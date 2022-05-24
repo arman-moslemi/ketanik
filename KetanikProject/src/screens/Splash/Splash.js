@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
        
       },splashText:{
         position:'absolute',
-        bottom:responsiveHeight(25),
+        bottom:responsiveHeight(20),
         color:Colors.darkGreen,
         ...myFontStyle.UltraBold,
         
