@@ -3,9 +3,9 @@ import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 
 //myFonts
 const myFontFamily = {
-  Bold: "IRANSansBold",
+  Bold: "IRANSansFaNum Bold",
   regularItalic: "RadomirTinkov-Gilroy-RegularItalic",
-  Medium: "IRANSans",
+  Medium: "IRANSansFaNum",
   UltraLight: "RadomirTinkov-Gilroy-UltraLight",
 }
 
