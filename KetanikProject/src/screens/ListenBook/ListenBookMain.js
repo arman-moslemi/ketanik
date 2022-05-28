@@ -49,6 +49,7 @@ console.log(id)
           url: apiAsset+item?.Link,
           title: "Ketanic",
           artwork: "https://i.picsum.photos/id/500/200/200.jpg",
+          artist:item.BookName
         })
         :
         null

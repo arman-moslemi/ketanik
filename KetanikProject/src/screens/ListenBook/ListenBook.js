@@ -52,6 +52,8 @@ import { ThemeContext } from '../../../theme/theme-context';
         // url: require('@assets/images/audio_2021-11-02_15-04-15.mp3'),
         title: "Ketanic",
         artwork: "https://i.picsum.photos/id/500/200/200.jpg",
+        artist:BookName
+
         // duration: 10
       }
       // ,{
