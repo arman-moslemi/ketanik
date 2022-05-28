@@ -64,8 +64,9 @@ return (
 const styles = StyleSheet.create({
 loginImg:{
   width:responsiveWidth(100),
+  height:responsiveHeight(50),
   resizeMode:'contain',
-  marginTop:responsiveHeight(-10)
+  marginTop:responsiveHeight(-5)
 },loginBtn:{
   backgroundColor:Colors.darkGreen,
   width:responsiveWidth(75),

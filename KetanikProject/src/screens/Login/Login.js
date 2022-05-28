@@ -300,7 +300,7 @@ indicatorStyle:{
 },tabViewBox:{
   flex:1,
   // width:responsiveWidth(100),
-  marginTop:responsiveHeight(-4),
+  marginTop:responsiveHeight(-10),
 },loginBtn:{
   backgroundColor:Colors.darkGreen,
   width:responsiveWidth(75),

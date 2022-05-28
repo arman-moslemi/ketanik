@@ -153,7 +153,7 @@ const styles =StyleSheet.create({
     color: '#000000',
 
     borderRadius:15,
-    paddingTop:10,
+    paddingTop:responsiveHeight(1),
     textAlign:'right'
     // backgroundColor:'#f3f3f3'
   },
