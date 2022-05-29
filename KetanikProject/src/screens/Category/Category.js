@@ -204,17 +204,17 @@ return (
     
         </View>
     <View style={styles(theme).topBar}>
-
-    <View style={{flex : 2,textAlign:"right"}}>
+    <View style={{flex : 1}}>
           <Text style={styles(theme).menuTitle}>دسته بندی</Text>
           </View>
-    
-        
-        <View style={{flex :0.5}}>
+
+        <View style={{flex :3}}>
           <TouchableOpacity onPress={()=>navigation.goBack()} style={{}}>
             <Icon name={"arrow-back"} color={theme.iconWhite} size={30}/>
           </TouchableOpacity>
           </View>
+    
+        
     </View>
      
   <ScrollView>
@@ -329,7 +329,7 @@ color:theme.menuTitle,
   topBar:{
       display:'flex',
       flexDirection:'row-reverse',
-      paddingTop:responsiveHeight(2),
+      paddingTop:responsiveHeight(3),
       paddingRight:responsiveWidth(7),
       paddingLeft:responsiveWidth(7),
       zIndex:1000,
@@ -515,7 +515,7 @@ color:theme.menuTitle,
   },cateTitle:{
     color:'#fff',
     ...myFontStyle.normalBold,
-    marginRight:responsiveWidth(5),
+    marginLeft:responsiveWidth(5),
     width:responsiveWidth(30),
   },imageBook:{
     width:responsiveWidth(15),

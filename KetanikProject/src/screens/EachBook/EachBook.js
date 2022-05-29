@@ -97,7 +97,7 @@ const _render = (item, index) => {
     <Text style={styles(theme).bookName}>
     {truncate(item.item.BookName,20)}
     </Text>
-    <View style={{display:'flex',flexDirection:'row-reverse',justifyContent:'space-between'}}>
+    <View style={{alignItems:'flex-end',flexDirection:'row-reverse',justifyContent:'space-between'}}>
     <Text style={styles(theme).bookName}>
     {item.item.Cost}ت
     </Text>
@@ -422,7 +422,7 @@ index+1>rate[0]?.Average?
            <View>
            <Image source={{uri:apiAsset+data?.Pic}} style={styles(theme).writerImg}/>
            </View>
-           <View>
+           <View style={{alignItems:'flex-end'}}>
              <Text style={styles(theme).eachBookDetail5}>{item.Username}</Text>
             <View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>
             <View style={{display:'flex',flexDirection:'row-reverse',justifyContent:'flex-end',marginTop:responsiveHeight(1),marginBottom:responsiveHeight(1)}}>
@@ -837,12 +837,12 @@ return (
  <View style={styles(theme).container}>
 
  <View style={{display:'flex',flexDirection:'row-reverse',justifyContent:'space-between',marginBottom:responsiveHeight(5),marginTop:responsiveHeight(5)}}>
-     <View style={{flex:1}}>
+     <View >
      <Text style={styles(theme).rowTitle}>
          کتاب های مرتبط
       </Text>
      </View>
-      <View>
+      <View style={{flex:1}}>
       <TouchableOpacity onPress={()=>navigation.navigate('SelectedNews',{type:"group",GroupID:grid,GroupName:data.Title})}>
       <Text style={styles(theme).seeAll}>
          مشاهده همه
@@ -861,12 +861,12 @@ return (
         />
    </View>
  <View style={{display:'flex',flexDirection:'row-reverse',justifyContent:'space-between',marginBottom:responsiveHeight(5),marginTop:responsiveHeight(5)}}>
-     <View style={{flex:1}}>
+     <View >
      <Text style={styles(theme).rowTitle}>
          دیگر کتاب های {data.Writer}
       </Text>
      </View>
-      <View>
+      <View style={{flex:1}}>
       <TouchableOpacity onPress={()=>navigation.navigate("SelectedNews",{type:"writer",writer:writer})}>
       <Text style={styles(theme).seeAll}>
          مشاهده همه
@@ -887,12 +887,12 @@ return (
 
 
  <View style={{display:'flex',flexDirection:'row-reverse',justifyContent:'space-between',marginBottom:responsiveHeight(5),marginTop:responsiveHeight(5)}}>
-     <View style={{flex:1}}>
+     <View >
      <Text style={styles(theme).rowTitle}>
          دیگر کتاب های {data.Publisher}
       </Text>
      </View>
-      <View>
+      <View style={{flex:1}}>
       <TouchableOpacity onPress={()=>navigation.navigate("SelectedNews",{type:"publisher",publisher:pub})}>
       <Text style={styles(theme).seeAll}>
 
@@ -1120,6 +1120,7 @@ cardBox:{
   width:responsiveWidth(34),
   borderRadius:10,
   textAlign:'center',
+  // alignItems:'center',
   padding:responsiveHeight(1),
   marginLeft:responsiveWidth(3),
   marginTop:responsiveHeight(3),
@@ -1136,6 +1137,7 @@ cardBox:{
 },bookName:{
   color:'#111',
   ...myFontStyle.normalRegular,
+  alignSelf:"flex-end",
   marginTop:responsiveHeight(0.5),
 },priceRed:{
   color:'#dc3545',
@@ -1208,6 +1210,7 @@ height: "100%",
   borderRadius:10,
 },bookDescription:{
   color:'#111',
+  alignSelf:"flex-end",
   ...myFontStyle.bookWriter3,
   marginTop:responsiveHeight(2),
   

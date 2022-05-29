@@ -146,7 +146,7 @@ console.log(episode)
   <LineChart
     // data={date.length>0?date:data2}
     data={data3}
-    width={responsiveWidth(180)}
+    width={responsiveWidth(220)}
     height={responsiveHeight(30)}
     verticalLabelRotation={0}
     chartConfig={chartConfig}
@@ -222,7 +222,7 @@ const SecondRoute = ({show,setShow,data,setRole,roleName,setRoleName,navigation,
 return(
  <View style={{ flex: 1}}>
 
-   <View  style={{position:'relative'}}>
+   <View  style={{position:'relative',zIndex:100000}}>
      <TouchableOpacity style={{display:'flex',flexDirection:'row-reverse',marginTop:responsiveHeight(2)}} onPress={()=>setShow(!show)} >
      <Icon name={"notes"} color={'#707070'} size={30} style={{transform: [{rotateY: '180deg'}]}}/>
        <Text style={styles(theme).pageTitleText}>

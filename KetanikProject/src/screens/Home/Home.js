@@ -319,13 +319,13 @@ return (
      
        <ScrollView >
   <View style={styles(theme).container}>
-  <View style={{display:'flex',flexDirection:'row-reverse',justifyContent:'space-between',marginBottom:responsiveHeight(5)}}>
-     <View style={{flex:1}}>
+  <View style={{flexDirection:'row-reverse',justifyContent:'space-between',marginBottom:responsiveHeight(5)}}>
+     <View >
      <Text style={styles(theme).rowTitle}>
           تازه های برگزیده
       </Text>
      </View>
-      <View>
+      <View style={{flex:1}}>
       <TouchableOpacity onPress={()=>navigation.navigate("SelectedNews")}>
       <Text style={styles(theme).seeAll}>
          مشاهده همه
@@ -348,12 +348,12 @@ return (
    
   
    <View style={{display:'flex',flexDirection:'row-reverse',justifyContent:'space-between',marginBottom:responsiveHeight(5),marginTop:responsiveHeight(5)}}>
-     <View style={{flex:1}}>
+     <View >
      <Text style={styles(theme).rowTitle}>
          پر فروش ترین ها
       </Text>
      </View>
-      <View>
+      <View style={{flex:1}}>
       <TouchableOpacity onPress={()=>navigation.navigate("SelectedNews",{type:"best"})}>
       <Text style={styles(theme).seeAll}>
          مشاهده همه
@@ -510,7 +510,8 @@ const styles =(theme) =>  StyleSheet.create({
     padding:responsiveHeight(1),
     marginLeft:responsiveWidth(3),
     marginTop:responsiveHeight(3)
-    , transform: [{ scaleX: -1 }] 
+    , transform: [{ scaleX: -1 }] ,
+    alignItems:'center'
 
 },bookImg:{
     height:responsiveHeight(14),
