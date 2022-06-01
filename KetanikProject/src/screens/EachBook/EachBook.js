@@ -1005,7 +1005,7 @@ indicatorStyle:{
   marginLeft:'auto'
 },
 greenBack:{
-  backgroundColor:theme.cardBack,
+  backgroundColor:theme.darkGreen,
    flexDirection:"row-reverse",
   justifyContent:'flex-start',
     position:"absolute",
@@ -1207,7 +1207,7 @@ height: "100%",
   paddingTop:responsiveHeight(1),
   borderRadius:10,
 },bookDescription:{
-  color:'#111',
+  color:theme.textTitle,
   ...myFontStyle.bookWriter3,
   marginTop:responsiveHeight(2),
   
@@ -1320,7 +1320,7 @@ height: "100%",
   },
   viwTab:{flexDirection:'row',alignItems:'center',justifyContent:"center"},
   tab:{borderBottomWidth:1,width:responsiveWidth(30),alignItems:'center',
-justifyContent:"center",paddingBottom:responsiveHeight(3)}
+justifyContent:"center",paddingBottom:responsiveHeight(3),borderBottomColor:theme.darkGreen}
  ,
   tabINActive:{borderBottomWidth:1,width:responsiveWidth(30),alignItems:'center',
 justifyContent:"center",paddingBottom:responsiveHeight(3),borderBottomColor:"#f1f1f1"}

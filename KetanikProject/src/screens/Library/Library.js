@@ -570,11 +570,11 @@ tabBar:{
   borderBottomWidth:2
 },
 tabBarText:{
-  color: "#000",
+  color: theme.lightGreen,
   ...myFontStyle.mediumBold
 },
 tabBarText2:{
-  color: "#000",
+  color: theme.lightGreen,
   ...myFontStyle.mediumRegular
 },
 indicatorStyle:{
@@ -639,7 +639,7 @@ libraryBox:{
   // alignItems:'center',
   marginTop:responsiveHeight(5),
 },pageTitleText:{
-  color:'#343434',
+  color:theme.lightGreen,
   ...myFontStyle.largeRegular,
   marginRight:responsiveWidth(2)
 },littleBtn:{
@@ -726,7 +726,7 @@ libraryBox:{
   color:'#111'
 },
 moreText:{
-  color:'#000',
+  color:theme.lightGreen,
   ...myFontStyle.normalRegular,
 },
   });
