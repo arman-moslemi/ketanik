@@ -17,6 +17,7 @@ import AsyncStorage from  '@react-native-async-storage/async-storage';
 // const onClick = () => setShowBox(true);
 import { ThemeContext } from '../../../theme/theme-context';
 import TrackPlayer, { usePlaybackState } from "react-native-track-player";
+import { getTranslation } from '@i18n/i18n';
 
 export const truncate = (str, len) => {
   if (str.length > len && str.length > 0) {
@@ -408,7 +409,7 @@ index+1>rate[0]?.Average?
        <View style={{display:'flex',flexDirection:'row-reverse'}}>
          <Icon name={'person'} color={'#1a1a1a'} size={25}/>
          <Text style={styles(theme).eachBookDetail3}>
-           نظر ({comment.length})
+         {getTranslation('نظر')} ({comment.length})
          </Text>
        </View>
      </View>
@@ -490,7 +491,7 @@ index+1>item?.Rate?
           <View style={{display:'flex',flexDirection:'row-reverse',flex:0.5,alignItems:'center'}}>
             <Icon name={'fiber-manual-record'} color={Colors.darkGreen} size={10}/>
             <Text style={styles(theme).table1}>
-              نام کتاب
+            {getTranslation('نام کتاب')}
             </Text>
           </View>
           <View style={{flex:0.5}}>
@@ -502,7 +503,7 @@ index+1>item?.Rate?
           <View style={{display:'flex',flexDirection:'row-reverse',flex:0.5,alignItems:'center'}}>
             <Icon name={'fiber-manual-record'} color={Colors.darkGreen} size={10}/>
             <Text style={styles(theme).table1}>
-             نویسنده
+            {getTranslation('نویسنده')}
             </Text>
           </View>
           <View style={{flex:0.5}}>
@@ -514,7 +515,7 @@ index+1>item?.Rate?
           <View style={{display:'flex',flexDirection:'row-reverse',flex:0.5,alignItems:'center'}}>
             <Icon name={'fiber-manual-record'} color={Colors.darkGreen} size={10}/>
             <Text style={styles(theme).table1}>
-             مترجم
+            {getTranslation('مترجم')}
             </Text>
           </View>
           <View style={{flex:0.5}}>
@@ -526,7 +527,7 @@ index+1>item?.Rate?
           <View style={{display:'flex',flexDirection:'row-reverse',flex:0.5,alignItems:'center'}}>
             <Icon name={'fiber-manual-record'} color={Colors.darkGreen} size={10}/>
             <Text style={styles(theme).table1}>
-            ناشر
+            {getTranslation('ناشر')}
             </Text>
           </View>
           <View style={{flex:0.5}}>
@@ -538,7 +539,7 @@ index+1>item?.Rate?
           <View style={{display:'flex',flexDirection:'row-reverse',flex:0.5,alignItems:'center'}}>
             <Icon name={'fiber-manual-record'} color={Colors.darkGreen} size={10}/>
             <Text style={styles(theme).table1}>
-             دسته
+            {getTranslation('دسته')}
             </Text>
           </View>
           <View style={{flex:0.5}}>
@@ -551,7 +552,7 @@ index+1>item?.Rate?
           <View style={{display:'flex',flexDirection:'row-reverse',flex:0.5,alignItems:'center'}}>
             <Icon name={'fiber-manual-record'} color={Colors.darkGreen} size={10}/>
             <Text style={styles(theme).table1}>
-            تعداد صفحات
+            {getTranslation('تعداد صفحات')}
             </Text>
           </View>
           <View style={{flex:0.5}}>
@@ -564,7 +565,7 @@ index+1>item?.Rate?
           <View style={{display:'flex',flexDirection:'row-reverse',flex:0.5,alignItems:'center'}}>
             <Icon name={'fiber-manual-record'} color={Colors.darkGreen} size={10}/>
             <Text style={styles(theme).table1}>
-           زبان
+            {getTranslation('زبان')}
             </Text>
           </View>
           <View style={{flex:0.5}}>
@@ -577,7 +578,7 @@ index+1>item?.Rate?
           <View style={{display:'flex',flexDirection:'row-reverse',flex:0.5,alignItems:'center'}}>
             <Icon name={'fiber-manual-record'} color={Colors.darkGreen} size={10}/>
             <Text style={styles(theme).table1}>
-            سایز
+            {getTranslation('سایز')}
             </Text>
           </View>
           <View style={{flex:0.5}}>
@@ -590,7 +591,7 @@ index+1>item?.Rate?
           <View style={{display:'flex',flexDirection:'row-reverse',flex:0.5,alignItems:'center'}}>
             <Icon name={'fiber-manual-record'} color={Colors.darkGreen} size={10}/>
             <Text style={styles(theme).table1}>
-            تاریخ انتشار
+            {getTranslation('تاریخ انتشار')}
             </Text>
           </View>
           <View style={{flex:0.5}}>
@@ -603,7 +604,7 @@ index+1>item?.Rate?
           <View style={{display:'flex',flexDirection:'row-reverse',flex:0.5,alignItems:'center'}}>
             <Icon name={'fiber-manual-record'} color={Colors.darkGreen} size={10}/>
             <Text style={styles(theme).table1}>
-             شابک
+            {getTranslation('شابک')}
             </Text>
           </View>
           <View style={{flex:0.5}}>
@@ -615,7 +616,7 @@ index+1>item?.Rate?
           <View style={{display:'flex',flexDirection:'row-reverse',flex:0.5,alignItems:'center'}}>
             <Icon name={'fiber-manual-record'} color={Colors.darkGreen} size={10}/>
             <Text style={styles(theme).table1}>
-            راوی
+            {getTranslation('راوی')}
             </Text>
           </View>
           <View style={{flex:0.5}}>
@@ -674,7 +675,7 @@ return (
 <Image source={{uri:apiAsset+data?.Pic}} style={styles(theme).bookImg2}/>
 <Text style={styles(theme).eachBookName}>{data.BookName}</Text>
 <Text style={styles(theme).eachBookDetail}>{data.Writer}</Text>
-<Text style={styles(theme).eachBookDetail}>{data.Cost} تومان</Text>
+<Text style={styles(theme).eachBookDetail}>{data.Cost} {getTranslation('تومان')}</Text>
 <View style={styles(theme).rateRow}>
 <Text style={styles(theme).eachBookDetail2}>{rate[0]?.Average}</Text>
 <Icon name={'star'} color={'#ffc93d'} size={20}/>
@@ -684,7 +685,7 @@ return (
   lib==true?
 <View style={styles(theme).btnRow}>
 <TouchableOpacity onPress={()=>navigation.navigate("EpisodesList",{id:data.BookID})} style={[styles(theme).loginBtn,{marginLeft:5}]}>
-       <Text style={styles(theme).btnText}>مطالعه</Text>
+       <Text style={styles(theme).btnText}>{getTranslation('مطالعه')}</Text>
      </TouchableOpacity>
      {/* <TouchableOpacity onPress={()=>navigation.navigate("ListenBook",{id:data.BookID,link:data.Link,image:data?.Pic,BookName:data.BookName,writer:data.Writer})} style={styles(theme).whiteBtn}>
        <Text style={styles(theme).btnText2}>نسخه نمونه</Text>
@@ -696,10 +697,10 @@ return (
   :
 <View style={styles(theme).btnRow}>
 <TouchableOpacity onPress={()=>buy()} style={styles(theme).loginBtn}>
-       <Text style={styles(theme).btnText}>خرید</Text>
+       <Text style={styles(theme).btnText}>{getTranslation('خرید')}</Text>
      </TouchableOpacity>
      <TouchableOpacity onPress={()=>gotoExample()} style={styles(theme).whiteBtn}>
-       <Text style={styles(theme).btnText2}>نسخه نمونه</Text>
+       <Text style={styles(theme).btnText2}>{getTranslation('نسخه نمونه')}</Text>
      </TouchableOpacity>
      <TouchableOpacity style={styles(theme).greenBtn2} onPress={toggleModal}>
       <Icon name={'keyboard-control'} size={30} color={'#fff'}/>
@@ -708,7 +709,7 @@ return (
 }
 <View>
 <TouchableOpacity onPress={()=>setModalVisibleCom(true)} style={styles(theme).comBtn}>
-       <Text style={styles(theme).btnText}>نظر دهید</Text>
+       <Text style={styles(theme).btnText}>{getTranslation('نظر دهید')}</Text>
      </TouchableOpacity>
 
 </View>
@@ -731,7 +732,7 @@ return (
 <TouchableOpacity onPress={()=>navigation.navigate("Rosters",{id:data.BookID})} style={{borderTopWidth:0.5,borderTopColor:'#c1c1c1',display:'flex',justifyContent:'space-between',alignItems:'center',flexDirection:'row-reverse',paddingTop:responsiveHeight(2),paddingBottom:responsiveHeight(2)}}>
 <View>
 <Text style={styles(theme).eachBookDetail3}>
-     فهرست کتاب
+{getTranslation('فهرست کتاب')}
     </Text>
 </View>
 <View>
@@ -751,7 +752,7 @@ return (
 <TouchableOpacity onPress={()=>mutSave()} style={{borderTopWidth:0.5,borderTopColor:'#c1c1c1',display:'flex',justifyContent:'space-between',alignItems:'center',flexDirection:'row-reverse',paddingTop:responsiveHeight(2),paddingBottom:responsiveHeight(2)}}>
 <View>
 <Text style={styles(theme).eachBookDetail3}>
-    افزودن به کتاب های دلخواه
+{getTranslation('افزودن به کتاب های دلخواه')}
     </Text>
 </View>
 <View>
@@ -761,7 +762,7 @@ return (
 <TouchableOpacity style={{borderTopWidth:0.5,borderTopColor:'#c1c1c1',display:'flex',justifyContent:'space-between',alignItems:'center',flexDirection:'row-reverse',paddingTop:responsiveHeight(2),paddingBottom:responsiveHeight(2)}}>
 <View>
 <Text style={styles(theme).eachBookDetail3}>
-     اشتراک گذاری
+{getTranslation('اشتراک گذاری')}
     </Text>
 </View>
 <View>
@@ -782,17 +783,17 @@ return (
       <View style={styles(theme).viwTab}>
       <TouchableOpacity onPress={()=>setPage(2)} style={page==2?styles(theme).tab:styles(theme).tabINActive}>
         <Text style={styles(theme).tabBarText}>
-         نظرات
+        {getTranslation('نظرات')}
         </Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={()=>setPage(1)} style={page==1?styles(theme).tab:styles(theme).tabINActive}>
         <Text style={styles(theme).tabBarText}>
-        جزییات
+        {getTranslation('جزییات')}
         </Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={()=>setPage(0)} style={page==0?styles(theme).tab:styles(theme).tabINActive}>
         <Text style={styles(theme).tabBarText}>
-        معرفی کتاب
+        {getTranslation('معرفی کتاب')}
         </Text>
       </TouchableOpacity>
           </View>
@@ -830,7 +831,7 @@ return (
 
 </View>
 <TouchableOpacity onPress={()=>mutComment()} style={styles(theme).comBtn}>
-       <Text style={styles(theme).btnText}>ثبت</Text>
+       <Text style={styles(theme).btnText}>{getTranslation('ثبت')}</Text>
      </TouchableOpacity>
  </View>
  </Modal>
@@ -839,13 +840,13 @@ return (
  <View style={{display:'flex',flexDirection:'row-reverse',justifyContent:'space-between',marginBottom:responsiveHeight(5),marginTop:responsiveHeight(5)}}>
      <View style={{flex:1}}>
      <Text style={styles(theme).rowTitle}>
-         کتاب های مرتبط
+     {getTranslation('کتاب های مرتبط')}
       </Text>
      </View>
       <View>
       <TouchableOpacity onPress={()=>navigation.navigate('SelectedNews',{type:"group",GroupID:grid,GroupName:data.Title})}>
       <Text style={styles(theme).seeAll}>
-         مشاهده همه
+      {getTranslation('مشاهده همه')}
       </Text>
       </TouchableOpacity>
       </View>
@@ -863,13 +864,13 @@ return (
  <View style={{display:'flex',flexDirection:'row-reverse',justifyContent:'space-between',marginBottom:responsiveHeight(5),marginTop:responsiveHeight(5)}}>
      <View style={{flex:1}}>
      <Text style={styles(theme).rowTitle}>
-         دیگر کتاب های {data.Writer}
+     {getTranslation('دیگر کتاب های')} {data.Writer}
       </Text>
      </View>
       <View>
       <TouchableOpacity onPress={()=>navigation.navigate("SelectedNews",{type:"writer",writer:writer})}>
       <Text style={styles(theme).seeAll}>
-         مشاهده همه
+      {getTranslation('مشاهده همه')}
       </Text>
       </TouchableOpacity>
       </View>
@@ -889,15 +890,14 @@ return (
  <View style={{display:'flex',flexDirection:'row-reverse',justifyContent:'space-between',marginBottom:responsiveHeight(5),marginTop:responsiveHeight(5)}}>
      <View style={{flex:1}}>
      <Text style={styles(theme).rowTitle}>
-         دیگر کتاب های {data.Publisher}
+         {getTranslation('دیگر کتاب های')} {data.Publisher}
       </Text>
      </View>
       <View>
       <TouchableOpacity onPress={()=>navigation.navigate("SelectedNews",{type:"publisher",publisher:pub})}>
       <Text style={styles(theme).seeAll}>
 
-         مشاهده همه
-      </Text>
+      {getTranslation('مشاهده همه')}      </Text>
       </TouchableOpacity>
       </View>
       </View>
@@ -916,14 +916,13 @@ return (
  <View style={{display:'flex',flexDirection:'row-reverse',justifyContent:'space-between',marginBottom:responsiveHeight(5),marginTop:responsiveHeight(5)}}>
      <View style={{flex:1}}>
      <Text style={styles(theme).rowTitle}>
-         دیگر کتاب های مترجم
+         {getTranslation('دیگر کتاب های')} {getTranslation('مترجم')}
       </Text>
      </View>
       <View>
       <TouchableOpacity onPress={()=>navigation.navigate("SelectedNews",{type:"translator",translator:trans})}>
       <Text style={styles(theme).seeAll}>
-         مشاهده همه
-      </Text>
+      {getTranslation('مشاهده همه')}      </Text>
       </TouchableOpacity>
       </View>
       </View>

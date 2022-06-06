@@ -15,6 +15,7 @@ import { apiUrl ,apiAsset} from "@commons/inFormTypes";
 // create a component
 import { ThemeContext } from '../../../theme/theme-context';
 import TrackPlayer, { usePlaybackState } from "react-native-track-player";
+import { getTranslation } from '@i18n/i18n';
 
 
 export const truncate = (str, len) => {
@@ -78,7 +79,7 @@ return (
     <View style={styles(theme).topBar}>
 
     <View style={{flex : 2,textAlign:"right"}}>
-          <Text style={styles(theme).menuTitle}>{data[0]?.BookName} ({data.length} اپیزود)</Text>
+          <Text style={styles(theme).menuTitle}>{data[0]?.BookName} ({data.length} {getTranslation('اپیزود')})</Text>
           </View>
     
         
@@ -104,7 +105,7 @@ return (
                 {item.Title}
             </Text>
             <Text style={styles(theme).episodeTime}>
-            {item.Size} دقیقه _{item.Time} مگابایت
+            {item.Size} {getTranslation('دقیقه')} _{item.Time} {getTranslation('مگابایت')}
             </Text>
         </View>
        </View>

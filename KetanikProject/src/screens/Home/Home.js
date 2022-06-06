@@ -15,6 +15,7 @@ import { apiUrl ,apiAsset} from "@commons/inFormTypes";
 import { ThemeContext } from '../../../theme/theme-context';
 import AsyncStorage from  '@react-native-async-storage/async-storage';
 import TrackPlayer, { Capability  } from "react-native-track-player";
+import { getTranslation } from '@i18n/i18n';
 
 // create a component
 
@@ -322,13 +323,13 @@ return (
   <View style={{display:'flex',flexDirection:'row-reverse',justifyContent:'space-between',marginBottom:responsiveHeight(5)}}>
      <View style={{flex:1}}>
      <Text style={styles(theme).rowTitle}>
-          تازه های برگزیده
+     {getTranslation('تازه های برگزیده')}
       </Text>
      </View>
       <View>
       <TouchableOpacity onPress={()=>navigation.navigate("SelectedNews")}>
       <Text style={styles(theme).seeAll}>
-         مشاهده همه
+      {getTranslation('مشاهده همه')}
       </Text>
       </TouchableOpacity>
       </View>
@@ -350,13 +351,13 @@ return (
    <View style={{display:'flex',flexDirection:'row-reverse',justifyContent:'space-between',marginBottom:responsiveHeight(5),marginTop:responsiveHeight(5)}}>
      <View style={{flex:1}}>
      <Text style={styles(theme).rowTitle}>
-         پر فروش ترین ها
+     {getTranslation('پر فروش ترین ها')}
       </Text>
      </View>
       <View>
       <TouchableOpacity onPress={()=>navigation.navigate("SelectedNews",{type:"best"})}>
       <Text style={styles(theme).seeAll}>
-         مشاهده همه
+      {getTranslation('مشاهده همه')}
       </Text>
       </TouchableOpacity>
       </View>

@@ -12,6 +12,7 @@ import { myFontStyle } from "@assets/Constance";
 import axios from 'axios';
 import { apiUrl ,apiAsset} from "@commons/inFormTypes";
 import { ThemeContext } from '../../../theme/theme-context';
+import { getTranslation } from '@i18n/i18n';
 
 // create a component
 
@@ -170,7 +171,7 @@ axios.post(apiUrl+'RelatedBook',{GroupID:GroupID})
                 {truncate(item.item.Writer,20)}
                 </Text>
                 <Text style={styles(theme).bookWriter}>
-                {truncate("ناشر :"+item.item.Publisher,30)}
+                {truncate(getTranslation("ناشر :")+item.item.Publisher,30)}
                 </Text>
                 <View style={{display:'flex',flexDirection:'row-reverse'}}>
                 {[...new Array(5)].map((index)=>{
@@ -225,26 +226,26 @@ return (
 
     <View style={{flex : 2,textAlign:"right"}}>
     {type=="writer"?
-        <Text style={styles(theme).menuTitle}>کتابهای {writer}</Text>
+        <Text style={styles(theme).menuTitle}>{getTranslation('کتابهای')} {writer}</Text>
      
     : type=="publisher"?
-    <Text style={styles(theme).menuTitle}>انتشارات {publisher}</Text>
+    <Text style={styles(theme).menuTitle}>{getTranslation('انتشارات')} {publisher}</Text>
  
 : type=="translator"?
-<Text style={styles(theme).menuTitle}>کتابهای {translator}</Text>
+<Text style={styles(theme).menuTitle}>{getTranslation('کتابهای')} {translator}</Text>
 
 : type=="translator"?
-<Text style={styles(theme).menuTitle}>پرفروش ترین ها</Text>
+<Text style={styles(theme).menuTitle}>{getTranslation('پرفروش ترین ها')}</Text>
 
 :type=="group"?
 <Text style={styles(theme).menuTitle}>{GroupName}</Text>
 
 
 :type=="best"?
-<Text style={styles(theme).menuTitle}>پرفروش ترین ها</Text>
+<Text style={styles(theme).menuTitle}>{getTranslation('پرفروش ترین ها')}</Text>
 
 :
-    <Text style={styles(theme).menuTitle}>تازه های برگزیده</Text>
+    <Text style={styles(theme).menuTitle}>{getTranslation('تازه های برگزیده')}</Text>
     }
           </View>
     

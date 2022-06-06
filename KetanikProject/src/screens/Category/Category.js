@@ -13,6 +13,7 @@ import { isMessageIgnored } from 'react-native/Libraries/LogBox/Data/LogBoxData'
 import { ThemeContext } from '../../../theme/theme-context';
 import AsyncStorage from  '@react-native-async-storage/async-storage';
 import TrackPlayer, { Capability  } from "react-native-track-player";
+import { getTranslation } from '@i18n/i18n';
 
 // create a component
 
@@ -206,7 +207,7 @@ return (
     <View style={styles(theme).topBar}>
 
     <View style={{flex : 2,textAlign:"right"}}>
-          <Text style={styles(theme).menuTitle}>دسته بندی</Text>
+          <Text style={styles(theme).menuTitle}>{getTranslation('دسته بندی')}</Text>
           </View>
     
         
@@ -269,7 +270,7 @@ return (
     <View>
 
       <Text style={styles(theme).miniText}>{book.BookName}</Text>
-      <Text style={styles(theme).miniText}>درحال مطالعه</Text>
+      <Text style={styles(theme).miniText}>{getTranslation('درحال مطالعه')}</Text>
       </View>
       <TouchableOpacity onPress={()=>setNull()}> 
       <Icon name={"close"} color={'#111'} style={{marginRight:responsiveWidth(30)}} size={30}/>

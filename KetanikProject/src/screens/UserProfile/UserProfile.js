@@ -1,6 +1,6 @@
 import React, { useState,useEffect,useContext  } from 'react';
 import { myFontStyle } from "@assets/Constance";
-
+import Modal from "react-native-modal";
 import { responsiveFontSize, responsiveHeight, responsiveScreenWidth, responsiveWidth } from 'react-native-responsive-dimensions';
 import { Colors} from "@assets/Colors";
 import { Switch } from 'react-native-paper';
@@ -11,6 +11,7 @@ import axios from 'axios';
 import Spinner from '@components/Spinner';
 import AsyncStorage from  '@react-native-async-storage/async-storage';
 import { ThemeContext } from '../../../theme/theme-context';
+import { getTranslation } from '@i18n/i18n';
 
  const UserProfile = ({navigation }) => {
   
@@ -19,15 +20,35 @@ import { ThemeContext } from '../../../theme/theme-context';
   const [name,setName]=useState();
   const [pic,setPic]=useState();
   const [email,setEmail]=useState();
-
+  const [isModalVisible, setModalVisible] = useState(false);
+  const [lang, setlang] = useState("فارسی");
+  const [refresh, setRefresh] = useState(false);
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible);
+  };
   const onToggleSwitch = () => setIsSwitchOn(!isSwitchOn);
+  const changelang=async(langs)=>{
+await AsyncStorage.setItem("@langs",langs);
+toggleModal();
+if(langs=="fa"){
+  setlang("فارسی")
+
+}else{
+
+  setlang("English")
+}
+setRefresh(!refresh)
+navigation.reset({
+  index: 0,
+  routes: [{ name: 'TabBar' }]
+})  }
 
   useEffect(() => {
   
     mutLogin();
 
 
-}, []);
+}, [refresh]);
 const  LogOut=async()=> {
   AsyncStorage.setItem('@user',"")
 
@@ -39,8 +60,19 @@ const  LogOut=async()=> {
 }
   const  mutLogin=async()=> {
     const state = await AsyncStorage.getItem("@user");
-
-console.log(state)
+    const ss = await AsyncStorage.getItem("@langs");
+    if(ss==""||ss==null||ss.length>5){
+setlang("فارسی")
+    }
+    else{
+      if(ss=="fa"){
+        setlang("فارسی")
+      
+      }else{
+        setlang("English")
+      }
+    }
+      console.log(state)
     axios.post(apiUrl+'OneCustomer',{CustomerID :state})
     .then(function (response) {
       const message = response.data;
@@ -68,6 +100,39 @@ setEmail(response.data.Data.Email)
 
 return (
     <View style={{ padding:0,justifyContent:'flex-start',alignContent:'flex-start',alignSelf:'flex-start',backgroundColor:theme.backgroundColor}}>
+     
+     
+     <Modal isVisible={isModalVisible} onBackdropPress={() => setModalVisible(false)} >
+ <View style={styles(theme).moreModal}>
+ 
+
+<TouchableOpacity onPress={()=>changelang("fa")} style={{borderTopWidth:0.5,borderTopColor:'#c1c1c1',display:'flex',justifyContent:'space-between',alignItems:'center',flexDirection:'row-reverse',paddingTop:responsiveHeight(2),paddingBottom:responsiveHeight(2)}}>
+<View>
+<Text style={styles(theme).eachBookDetail3}>
+فارسی    </Text>
+</View>
+
+</TouchableOpacity>
+{/* <TouchableOpacity style={{borderTopWidth:0.5,borderTopColor:'#c1c1c1',display:'flex',justifyContent:'space-between',alignItems:'center',flexDirection:'row-reverse',paddingTop:responsiveHeight(2),paddingBottom:responsiveHeight(2)}}>
+<View>
+<Text style={styles(theme).eachBookDetail3}>
+     ارسال هدیه
+    </Text>
+</View>
+<View>
+  <Image source={require('@assets/images/gift.png')} style={styles(theme).miniIcon}/>
+</View>
+</TouchableOpacity> */}
+<TouchableOpacity  onPress={()=>changelang("en")} style={{borderTopWidth:0.5,borderTopColor:'#c1c1c1',display:'flex',justifyContent:'space-between',alignItems:'center',flexDirection:'row-reverse',paddingTop:responsiveHeight(2),paddingBottom:responsiveHeight(2)}}>
+<View>
+<Text style={styles(theme).eachBookDetail3}>
+English    </Text>
+</View>
+
+</TouchableOpacity>
+
+ </View>
+ </Modal>
        <Image source={require('@assets/images/userProfileTop.png')} style={styles(theme).topImg}/>
   
      {/* <View style={styles(theme).backView}>
@@ -87,7 +152,7 @@ return (
     <View style={styles(theme).edit}>
       <TouchableOpacity onPress={()=>navigation.navigate("EditProfile")} style={{display:'flex',flexDirection:'row-reverse',alignItems:'center',justifyContent:'flex-end'}}>
       <Icon name={'mode-edit'} size={20} color={'#007bff'} />
-      <Text style={styles(theme).btnEdit}>ویرایش حساب کاربری</Text>
+      <Text style={styles(theme).btnEdit}>{getTranslation('ویرایش حساب کاربری')}</Text>
       </TouchableOpacity>
     </View>
    
@@ -96,7 +161,7 @@ return (
   <TouchableOpacity style={styles(theme).editProfileBtn} onPress={()=>navigation.navigate("Wallet")}>
       <View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>
         <Image source={require('@assets/images/wallet.png')} style={styles(theme).btnImg2}/>
-        <Text style={styles(theme).btnText}>کیف پول</Text>
+        <Text style={styles(theme).btnText}>{getTranslation("کیف پول")}</Text>
       </View>
       <View>
         <Icon name={'chevron-left'} size={20} color={theme.textTitle}/>
@@ -105,7 +170,7 @@ return (
     <TouchableOpacity style={styles(theme).editProfileBtn}>
       <View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>
         <Image source={require('@assets/images/takhfif.png')} style={styles(theme).btnImg}/>
-        <Text style={styles(theme).btnText}>بن های تخفیف</Text>
+        <Text style={styles(theme).btnText}>{getTranslation("بن های تخفیف")}</Text>
       </View>
       <View>
         <Icon name={'chevron-left'} size={20} color={theme.textTitle}/>
@@ -114,7 +179,7 @@ return (
     <TouchableOpacity onPress={()=>navigation.navigate("BookSaved")} style={styles(theme).editProfileBtn}>
       <View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>
         <Image source={require('@assets/images/bookmark.png')} style={styles(theme).btnImg}/>
-        <Text style={styles(theme).btnText}>کتاب های نشان شده</Text>
+        <Text style={styles(theme).btnText}>{getTranslation("کتاب های نشان شده")}</Text>
       </View>
       <View>
         <Icon name={'chevron-left'} size={20} color={theme.textTitle}/>
@@ -132,7 +197,7 @@ return (
     <TouchableOpacity style={styles(theme).editProfileBtn}>
       <View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>
         <Image source={require('@assets/images/night.png')} style={styles(theme).btnImg}/>
-        <Text style={styles(theme).btnText}>حالت شب</Text>
+        <Text style={styles(theme).btnText}>{getTranslation("حالت شب")}</Text>
       </View>
       <View>
       {/* <Switch value={isSwitchOn} onValueChange={onToggleSwitch} color={Colors.darkGreen} /> */}
@@ -142,20 +207,20 @@ return (
                  onChange={toggle} value = {dark} />
                        </View>
     </TouchableOpacity>
-    <TouchableOpacity style={styles(theme).editProfileBtn}>
+    <TouchableOpacity style={styles(theme).editProfileBtn} onPress={toggleModal}>
       <View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>
         <Image source={require('@assets/images/language.png')} style={styles(theme).btnImg}/>
-        <Text style={styles(theme).btnText}>زبان</Text>
+        <Text style={styles(theme).btnText}>{getTranslation("زبان")}</Text>
       </View>
       <View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>
-      <Text style={styles(theme).btnText}>فارسی</Text>
+      <Text style={styles(theme).btnText}>{lang}</Text>
         <Icon name={'chevron-left'} size={20} color={theme.textTitle}/>
       </View>
     </TouchableOpacity>
     <TouchableOpacity style={styles(theme).editProfileBtn}>
       <View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>
         <Image source={require('@assets/images/guide.png')} style={styles(theme).btnImg}/>
-        <Text style={styles(theme).btnText}>راهنمایی و پشتیبانی</Text>
+        <Text style={styles(theme).btnText}>{getTranslation("راهنمایی و پشتیبانی")}</Text>
       </View>
       <View>
         <Icon name={'chevron-left'} size={20} color={theme.textTitle}/>
@@ -164,7 +229,7 @@ return (
     <TouchableOpacity style={styles(theme).editProfileBtn} onPress={()=>navigation.navigate("AboutUs")}>
       <View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>
         <Image source={require('@assets/images/about.png')} style={styles(theme).btnImg}/>
-        <Text style={styles(theme).btnText}>درباره ما</Text>
+        <Text style={styles(theme).btnText}>{getTranslation("درباره ما")}</Text>
       </View>
       <View>
         <Icon name={'chevron-left'} size={20} color={theme.textTitle}/>
@@ -173,14 +238,14 @@ return (
     <TouchableOpacity onPress={()=>navigation.navigate("Share")} style={styles(theme).editProfileBtn}>
       <View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>
         <Image source={require('@assets/images/friend.png')} style={styles(theme).btnImg}/>
-        <Text style={styles(theme).btnText}>دعوت از دوستان</Text>
+        <Text style={styles(theme).btnText}>{getTranslation("دعوت از دوستان")}</Text>
       </View>
    
     </TouchableOpacity>
     <TouchableOpacity onPress={()=> LogOut()} style={styles(theme).editProfileBtn}>
       <View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>
         <Image source={require('@assets/images/exit.png')} style={styles(theme).btnImg}/>
-        <Text style={styles(theme).btnText}>خروج از حساب</Text>
+        <Text style={styles(theme).btnText}>{getTranslation("خروج از حساب")}</Text>
       </View>
       
     </TouchableOpacity>
@@ -249,7 +314,17 @@ const styles =(theme) => StyleSheet.create({
       resizeMode:'contain',
       width:25,
       height:35 ,
-    }
+    },moreModal:{
+      // backgroundColor:Colors.lightGreen,
+      backgroundColor:Colors.white,
+      bottom:0,
+      borderRightColor:Colors.darkGreen,
+      borderRightWidth:5,
+      borderRadius:10,
+      padding:responsiveHeight(2),
+      display:'flex',
+      justifyContent:'flex-start',
+    },
   });
 
   export default UserProfile;

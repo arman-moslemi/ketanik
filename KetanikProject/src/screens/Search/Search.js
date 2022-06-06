@@ -14,6 +14,7 @@ import axios from 'axios';
 import { apiUrl ,apiAsset} from "@commons/inFormTypes";
 import { Input } from '@components/Input';
 import { ThemeContext } from '../../../theme/theme-context';
+import { getTranslation } from '@i18n/i18n';
 
 export const truncate = (str, len) => {
   // console.log("truncate", str, str.length, len);
@@ -131,7 +132,7 @@ return (
     <View style={styles(theme).topBar}>
 
     <View style={{flex : 2,textAlign:"right"}}>
-          <Text style={styles(theme).menuTitle}>جستجو</Text>
+          <Text style={styles(theme).menuTitle}>{getTranslation('جستجو')}</Text>
           </View>
     
         
@@ -151,7 +152,7 @@ return (
   <Icon name={'search'} size={40} color={'#c1c1c1'}/>
 </View>
 <View>
-  <Input onChangeText={(ss)=>setName(ss)} placeholder='جستجو کتاب،نویسنده و ناشر...' inputStyle={styles(theme).searchInput} />
+  <Input onChangeText={(ss)=>setName(ss)} placeholder={getTranslation('جستجو کتاب،نویسنده و ناشر...')} inputStyle={styles(theme).searchInput} />
 </View>
     </View>
     {/* <View style={{display:'flex',justifyContent:'space-between',alignItems:'center',flexDirection:'row-reverse',marginTop:responsiveHeight(3),marginBottom:responsiveHeight(3)}}>

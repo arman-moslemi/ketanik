@@ -12,6 +12,7 @@ import Player from "@components/Player";
 import axios from 'axios';
 import { apiUrl ,apiAsset} from "@commons/inFormTypes";
 import AsyncStorage from  '@react-native-async-storage/async-storage';
+import { getTranslation } from '@i18n/i18n';
 
  const ListenBookMain = ({navigation,route }) => {
   const [data,setData]=useState([]);
@@ -227,15 +228,15 @@ return (
         </TouchableOpacity> */}
         <TouchableOpacity style={styles.btnBox}>
           <Image source={require('@assets/images/share.png')} style={styles.btnBoxImg}/>
-          <Text style={styles.btnBoxTxt}>اشتراک گذاری</Text>
+          <Text style={styles.btnBoxTxt}>{getTranslation('اشتراک گذاری')}</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={()=>mutSave()} style={styles.btnBox}>
           <Image source={require('@assets/images/save.png')} style={styles.btnBoxImg}/>
-          <Text style={styles.btnBoxTxt}>نشان کردن</Text>
+          <Text style={styles.btnBoxTxt}>{getTranslation('نشان کردن')}</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.btnBox} onPress={toggleModal} >
           <Image source={require('@assets/images/car.png')} style={styles.btnBoxImg}/>
-          <Text style={styles.btnBoxTxt}>حالت ماشین</Text>
+          <Text style={styles.btnBoxTxt}>{getTranslation('حالت ماشین')}</Text>
         </TouchableOpacity>
       </View>
       {/* player Code is Here */}

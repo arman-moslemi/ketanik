@@ -14,6 +14,7 @@ import axios from 'axios';
 import { apiUrl ,apiAsset} from "@commons/inFormTypes";
 // create a component
 import { ThemeContext } from '../../../theme/theme-context';
+import { getTranslation } from '@i18n/i18n';
 
 
 export const truncate = (str, len) => {
@@ -210,7 +211,7 @@ return (
     <View style={styles(theme).topBar}>
 
     <View style={{flex : 2,textAlign:"right",display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>
-          <Text style={styles(theme).menuTitle}>سبد خرید</Text>
+          <Text style={styles(theme).menuTitle}>{getTranslation('سبد خرید')}</Text>
           <View style={styles(theme).badget}>
               <Text style={styles(theme).badgetText}>{data.length}</Text>
           </View>
@@ -241,7 +242,7 @@ renderItem={_render}
     </View>
     <View>
         <Text style={styles(theme).discountText}>
-            کد تخفیف : 
+        {getTranslation('کد تخفیف :')}
         </Text>
     </View>
     <View>
@@ -249,12 +250,12 @@ renderItem={_render}
     </View>
     <View>
     <TouchableOpacity onPress={()=>dis()} disabled={discountDisable} style={styles(theme).loginBtn}>
-       <Text style={styles(theme).btnText}>ثبت</Text>
+       <Text style={styles(theme).btnText}>{getTranslation('ثبت')}</Text>
      </TouchableOpacity>
     </View>
 </View>
 <TouchableOpacity onPress={()=>{buy()}} style={styles(theme).purchaseBtn}>
-       <Text style={styles(theme).purchaseBtnText}>پرداخت | {cost}</Text>
+       <Text style={styles(theme).purchaseBtnText}>{getTranslation('پرداخت')} | {cost}</Text>
      </TouchableOpacity>
    </View>
   </ScrollView>

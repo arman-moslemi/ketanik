@@ -14,6 +14,7 @@ import axios from 'axios';
 import { apiUrl ,apiAsset} from "@commons/inFormTypes";
 import AsyncStorage from  '@react-native-async-storage/async-storage';
 import { ThemeContext } from '../../../theme/theme-context';
+import { getTranslation } from '@i18n/i18n';
 
  const ListenBook = ({navigation,route }) => {
   const {  theme } = useContext(ThemeContext);
@@ -198,15 +199,15 @@ return (
         </TouchableOpacity> */}
         <TouchableOpacity style={styles(theme).btnBox}>
           <Image source={require('@assets/images/share.png')} style={styles(theme).btnBoxImg}/>
-          <Text style={styles(theme).btnBoxTxt}>اشتراک گذاری</Text>
+          <Text style={styles(theme).btnBoxTxt}>{getTranslation('اشتراک گذاری')}</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={()=>mutSave()} style={styles(theme).btnBox}>
           <Image source={require('@assets/images/save.png')} style={styles(theme).btnBoxImg}/>
-          <Text style={styles(theme).btnBoxTxt}>نشان کردن</Text>
+          <Text style={styles(theme).btnBoxTxt}>{getTranslation('نشان کردن')}</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles(theme).btnBox} onPress={toggleModal} >
           <Image source={require('@assets/images/car.png')} style={styles(theme).btnBoxImg}/>
-          <Text style={styles(theme).btnBoxTxt}>حالت ماشین</Text>
+          <Text style={styles(theme).btnBoxTxt}>{getTranslation('حالت ماشین')}</Text>
         </TouchableOpacity>
       </View>
       {/* player Code is Here */}
@@ -226,13 +227,13 @@ return (
         <Icon name={'access-time'} size={35}/>
       </TouchableOpacity> */}
       <TouchableOpacity onPress={()=>buy()} style={styles(theme).loginBtn}>
-       <Text style={styles(theme).btnText}>دریافت نسخه کامل</Text>
+       <Text style={styles(theme).btnText}>{getTranslation('دریافت نسخه کامل')}</Text>
      </TouchableOpacity>
       </View>
       <Modal isVisible={isModalVisible} onBackdropPress={() => setModalVisible(false)} >
  <View style={styles(theme).editModal}>
    <Text style={styles(theme).modalTitle}>
-     حالت ماشین
+   {getTranslation('حالت ماشین')}
    </Text>
   <View style={{display:'flex',justifyContent:'center',alignContent:'center',alignItems:'center'}}>
 
@@ -258,7 +259,7 @@ return (
  <Modal isVisible={isModalVisible2} onBackdropPress={() => setModalVisible2(false)} >
  <View style={styles(theme).editModal}>
    <Text style={styles(theme).modalTitle}>
-     زمان سنج توقف
+   {getTranslation('زمان سنج توقف')}
    </Text>
    <View style={styles(theme).radioRow}>
   <View style={styles(theme).radioView}>
@@ -269,7 +270,7 @@ return (
         color={Colors.darkGreen}
       />
   <Text style={styles(theme).radionText}>
-    خاموش
+  {getTranslation('خاموش')}
   </Text>
       </View>
   </View>
@@ -282,7 +283,7 @@ return (
         color={Colors.darkGreen}
       />
   <Text style={styles(theme).radionText}>
-   تا پایان اپیزود
+  {getTranslation('تا پایان اپیزود')}
   </Text>
       </View>
   </View>
@@ -295,7 +296,7 @@ return (
         color={Colors.darkGreen}
       />
   <Text style={styles(theme).radionText}>
- دقیقه 5
+  {getTranslation('دقیقه')}5
   </Text>
       </View>
   </View>
@@ -308,7 +309,7 @@ return (
         color={Colors.darkGreen}
       />
   <Text style={styles(theme).radionText}>
-    دقیقه 10
+  {getTranslation('دقیقه')} 10
   </Text>
       </View>
   </View>
@@ -321,7 +322,7 @@ return (
         color={Colors.darkGreen}
       />
   <Text style={styles(theme).radionText}>
-    دقیقه 15
+  {getTranslation('دقیقه')} 15
   </Text>
       </View>
   </View>
@@ -334,7 +335,7 @@ return (
         color={Colors.darkGreen}
       />
   <Text style={styles(theme).radionText}>
-    دقیقه 30
+  {getTranslation('دقیقه')} 30
   </Text>
       </View>
   </View>
@@ -347,7 +348,7 @@ return (
         color={Colors.darkGreen}
       />
   <Text style={styles(theme).radionText}>
-    دقیقه 45
+  {getTranslation('دقیقه')} 45
   </Text>
       </View>
   </View>
@@ -360,7 +361,7 @@ return (
         color={Colors.darkGreen}
       />
   <Text style={styles(theme).radionText}>
-    دقیقه 60
+  {getTranslation('دقیقه')} 60
   </Text>
       </View>
   </View>

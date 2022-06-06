@@ -19,6 +19,7 @@ import {
 } from "react-native-chart-kit";
 import { ThemeContext } from '../../../theme/theme-context';
 import TrackPlayer, { Capability  } from "react-native-track-player";
+import { getTranslation } from '@i18n/i18n';
 
 const chartConfig = {
   backgroundGradientFrom: "#F4F4F4",
@@ -96,7 +97,7 @@ console.log(episode)
            {dataShow?.NumberGroupData}
          </Text>
          <Text style={styles(theme).miniText}>
-           ژانر خوانده شده
+         {getTranslation('ژانر خوانده شده')}
          </Text>
          
       </View>
@@ -109,7 +110,7 @@ console.log(episode)
 
          </Text>
          <Text style={styles(theme).miniText}>
-           ساعت  خوانده شده
+         {getTranslation('ساعت  خوانده شده')}
          </Text>
   </View>
   <View style={styles(theme).lightGreenBack}>
@@ -122,7 +123,7 @@ console.log(episode)
 
          </Text>
          <Text style={styles(theme).miniText}>
-           کتاب خوانده شده
+         {getTranslation('کتاب خوانده شده')}
          </Text>
   </View>
   
@@ -179,7 +180,7 @@ console.log(episode)
     <View>
 
       <Text style={styles(theme).miniText}>{book.BookName}</Text>
-      <Text style={styles(theme).miniText}>درحال مطالعه</Text>
+      <Text style={styles(theme).miniText}>{getTranslation('درحال مطالعه')}</Text>
       </View>
       <TouchableOpacity onPress={()=>setNull()}> 
       <Icon name={"close"} color={'#111'} style={{marginRight:responsiveWidth(30)}} size={30}/>
@@ -233,22 +234,22 @@ return(
      show?
     
      <View style={styles(theme).greenBox}>
-       <TouchableOpacity onPress={()=>{setRole(1);setRoleName("در حال مطالعه");setShow(false)}} style={styles(theme).greenBoxBtn}>
+       <TouchableOpacity onPress={()=>{setRole(1);setRoleName(getTranslation("در حال مطالعه"));setShow(false)}} style={styles(theme).greenBoxBtn}>
          <Text style={styles(theme).greenBoxText}>
            در حال مطالعه
          </Text>
        </TouchableOpacity>
-       <TouchableOpacity onPress={()=>{setRole(2);setRoleName("خوانده نشده ها");setShow(false)}} style={styles(theme).greenBoxBtn}>
+       <TouchableOpacity onPress={()=>{setRole(2);setRoleName(getTranslation("خوانده نشده ها"));setShow(false)}} style={styles(theme).greenBoxBtn}>
          <Text style={styles(theme).greenBoxText}>
          خوانده نشده ها
          </Text>
        </TouchableOpacity>
-       <TouchableOpacity onPress={()=>{setRole(3);setRoleName("خوانده شده ها");setShow(false)}} style={styles(theme).greenBoxBtn}>
+       <TouchableOpacity onPress={()=>{setRole(3);setRoleName(getTranslation("خوانده شده ها"));setShow(false)}} style={styles(theme).greenBoxBtn}>
          <Text style={styles(theme).greenBoxText}>
            خوانده شده ها
          </Text>
        </TouchableOpacity>
-       <TouchableOpacity onPress={()=>{setRole();setRoleName("همه کتاب ها");setShow(false)}} style={styles(theme).greenBoxBtn}>
+       <TouchableOpacity onPress={()=>{setRole();setRoleName(getTranslation("همه کتاب ها"));setShow(false)}} style={styles(theme).greenBoxBtn}>
          <Text style={styles(theme).greenBoxText}>
           همه کتاب ها
          </Text>
@@ -282,7 +283,7 @@ return(
  const Library = ({navigation }) => {
   const {  theme } = useContext(ThemeContext);
   const [show,setShow]=useState(false);
-  const [roleName,setRoleName]=useState("همه کتاب ها");
+  const [roleName,setRoleName]=useState(getTranslation("همه کتاب ها"));
 
   const [index, setIndex] = React.useState(0);
   const renderScene = ({ route }) => {
@@ -297,8 +298,8 @@ return(
     }
     };;
   const [routes] = React.useState([
-    { key: 'status', title: 'وضعیت' },
-    { key: 'library', title: 'کتابخانه' },
+    { key: 'status', title: getTranslation('وضعیت') },
+    { key: 'library', title: getTranslation('کتابخانه') },
     
   ]);
   const renderTabBar = props => (

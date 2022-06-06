@@ -13,6 +13,7 @@ import axios from 'axios';
 import { apiUrl ,apiAsset} from "@commons/inFormTypes";
 import AsyncStorage from  '@react-native-async-storage/async-storage';
 import { ThemeContext } from '../../../theme/theme-context';
+import { getTranslation } from '@i18n/i18n';
 
 // create a component
 
@@ -81,7 +82,7 @@ export const truncate = (str, len) => {
                 {truncate(item.item.Writer,20)}
                 </Text>
                 <Text style={styles(theme).bookWriter}>
-                {truncate("ناشر :"+item.item.Publisher,30)}
+                {truncate(getTranslation("ناشر :")+item.item.Publisher,30)}
                 </Text>
                 <View style={{display:'flex',flexDirection:'row-reverse'}}>
                 {[...new Array(5)].map((index)=>{
@@ -135,7 +136,7 @@ return (
     <View style={styles(theme).topBar}>
 
     <View style={{flex : 2,textAlign:"right"}}>
-          <Text style={styles(theme).menuTitle}>کتاب های ذخیره شده</Text>
+          <Text style={styles(theme).menuTitle}>{getTranslation('کتاب های ذخیره شده')}</Text>
           </View>
     
         
