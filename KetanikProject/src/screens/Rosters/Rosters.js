@@ -111,7 +111,7 @@ return (
                 </View>
                 <View>
                     <Text style={styles.price}>
-                        {data[0]?.Cost} {getTranslation('تومان')}
+                        {data[0]?.Cost} {getTranslation('یورو')}
                     </Text>
                 </View>
             </View>
@@ -142,7 +142,7 @@ return (
         </View>
         <View>
             <Text style={styles.price}>
-                25.000 تومان
+                25.000 یورو
             </Text>
         </View>
     </View>

@@ -675,7 +675,7 @@ return (
 <Image source={{uri:apiAsset+data?.Pic}} style={styles(theme).bookImg2}/>
 <Text style={styles(theme).eachBookName}>{data.BookName}</Text>
 <Text style={styles(theme).eachBookDetail}>{data.Writer}</Text>
-<Text style={styles(theme).eachBookDetail}>{data.Cost} {getTranslation('تومان')}</Text>
+<Text style={styles(theme).eachBookDetail}>{data.Cost} {getTranslation('یورو')}</Text>
 <View style={styles(theme).rateRow}>
 <Text style={styles(theme).eachBookDetail2}>{rate[0]?.Average}</Text>
 <Icon name={'star'} color={'#ffc93d'} size={20}/>

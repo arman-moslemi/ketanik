@@ -191,7 +191,7 @@ index+1>item.item.Rate?
        </TouchableOpacity>
             <View>
                 <Text style={styles(theme).price}>
-                    {item.item.Cost} تومان
+                    {item.item.Cost} یورو
                 </Text>
             </View>
         </View>
