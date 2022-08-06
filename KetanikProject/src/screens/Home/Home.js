@@ -303,6 +303,10 @@ return (
               <Image source={{uri:apiAsset+slider?.Slider3}}  resizeMode={"stretch"} style={styles(theme).imageSlider}>
                 </Image>
                 </TouchableOpacity>
+                <TouchableOpacity onPress={()=>Linking.openURL(data?.LinkSlider4)} style={styles(theme).viewBox}>
+              <Image source={{uri:apiAsset+slider?.Slider4}}  resizeMode={"stretch"} style={styles(theme).imageSlider}>
+                </Image>
+                </TouchableOpacity>
 
             </>
       }
