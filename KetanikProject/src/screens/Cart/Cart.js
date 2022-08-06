@@ -142,7 +142,7 @@ mutLogin()
       console.log(message);
     
       if(result == "true"){
-        navigation.navigate("Factor")        // navigation.navigate("ChangePass",{mobile:user,verify:response.data.Data})
+        navigation.navigate("Factor")        
                         }else{
     alert(response.data.message)
       }
@@ -153,6 +153,35 @@ mutLogin()
    
       
           };
+  const  dargah=async()=> {
+    const state = await AsyncStorage.getItem("@user");
+
+    console.log(discount);
+    console.log(state);
+    console.log(cost);
+    console.log(discountID);
+
+    axios.post(apiUrl+'Dargah',{CostTotal:cost,CustomerID:state})
+    .then(function (response) {
+      const message = response.data;
+      const result = response.data.result;
+    
+      if(result == "true"){
+        console.log(response.data.Data)
+        let userObj = JSON.parse(response.data.Data);
+        console.log(userObj.id)
+        navigation.navigate("Dargah",{id:userObj.id})        
+                        }else{
+    alert(response.data.message)
+      }
+    })
+    .catch(function (error) {
+      console.log(error);
+    })
+   
+      
+          };
+
         const keyExtractor = item => {
             return item.BookID;
           };
@@ -216,7 +245,6 @@ return (
               <Text style={styles(theme).badgetText}>{data.length}</Text>
           </View>
           </View>
-    
         
         <View style={{flex :0.5}}>
           <TouchableOpacity onPress={()=>navigation.goBack()} style={{}}>
@@ -254,7 +282,8 @@ renderItem={_render}
      </TouchableOpacity>
     </View>
 </View>
-<TouchableOpacity onPress={()=>{buy()}} style={styles(theme).purchaseBtn}>
+{/* <TouchableOpacity onPress={()=>{buy()}} style={styles(theme).purchaseBtn}> */}
+<TouchableOpacity onPress={()=>{dargah()}} style={styles(theme).purchaseBtn}>
        <Text style={styles(theme).purchaseBtnText}>{getTranslation('پرداخت')} | {cost}</Text>
      </TouchableOpacity>
    </View>

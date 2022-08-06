@@ -31,6 +31,7 @@ import Rosters from '@screens/Rosters/Rosters';
 import ListenBook from '@screens/ListenBook/ListenBook';
 import ListenBookMain from '@screens/ListenBook/ListenBookMain';
 import Wallet from '@screens/Wallet/Wallet';
+import Dargah from '@screens/Wallet/Dargah';
 import Factor from '@screens/Factor/Factor';
 import Search from "@screens/Search/Search";
 import { ThemeProvider} from './theme/theme-context';
@@ -96,6 +97,8 @@ const StackNavigatorsHome = () => {
         <Stack.Screen name="ListenBookMain" component={ListenBookMain} />
         <Stack.Screen name="Wallet" component={Wallet} /> 
         <Stack.Screen name="Factor" component={Factor} /> 
+        <Stack.Screen name="Dargah" component={Dargah} /> 
+
     </Stack.Navigator>
   );
  }
@@ -159,6 +162,7 @@ const StackNavigatorsProfile = () => {
         <Stack.Screen name="EditPassword" component={EditPassword} /> 
         <Stack.Screen name="Wallet" component={Wallet} /> 
         <Stack.Screen name="Factor" component={Factor} /> 
+        <Stack.Screen name="Dargah" component={Dargah} /> 
     </Stack.Navigator>
   );
  }
