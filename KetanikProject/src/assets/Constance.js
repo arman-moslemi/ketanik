@@ -91,10 +91,6 @@ export const myFontStyle = {
   largUltraLight: {
     fontFamily: myFontFamily.UltraLight,
     fontSize: responsiveFontSize(2),
-  },btnBold:{
-    fontFamily:myFontFamily.Bold,
-    // fontSize:responsiveFontSize(2),
-    fontSize:RFPercentage(1.75),
   }
   ,textOnImg:{
     fontFamily:myFontFamily.Bold,
@@ -102,5 +98,22 @@ export const myFontStyle = {
   },rate:{
     fontFamily:myFontFamily.Bold,
     fontSize:responsiveFontSize(6),
+  }
+
+
+  /***************Keshavarzi******** */
+  ,SplashText: {
+    fontFamily: myFontFamily.Bold,
+    fontSize: RFPercentage(4),
+  },btnBold:{
+    fontFamily:myFontFamily.Bold,
+    // fontSize:responsiveFontSize(2),
+    fontSize:RFPercentage(3),
+  } ,registerText:{
+    fontFamily:myFontFamily.Bold,
+    fontSize:responsiveFontSize(2.25),
+  },checkBox: {
+    fontFamily: myFontFamily.Medium,
+    fontSize: RFPercentage(2.5),
   }
 }

@@ -6,5 +6,7 @@ export const Colors = {
     borderColor:"#cacaca",
     lightGreen:'#f1f5ec',
     gray:'#E8EAE6',
-    white:'#fff'
+   Yellow:'#FFD200',
+    Green1:'#009959',
+    White:'#ffffff',
   }

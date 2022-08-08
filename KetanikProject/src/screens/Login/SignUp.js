@@ -12,9 +12,12 @@ import AsyncStorage from  '@react-native-async-storage/async-storage';
 import { Button } from 'react-native-paper';
 
 // create a component
-const Verify = ({navigation }) => {
+const SignUp = ({navigation }) => {
  
   const keyboardVerticalOffset = responsiveHeight(1);
+  const [text, setText] = useState('');
+
+  const [passwordVisible, setPasswordVisible] = useState(true);
   return (
   <View style={{backgroundColor:'#f4f4f4',height:'100%',width:'100%'}}>
     
@@ -24,16 +27,16 @@ const Verify = ({navigation }) => {
     <Image source={require('@assets/images/LoginBack.png')} style={styles.loginBack} />
     <View style={{position:'absolute',height:'100%',top:responsiveHeight(10),width:'100%'}}>
       <Text style={styles.loginTitle}>
-        کد تایید
+        ثبت نام
       </Text>
       <View style={{position:'absolute',top:responsiveHeight(10),display:'flex',alignContent:'center',alignSelf:'center'}}>
       <View style={styles.inputIcon}>
       <Icon name={"phone-iphone"} color={'#CECECE'} size={30}/>
-      <TextInput style={styles.textInputIcon}  placeholder="کد تایید"/>
+      <TextInput style={styles.textInputIcon}  placeholder="شماره تلفن همراه"/>
       </View>
      
-      <TouchableOpacity style={styles.yellowBtn} onPress={()=>  navigation.navigate("SignUpSecond")}>
-        <Text style={styles.yellowBtnTxt}>ثبت کد تایید</Text>
+      <TouchableOpacity style={styles.yellowBtn} onPress={()=>  navigation.navigate("Verify")}>
+        <Text style={styles.yellowBtnTxt}>ایجاد حساب کاربری</Text>
       </TouchableOpacity>
       <View style={{display:'flex',flexDirection:'row-reverse',textAlign:'center',justifyContent:'center',alignContent:'center',marginTop:responsiveHeight(2)}}>
       <Text style={styles.registerText}>
@@ -155,6 +158,6 @@ elevation: 5,
   }
   );
 
-  export default Verify;
+  export default SignUp;
 
 //make this component available to the <app></app>

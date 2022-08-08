@@ -65,11 +65,11 @@ import AsyncStorage from  '@react-native-async-storage/async-storage';
     }, []);
  
 return (
-    <View style={{ flex: 2,padding:0,alignItems:'center'}}>
-      <Image source={require('@assets/images/splash.png')} style={styles.splashImg} />
+    <View style={{ flex: 2,padding:0,alignItems:'center',backgroundColor:'#009959'}}>
+      
       <View style={styles.overlay} />
-      <Image source={require('@assets/images/logo.png')} style={styles.logo} />
-    <Text style={styles.splashText} >مرجع دانلود کتاب های صوتی</Text>
+      <Image source={require('@assets/images/LogoWhite.png')} style={styles.logo} />
+    <Text style={styles.splashText} >اسم اپلیکیشن</Text>
     {/* <TouchableOpacity style={styles.arrowRightBtn}>
     <Image source={require('@assets/images/right.png')} style={styles.rightImg}/>
     </TouchableOpacity> */}
@@ -84,34 +84,15 @@ const styles = StyleSheet.create({
         width:responsiveWidth(100),
     },logo:{
         position:'absolute',
-        width:responsiveWidth(80),
-       top:responsiveHeight(-15),
+        width:responsiveWidth(70),
+       top:responsiveHeight(10),
         resizeMode:'contain',
-    }  ,overlay: {
-        ...StyleSheet.absoluteFillObject,
-        backgroundColor: '#000000',
-        opacity:0.65,
-       
-      },splashText:{
+    } ,splashText:{
         position:'absolute',
-        bottom:responsiveHeight(20),
-        color:Colors.darkGreen,
-        ...myFontStyle.UltraBold,
+        bottom:responsiveHeight(25),
+        color:Colors.White,
+        ...myFontStyle.SplashText,
         
-      },arrowRightBtn:{
-          position:'absolute',
-          backgroundColor:Colors.darkGreen,
-          height:responsiveHeight(10),
-          width:responsiveWidth(20),
-          bottom:responsiveHeight(10),
-          borderRadius:50,
-         alignContent:'center',
-         justifyContent:'center',
-         alignItems:'center',
-         
-      },rightImg:{
-        width:responsiveWidth(10),
-        resizeMode:"contain"
       }
   });
 

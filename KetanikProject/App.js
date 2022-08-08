@@ -7,31 +7,15 @@ import Login from '@screens/Login/Login';
 import Splash from '@screens/Splash/Splash';
 import Verify from '@screens/Login/Verify';
 import ForgetPassword from '@screens/Login/ForgetPassword';
-import SelectedNews from '@screens/SelectedNews/SelectedNews';
-import EpisodesList from '@screens/EpisodesList/EpisodesList';
-import EachSelectedNews from '@screens/SelectedNews/EachSelectedNews';
-import Cart from '@screens/Cart/Cart';
-import Category from '@screens/Category/Category';
-import Share from '@screens/Share/Share';
-import AboutUs from '@screens/AboutUs/AboutUs';
-import EditPassword from '@screens/EditPassword/EditPassword';
+import SignUp from "@screens/Login/SignUp";
 import Home from '@screens/Home/Home';
-import UserProfile from '@screens/UserProfile/UserProfile';
-import EditProfile from '@screens/UserProfile/EditProfile';
-import BookSaved from '@screens/UserProfile/BookSaved';
-import GroupBook from '@screens/GroupBook/GroupBook';
-import Library from '@screens/Library/Library';
+import SignUpSecond from '@screens/Login/SignUpSecond';
 import { Colors } from '@assets/Colors';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
 
 
-import EachBook from '@screens/EachBook/EachBook';
-import Rosters from '@screens/Rosters/Rosters';
-import ListenBook from '@screens/ListenBook/ListenBook';
-import ListenBookMain from '@screens/ListenBook/ListenBookMain';
-import Wallet from '@screens/Wallet/Wallet';
-import Factor from '@screens/Factor/Factor';
+
 import Search from "@screens/Search/Search";
 import { ThemeProvider} from './theme/theme-context';
 import { myFontStyle } from './src/assets/Constance';
@@ -87,15 +71,6 @@ const StackNavigatorsHome = () => {
     }}>
       <Stack.Screen name="Home" component={Home} />
     
-     <Stack.Screen name="EpisodesList" component={EpisodesList} />
-        <Stack.Screen name="Rosters" component={Rosters} />
-        <Stack.Screen name="Cart" component={Cart} />
-        <Stack.Screen name="SelectedNews" component={SelectedNews} />
-        <Stack.Screen name="EachBook" component={EachBook} />
-        <Stack.Screen name="ListenBook" component={ListenBook} />
-        <Stack.Screen name="ListenBookMain" component={ListenBookMain} />
-        <Stack.Screen name="Wallet" component={Wallet} /> 
-        <Stack.Screen name="Factor" component={Factor} /> 
     </Stack.Navigator>
   );
  }
@@ -107,8 +82,7 @@ const StackNavigatorsLibrary = () => {
       headerShown: false
     }}>
      
-        <Stack.Screen name="Library" component={Library} />
-        <Stack.Screen name="EachBook" component={EachBook} />
+      
 
     </Stack.Navigator>
   );
@@ -134,12 +108,7 @@ const StackNavigatorsCat = () => {
     }}>
     
     
-        <Stack.Screen name="Category" component={Category} />
-        <Stack.Screen name="GroupBook" component={GroupBook} /> 
-        <Stack.Screen name="EachBook" component={EachBook} />
-        <Stack.Screen name="SelectedNews" component={SelectedNews} />
-
- 
+      
     </Stack.Navigator>
   );
  }
@@ -150,15 +119,7 @@ const StackNavigatorsProfile = () => {
     <Stack.Navigator screenOptions={{
       headerShown: false
     }}>
-              <Stack.Screen name="UserProfile" component={UserProfile} />
-
-        <Stack.Screen name="EditProfile" component={EditProfile}/>
-        <Stack.Screen name="BookSaved" component={BookSaved}/>
-               <Stack.Screen name="Share" component={Share} />
-        <Stack.Screen name="AboutUs" component={AboutUs} />
-        <Stack.Screen name="EditPassword" component={EditPassword} /> 
-        <Stack.Screen name="Wallet" component={Wallet} /> 
-        <Stack.Screen name="Factor" component={Factor} /> 
+             
     </Stack.Navigator>
   );
  }
@@ -173,9 +134,10 @@ export default function App() {
     }} >
       <Stack.Screen name="Splash" component={Splash} />
         <Stack.Screen name="Login" component={Login} /> 
+        <Stack.Screen name="SignUp" component={SignUp} /> 
         <Stack.Screen name="ForgetPassword" component={ForgetPassword} />
         <Stack.Screen name="Verify" component={Verify} />
-
+        <Stack.Screen name="SignUpSecond" component={SignUpSecond}/>
          <Stack.Screen name="TabBar" component={TabStack} />
   
    

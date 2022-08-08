@@ -1,7 +1,7 @@
 import React, { useState,useEffect } from 'react';
 import { myFontStyle } from "@assets/Constance";
-import { View, Text , StyleSheet,Image, TouchableOpacity,KeyboardAvoidingView} from 'react-native';
-import { TabView, SceneMap,TabBar } from 'react-native-tab-view';
+import { View, Text , StyleSheet,Image, TouchableOpacity,KeyboardAvoidingView,TextInput} from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import { responsiveFontSize, responsiveHeight, responsiveScreenWidth, responsiveWidth } from 'react-native-responsive-dimensions';
 import { Colors} from "@assets/Colors";
 import {Input} from '@components/Input';
@@ -9,329 +9,156 @@ import { apiUrl ,apiAsset} from "@commons/inFormTypes";
 import axios from 'axios';
 import Spinner from '@components/Spinner';
 import AsyncStorage from  '@react-native-async-storage/async-storage';
+import { Button } from 'react-native-paper';
 
 // create a component
 const Login = ({navigation }) => {
-  const [user,setUser]=useState("");
-const [pass,setPass]=useState("");
-const [email,setEmail]=useState("");
-const [name,setName]=useState("");
-const [pass2,setPass2]=useState("");
-const [isLoading,setLoading]=useState(false);
-const [eror,SetEror]=useState(false);
-const [eror2,SetEror2]=useState(false);
-const [erorReg,SetErorReg]=useState(false);
-const [erorReg2,SetErorReg2]=useState(false);
-const [page,setPage]=useState(0);
-const keyboardVerticalOffset = responsiveHeight(1)
-  const  mutLogin=async()=> {
-    setLoading(true);
-if(user=="" || pass==""){
-    // alert("Please fill input")
-    SetEror(true)
-    setLoading(false);
+ 
+  const keyboardVerticalOffset = responsiveHeight(1);
+  const [text, setText] = useState('');
 
-}
-
-else{
-console.log(545)
-console.log(user)
-    // if((user=="user1"&&pass=="pass1")||(user=="user2"&&pass=="pass2")){
-      // console.log(await  AsyncStorage.getItem("userID") )
-    // await  AsyncStorage.setItem("userID",3)
-      setLoading(false);
-            axios.post(apiUrl + 'Login',{Email:user,Password:pass})
-            .then(function (response) {
-              // await AsyncStorage.setItem("@user","true")
-              const message = response.data.message;
-              const result = response.data.result;
-              console.log(result);
-              console.log(message);
-              if(result == "true"){
-               console.log(22);
-               console.log(response.data.Data);
-               console.log(response.data.Data.CustomerID);
-                // storeData(response.data.CustomerID);
-                AsyncStorage.setItem('@user',response.data.Data.CustomerID.toString())
-                AsyncStorage.setItem('@userName',response.data.Data.Username.toString())
-            //     if(response.data.Data[0].Photo)
-            //     {
-
-            //       AsyncStorage.setItem('@userPhoto',response.data.Data[0].Photo?.toString())
-            //     }
-            //     else{
-            //       AsyncStorage.setItem('@userPhoto',"")
-
-            //     }
-                navigation.reset({
-                  index: 0,
-                  routes: [{ name: 'TabBar' }]
-             })
-            // navigation.navigate("TabBar")
-                                }else{
-                 setLoading(false);
-                 SetEror2(true);
-              }
-            })
-            .catch(function (error) {
-              console.log(error);
-            });
-
-    // }
-// else{
-//         setLoading(false);
-//          SetEror2(true)
-
-
-
-// }
-
-
-}
-
-    };
-  const  register=async()=> {
-    setLoading(true);
-if(email=="" || pass2=="" || name==""){
-    // alert("Please fill input")
-    SetErorReg(true)
-    setLoading(false);
-
-}
-
-else{
-console.log(545)
-console.log(user)
-    // if((user=="user1"&&pass=="pass1")||(user=="user2"&&pass=="pass2")){
-      // console.log(await  AsyncStorage.getItem("userID") )
-    // await  AsyncStorage.setItem("userID",3)
-      setLoading(false);
-            axios.post(apiUrl + 'RegisterSMS',{Email:email})
-            .then(function (response) {
-              // await AsyncStorage.setItem("@user","true")
-              const result = response.data.result;
-              console.log(result);
-              if(result == "true"){
-               console.log(22);
-               console.log(response.data.Data);
-               console.log(response.data.Data.code);
-               navigation.navigate("Verify",{email:email,name:name,pass:pass2,code:response.data.Data})
-             
-                                }
-                                else if(result == "duplicate"){
-alert("کاربر با این ایمیل وجود دارد")
-                                }
-                                else{
-                 setLoading(false);
-                 SetErorReg2(true);
-              }
-            })
-            .catch(function (error) {
-              console.log(error);
-            });
-
-    // }
-// else{
-//         setLoading(false);
-//          SetEror2(true)
-
-
-
-// }
-
-
-}
-
-    };
-   const FirstRoute = () => (
-     <View style={{ flex: 1}}>
-        <View style={{flex:1,alignItems:'center'}}>
-        <Input  placeholder="نام کاربری" inputStyle={{marginTop:responsiveHeight(5)}} />
-        <Input  placeholder="yasaman@yahoo.com" inputStyle={{marginTop:responsiveHeight(2)}} />
-        <Input  placeholder="رمز عبور" inputStyle={{marginTop:responsiveHeight(2)}} />
-        <TouchableOpacity style={styles.loginBtn}>
-          <Text style={styles.btnText}>ثبت نام</Text>
-        </TouchableOpacity>
-        </View>
-            
-     </View>
-   );
-   
-   const SecondRoute = () => (
-     <View style={{ flex: 1}}>
-     <View style={{flex:1,alignItems:'center'}}>
-     
-     <Input onChangeText={(ss)=>setUser(ss)}  placeholder="yasaman@yahoo.com" inputStyle={{marginTop:responsiveHeight(5)}}  />
-     <Input onChangeText={(ss)=>setPass(ss)} ErrorText={eror?"لطفا موارد را وارد نمایید":eror2?"نام کاربری یا رمز عبور درست نیست":""}    placeholder="رمز عبور" inputStyle={{marginTop:responsiveHeight(2)}} />
-     <TouchableOpacity onPress={()=>navigation.navigate("ForgetPassword")} style={styles.forgetPassBtn}>
-          <Text style={styles.forgetPassBtnText}>رمز عبور خود را فراموش کرده اید ؟</Text>
-        </TouchableOpacity>
-     <TouchableOpacity onPress={()=>mutLogin()} style={styles.loginBtn}>
-          <Text style={styles.btnText}>ورود</Text>
-        </TouchableOpacity>
-     </View>
-         
-   </View>
-   );
-   
-   const renderScene = SceneMap({
-     signup: FirstRoute,
-     login: SecondRoute,
-   });
-
-  const [index, setIndex] = React.useState(0);
-  const [routes] = React.useState([
-    { key: 'signup', title: 'ثبت نام' },
-    { key: 'login', title: 'ورود'},
-  ]);
-  const renderTabBar = props => (
-    <TabBar
-      {...props}
-      indicatorStyle={styles.indicatorStyle}
-      style={styles.tabBar}
-      getLabelText={({route}) => route.title}
-      renderLabel={({route, focused, color}) =>
-        focused ? (
-          <Text style={styles.tabBarText}>{route.title}</Text>
-        ) : (
-          <Text style={styles.tabBarText2}>{route.title}</Text>
-        )
-      }
-    />
-  );
-return (
-    <View style={{ flex: 1,padding:0,alignItems:'center'}}>
-                  <KeyboardAvoidingView behavior='position' keyboardVerticalOffset={keyboardVerticalOffset}>
-
-      <Image source={require('@assets/images/login.png')} style={styles.loginImg} />
-      <View style={styles.tabViewBox}>
-      {/* <TabView
-      renderTabBar={renderTabBar}
-      navigationState={{ index, routes }}
-      renderScene={renderScene}
-      onIndexChange={setIndex}
-      initialLayout={{ width:responsiveWidth(90) }}
-    /> */}
-    <View style={styles.viwTab}>
-      <TouchableOpacity onPress={()=>setPage(1)} style={page==1?styles.tab:styles.tabINActive}>
-        <Text style={styles.tabBarText}>
-          ثبت نام
-        </Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={()=>setPage(0)} style={page==0?styles.tab:styles.tabINActive}>
-        <Text style={styles.tabBarText}>
-          ورود
-        </Text>
-      </TouchableOpacity>
-          </View>
-{
-  page==0?
-          <View style={{ flex: 1}}>
-
-     <View style={{flex:1,alignItems:'center'}}>
-     
-     <Input onChangeText={(ss)=>setUser(ss)}  placeholder="ٍEmail" inputStyle={{marginTop:responsiveHeight(5)}}  />
-     <Input onChangeText={(ss)=>setPass(ss)} placeholder="Password" ErrorText={eror?"لطفا موارد را وارد نمایید":eror2?"نام کاربری یا رمز عبور درست نیست":""}    inputStyle={{marginTop:responsiveHeight(2)}} />
-     <TouchableOpacity onPress={()=>navigation.navigate("ForgetPassword")} style={styles.forgetPassBtn}>
-          <Text style={styles.forgetPassBtnText}>رمز عبور خود را فراموش کرده اید ؟</Text>
-        </TouchableOpacity>
-     <TouchableOpacity onPress={()=>mutLogin()} style={styles.loginBtn}>
-          
-          {isLoading == true ?
-          <Spinner size={50} color={"#fff"} />
-        :<Text style={styles.btnText}>ورود</Text>}
-        </TouchableOpacity>
-     </View>
-   </View>
-  :
-  <View style={{ flex: 1}}>
-
-  <View style={{flex:1,alignItems:'center'}}>
-  <Input onChangeText={(ss)=>setName(ss)}  placeholder="Name" inputStyle={{marginTop:responsiveHeight(5)}} />
-  <Input onChangeText={(ss)=>setEmail(ss)} placeholder="ٍEmail" inputStyle={{marginTop:responsiveHeight(2)}} />
-  <Input onChangeText={(ss)=>setPass2(ss)} placeholder="Password" ErrorText={erorReg?"لطفا موارد را وارد نمایید":erorReg2?"نام کاربری یا رمز عبور درست نیست":""}   inputStyle={{marginTop:responsiveHeight(2)}} />
-  {isLoading == true ?
-          <Spinner size={50} color={"#fff"} />
-        :   
-        <TouchableOpacity onPress={()=>register()} style={styles.loginBtn}>
-    <Text style={styles.btnText}>ثبت نام</Text>
-  </TouchableOpacity>
-      }
-  </View>
-</View>
-}
-
+  const [passwordVisible, setPasswordVisible] = useState(true);
+  return (
+  <View style={{backgroundColor:'#f4f4f4',height:'100%',width:'100%'}}>
+    
+<KeyboardAvoidingView behavior='position' keyboardVerticalOffset={keyboardVerticalOffset}>
+    <Image source={require('@assets/images/LogoGreen.png')} style={styles.loginLogo} />
+    <View style={styles.greenBack}>
+    <Image source={require('@assets/images/LoginBack.png')} style={styles.loginBack} />
+    <View style={{position:'absolute',height:'100%',top:responsiveHeight(10),width:'100%'}}>
+      <Text style={styles.loginTitle}>
+        ورود
+      </Text>
+      <View style={{position:'absolute',top:responsiveHeight(10),display:'flex',alignContent:'center',alignSelf:'center'}}>
+      <View style={styles.inputIcon}>
+      <Icon name={"phone-iphone"} color={'#CECECE'} size={30}/>
+      <TextInput style={styles.textInputIcon}  placeholder="شماره تلفن همراه"/>
       </View>
-      </KeyboardAvoidingView>
-
-  
+      <View style={styles.inputIcon2}>
+      <Icon name={"lock"} color={'#CECECE'} size={30} />
+      <TextInput style={styles.textInputIcon} secureTextEntry={passwordVisible} placeholder="رمز عبور"/>
+      <Icon style={styles.eyeIcon} name={passwordVisible ? "remove-red-eye": "remove-red-eye"} color={'#CECECE'} size={30} onPress={() => setPasswordVisible(!passwordVisible)}/>
+      </View>
+      <TouchableOpacity style={styles.yellowBtn}>
+        <Text style={styles.yellowBtnTxt}>ورود</Text>
+      </TouchableOpacity>
+      <View style={{display:'flex',flexDirection:'row-reverse',textAlign:'center',justifyContent:'center',alignContent:'center',marginTop:responsiveHeight(2)}}>
+      <Text style={styles.registerText}>
+        حساب کاربری ندارید ؟
+        </Text>
+        <TouchableOpacity onPress={()=>  navigation.navigate("SignUp")}>
+          <Text style={styles.registerText2}>
+            ثبت نام کنید
+          </Text>
+        </TouchableOpacity>
+      </View>
+      </View>
+    </View>
+    </View>
+    </KeyboardAvoidingView>
   </View>
 );
-};
+
+    };
+
+ 
+   
+
+
+
+
 
 const styles = StyleSheet.create({
-loginImg:{
-  width:responsiveWidth(100),
-  resizeMode:'contain',
-  marginTop:responsiveHeight(-10)
-},
-tabBar:{
-  backgroundColor:"transparent",
-  elevation: 0,
-  paddingBottom:responsiveHeight(2),
-  borderBottomColor:Colors.borderColor,
-  borderBottomWidth:2
-},
-tabBarText:{
-  color: Colors.darkGreen,
-  ...myFontStyle.normalBold
-},
-tabBarText2:{
-  color: "#000",
-  ...myFontStyle.normalBold
-},
-indicatorStyle:{
-  backgroundColor: Colors.darkGreen,
-    marginBottom: responsiveHeight(-0.3),
-    marginLeft: responsiveWidth(0),
+  loginLogo:{
+    width:responsiveWidth(50),
+    resizeMode:'contain',
+    marginLeft:'auto',
+    marginRight:'auto',
+    marginTop:responsiveHeight(-10)
+  },
+  greenBack:{
+   
+    width:'100%',
+    height:responsiveHeight(70),
+    marginTop:responsiveHeight(-15),
     
-    height:responsiveHeight(0.5),
-    borderRadius:5
-},tabViewBox:{
-  flex:1,
-  // width:responsiveWidth(100),
-  marginTop:responsiveHeight(-4),
-},loginBtn:{
-  backgroundColor:Colors.darkGreen,
-  width:responsiveWidth(75),
-  marginTop:responsiveHeight(2),
-  height:responsiveHeight(8),
-  alignContent:'center',
-  alignItems:'center',
-  // paddingTop:responsiveHeight(2),
-  borderRadius:15,
-  justifyContent:'center'
-},btnText:{
-  ...myFontStyle.textOnImg,
-  
-  color:'#fff',
-},forgetPassBtn:{
-  textAlign:'left',
-  
-  alignSelf:'flex-start',
-  paddingLeft:responsiveWidth(14),
-  marginTop:responsiveHeight(2),
-  marginBottom:responsiveHeight(2),
-},forgetPassBtnText:{
-  color:'#3495fe',
-  ...myFontStyle.normalBold,
+   
+  }
+  ,loginBack:{
+    height:'100%',
+    width:'100%',
+    resizeMode:'contain'
+  },loginTitle:{
+    color:Colors.White,
+    ...myFontStyle.SplashText,
+    textAlign:'center',
+    flex:1,
+    justifyContent:'center'
+  },
+  inputIcon:{
+    alignItems:'center',
+    display:'flex',
+    flexDirection:'row-reverse',
+    backgroundColor:'#ffffff',
+    borderRadius:5,
+    width:responsiveWidth(80),
+    marginRight:'auto',
+    marginLeft:'auto',
+    height:responsiveHeight(6),
+    paddingLeft:responsiveWidth(2),
+  },
+  inputIcon2:{
+    alignItems:'center',
+    display:'flex',
+    flexDirection:'row-reverse',
+    backgroundColor:'#ffffff',
+    borderRadius:5,
+    width:responsiveWidth(80),
+    marginRight:'auto',
+    marginLeft:'auto',
+    height:responsiveHeight(6),
+    paddingLeft:responsiveWidth(2),
+    marginTop:responsiveHeight(3),
+    
+  },eyeIcon:{
+    right:responsiveScreenWidth(2),
+    position:'absolute',
+  },textInputIcon:{
+    textAlign:'right',
+    ...myFontStyle.largUltraLight
+  },yellowBtn:{
+    backgroundColor:Colors.Yellow,
+    height:responsiveHeight(6),
+    display:'flex',
+    alignContent:'center',
+    justifyContent:'center',alignItems:'center',
+    borderRadius:5,
+    marginTop:responsiveHeight(5),
+    shadowColor: "#ffd200",
+shadowOffset: {
+	width: 0,
+	height: 2,
 },
-viwTab:{flexDirection:'row',alignItems:'center',justifyContent:"center"},
-tab:{borderBottomWidth:1,width:responsiveWidth(40),alignItems:'center',
-justifyContent:"center",paddingBottom:responsiveHeight(3)}
- ,
-  tabINActive:{borderBottomWidth:1,width:responsiveWidth(40),alignItems:'center',
-justifyContent:"center",paddingBottom:responsiveHeight(3),borderBottomColor:"#f1f1f1"}
+shadowOpacity: 0.5,
+shadowRadius: 3.84,
+
+elevation: 5,
+  },yellowBtnTxt:{
+    color:'#ffffff',
+  
+    ...myFontStyle.btnBold,
+  },registerText:{
+    color:Colors.White,
+    ...myFontStyle.registerText,
+  },registerText2:{
+    color:Colors.White,
+    ...myFontStyle.registerText,
+    marginRight:responsiveWidth(2),
+    borderBottomColor:'#fff',
+    borderBottomWidth:1,
+    borderStyle:"dashed",
+  }
+
   }
   );
 
