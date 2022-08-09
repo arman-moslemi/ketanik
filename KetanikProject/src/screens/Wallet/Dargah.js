@@ -1,5 +1,5 @@
-import React, {useState,useRef,useContext} from 'react';
-import {View, TextInput, Text, TouchableOpacity,Image,ScrollView} from 'react-native';
+import React, {useState,useEffect,useContext} from 'react';
+import {View, Text, TouchableOpacity,Image,ScrollView} from 'react-native';
 
 
 import { StyleSheet  } from 'react-native';
@@ -12,7 +12,8 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import { myFontStyle } from "@assets/Constance";
 import { RadioButton } from 'react-native-paper';
 import { ThemeContext } from '../../../theme/theme-context';
-
+import AsyncStorage from  '@react-native-async-storage/async-storage';
+import { apiUrl ,apiAsset} from "@commons/inFormTypes";
 // create a component
 
 
@@ -31,7 +32,15 @@ import { ThemeContext } from '../../../theme/theme-context';
  const Dargah = ({navigation,route }) => {
   const {  theme } = useContext(ThemeContext);
   const {id} = route?.params ?? {};
-  const [checked, setChecked] = React.useState('first');
+  const [customerID, setCustomerID] = useState();
+  useEffect(() => {
+  
+    dargah()
+}, []);
+const  dargah=async()=> {
+  const state = await AsyncStorage.getItem("@user");
+  setCustomerID(state)
+}
 return (
     <View style={{backgroundColor:theme.backgroundColor,flex:1}}>
 
@@ -57,7 +66,10 @@ return (
  {/* <View style={styles(theme).container}> */}
  <WebView
         source={{
-          uri: 'https://test-www.payson.se/embedded/checkout?id='+id
+          // uri: 'https://test-www.payson.se/embedded/checkout?id='+id
+          uri:
+    apiUrl+'DargahMain/'+customerID+"T"+id+'' ,method:'GET'
+
         //   uri: 'http://www.google.com'
         }}
         style={{ marginTop: responsiveHeight(5),height:responsiveHeight(75) }}

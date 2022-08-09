@@ -67,7 +67,7 @@ return (
         color={Colors.darkGreen}
       />
   <Text style={styles(theme).radionText}>
-     10 یورو
+     10 sek
   </Text>
       </View>
   </View>
@@ -80,7 +80,7 @@ return (
         color={Colors.darkGreen}
       />
   <Text style={styles(theme).radionText}>
-     20 یورو
+     20 sek
   </Text>
       </View>
   </View>
@@ -93,7 +93,7 @@ return (
         color={Colors.darkGreen}
       />
   <Text style={styles(theme).radionText}>
-    50 یورو
+    50 sek
   </Text>
       </View>
   </View>
@@ -106,7 +106,7 @@ return (
         color={Colors.darkGreen}
       />
   <Text style={styles(theme).radionText}>
-     100 یورو
+     100 sek
   </Text>
       </View>
   </View>
@@ -119,7 +119,7 @@ return (
         color={Colors.darkGreen}
       />
   <Text style={styles(theme).radionText}>
-     200 یورو
+     200 sek
   </Text>
       </View>
   </View>

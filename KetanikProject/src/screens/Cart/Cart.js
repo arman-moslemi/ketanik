@@ -220,7 +220,7 @@ index+1>item.item.Rate?
        </TouchableOpacity>
             <View>
                 <Text style={styles(theme).price}>
-                    {item.item.Cost} یورو
+                    {item.item.Cost} sek
                 </Text>
             </View>
         </View>

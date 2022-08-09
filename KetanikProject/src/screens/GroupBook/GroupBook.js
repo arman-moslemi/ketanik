@@ -91,7 +91,7 @@ export const truncate = (str, len) => {
                 </View>
                 <View>
                     <Text style={styles.price}>
-                        {item.item.Cost} یورو
+                        {item.item.Cost} sek
                     </Text>
                 </View>
             </View>

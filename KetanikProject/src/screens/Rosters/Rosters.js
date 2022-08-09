@@ -111,7 +111,7 @@ return (
                 </View>
                 <View>
                     <Text style={styles.price}>
-                        {data[0]?.Cost} {getTranslation('یورو')}
+                        {data[0]?.Cost} {getTranslation('sek')}
                     </Text>
                 </View>
             </View>
@@ -142,7 +142,7 @@ return (
         </View>
         <View>
             <Text style={styles.price}>
-                25.000 یورو
+                25.000 sek
             </Text>
         </View>
     </View>

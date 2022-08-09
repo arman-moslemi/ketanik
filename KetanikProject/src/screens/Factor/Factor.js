@@ -112,7 +112,7 @@ return (
       </View>
       <View style={{width:responsiveWidth(20),padding:5,borderLeftColor:'#d3d3d3',borderLeftWidth:0.5}}>
         <Text style={styles(theme).tableContentGreen}>
-         {item.Cost} {getTranslation('یورو')}
+         {item.Cost} {getTranslation('sek')}
         </Text>
       </View>
       <View style={{width:responsiveWidth(25),padding:5,borderLeftColor:'#d3d3d3',borderLeftWidth:0.5}}>

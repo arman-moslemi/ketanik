@@ -80,7 +80,7 @@ return (
         </View>
         <View>
             <Text style={styles(theme).price}>
-                25.000 یورو
+                25.000 sek
             </Text>
         </View>
     </View>
