@@ -125,7 +125,8 @@ const styles = StyleSheet.create({
     position:'absolute',
   },textInputIcon:{
     textAlign:'right',
-    ...myFontStyle.largUltraLight
+   ...myFontStyle.mediumRegular,
+   width:"100%",
   },yellowBtn:{
     backgroundColor:Colors.Yellow,
     height:responsiveHeight(6),

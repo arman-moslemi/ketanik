@@ -10,6 +10,7 @@ import ForgetPassword from '@screens/Login/ForgetPassword';
 import SignUp from "@screens/Login/SignUp";
 import Home from '@screens/Home/Home';
 import SignUpSecond from '@screens/Login/SignUpSecond';
+import Store from "@screens/Store/Store";
 import { Colors } from '@assets/Colors';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
@@ -146,6 +147,7 @@ export default function App() {
         <Stack.Screen name="ForgetPassword" component={ForgetPassword} />
         <Stack.Screen name="Verify" component={Verify} />
         <Stack.Screen name="SignUpSecond" component={SignUpSecond}/>
+        <Stack.Screen name="Store" component={Store}/>
          <Stack.Screen name="TabBar" component={TabStack} />
   
    

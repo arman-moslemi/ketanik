@@ -18,7 +18,7 @@ import { myFontStyle } from "@assets/Constance";
   return (
     <View style={styles.container}>
       <View style={{display:'flex',flexDirection:'row-reverse',justifyContent:'space-between'}}>
-        <TouchableOpacity style={styles.seeProducts}>
+        <TouchableOpacity style={styles.seeProducts} onPress={()=>  navigation.navigate("Store")}>
         <View style={{display:'flex',flexDirection:'column',alignContent:'center',alignItems:'center'}}>
         <Image source={require('@assets/images/store.png')} style={styles.btnImg} />
         <Text style={styles.btnText}>مشاهده محصولات</Text>
