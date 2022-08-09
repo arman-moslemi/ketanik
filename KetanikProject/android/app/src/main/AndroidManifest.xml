@@ -11,6 +11,8 @@
       android:allowBackup="false"
       android:theme="@style/AppTheme"
       android:forceDarkAllowed="false"
+      android:usesCleartextTraffic="true"
+
       >
       <activity
         android:name=".MainActivity"

@@ -201,7 +201,9 @@ const keyExtractor = item => {
 };
 
 
-const SecondRoute = ({show,setShow,data,setRole,roleName,setRoleName,navigation,theme}) => {
+const SecondRoute = ({show,setShow,data,setRole,roleName,setRoleName,navigation}) => {
+  const {  theme } = useContext(ThemeContext);
+
   const _render = ({item}) => {
     console.log(item.BookName)
   
@@ -343,6 +345,7 @@ return(
     .then(function (response) {
       const message = response.data;
       const result = response.data.result;
+      console.log(147852);
       console.log(message);
 
       if(result == "true"){
@@ -420,7 +423,8 @@ return(
       .catch(function (error) {
         console.log(error);
       });
-  
+      const books = await AsyncStorage.getItem("@bookid");
+
   
 
       axios.post(apiUrl+'SubBookShow',{BookID:books,CustomerID:state})
@@ -571,11 +575,11 @@ tabBar:{
   borderBottomWidth:2
 },
 tabBarText:{
-  color: theme.lightGreen,
+  color: theme.textTitle,
   ...myFontStyle.mediumBold
 },
 tabBarText2:{
-  color: theme.lightGreen,
+  color: theme.textTitle,
   ...myFontStyle.mediumRegular
 },
 indicatorStyle:{
@@ -640,7 +644,7 @@ libraryBox:{
   // alignItems:'center',
   marginTop:responsiveHeight(5),
 },pageTitleText:{
-  color:theme.lightGreen,
+  color:theme.textTitle,
   ...myFontStyle.largeRegular,
   marginRight:responsiveWidth(2)
 },littleBtn:{
@@ -691,7 +695,7 @@ libraryBox:{
   width:'100%',
 },greenBoxText:{
   ...myFontStyle.normalRegular,
-  color:'#111',
+  color:'#000',
 },lightGreenBack:{
   backgroundColor:'#E5EBDF',
   borderRadius:15,
@@ -721,13 +725,13 @@ libraryBox:{
     resizeMode:'contain' 
 },largeText:{
   ...myFontStyle.textOnImg,
-  color:'#111',
+  color:theme.textTitle,
 },miniText:{
   ...myFontStyle.mediumRegular,
   color:'#111'
 },
 moreText:{
-  color:theme.lightGreen,
+  color:Colors.darkGreen,
   ...myFontStyle.normalRegular,
 },
   });

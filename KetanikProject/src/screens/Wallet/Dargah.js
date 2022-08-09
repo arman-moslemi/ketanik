@@ -41,6 +41,12 @@ const  dargah=async()=> {
   const state = await AsyncStorage.getItem("@user");
   setCustomerID(state)
 }
+const backs=()=> {
+  navigation.reset({
+    index: 0,
+    routes: [{ name: 'TabBar' }]
+})
+}
 return (
     <View style={{backgroundColor:theme.backgroundColor,flex:1}}>
 
@@ -62,7 +68,7 @@ return (
           </View>
 
     </View>
-    <ScrollView>
+    <ScrollView >
  {/* <View style={styles(theme).container}> */}
  <WebView
         source={{
@@ -75,7 +81,15 @@ return (
         style={{ marginTop: responsiveHeight(5),height:responsiveHeight(75) }}
       />
     {/* </View> */}
-    </ScrollView>
+    <TouchableOpacity
+     onPress={()=>
+ backs()
+} 
+ style={styles(theme).payBtn}>
+
+       <Text style={styles(theme).btnText}>بازگشت</Text>
+     </TouchableOpacity>   
+      </ScrollView>
     </View>
 );
 };
@@ -162,13 +176,14 @@ radionText: {
 },payBtn:{
   backgroundColor:Colors.darkGreen,
   width:responsiveWidth(38),
-  marginTop:responsiveHeight(5),
+  marginTop:responsiveHeight(1),
+  marginBottom:responsiveHeight(1),
   height:responsiveHeight(6),
   alignContent:'center',
   alignItems:'center',
 display:'flex',
 alignContent:'center',
-alignItems:'center',
+alignSelf:'center',
 justifyContent:'center',
   borderRadius:10,
 

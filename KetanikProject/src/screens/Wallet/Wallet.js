@@ -1,4 +1,4 @@
-import React, {useState,useRef,useContext} from 'react';
+import React, {useState,useEffect,useContext} from 'react';
 import {View, TextInput, Text, TouchableOpacity,Image,ScrollView} from 'react-native';
 
 
@@ -11,6 +11,9 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import { myFontStyle } from "@assets/Constance";
 import { RadioButton } from 'react-native-paper';
 import { ThemeContext } from '../../../theme/theme-context';
+import AsyncStorage from  '@react-native-async-storage/async-storage';
+import axios from 'axios';
+import { apiUrl ,apiAsset} from "@commons/inFormTypes";
 
 // create a component
 
@@ -29,8 +32,66 @@ import { ThemeContext } from '../../../theme/theme-context';
 
  const Wallet = ({navigation }) => {
   const {  theme } = useContext(ThemeContext);
-   
+  const [cost,setCost]=useState(0);
+  const [defcost,setDefCost]=useState(0);
+
   const [checked, setChecked] = React.useState('first');
+  useEffect(() => {
+  
+    mutLogin();
+
+
+}, []);
+const  mutLogin=async()=> {
+  const state = await AsyncStorage.getItem("@user");
+
+  
+  axios.post(apiUrl+'FactorWallet',{CustomerID:state})
+  .then(function (response) {
+    const message = response.data;
+    const result = response.data.result;
+    console.log(message);
+  
+    if(result == "true"){
+        
+  
+  setDefCost(response.data.CostData?.Money)
+      // navigation.navigate("ChangePass",{mobile:user,verify:response.data.Data})
+                      }else{
+    }
+  })
+  .catch(function (error) {
+    console.log(error);
+  })
+ 
+    
+        };
+  const  dargah=async()=> {
+    const state = await AsyncStorage.getItem("@user");
+
+    console.log(state);
+    console.log(cost);
+
+    axios.post(apiUrl+'Dargah',{CostTotal:cost,CustomerID:state,Type:2})
+    .then(function (response) {
+      const message = response.data;
+      const result = response.data.result;
+    
+      if(result == "true"){
+        console.log(response.data.Data)
+        let userObj = JSON.parse(response.data.Data);
+        console.log(userObj.id)
+        navigation.navigate("Dargah",{id:userObj.id})        
+                        }else{
+    alert(response.data.message)
+      }
+    })
+    .catch(function (error) {
+      console.log(error);
+    })
+   
+      
+          };
 return (
     <View style={{backgroundColor:theme.backgroundColor,flex:1}}>
 
@@ -56,14 +117,14 @@ return (
  <View style={styles(theme).container}>
   <View style={styles(theme).aboutView}>
     <Text style={styles(theme).aboutTitle}>
-     مبلغ فعلی کیف پول : 0
+     مبلغ فعلی کیف پول : {defcost}
     </Text>
     <View style={styles(theme).radioRow}>
   <View style={styles(theme).radioView}>
   <RadioButton
         value="first"
         status={ checked === 'first' ? 'checked' : 'unchecked' }
-        onPress={() => setChecked('first')}
+        onPress={() => {setChecked('first');setCost(10)}}
         color={Colors.darkGreen}
       />
   <Text style={styles(theme).radionText}>
@@ -76,7 +137,7 @@ return (
   <RadioButton
         value="second"
         status={ checked === 'second' ? 'checked' : 'unchecked' }
-        onPress={() => setChecked('second')}
+        onPress={() => {setChecked('second');setCost(20)}}
         color={Colors.darkGreen}
       />
   <Text style={styles(theme).radionText}>
@@ -89,7 +150,7 @@ return (
   <RadioButton
         value="third"
         status={ checked === 'third' ? 'checked' : 'unchecked' }
-        onPress={() => setChecked('third')}
+        onPress={() => {setChecked('third');setCost(50)}}
         color={Colors.darkGreen}
       />
   <Text style={styles(theme).radionText}>
@@ -102,7 +163,7 @@ return (
   <RadioButton
         value="four"
         status={ checked === 'four' ? 'checked' : 'unchecked' }
-        onPress={() => setChecked('four')}
+        onPress={() => {setChecked('four');setCost(100)}}
         color={Colors.darkGreen}
       />
   <Text style={styles(theme).radionText}>
@@ -125,7 +186,7 @@ return (
   </View>
   <View style={{display:'flex',flexDirection:'row-reverse',marginTop:responsiveHeight(5),justifyContent:'space-between'}}>
    
-    <TouchableOpacity style={styles(theme).payBtn}>
+    <TouchableOpacity onPress={()=>dargah()} style={styles(theme).payBtn}>
        <Text style={styles(theme).btnText}>پرداخت</Text>
      </TouchableOpacity>
     

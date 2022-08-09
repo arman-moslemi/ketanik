@@ -30,7 +30,7 @@ const themes = {
         cardBack:'#ffffff',
         iconWhite:'#111',
         topRowBack:'#fff',
-        textTitle:'#111',
+        textTitle:'#111111',
         // backgroundColor:"#fcfcfc",
         // backgroundColor:"#f0fff0",
         backgroundColor:"#f0fff0",

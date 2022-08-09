@@ -15,6 +15,7 @@ import { apiUrl ,apiAsset} from "@commons/inFormTypes";
 // create a component
 import { ThemeContext } from '../../../theme/theme-context';
 import { getTranslation } from '@i18n/i18n';
+import CheckBox from '@react-native-community/checkbox';
 
 
 export const truncate = (str, len) => {
@@ -31,6 +32,7 @@ export const truncate = (str, len) => {
 
  const Cart = ({navigation }) => {
   const {  theme } = useContext(ThemeContext);
+  const [toggleCheckBox, setToggleCheckBox] = useState(false)
 
     const [data,setData]=useState([]);
     const [cost,setCost]=useState(0);
@@ -161,18 +163,26 @@ mutLogin()
     console.log(cost);
     console.log(discountID);
 
-    axios.post(apiUrl+'Dargah',{CostTotal:cost,CustomerID:state})
+    axios.post(apiUrl+'Dargah',{CostTotal:cost,CustomerID:state,Type:toggleCheckBox?3:1})
     .then(function (response) {
       const message = response.data;
       const result = response.data.result;
     
       if(result == "true"){
         console.log(response.data.Data)
-        let userObj = JSON.parse(response.data.Data);
-        console.log(userObj.id)
-        navigation.navigate("Dargah",{id:userObj.id})        
+        if(response.data.Data){
+
+          let userObj = JSON.parse(response.data.Data);
+          console.log(userObj.id)
+          navigation.navigate("Dargah",{id:userObj.id})        
+        }else{
+          alert("با موفقیت اضافه شد")
+
+        }
                         }else{
-    alert(response.data.message)
+    alert("کیف پول شما موجودی لازم را ندارد")
+    console.log(response.data);
+
       }
     })
     .catch(function (error) {
@@ -277,10 +287,25 @@ renderItem={_render}
         <TextInput onChangeText={(ee)=>setDis(ee)} placeholder="" style={styles(theme).discountInput} />
     </View>
     <View>
+    
     <TouchableOpacity onPress={()=>dis()} disabled={discountDisable} style={styles(theme).loginBtn}>
        <Text style={styles(theme).btnText}>{getTranslation('ثبت')}</Text>
      </TouchableOpacity>
     </View>
+</View>
+    <View style={styles(theme).takhfifRow}>
+    <View>
+        <Text style={styles(theme).discountText}>
+        {getTranslation('پرداخت از کیف پول:')}
+        </Text>
+    </View>
+    <View>
+    <CheckBox
+    disabled={false}
+    value={toggleCheckBox}
+    onValueChange={(newValue) => setToggleCheckBox(newValue)}
+  />   
+   </View>
 </View>
 {/* <TouchableOpacity onPress={()=>{buy()}} style={styles(theme).purchaseBtn}> */}
 <TouchableOpacity onPress={()=>{dargah()}} style={styles(theme).purchaseBtn}>
