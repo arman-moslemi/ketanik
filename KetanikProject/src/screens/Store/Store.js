@@ -36,7 +36,14 @@ import { myFontStyle } from "@assets/Constance";
         </TouchableOpacity>
       </View>
       </View>
-     
+     <View style={{display:'flex',flexDirection:'row'}}>
+      <View style={{width:'46%',marginRight:'1%',marginLeft:'1%'}}>
+        <ProductCard/>
+      </View>
+      <View style={{width:'46%',marginRight:'1%',marginLeft:'1%'}}>
+        <ProductCard/>
+      </View>
+     </View>
     </ScrollView>
     </View>
   );

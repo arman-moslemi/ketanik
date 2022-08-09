@@ -9,14 +9,31 @@ import { responsiveFontSize, responsiveHeight, responsiveWidth } from "react-nat
 
 export const ProductCard = props => {
   return (
- <View>
+ <View style={styles.productCard}>
 
  </View>
 
   );
 };
 
-const style = StyleSheet.create({
- 
+const styles = StyleSheet.create({
+ productCard:{
+
+
+marginTop:responsiveHeight(1),
+marginBottom:responsiveHeight(1),
+  height:160,
+  backgroundColor:'#ffffff',
+  borderRadius:5,
+  shadowColor:'#000',
+  shadowOffset: {
+    width: 0,
+    height: 2,
+  },
+  // shadowOpacity: 0.5,
+  shadowRadius: 2,
+  
+  elevation: 10,
+ }
 });
 
