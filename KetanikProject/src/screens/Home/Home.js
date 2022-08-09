@@ -68,6 +68,15 @@ import { myFontStyle } from "@assets/Constance";
       alignContent:'center',
       alignItems:'center',
       flexDirection:'column',
+      shadowColor:'#000',
+      shadowOffset: {
+        width: 0,
+        height: 2,
+      },
+      // shadowOpacity: 0.5,
+      shadowRadius: 2,
+      
+      elevation: 10,
     },iotProducts:{
       backgroundColor:'#4BA064',
       height:170,
@@ -77,6 +86,15 @@ import { myFontStyle } from "@assets/Constance";
       justifyContent:'center',
       alignContent:'center',
       alignItems:'center',
+      shadowColor:'#000',
+      shadowOffset: {
+        width: 0,
+        height: 2,
+      },
+      // shadowOpacity: 0.5,
+      shadowRadius: 2,
+      
+      elevation: 10,
     },btnImg:{
       width:70,
       resizeMode:"contain",
@@ -91,6 +109,15 @@ import { myFontStyle } from "@assets/Constance";
       alignContent:'center',
       alignItems:'center',
       flexDirection:'column',
+      shadowColor:'#000',
+      shadowOffset: {
+        width: 0,
+        height: 2,
+      },
+      // shadowOpacity: 0.5,
+      shadowRadius: 2,
+      
+      elevation: 10,
     },news
       :{
         backgroundColor:'#FF6900',
@@ -102,6 +129,15 @@ import { myFontStyle } from "@assets/Constance";
         alignContent:'center',
         alignItems:'center',
         flexDirection:'column',
+        shadowColor:'#000',
+      shadowOffset: {
+        width: 0,
+        height: 2,
+      },
+      // shadowOpacity: 0.5,
+      shadowRadius: 2,
+      
+      elevation: 10,
       },btnText:{
         ...myFontStyle.registerText,
         color:'#ffffff',
