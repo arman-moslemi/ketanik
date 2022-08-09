@@ -13,6 +13,7 @@ import SignUpSecond from '@screens/Login/SignUpSecond';
 import { Colors } from '@assets/Colors';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 
 
 
@@ -22,6 +23,7 @@ import { myFontStyle } from './src/assets/Constance';
 
 const Stack = createNativeStackNavigator();
 const Tab = createMaterialBottomTabNavigator();
+const Drawer = createDrawerNavigator();
 
 const TabStack= () => {
 
