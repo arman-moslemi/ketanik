@@ -21,13 +21,13 @@ import AsyncStorage from  '@react-native-async-storage/async-storage';
     console.log(state)
     navigation.reset({
       index: 0,
-      routes: [{ name: 'TabBar' }]
+      routes: [{ name: 'Login' }]
  })    }
     else{
 
       navigation.reset({
         index: 0,
-        routes: [{ name: 'TabBar' }]
+        routes: [{ name: 'Login' }]
    })
 
     }
