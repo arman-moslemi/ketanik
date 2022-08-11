@@ -67,7 +67,7 @@ navigation.navigate("TabBar", { CustomerID:response.data.Data[0].CustomerID});
     <Image source={require('@assets/images/LogoGreen.png')} style={styles.loginLogo} />
     <View style={styles.greenBack}>
     <Image source={require('@assets/images/LoginBack.png')} style={styles.loginBack} />
-    <View style={{position:'absolute',height:'100%',top:responsiveHeight(10),width:'100%'}}>
+    <View style={{position:'absolute',height:'100%',top:responsiveHeight(13),width:'100%'}}>
       <Text style={styles.loginTitle}>
         ورود
       </Text>
@@ -93,7 +93,15 @@ navigation.navigate("TabBar", { CustomerID:response.data.Data[0].CustomerID});
             ثبت نام کنید
           </Text>
         </TouchableOpacity>
+      
       </View>
+      <View style={{display:'flex',flexDirection:'row-reverse',textAlign:'left',marginTop:responsiveHeight(2)}}>
+      <TouchableOpacity onPress={()=>  navigation.navigate("ForgetPassword")}>
+
+        <Text style={styles.registerText2}>
+فراموشی رمز          </Text>
+</TouchableOpacity>
+</View>
       </View>
     </View>
     </View>
@@ -127,7 +135,7 @@ const styles = StyleSheet.create({
    
   }
   ,loginBack:{
-    height:'100%',
+    height:responsiveHeight(80),
     width:'100%',
     resizeMode:'contain'
   },loginTitle:{
@@ -199,6 +207,7 @@ elevation: 5,
     borderBottomColor:'#fff',
     borderBottomWidth:1,
     borderStyle:"dashed",
+    width:responsiveWidth(30)
   }
 
   }

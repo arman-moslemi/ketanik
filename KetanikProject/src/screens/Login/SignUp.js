@@ -16,8 +16,52 @@ const SignUp = ({navigation }) => {
  
   const keyboardVerticalOffset = responsiveHeight(1);
   const [text, setText] = useState('');
+  const [mobile,setMobile]=useState()
 
   const [passwordVisible, setPasswordVisible] = useState(true);
+  const login=()=>{
+    const axios = require("axios");
+    if(!mobile)
+    {
+        
+        alert("موبایل را وارد نمائید")
+        
+    }
+    else{
+
+    axios.post(apiUrl + "Register",{Mobile:mobile})
+    .then(function (response) {
+      console.log(response.data)
+      if (response.data.result == "True") {
+        console.log(777)
+        console.log(response.data.Data)
+        // auth.login(response.data.Data.CustomerID);
+        console.log(88)
+        navigation.navigate("Verify",{
+    Mobile:mobile,
+    VerifyCode:response.data.Data
+});
+
+        // console.log("auth", auth.isLoggedIn);
+        // localStorage.setItem("guest","");
+        // history.push("/EditInformation/"+response.data.Data.CustomerID)
+
+    }
+    else{
+      alert("موبایل با این شماره وجود دارد")
+
+    }})
+    .catch(function (error) {
+      console.log(777)
+      alert(error)
+
+      console.log(error);
+    });
+  }
+
+
+
+  }
   return (
   <View style={{backgroundColor:'#f4f4f4',height:'100%',width:'100%'}}>
     
@@ -25,17 +69,17 @@ const SignUp = ({navigation }) => {
     <Image source={require('@assets/images/LogoGreen.png')} style={styles.loginLogo} />
     <View style={styles.greenBack}>
     <Image source={require('@assets/images/LoginBack.png')} style={styles.loginBack} />
-    <View style={{position:'absolute',height:'100%',top:responsiveHeight(10),width:'100%'}}>
+    <View style={{position:'absolute',height:'100%',top:responsiveHeight(15),width:'100%'}}>
       <Text style={styles.loginTitle}>
         ثبت نام
       </Text>
       <View style={{position:'absolute',top:responsiveHeight(10),display:'flex',alignContent:'center',alignSelf:'center'}}>
       <View style={styles.inputIcon}>
       <Icon name={"phone-iphone"} color={'#CECECE'} size={30}/>
-      <TextInput style={styles.textInputIcon}  placeholder="شماره تلفن همراه"/>
+      <TextInput onChangeText={(ss)=>setMobile(ss)} style={styles.textInputIcon}  placeholder="شماره تلفن همراه"/>
       </View>
      
-      <TouchableOpacity style={styles.yellowBtn} onPress={()=>  navigation.navigate("Verify")}>
+      <TouchableOpacity onPress={()=>login()} style={styles.yellowBtn}>
         <Text style={styles.yellowBtnTxt}>ایجاد حساب کاربری</Text>
       </TouchableOpacity>
       <View style={{display:'flex',flexDirection:'row-reverse',textAlign:'center',justifyContent:'center',alignContent:'center',marginTop:responsiveHeight(2)}}>
@@ -81,7 +125,7 @@ const styles = StyleSheet.create({
    
   }
   ,loginBack:{
-    height:'100%',
+    height:responsiveHeight(80),
     width:'100%',
     resizeMode:'contain'
   },loginTitle:{
