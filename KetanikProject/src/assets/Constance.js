@@ -115,5 +115,14 @@ export const myFontStyle = {
   },checkBox: {
     fontFamily: myFontFamily.Medium,
     fontSize: RFPercentage(2.5),
+  },productNameText: {
+    fontFamily: myFontFamily.Bold,
+    fontSize: RFPercentage(1.8),
+  },productValueText: {
+    fontFamily: myFontFamily.Medium,
+    fontSize: RFPercentage(1.8),
+  },productPriceText: {
+    fontFamily: myFontFamily.Medium,
+    fontSize: RFPercentage(1.8),
   }
 }
