@@ -166,19 +166,20 @@ import {RadioButton ,Switch,List} from 'react-native-paper';
       </Text>
           <Switch value={isSwitchOn} onValueChange={onToggleSwitch} color={'#ffb921'}/>
           </View>
-          <List.Section title="Accordions">
+          <List.Section title="Accordions" backgroundColor={'#ffffff'} style={{...myFontStyle.productPriceText,color:'#ffffff'}}>
       <List.Accordion
-        title="Uncontrolled Accordion"
-        left={props => <List.Icon icon={'star'} />}>
+        title="دسته بندی یک"
+        style={{...myFontStyle.productPriceText,color:'#ffffff'}}
+        
+        >
         <List.Item title="First item" />
         <List.Item title="Second item" />
       </List.Accordion>
 
       <List.Accordion
         title="Controlled Accordion"
-        left={props => <List.Icon  icon={'star'} />}
-        expanded={expanded}
-        onPress={handlePress}>
+        style={styles.accardionStyle}
+        >
         <List.Item title="First item" />
         <List.Item title="Second item" />
       </List.Accordion>
@@ -295,6 +296,9 @@ const shadow2 = {
     },radioLable:{
       ...myFontStyle.productNameText,
       color:'#000000',
+    },accardionStyle:{
+      direction:'rtl',
+      backgroundColor:'#ffffff',
     }
   });
 
