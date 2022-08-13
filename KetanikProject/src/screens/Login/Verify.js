@@ -12,9 +12,37 @@ import AsyncStorage from  '@react-native-async-storage/async-storage';
 import { Button } from 'react-native-paper';
 
 // create a component
-const Verify = ({navigation }) => {
+const Verify = ({navigation ,route}) => {
  
   const keyboardVerticalOffset = responsiveHeight(1);
+  const [code,setCode]=useState()
+  const {VerifyCode,Mobile} = route?.params ?? {};
+
+const VerifyClick=()=>{
+
+if(!code )
+{
+
+  alert("کد را وارد نمائید")
+
+}
+else{
+
+
+      if (code== VerifyCode) {
+        console.log(777)
+        // auth.login(response.data.Data.CustomerID);
+        console.log(88)
+navigation.navigate("SignUpSecond"
+, {Mobile:Mobile} 
+);
+      }
+      else{
+        alert("کد نادرست می باشد")
+      }
+}
+
+  }
   return (
   <View style={{backgroundColor:'#f4f4f4',height:'100%',width:'100%'}}>
     
@@ -22,17 +50,17 @@ const Verify = ({navigation }) => {
     <Image source={require('@assets/images/LogoGreen.png')} style={styles.loginLogo} />
     <View style={styles.greenBack}>
     <Image source={require('@assets/images/LoginBack.png')} style={styles.loginBack} />
-    <View style={{position:'absolute',height:'100%',top:responsiveHeight(10),width:'100%'}}>
+    <View style={{position:'absolute',height:'100%',top:responsiveHeight(15),width:'100%'}}>
       <Text style={styles.loginTitle}>
         کد تایید
       </Text>
       <View style={{position:'absolute',top:responsiveHeight(10),display:'flex',alignContent:'center',alignSelf:'center'}}>
       <View style={styles.inputIcon}>
       <Icon name={"phone-iphone"} color={'#CECECE'} size={30}/>
-      <TextInput style={styles.textInputIcon}  placeholder="کد تایید"/>
+      <TextInput style={styles.textInputIcon} onChangeText={(ss)=>setCode(ss)} placeholder="کد تایید"/>
       </View>
      
-      <TouchableOpacity style={styles.yellowBtn} onPress={()=>  navigation.navigate("SignUpSecond")}>
+      <TouchableOpacity style={styles.yellowBtn} onPress={()=>  VerifyClick()}>
         <Text style={styles.yellowBtnTxt}>ثبت کد تایید</Text>
       </TouchableOpacity>
       <View style={{display:'flex',flexDirection:'row-reverse',textAlign:'center',justifyContent:'center',alignContent:'center',marginTop:responsiveHeight(2)}}>
@@ -78,7 +106,7 @@ const styles = StyleSheet.create({
    
   }
   ,loginBack:{
-    height:'100%',
+    height:responsiveHeight(80),
     width:'100%',
     resizeMode:'contain'
   },loginTitle:{

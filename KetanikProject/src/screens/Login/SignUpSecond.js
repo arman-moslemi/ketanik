@@ -13,15 +13,72 @@ import { Button,Checkbox } from 'react-native-paper';
 
 
 // create a component
-const SignUpSecond = ({navigation }) => {
+const SignUpSecond = ({navigation,route }) => {
  
-  const keyboardVerticalOffset = responsiveHeight(1);
+  const keyboardVerticalOffset = responsiveHeight(0.25);
   const [text, setText] = useState('');
   const [checked, setChecked] = React.useState(false);
   const [passwordVisible, setPasswordVisible] = useState(true);
   const [passwordVisible2, setPasswordVisible2] = useState(true);
+  const [name,setName]=useState("")
+  const [family,setFamily]=useState("")
+  const [pass,setPass]=useState("")
+  const [again,setAgain]=useState("")
+  const {Mobile} = route?.params ?? {};
+
+  const Signups=()=>{
+    console.log(checked)
+    const axios = require("axios");
+    if(!name || !family || !pass || !again) 
+    {
+        
+        setTitle("همه موارد را وارد نمائید")
+        setOpen(true)
+        
+    }
+    else if(pass != again){
+        setTitle("پسورد و تکرار با هم منطبق نیستند")
+        setOpen(true)
+    }
+    else{
+
+    axios.post(apiUrl + "InsertCustomer",{Mobile:Mobile,Name:name,Family:family,Password:pass,IsConsultant:checked})
+    .then(function (response) {
+      console.log(response)
+      if (response.data.result == "True") {
+        console.log(777)
+        console.log(response.data.Data)
+        // auth.login(response.data.Data.CustomerID);
+        console.log(88)
+        if(checked){
+          alert("برای تاپید اطلاع داده میشود.ثبت نام با موفقیت انجام شد")
+        }
+        else{
+
+          alert("ثبت نام با موفقیت انجام شد")
+        }
+navigation.navigate("Login");
+
+        // console.log("auth", auth.isLoggedIn);
+        // localStorage.setItem("guest","");
+        // history.push("/EditInformation/"+response.data.Data.CustomerID)
+
+    }
+    else{
+      alert("نام کاربری یا رمز عبور نادرست می باشد")
+
+    }})
+    .catch(function (error) {
+      console.log(777)
+      alert(error)
+
+      console.log(error);
+    });
+  }
 
 
+
+  }
   return (
   <View style={{backgroundColor:'#f4f4f4',height:'100%',width:'100%'}}>
     
@@ -29,27 +86,27 @@ const SignUpSecond = ({navigation }) => {
     <Image source={require('@assets/images/LogoGreen.png')} style={styles.loginLogo} />
     <View style={styles.greenBack}>
     <Image source={require('@assets/images/LoginBack.png')} style={styles.loginBack} />
-    <View style={{position:'absolute',height:'100%',top:responsiveHeight(8),width:'100%'}}>
+    <View style={{position:'absolute',height:'100%',top:responsiveHeight(16),width:'100%'}}>
       <Text style={styles.loginTitle}>
        تکمیل ثبت نام
       </Text>
       <View style={{position:'absolute',top:responsiveHeight(8),display:'flex',alignContent:'center',alignSelf:'center'}}>
       <View style={styles.inputIcon}>
       <Icon name={"person"} color={'#CECECE'} size={30}/>
-      <TextInput style={styles.textInputIcon}  placeholder="نام"/>
+      <TextInput style={styles.textInputIcon} onChangeText={(ss)=>setName(ss)} placeholder="نام"/>
       </View>
       <View style={styles.inputIcon2}>
       <Icon name={"person"} color={'#CECECE'} size={30}/>
-      <TextInput style={styles.textInputIcon}  placeholder="نام خانوادگی"/>
+      <TextInput style={styles.textInputIcon} onChangeText={(ss)=>setFamily(ss)} placeholder="نام خانوادگی"/>
       </View>
       <View style={styles.inputIcon2}>
       <Icon name={"lock"} color={'#CECECE'} size={30} />
-      <TextInput style={styles.textInputIcon} secureTextEntry={passwordVisible} placeholder="رمز عبور"/>
+      <TextInput style={styles.textInputIcon} onChangeText={(ss)=>setPass(ss)}secureTextEntry={passwordVisible} placeholder="رمز عبور"/>
       <Icon style={styles.eyeIcon} name={passwordVisible ? "remove-red-eye": "remove-red-eye"} color={'#CECECE'} size={30} onPress={() => setPasswordVisible(!passwordVisible)}/>
       </View>
       <View style={styles.inputIcon2}>
       <Icon name={"lock"} color={'#CECECE'} size={30} />
-      <TextInput style={styles.textInputIcon} secureTextEntry={passwordVisible2} placeholder="رمز عبور"/>
+      <TextInput style={styles.textInputIcon} onChangeText={(ss)=>setAgain(ss)}secureTextEntry={passwordVisible2} placeholder="رمز عبور"/>
       <Icon style={styles.eyeIcon} name={passwordVisible2 ? "remove-red-eye": "remove-red-eye"} color={'#CECECE'} size={30} onPress={() => setPasswordVisible2(!passwordVisible2)}/>
       </View>
       <View style={{display:'flex',flexDirection:'row-reverse',alignContent:'center',alignItems:'center',marginTop:15}}>
@@ -64,10 +121,10 @@ const SignUpSecond = ({navigation }) => {
     />
     <Text style={styles.consult}>ثبت نام به عنوان مشاور</Text>
       </View>
-      <TouchableOpacity style={styles.yellowBtn} onPress={()=>  navigation.navigate("Home")}>
+      <TouchableOpacity style={styles.yellowBtn} onPress={()=>  Signups()}>
         <Text style={styles.yellowBtnTxt}>ایجاد حساب کاربری</Text>
       </TouchableOpacity>
-      <View style={{display:'flex',flexDirection:'row-reverse',textAlign:'center',justifyContent:'center',alignContent:'center',marginTop:responsiveHeight(2)}}>
+      {/* <View style={{display:'flex',flexDirection:'row-reverse',textAlign:'center',justifyContent:'center',alignContent:'center',marginTop:responsiveHeight(2)}}>
       <Text style={styles.registerText}>
         حساب کاربری دارید ؟
         </Text>
@@ -76,7 +133,7 @@ const SignUpSecond = ({navigation }) => {
             وارد شوید
           </Text>
         </TouchableOpacity>
-      </View>
+      </View> */}
       </View>
     </View>
     </View>
@@ -105,12 +162,12 @@ const styles = StyleSheet.create({
    
     width:'100%',
     height:responsiveHeight(70),
-    marginTop:responsiveHeight(-20),
+    marginTop:responsiveHeight(-15),
     
    
   }
   ,loginBack:{
-    height:'100%',
+    height:responsiveHeight(80),
     width:'100%',
     resizeMode:'contain'
   },loginTitle:{

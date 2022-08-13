@@ -1,2 +1,2 @@
-export const apiUrl ="https://api.ketanik.com/api/WebApi/";
-export const apiAsset ="https://api.ketanik.com/images/";
+export const apiUrl ="http://localhost:8000/api/";
+export const apiAsset ="http://localhost:8000/images/";

@@ -16,8 +16,50 @@ const Login = ({navigation }) => {
  
   const keyboardVerticalOffset = responsiveHeight(1);
   const [text, setText] = useState('');
+  const [pass,setPass]=useState()
+  const [mobile,setMobile]=useState()
 
   const [passwordVisible, setPasswordVisible] = useState(true);
+  const login=()=>{
+    const axios = require("axios");
+    console.log(mobile)
+    console.log(pass)
+
+if(!mobile || !pass)
+{
+
+  alert("همه مقادیر را وارد نمائید")
+  // setOpen(true)
+
+}
+else{
+
+    axios.post(apiUrl + "Login",{Mobile:mobile,Password:pass})
+    .then(function (response) {
+      if (response.data.result == "True") {
+        console.log(777)
+        // auth.login(response.data.Data.CustomerID);
+        AsyncStorage.setItem("CustomerID",response.data.Data[0].CustomerID);
+navigation.navigate("TabBar", { CustomerID:response.data.Data[0].CustomerID});
+
+
+
+    }
+    else{
+      alert("نام کاربری یا رمز عبور نادرست می باشد")
+
+    }})
+    .catch(function (error) {
+      console.log(568)
+      alert(error)
+
+      console.log(error);
+    });
+  }
+
+
+
+  }
   return (
   <View style={{backgroundColor:'#f4f4f4',height:'100%',width:'100%'}}>
     
@@ -25,21 +67,21 @@ const Login = ({navigation }) => {
     <Image source={require('@assets/images/LogoGreen.png')} style={styles.loginLogo} />
     <View style={styles.greenBack}>
     <Image source={require('@assets/images/LoginBack.png')} style={styles.loginBack} />
-    <View style={{position:'absolute',height:'100%',top:responsiveHeight(10),width:'100%'}}>
+    <View style={{position:'absolute',height:'100%',top:responsiveHeight(13),width:'100%'}}>
       <Text style={styles.loginTitle}>
         ورود
       </Text>
       <View style={{position:'absolute',top:responsiveHeight(10),display:'flex',alignContent:'center',alignSelf:'center'}}>
       <View style={styles.inputIcon}>
       <Icon name={"phone-iphone"} color={'#CECECE'} size={30}/>
-      <TextInput style={styles.textInputIcon}  placeholder="شماره تلفن همراه"/>
+      <TextInput style={styles.textInputIcon}  onChangeText={(ss)=>setMobile(ss)}  placeholder="شماره تلفن همراه"/>
       </View>
       <View style={styles.inputIcon2}>
       <Icon name={"lock"} color={'#CECECE'} size={30} />
-      <TextInput style={styles.textInputIcon} secureTextEntry={passwordVisible} placeholder="رمز عبور"/>
+      <TextInput style={styles.textInputIcon} onChangeText={(ss)=>setPass(ss)} secureTextEntry={passwordVisible} placeholder="رمز عبور"/>
       <Icon style={styles.eyeIcon} name={passwordVisible ? "remove-red-eye": "remove-red-eye"} color={'#CECECE'} size={30} onPress={() => setPasswordVisible(!passwordVisible)}/>
       </View>
-      <TouchableOpacity style={styles.yellowBtn}>
+      <TouchableOpacity onPress={()=>login()} style={styles.yellowBtn}>
         <Text style={styles.yellowBtnTxt}>ورود</Text>
       </TouchableOpacity>
       <View style={{display:'flex',flexDirection:'row-reverse',textAlign:'center',justifyContent:'center',alignContent:'center',marginTop:responsiveHeight(2)}}>
@@ -51,7 +93,15 @@ const Login = ({navigation }) => {
             ثبت نام کنید
           </Text>
         </TouchableOpacity>
+      
       </View>
+      <View style={{display:'flex',flexDirection:'row-reverse',textAlign:'left',marginTop:responsiveHeight(2)}}>
+      <TouchableOpacity onPress={()=>  navigation.navigate("ForgetPassword")}>
+
+        <Text style={styles.registerText2}>
+فراموشی رمز          </Text>
+</TouchableOpacity>
+</View>
       </View>
     </View>
     </View>
@@ -85,7 +135,7 @@ const styles = StyleSheet.create({
    
   }
   ,loginBack:{
-    height:'100%',
+    height:responsiveHeight(80),
     width:'100%',
     resizeMode:'contain'
   },loginTitle:{
@@ -158,6 +208,7 @@ elevation: 5,
     borderBottomColor:'#fff',
     borderBottomWidth:1,
     borderStyle:"dashed",
+    width:responsiveWidth(30)
   }
 
   }
