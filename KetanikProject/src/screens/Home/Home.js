@@ -43,14 +43,14 @@ tweenHandler={(ratio) => ({
 <DrawerPage drawers={drawers} name={"صفحه اصلی"} />
 <View style={styles.container}>
     <View style={{display:'flex',flexDirection:'row-reverse',justifyContent:'space-between'}}>
-      <TouchableOpacity style={styles.seeProducts}>
+      <TouchableOpacity style={styles.seeProducts} onPress={()=>  navigation.navigate("Store")}>
       <View style={{display:'flex',flexDirection:'column',alignContent:'center',alignItems:'center'}}>
       <Image source={require('@assets/images/store.png')} style={styles.btnImg} />
       <Text style={styles.btnText}>مشاهده محصولات</Text>
       </View>
 
       </TouchableOpacity>
-      <TouchableOpacity style={styles.iotProducts}>
+      <TouchableOpacity style={styles.iotProducts} >
       <View style={{display:'flex',flexDirection:'column',alignContent:'center',alignItems:'center'}}>
       <Image source={require('@assets/images/Iot.png')} style={styles.btnImg} />
       <Text style={styles.btnText}>کشاورزی هوشمند</Text>
@@ -58,7 +58,7 @@ tweenHandler={(ratio) => ({
       </TouchableOpacity>
     </View>
     <View style={{display:'flex',flexDirection:'row-reverse',justifyContent:'space-between',marginTop:20}}>
-      <TouchableOpacity style={styles.consult1}>
+      <TouchableOpacity style={styles.consult1} onPress={()=>  navigation.navigate("ConsultantList")}>
       <View style={{display:'flex',flexDirection:'column',alignContent:'center',alignItems:'center'}}>
       <Image source={require('@assets/images/consulting.png')} style={styles.btnImg} />
       <Text style={styles.btnText}>لیست مشاوران</Text>

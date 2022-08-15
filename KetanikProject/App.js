@@ -11,13 +11,15 @@ import SignUp from "@screens/Login/SignUp";
 import Home from '@screens/Home/Home';
 import SignUpSecond from '@screens/Login/SignUpSecond';
 import Store from "@screens/Store/Store";
+import Profile from "@screens/Profile/Profile";
+import Wallet from "@screens/Wallet/Wallet";
 import { Colors } from '@assets/Colors';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 
 
-
+import ConsultantList from '@screens/ConsultantList/ConsultantList';
 import Search from "@screens/Search/Search";
 import { ThemeProvider} from './theme/theme-context';
 import { myFontStyle } from './src/assets/Constance';
@@ -130,7 +132,7 @@ const StackNavigatorsProfile = () => {
     <Stack.Navigator screenOptions={{
       headerShown: false
     }}>
-             
+             <Stack.Screen name="Profile" component={Profile} /> 
     </Stack.Navigator>
   );
  }
@@ -150,6 +152,8 @@ export default function App() {
         <Stack.Screen name="Verify" component={Verify} />
         <Stack.Screen name="SignUpSecond" component={SignUpSecond}/>
         <Stack.Screen name="Store" component={Store}/>
+        <Stack.Screen name="Wallet" component={Wallet}/>
+        <Stack.Screen name="ConsultantList" component={ConsultantList}/>
          <Stack.Screen name="TabBar" component={TabStack} />
   
    
