@@ -177,7 +177,8 @@ const styles = StyleSheet.create({
     textAlign:'right',
    ...myFontStyle.mediumRegular,
    width:"100%",
-  },yellowBtn:{
+  },
+  yellowBtn:{
     backgroundColor:Colors.Yellow,
     height:responsiveHeight(6),
     display:'flex',

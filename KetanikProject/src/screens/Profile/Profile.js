@@ -47,13 +47,13 @@ return (
     </Text>
     </TouchableOpacity>
   </View>
-  <TouchableOpacity style={styles.bigBtn}>
+  <TouchableOpacity style={styles.bigBtn} >
   <Image source={require('@assets/images/pCart.png')} style={styles.bigBtnImg} />
   <Text style={styles.bigBtnText}>
     محصولات برگزیده
   </Text>
   </TouchableOpacity>
-  <TouchableOpacity style={styles.bigBtn}>
+  <TouchableOpacity style={styles.bigBtn} onPress={()=>  navigation.navigate("BestConsultant")}>
   <Image source={require('@assets/images/pHeadphone.png')} style={styles.bigBtnImg} />
   <Text style={styles.bigBtnText}>
     مشاوران برگزیده

@@ -13,6 +13,7 @@ import SignUpSecond from '@screens/Login/SignUpSecond';
 import Store from "@screens/Store/Store";
 import Profile from "@screens/Profile/Profile";
 import Wallet from "@screens/Wallet/Wallet";
+import BestConsultant from '@screens/ConsultantList/BestConsultant';
 import { Colors } from '@assets/Colors';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
@@ -154,6 +155,7 @@ export default function App() {
         <Stack.Screen name="Store" component={Store}/>
         <Stack.Screen name="Wallet" component={Wallet}/>
         <Stack.Screen name="ConsultantList" component={ConsultantList}/>
+        <Stack.Screen name="BestConsultant" component={BestConsultant}/>
          <Stack.Screen name="TabBar" component={TabStack} />
   
    
