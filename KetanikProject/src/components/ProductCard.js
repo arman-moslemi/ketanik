@@ -8,16 +8,16 @@ import { responsiveFontSize, responsiveHeight, responsiveWidth } from "react-nat
 import { myFontStyle } from '../assets/Constance';
 
 export const truncate = (str, len) => {
-  if (str.length > len && str.length > 0) {
+  if (str?.length > len && str?.length > 0) {
     let new_str = str + " ";
-    new_str = str.substr(0, len);
+    new_str = str?.substr(0, len);
     new_str = str.substr(0, new_str.lastIndexOf(" "));
-    new_str = new_str.length > 0 ? new_str : str.substr(0, len);
+    new_str = new_str.length > 0 ? new_str : str?.substr(0, len);
     return new_str + "...";
   }
   return str;
 };
-export const ProductCard = props => {
+export const ProductCard = (props) => {
   const[alternateImage, setAlternateImage] = useState(true);
   
   return (
@@ -26,18 +26,18 @@ export const ProductCard = props => {
     <Image source={require('@assets/images/heart.png')} style={styles.heartBtn}/>
   </TouchableOpacity>
     <Image source={require('@assets/images/p1.png')} style={styles.productCardImg} />
-    <View style={{display:'flex',flexDirection:'row-reverse',justifyContent:'flex-start',marginLeft:responsiveWidth(2)}}>
+    {/* <View style={{display:'flex',flexDirection:'row-reverse',justifyContent:'flex-start',marginLeft:responsiveWidth(2)}}>
       <Icon name={"star"} color={'#ffb921'} size={15}/>
       <Icon name={"star"} color={'#ffb921'} size={15}/>
       <Icon name={"star"} color={'#ffb921'} size={15}/>
       <Icon name={"star-border"} color={'#000000'} size={15}/>
       <Icon name={"star-border"} color={'#000000'} size={15}/>
-      </View>
+      </View> */}
       <Text style={styles.productName}>
-      {truncate("دستگاه میوه خشک کن برقی 100 وات بزرگ",30)}
+      {truncate(props.Name,20)}
       </Text>
       <Text style={styles.productValue}>
-      موجودی : 10 تن
+      موجودی :{props.Number} {props.Unit}
       </Text>
       <View style={{display:'flex',justifyContent:'space-between',alignItems:'center',flexDirection:'row-reverse',marginRight:responsiveWidth(2),marginLeft:responsiveWidth(2),marginTop:responsiveHeight(1)}}>
         <View>
@@ -47,7 +47,7 @@ export const ProductCard = props => {
           </View>
           <View>
             <Text style={styles.productPrice}>
-              125.000.000 تومان
+            {props.Cost}تومان
             </Text>
             </View>
         </View>
@@ -69,12 +69,14 @@ const styles = StyleSheet.create({
  productCard:{
 position:'relative',
 display:'flex',
-padding:10,
+padding:responsiveWidth(3),
 marginTop:responsiveHeight(1),
 marginBottom:responsiveHeight(1),
+width:responsiveWidth(44),
   // height:160,
   backgroundColor:'#ffffff',
   borderRadius:5,
+  margin:responsiveWidth(1),
   shadowColor:'#000',
   shadowOffset: {
     width: 0,
@@ -85,8 +87,8 @@ marginBottom:responsiveHeight(1),
   
   elevation: 10,
  },productCardImg:{
-  width:100,
-  height:100,
+  width:responsiveWidth(20),
+  height:responsiveHeight(12),
   marginRight:'auto',marginLeft:'auto',
  },heartBtn:{
   

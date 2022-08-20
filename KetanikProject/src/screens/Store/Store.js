@@ -10,6 +10,8 @@ import { ProductCard } from '@components/ProductCard';
 import { myFontStyle } from "@assets/Constance";
 import Modal from "react-native-modal";
 import {RadioButton ,Switch,List} from 'react-native-paper';
+import { apiUrl ,apiAsset} from "@commons/inFormTypes";
+
 // create a component
 
 
@@ -17,9 +19,10 @@ import {RadioButton ,Switch,List} from 'react-native-paper';
  const Store = ({navigation }) => {
   const [isModalVisible, setModalVisible] = useState(false);
   const [isModalVisible2, setModalVisible2] = useState(false);
-  const [checked, setChecked] = React.useState('first');
-  const [isSwitchOn, setIsSwitchOn] = React.useState(false);
-  const [expanded, setExpanded] = React.useState(true);
+  const [checked, setChecked] = useState('first');
+  const [isSwitchOn, setIsSwitchOn] = useState(false);
+  const [expanded, setExpanded] = useState(true);
+  const [search, setSearch] = useState("");
 
   const handlePress = () => setExpanded(!expanded);
   const onToggleSwitch = () => setIsSwitchOn(!isSwitchOn);
@@ -35,13 +38,95 @@ import {RadioButton ,Switch,List} from 'react-native-paper';
   const closeModal2=()=>{
     setModalVisible2(!isModalVisible2);
   }
+  const [data,setData]=useState([])
+  const keyExtractor = item => {
+    return item[0]?.ProductID;
+  };
+  const _render = (item, index) => {
+    return (
+      <ProductCard Name={item.item[0]?.Name} Unit={item.item[0]?.Unit} Number={item.item[0]?.Number} Cost={item.item[0]?.Cost} />
+
+    );
+  };
+  const  _handleKeyDownAuto = async(aa) => {
+    const axios = require("axios");
+
+        axios
+            .post(apiUrl + "SearchProductApp",{
+                ProductName:aa
+            })
+        .then(function (response) {
+          if (response.data.result == "True") {
+            // data.filter((el)=>el[0].Name.includes(aa))
+setData(Object.values(response.data.Data)) 
+           console.log(response.data.Data)
+  
+        }
+        else{
+          console.log(response.data.result)
+  
+        }})
+        .catch(function (error) {
+          console.log(error);
+        });}
+        const viewset=()=>{
+
+
+          console.log(14563)
+          //  setProduct([])
+          // var list=[...product].sort((a, b) => (a.Cost > b.Cost) ? 1 : -1);
+          setData([...Object.values(data)].sort((a, b) => (a.TotalView < b.TotalView) ? 1 : -1))
+          
+          }
+      const expensive=()=>{
+  
+  
+          console.log(14563)
+      //  setProduct([])
+      // var list=[...product].sort((a, b) => (a.Cost > b.Cost) ? 1 : -1);
+      setData([...Object.values(data)].sort((a, b) => (a.Cost < b.Cost) ? 1 : -1))
+      
+      }
+      const cheep=()=>{
+  
+  
+  
+          setData([...Object.values(data)].sort((a, b) => (a.Cost > b.Cost) ? 1 : -1))
+        
+        }
+  const GetData=()=>{
+    const axios = require("axios");
+  
+
+    axios.get(apiUrl + "AllProduct") 
+    .then(function (response) {
+      if (response.data.result == "True") {
+
+        setData( Object.values(response.data.Data))
+
+    }})
+    .catch(function (error) {
+      console.log(777)
+      alert(error)
+
+      console.log(error);
+    });
+   ;
+    
+    
+
+  }
+  useEffect(() => {
+    GetData();
+
+  }, []);
   return (
     <View style={styles.container}>
     <ScrollView>
       <View style={{display:'flex',flexDirection:'row-reverse',alignContent:'center',alignItems:'center'}}>
       <View style={styles.inputIcon}>
       <Icon name={"search"} color={'#CECECE'} size={30}/>
-      <TextInput style={styles.textInputIcon}  placeholder="جستجو کنید ..."/>
+      <TextInput style={styles.textInputIcon} onChangeText={(aa)=>_handleKeyDownAuto(aa)}  placeholder="جستجو کنید ..."/>
       </View>
       <View style={{width:"14%",marginRight:"1%"}}>
         <TouchableOpacity style={[styles.sort,shadow]} onPress={toggleModal}>
@@ -57,7 +142,7 @@ import {RadioButton ,Switch,List} from 'react-native-paper';
         </TouchableOpacity>
       </View>
       </View>
-     <View style={{display:'flex',flexDirection:'row'}}>
+     {/* <View style={{display:'flex',flexDirection:'row'}}>
       <View style={{width:'48%',marginRight:'1%'}}>
         <ProductCard/>
       </View>
@@ -65,34 +150,17 @@ import {RadioButton ,Switch,List} from 'react-native-paper';
         <ProductCard/>
       </View>
       
-     </View>
-     <View style={{display:'flex',flexDirection:'row'}}>
-      <View style={{width:'48%',marginRight:'1%'}}>
-        <ProductCard/>
-      </View>
-      <View style={{width:'48%',marginLeft:'1%'}}>
-        <ProductCard/>
-      </View>
-      
-     </View>
-     <View style={{display:'flex',flexDirection:'row'}}>
-      <View style={{width:'48%',marginRight:'1%'}}>
-        <ProductCard/>
-      </View>
-      <View style={{width:'48%',marginLeft:'1%'}}>
-        <ProductCard/>
-      </View>
-      
-     </View>
-     <View style={{display:'flex',flexDirection:'row'}}>
-      <View style={{width:'48%',marginRight:'1%'}}>
-        <ProductCard/>
-      </View>
-      <View style={{width:'48%',marginLeft:'1%'}}>
-        <ProductCard/>
-      </View>
-      
-     </View>
+     </View> */}
+     <FlatList
+          numColumns={2}
+          columnWrapperStyle={{width:'50%'}}
+          keyExtractor={keyExtractor}
+          data={data}
+          renderItem={_render}
+          style={{marginTop:responsiveHeight(4),marginBottom:responsiveHeight(20),marginRight:2}}
+                    // ListFooterComponent={listFooter}
+          // onEndReached={fetchNextCharityPage}
+        />
     </ScrollView>
     <Modal isVisible={isModalVisible} onBackdropPress={closeModal} animationIn={'slideInUp'} style={{display:'flex',justifyContent:'center',alignItems:'center'}}>
         <View style={{ flex:0.3,backgroundColor:'#ffffff',borderRadius:10,width:'80%'}}>
@@ -107,7 +175,7 @@ import {RadioButton ,Switch,List} from 'react-native-paper';
     <RadioButton
         value="first"
         status={ checked === 'first' ? 'checked' : 'unchecked' }
-        onPress={() => setChecked('first')}
+        onPress={() => {setChecked('first');GetData()}}
         color={'#ffb921'}
       />
       <Text style={styles.radioLable}>
@@ -118,18 +186,18 @@ import {RadioButton ,Switch,List} from 'react-native-paper';
     <RadioButton
         value="second"
         status={ checked === 'second' ? 'checked' : 'unchecked' }
-        onPress={() => setChecked('second')}
+        onPress={() => {setChecked('second');viewset()}}
         color={'#ffb921'}
       />
       <Text style={styles.radioLable}>
-       پرفروش ترین
+       پربازدیدترین
       </Text>
     </View>
     <View style={{display:'flex',alignItems:'center',flexDirection:'row-reverse'}}>
     <RadioButton
         value="third"
         status={ checked === 'third' ? 'checked' : 'unchecked' }
-        onPress={() => setChecked('third')}
+        onPress={() => {setChecked('third');cheep()}}
         color={'#ffb921'}
       />
       <Text style={styles.radioLable}>
@@ -216,7 +284,7 @@ const shadow2 = {
 
   const styles = StyleSheet.create({
     container:{
-      padding:25,
+      padding:responsiveWidth(3),
      
     },
     inputIcon:{

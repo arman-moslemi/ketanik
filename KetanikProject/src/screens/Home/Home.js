@@ -43,7 +43,7 @@ tweenHandler={(ratio) => ({
 <DrawerPage drawers={drawers} name={"صفحه اصلی"} />
 <View style={styles.container}>
     <View style={{display:'flex',flexDirection:'row-reverse',justifyContent:'space-between'}}>
-      <TouchableOpacity style={styles.seeProducts}>
+      <TouchableOpacity onPress={()=>navigation.navigate("Store")} style={styles.seeProducts}>
       <View style={{display:'flex',flexDirection:'column',alignContent:'center',alignItems:'center'}}>
       <Image source={require('@assets/images/store.png')} style={styles.btnImg} />
       <Text style={styles.btnText}>مشاهده محصولات</Text>

@@ -8,6 +8,7 @@ import { Colors } from '@assets/Colors';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import { myFontStyle } from "@assets/Constance";
+import { apiUrl ,apiAsset} from "@commons/inFormTypes";
 
 
 export const truncate = (str, len) => {
@@ -23,14 +24,45 @@ export const truncate = (str, len) => {
 };
 
  const Search = ({navigation }) => {
+  const [search, setSearch] = useState([]);
 
+  const  _handleKeyDownAuto = async(aa) => {
+    const axios = require("axios");
+
+        axios
+            .post(apiUrl + "SearchProduct",{
+                ProductName:aa
+            })
+        .then(function (response) {
+          if (response.data.result == "True") {
+  
+            setSearch(response.data.Data)
+            console.log(response.data.Data)
+  
+        }
+        else{
+          console.log(response.data.result)
+  
+        }})
+        .catch(function (error) {
+          console.log(error);
+        });}
+        const keyExtractor = item => {
+          return item[0].ProductID;
+        };
+        const _render = (item, index) => {
+          return (
+            <ProductCard Name={item.item[0].Name} Unit={item.item[0].Name} Number={item.item[0].Number} Cost={item.item[0].Cost} />
+      
+          );
+        };
 return (
   <View style={styles.container}>
       
       <View style={{display:'flex',flexDirection:'row-reverse',alignContent:'center',alignItems:'center'}}>
       <View style={styles.inputIcon}>
       <Icon name={"search"} color={'#CECECE'} size={30}/>
-      <TextInput style={styles.textInputIcon}  placeholder="جستجو کنید ..."/>
+      <TextInput  onChangeText={(ss)=>_handleKeyDownAuto(ss)} style={styles.textInputIcon}  placeholder="جستجو کنید ..."/>
       </View>
       <View style={{width:"14%",marginRight:"1%"}}>
         <TouchableOpacity style={[styles.search,shadow]}>
@@ -41,11 +73,28 @@ return (
   
      
       </View> 
-    
+    {
+      search?
+<>
       <Image source={require('@assets/images/searchEmpty.png')} style={styles.searchEmpty} />
       <Text style={styles.serachText}>
         هنوز مطلبی جستجو نکرده اید !
       </Text>
+
+</>
+      :
+      <FlatList
+      numColumns={2}
+      columnWrapperStyle={{width:'50%'}}
+      keyExtractor={keyExtractor}
+      data={data}
+      renderItem={_render}
+      style={{marginTop:responsiveHeight(4),marginBottom:responsiveHeight(20),marginRight:2}}
+                // ListFooterComponent={listFooter}
+      // onEndReached={fetchNextCharityPage}
+    />
+
+    }
       
   </View>
    
