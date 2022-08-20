@@ -100,7 +100,7 @@ const _render = (item, index) => {
     </Text>
     <View style={{display:'flex',flexDirection:'row-reverse',justifyContent:'space-between'}}>
     <Text style={styles(theme).bookName}>
-    {item.item.Cost}ت
+    {item.item.Cost}sek
     </Text>
     <View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>
     <Text style={styles(theme).bookName}>

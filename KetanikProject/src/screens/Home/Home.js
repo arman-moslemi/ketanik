@@ -177,15 +177,15 @@ console.log(episode)
           item.item.SpecialCost?
 <>
       <Text style={styles(theme).priceRed}>
-      {item.item.SpecialCost}ت
+      {item.item.SpecialCost}sek
     </Text>
     <Text style={styles(theme).priceStroke}>
-    {item.item.Cost}ت
+    {item.item.Cost}sek
     </Text>
     </>
           :
 <Text style={styles(theme).bookName}>
-      {item.item.Cost}ت
+      {item.item.Cost}sek
       </Text>
         }
   <View style={{flexDirection:'row-reverse',alignItems:'center',width:"10%"}}>

@@ -167,7 +167,8 @@ mutLogin()
     .then(function (response) {
       const message = response.data;
       const result = response.data.result;
-    
+      console.log(response.data);
+
       if(result == "true"){
         console.log(response.data.Data)
         if(response.data.Data){
@@ -180,8 +181,16 @@ mutLogin()
 
         }
                         }else{
-    alert("کیف پول شما موجودی لازم را ندارد")
-    console.log(response.data);
+                          // let userObj2 = JSON.parse(response.data);
+                          if(JSON.parse(response.data.message).errors[0].message){
+
+                            alert(JSON.parse(response.data.message).errors[0].message);
+
+                          }
+                          else{
+
+                            alert("کیف پول شما موجودی لازم را ندارد")
+                          }
 
       }
     })
