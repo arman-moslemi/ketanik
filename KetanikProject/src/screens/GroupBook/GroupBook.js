@@ -38,7 +38,11 @@ export const truncate = (str, len) => {
   const {GroupID,Name} = route?.params ?? {};
 
     const  mutLogin=async()=> {
-      axios.post(apiUrl+'RelatedBook',{GroupID:GroupID})
+      const lang = await AsyncStorage.getItem("@langs");
+
+      axios.post(apiUrl+'RelatedBook',{GroupID:GroupID},{ headers: {
+        lang: lang
+      }})
       .then(function (response) {
         const message = response.data;
         const result = response.data.result;

@@ -33,9 +33,12 @@ import { getTranslation } from '@i18n/i18n';
   };
   const  mutLogin=async()=> {
     const state = await AsyncStorage.getItem("@user");
+    const lang = await AsyncStorage.getItem("@langs");
 
 console.log(state)
-    axios.post(apiUrl+'OneCustomer',{CustomerID :state})
+    axios.post(apiUrl+'OneCustomer',{CustomerID :state},{ headers: {
+      lang: lang
+    }})
     .then(function (response) {
       const message = response.data;
       const result = response.data.result;

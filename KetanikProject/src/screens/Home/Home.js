@@ -61,7 +61,12 @@ console.log(episode)
 
 }, []);
   const  mutLogin=async()=> {
-    axios.get(apiUrl+'MainSlider')
+    const lang = await AsyncStorage.getItem("@langs");
+console.log(222222)
+console.log(lang)
+    axios.get(apiUrl+'MainSlider',{ headers: {
+      lang: lang
+    }})
     .then(function (response) {
       const message = response.data;
       const result = response.data.result;

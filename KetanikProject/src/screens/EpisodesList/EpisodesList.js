@@ -43,8 +43,11 @@ export const truncate = (str, len) => {
 
     const  mutLogin=async()=> {
       await TrackPlayer.destroy()
+      const lang = await AsyncStorage.getItem("@langs");
 
-      axios.post(apiUrl+'SubBookShow',{BookID:id})
+      axios.post(apiUrl+'SubBookShow',{BookID:id},{ headers: {
+        lang: lang
+      }})
       .then(function (response) {
         const message = response.data;
         const result = response.data.result;

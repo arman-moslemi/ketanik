@@ -47,8 +47,12 @@ export const truncate = (str, len) => {
   }, [name]);
 
     const  mutLogin=async()=> {
+      const lang = await AsyncStorage.getItem("@langs");
+
     name.length!=0?
-      axios.post(apiUrl+'SearchBook',{Search:name})
+      axios.post(apiUrl+'SearchBook',{Search:name},{ headers: {
+        lang: lang
+      }})
       .then(function (response) {
         const message = response.data;
         const result = response.data.result;
@@ -152,7 +156,7 @@ return (
   <Icon name={'search'} size={40} color={'#c1c1c1'}/>
 </View>
 <View>
-  <Input onChangeText={(ss)=>setName(ss)} placeholder={getTranslation('جستجو کتاب،نویسنده و ناشر...')} inputStyle={styles(theme).searchInput} />
+  <Input onChangeText={(ss)=>setName(ss)} placeholder={getTranslation('جستجو')} inputStyle={styles(theme).searchInput} />
 </View>
     </View>
     {/* <View style={{display:'flex',justifyContent:'space-between',alignItems:'center',flexDirection:'row-reverse',marginTop:responsiveHeight(3),marginBottom:responsiveHeight(3)}}>

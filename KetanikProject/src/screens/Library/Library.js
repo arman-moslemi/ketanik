@@ -340,8 +340,11 @@ return(
 
   const  mutLogin=async()=> {
     const state = await AsyncStorage.getItem("@user");
+    const lang = await AsyncStorage.getItem("@langs");
 
-    axios.post(apiUrl+'Library',{CustomerID:state,RoleID:role})
+    axios.post(apiUrl+'Library',{CustomerID:state,RoleID:role},{ headers: {
+      lang: lang
+    }})
     .then(function (response) {
       const message = response.data;
       const result = response.data.result;
@@ -367,8 +370,11 @@ return(
     const state = await AsyncStorage.getItem("@user");
     const books = await AsyncStorage.getItem("@bookid");
     const episode = await AsyncStorage.getItem("@epid");
+    const lang = await AsyncStorage.getItem("@langs");
 
-    axios.post(apiUrl+'SingleBook',{CustomerID:state,BookID:books})
+    axios.post(apiUrl+'SingleBook',{CustomerID:state,BookID:books},{ headers: {
+      lang: lang
+    }})
     .then(function (response) {
       const message = response.data;
       const result = response.data.result;
@@ -399,7 +405,11 @@ return(
       }
     const  mutShow=async()=> {
       const state = await AsyncStorage.getItem("@user");
-      axios.post(apiUrl+'ReadCustomer',{CustomerID:state,Month:date?date:null})
+      const lang = await AsyncStorage.getItem("@langs");
+
+      axios.post(apiUrl+'ReadCustomer',{CustomerID:state,Month:date?date:null},{ headers: {
+        lang: lang
+      }})
       .then(function (response) {
         const message = response.data;
         const result = response.data.result;

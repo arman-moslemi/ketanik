@@ -80,10 +80,13 @@ export const truncate = (str, len) => {
   const [writer, setWriter] = useState();
   const [grid, setGrid] = useState();
   const [lib, setlib] = useState();
+  const [newID, setNewID] = useState();
+  const refs = React.useRef();
 
   useEffect(() => {
 
-    mutLogin();
+mutLogin(id)
+
 
 
 }, [like]);
@@ -93,7 +96,10 @@ const keyExtractor = item => {
 // const data=[1,2,3,4,5]
 const _render = (item, index) => {
   return (
-    <TouchableOpacity onPress={()=>navigation.navigate("EachBook",{id:item.item.BookID})} style={styles(theme).cardBox}>
+    <TouchableOpacity onPress={()=>{mutLogin(item.item.BookID);    refs.current?.scrollTo({
+      y: 0,
+      animated: true,
+    });}} style={styles(theme).cardBox}>
     <Image source={{uri:apiAsset+item.item.Pic}} style={styles(theme).bookImg}/>
     <Text style={styles(theme).bookName}>
     {truncate(item.item.BookName,20)}
@@ -114,12 +120,18 @@ const _render = (item, index) => {
 };
 const {id} = route?.params ?? {};
 
-  const  mutLogin=async()=> {
+  const  mutLogin=async(mm)=> {
     // await TrackPlayer.destroy()
-
+ 
+      
+      setNewID(id)
+    
     const state = await AsyncStorage.getItem("@user");
+    const lang = await AsyncStorage.getItem("@langs");
 
-    axios.post(apiUrl+'SingleBook',{BookID:id,CustomerID:state})
+    axios.post(apiUrl+'SingleBook',{BookID:mm,CustomerID:state},{ headers: {
+      lang: lang
+    }})
     .then(function (response) {
       const message = response.data;
       const result = response.data.result;
@@ -138,7 +150,9 @@ const {id} = route?.params ?? {};
         setlib(response.data.LibData)
         console.log(896);
         console.log(response.data.LibData);
-        axios.post(apiUrl+'LastRelatedBook',{GroupID:response.data.GroupData.GroupID})
+        axios.post(apiUrl+'LastRelatedBook',{GroupID:response.data.GroupData.GroupID},{ headers: {
+          lang: lang
+        }})
         .then(function (response2) {
   
     
@@ -155,7 +169,9 @@ const {id} = route?.params ?? {};
         });
         console.log(response.data.GroupData.Writer);
 
-        axios.post(apiUrl+'LastWriterBook',{Writer:response.data.GroupData.Writer})
+        axios.post(apiUrl+'LastWriterBook',{Writer:response.data.GroupData.Writer},{ headers: {
+          lang: lang
+        }})
         .then(function (response3) {
           const message = response3.data;
           const result = response3.data.result;
@@ -172,7 +188,9 @@ const {id} = route?.params ?? {};
         .catch(function (error) {
           console.log(error);
         });
-        axios.post(apiUrl+'LastTranslatorBook',{Translator:response.data.GroupData.Translator})
+        axios.post(apiUrl+'LastTranslatorBook',{Translator:response.data.GroupData.Translator},{ headers: {
+          lang: lang
+        }})
         .then(function (response4) {
           const message = response4.data;
           const result = response4.data.result;
@@ -189,7 +207,9 @@ const {id} = route?.params ?? {};
         .catch(function (error) {
           console.log(error);
         });
-        axios.post(apiUrl+'LastPublisherBook',{Publisher:response.data.GroupData.Publisher})
+        axios.post(apiUrl+'LastPublisherBook',{Publisher:response.data.GroupData.Publisher},{ headers: {
+          lang: lang
+        }})
         .then(function (response5) {
           const message = response5.data;
           const result = response5.data.result;
@@ -232,7 +252,7 @@ if(state==""){
   alert("لطفا وارد شوید")
 
 }
-    axios.post(apiUrl+'InsertComment',{BookID:id,CustomerID:state,Rate:rateNum,Text:income})
+    axios.post(apiUrl+'InsertComment',{BookID:newID,CustomerID:state,Rate:rateNum,Text:income})
     .then(function (response) {
       const message = response.data;
       const result = response.data.result;
@@ -260,7 +280,7 @@ if(state==""){
   alert("لطفا وارد شوید")
 
 }
-    axios.post(apiUrl+'SingleBookSave',{BookID:id,CustomerID:state})
+    axios.post(apiUrl+'SingleBookSave',{BookID:newID,CustomerID:state})
     .then(function (response) {
       const message = response.data;
       const result = response.data.result;
@@ -309,7 +329,7 @@ if(state==""){
     const  buy=async()=> {
       const state = await AsyncStorage.getItem("@user");
 
-      axios.post(apiUrl+'ShoppingBasketAdd',{CustomerID:state,BookID:id,Cost:data.SpecialCost?data.SpecialCost:data.Cost})
+      axios.post(apiUrl+'ShoppingBasketAdd',{CustomerID:state,BookID:newID,Cost:data.SpecialCost?data.SpecialCost:data.Cost})
       .then(function (response) {
         const message = response.data;
         const result = response.data.result;
@@ -645,7 +665,7 @@ index+1>item?.Rate?
   };
 return (
  
-<ScrollView style={{ flex: 1,padding:0,backgroundColor:theme.backgroundColor}}>
+<ScrollView ref={refs} style={{ flex: 1,padding:0,backgroundColor:theme.backgroundColor}}>
     <View style={styles(theme).greenBack}>
     <View style={styles(theme).topBar}>
 
@@ -1034,7 +1054,7 @@ greenBack:{
     resizeMode:'contain',
   marginLeft:responsiveWidth(5),
 },bookImg2:{
-  width:responsiveWidth(40),
+  width:responsiveWidth(48),
   height:responsiveHeight(25),
   zIndex:2000,
 marginRight:'auto',

@@ -44,9 +44,12 @@ import { apiUrl ,apiAsset} from "@commons/inFormTypes";
 }, []);
 const  mutLogin=async()=> {
   const state = await AsyncStorage.getItem("@user");
+  const lang = await AsyncStorage.getItem("@langs");
 
   
-  axios.post(apiUrl+'FactorWallet',{CustomerID:state})
+  axios.post(apiUrl+'FactorWallet',{CustomerID:state},{ headers: {
+    lang: lang
+  }})
   .then(function (response) {
     const message = response.data;
     const result = response.data.result;

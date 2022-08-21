@@ -41,9 +41,13 @@ export const truncate = (str, len) => {
   const {type,writer,translator,publisher,GroupID,GroupName} = route?.params ?? {};
 
     const  mutLogin=async()=> {
+      const lang = await AsyncStorage.getItem("@langs");
+
 type=="best"?
 
-axios.get(apiUrl+'BestSellerBook')
+axios.get(apiUrl+'BestSellerBook',{ headers: {
+  lang: lang
+}})
 .then(function (response) {
   const message = response.data;
   const result = response.data.result;
@@ -61,7 +65,9 @@ axios.get(apiUrl+'BestSellerBook')
   console.log(error);
 })
 :type=="writer"?
-axios.post(apiUrl+'WriterBook',{Writer:writer})
+axios.post(apiUrl+'WriterBook',{Writer:writer},{ headers: {
+  lang: lang
+}})
 .then(function (response) {
   const message = response.data;
   const result = response.data.result;
@@ -78,7 +84,9 @@ axios.post(apiUrl+'WriterBook',{Writer:writer})
 .catch(function (error) {
   console.log(error);
 }):type=="translator"?
-axios.post(apiUrl+'TranslatorBook',{Translator:translator})
+axios.post(apiUrl+'TranslatorBook',{Translator:translator},{ headers: {
+  lang: lang
+}})
 .then(function (response) {
   const message = response.data;
   const result = response.data.result;
@@ -96,7 +104,9 @@ axios.post(apiUrl+'TranslatorBook',{Translator:translator})
   console.log(error);
 })
 :type=="publisher"?
-axios.post(apiUrl+'PublisherBook',{Publisher:publisher})
+axios.post(apiUrl+'PublisherBook',{Publisher:publisher},{ headers: {
+  lang: lang
+}})
 .then(function (response) {
   const message = response.data;
   const result = response.data.result;
@@ -116,7 +126,9 @@ axios.post(apiUrl+'PublisherBook',{Publisher:publisher})
 :type=="group"?
 
 
-axios.post(apiUrl+'RelatedBook',{GroupID:GroupID})
+axios.post(apiUrl+'RelatedBook',{GroupID:GroupID},{ headers: {
+  lang: lang
+}})
 .then(function (response) {
   const message = response.data;
   const result = response.data.result;
@@ -134,7 +146,9 @@ axios.post(apiUrl+'RelatedBook',{GroupID:GroupID})
   console.log(error);
 })
 :
-      axios.get(apiUrl+'LastNewBook')
+      axios.get(apiUrl+'LastNewBook',{ headers: {
+        lang: lang
+      }})
       .then(function (response) {
         const message = response.data;
         const result = response.data.result;

@@ -36,6 +36,7 @@ import Factor from '@screens/Factor/Factor';
 import Search from "@screens/Search/Search";
 import { ThemeProvider} from './theme/theme-context';
 import { myFontStyle } from './src/assets/Constance';
+import { getTranslation } from '@i18n/i18n';
 
 const Stack = createNativeStackNavigator();
 const Tab = createMaterialBottomTabNavigator();
@@ -56,13 +57,13 @@ activeColor={Colors.darkGreen}
     // name="home"
     name={"StackNavigatorsHome"}
     component={StackNavigatorsHome}
-    options={{          tabBarLabel:<Text style={{...myFontStyle.menu,marginTop:10,textAlign:'center'}}>خانه</Text>,  tabBarIcon: ({ color }) => (            <Icon name="home" color={Colors.darkGreen}  size={25} />          ),        }}      />
+    options={{          tabBarLabel:<Text style={{...myFontStyle.menu,marginTop:10,textAlign:'center'}}>{getTranslation("خانه")}</Text>,  tabBarIcon: ({ color }) => (            <Icon name="home" color={Colors.darkGreen}  size={25} />          ),        }}      />
 <Tab.Screen
    name="Library" component={StackNavigatorsLibrary}
-   options={{          tabBarLabel:<Text style={{...myFontStyle.menu}}>کتابخانه</Text>,    tabBarIcon: ({ color }) => (    <Icon name="library-books" color={Colors.darkGreen} size={25} />         ),           }}      />
+   options={{          tabBarLabel:<Text style={{...myFontStyle.menu}}>{getTranslation("کتابخانه")}</Text>,    tabBarIcon: ({ color }) => (    <Icon name="library-books" color={Colors.darkGreen} size={25} />         ),           }}      />
 <Tab.Screen
    name="Searchs" component={StackNavigatorsSearch}
-   options={{          tabBarLabel: <Text style={{...myFontStyle.menu}}>جستجو</Text>, tabBarIcon: ({ color }) => (    <Icon name="search" color={Colors.darkGreen} size={25} />         ),           }}      />
+   options={{          tabBarLabel: <Text style={{...myFontStyle.menu}}>{getTranslation("جستجو")}</Text>, tabBarIcon: ({ color }) => (    <Icon name="search" color={Colors.darkGreen} size={25} />         ),           }}      />
 
   
 <Tab.Screen
@@ -70,11 +71,11 @@ activeColor={Colors.darkGreen}
        name={"Categorys"}
        component={StackNavigatorsCat}
 
-       options={{          tabBarLabel:<Text style={{...myFontStyle.menu}}>دسته بندی</Text>,          tabBarIcon: ({ color }) => (            <Icon name="apps" color={Colors.darkGreen} size={25} />          ),        }}      />
+       options={{          tabBarLabel:<Text style={{...myFontStyle.menu}}>{getTranslation("دسته بندی")} </Text>,          tabBarIcon: ({ color }) => (            <Icon name="apps" color={Colors.darkGreen} size={25} />          ),        }}      />
 <Tab.Screen
    name="Profile" component={StackNavigatorsProfile}
    style={{...myFontStyle.UltraBold}}
-   options={{          tabBarLabel: <Text style={{...myFontStyle.menu}}>حساب کاربری</Text>,    tabBarIcon: ({ color }) => (    <Icon name="person-outline" color={Colors.darkGreen} size={25} />         ),           }}      />
+   options={{          tabBarLabel: <Text style={{...myFontStyle.menu}}>{getTranslation("حساب کاربری")}</Text>,    tabBarIcon: ({ color }) => (    <Icon name="person-outline" color={Colors.darkGreen} size={25} />         ),           }}      />
 
 </Tab.Navigator>
   );

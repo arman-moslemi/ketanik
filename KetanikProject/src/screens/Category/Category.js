@@ -56,7 +56,11 @@ console.log(episode)
 
 }, []);
   const  mutLogin=async()=> {
-    axios.get(apiUrl+'AllGroup')
+    const lang = await AsyncStorage.getItem("@langs");
+
+    axios.get(apiUrl+'AllGroup',{ headers: {
+      lang: lang
+    }})
     .then(function (response) {
       const message = response.data;
       const result = response.data.result;
