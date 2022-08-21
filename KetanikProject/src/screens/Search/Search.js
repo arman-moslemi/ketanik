@@ -9,6 +9,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import { myFontStyle } from "@assets/Constance";
 import { apiUrl ,apiAsset} from "@commons/inFormTypes";
+import { ProductCard } from '@components/ProductCard';
 
 
 export const truncate = (str, len) => {
@@ -48,18 +49,18 @@ export const truncate = (str, len) => {
           console.log(error);
         });}
         const keyExtractor = item => {
-          return item[0].ProductID;
+          return item.ProductID;
         };
         const _render = (item, index) => {
           return (
-            <ProductCard Name={item.item[0].Name} Unit={item.item[0].Name} Number={item.item[0].Number} Cost={item.item[0].Cost} />
+            <ProductCard Name={item.item.Name} Unit={item.item.Unit} Number={item.item.Number} Cost={item.item.Cost} />
       
           );
         };
 return (
   <View style={styles.container}>
       
-      <View style={{display:'flex',flexDirection:'row-reverse',alignContent:'center',alignItems:'center'}}>
+      <View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center',paddingLeft:responsiveWidth(8)}}>
       <View style={styles.inputIcon}>
       <Icon name={"search"} color={'#CECECE'} size={30}/>
       <TextInput  onChangeText={(ss)=>_handleKeyDownAuto(ss)} style={styles.textInputIcon}  placeholder="جستجو کنید ..."/>
@@ -74,7 +75,7 @@ return (
      
       </View> 
     {
-      search?
+      !search?
 <>
       <Image source={require('@assets/images/searchEmpty.png')} style={styles.searchEmpty} />
       <Text style={styles.serachText}>
@@ -87,9 +88,9 @@ return (
       numColumns={2}
       columnWrapperStyle={{width:'50%'}}
       keyExtractor={keyExtractor}
-      data={data}
+      data={search}
       renderItem={_render}
-      style={{marginTop:responsiveHeight(4),marginBottom:responsiveHeight(20),marginRight:2}}
+      style={{marginTop:responsiveHeight(4)}}
                 // ListFooterComponent={listFooter}
       // onEndReached={fetchNextCharityPage}
     />
@@ -117,15 +118,16 @@ const styles = StyleSheet.create({
     backgroundColor:'#fff',
     flex:1,
     display:'flex',
-    padding:25,
+    padding:responsiveWidth(3),
    
-  },    inputIcon:{
+  },   
+   inputIcon:{
     alignItems:'center',
     display:'flex',
     flexDirection:'row-reverse',
     backgroundColor:'#ffffff',
     borderRadius:5,
-    width:"83%",
+    // width:"83%",
     marginLeft:'1%',
     marginTop:5,
     marginBottom:5,

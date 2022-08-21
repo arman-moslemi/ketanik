@@ -11,10 +11,7 @@ import { myFontStyle } from "@assets/Constance";
 import Modal from "react-native-modal";
 import {RadioButton ,Switch,List} from 'react-native-paper';
 import DropDownPicker from 'react-native-dropdown-picker';
-
-// create a component
-
-
+import { apiUrl ,apiAsset} from "@commons/inFormTypes";
 
  const ConsultantList = ({navigation }) => {
   const [isModalVisible, setModalVisible] = useState(false);
@@ -23,9 +20,10 @@ import DropDownPicker from 'react-native-dropdown-picker';
 
   const [open, setOpen] = useState(false);
   const [items, setItems] = useState([
-    // {label: 'پزشکی', value: '1'},
-    // {label: 'دندان پزشکی', value: '2'},
-    // {label: 'بورد', value: '3'},
+    {label: '15 دقیقه', value: '15'},
+    {label: '30 دقیقه', value: '30'},
+    {label: '45 دقیقه', value: '45'},
+    {label: '60 دقیقه', value: '60'},
   ]);
   const [checked, setChecked] = React.useState('first');
   const [isSwitchOn, setIsSwitchOn] = React.useState(false);
@@ -34,8 +32,17 @@ import DropDownPicker from 'react-native-dropdown-picker';
 
   const handlePress = () => setExpanded(!expanded);
   const onToggleSwitch = () => setIsSwitchOn(!isSwitchOn);
-  const toggleModal = () => {
+  const [name, setName] = useState();
+  const [subject, setubject] = useState();
+  const [Specialty, setSpecialty] = useState();
+  const [type, setType] = useState();
+  const [time, setTime] = useState();
+  const [cost, setCost] = useState();
+  const [consultant, setConsultant] = useState();
+  const toggleModal = (types,names,specialtys,wait,id) => {
     setModalVisible(!isModalVisible);
+    setName(names);setType(types);setSpecialty(specialtys);
+    setConsultant(id)
   };
   const closeModal=()=>{
     setModalVisible(!isModalVisible);
@@ -46,7 +53,101 @@ import DropDownPicker from 'react-native-dropdown-picker';
   const closeModal2=()=>{
     setModalVisible2(!isModalVisible2);
   }
- 
+  const [data, setData] = useState([]);
+  const [recent, setRecent] = useState([]);
+
+
+  const GetData=()=>{
+      const axios = require("axios");
+      axios.get(apiUrl + "AllConsultant")
+      .then(function (response) {
+        if (response.data.result == "True") {
+            setData(response.data.Data)
+            
+          }})
+          .catch(function (error) {
+              console.log(777)
+              alert(error)
+              
+              console.log(error);
+          });
+      axios.get(apiUrl + "GetConsultant")
+      .then(function (response) {
+        if (response.data.result == "True") {
+            setData(response.data.Data)
+            
+          }})
+          .catch(function (error) {
+              console.log(777)
+              alert(error)
+              
+              console.log(error);
+          });
+   
+      
+
+    }
+    const GetCost=()=>{
+        const axios = require("axios");
+        console.log(4444)
+        console.log(consultant)
+        axios.post(apiUrl + "SetCostConsultant",{CustomerID:consultant,Time:time,Type:type})
+        .then(function (response) {
+          if (response.data.result == "True") {
+              setCost(response.data.Data)
+              toggleModal2()
+            }})
+            .catch(function (error) {
+                console.log(777)
+                alert(error)
+                
+                console.log(error);
+            }); 
+  
+      }
+    const InsertConsultant=()=>{
+        const axios = require("axios");
+        var ss= localStorage.getItem("CustomerID")
+        axios.post(apiUrl + "SetConsultant",{Customer:ss,Consultant:consultant,Cost:cost,Time:time,Type:type,Subject:subject})
+        .then(function (response) {
+          if (response.data.result == "True") {
+              handleClose2()
+              alert("با موفقیت ثبت شد")
+            }})
+            .catch(function (error) {
+                console.log(777)
+                alert(error)
+                
+                console.log(error);
+            });
+   
+     
+        
+  
+      }
+    const InsertFavorite=(id)=>{
+        const axios = require("axios");
+        var ss= localStorage.getItem("CustomerID")
+        axios.post(apiUrl + "InsertFavorite",{CustomerID:ss,CustomerID2:id})
+        .then(function (response) {
+          if (response.data.result == "True") {
+              alert("با موفقیت ثبت شد")
+            }})
+            .catch(function (error) {
+                console.log(777)
+                alert(error)
+                
+                console.log(error);
+            });
+   
+     
+        
+  
+      }
+    useEffect(() => {
+      GetData();
+
+    }, []);
   return (
     <View style={styles.container}>
     <ScrollView>
@@ -69,30 +170,40 @@ import DropDownPicker from 'react-native-dropdown-picker';
       لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است 
       </Text>
    </View>
+   {
+    data?.map((item)=>{
+      return(
    <View style={styles.historyBox}>
     <View style={{display:'flex',flexDirection:'row-reverse',paddingBottom:responsiveHeight(0.75),borderBottomWidth:1,borderBottomColor:"rgba(186, 186, 186, 0.25)"}}>
   <View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>
   <Image source={require('@assets/images/profile2.png')} style={styles.profilePic} />
   <View style={{display:'flex',flexDirection:'column'}}>
     <Text style={styles.ConsultantName}>
-     یاسمن طاهری
-    </Text>
+    {item.Name} {item.Family}    </Text>
     <Text style={styles.ConsultantName2}>
-      کارشناس ارشد کشاورزی
-    </Text>
+    {item.Specialty}      </Text>
     <Text style={styles.ConsultantName2}>
-      زمان انتظار : 20 دقیقه
+      زمان انتظار : {item.WaitTime} دقیقه
     </Text>
   </View>
   </View>
 
   <View style={{flexDirection:'column',alignItems:'flex-start',justifyContent:'space-between'}}>
   <View style={{flexDirection:'row-reverse',alignItems:'flex-start'}}>
-  <Icon name={"star-border"} color={'#000000'} size={15}/>
-      <Icon name={"star-border"} color={'#000000'} size={15}/>
-      <Icon name={"star"} color={'#ffb921'} size={15}/>
-      <Icon name={"star"} color={'#ffb921'} size={15}/>
-      <Icon name={"star"} color={'#ffb921'} size={15}/>
+  {
+                      [...new Array(5)].map((item2,index)=>{
+                        return(
+index+1>item.Rate?
+<Icon name={"star"} color={'#ffb921'} size={15}/>
+
+:
+<Icon name={"star-border"} color={'#000000'} size={15}/>
+
+
+                        )
+                      })
+                    }
+  
      
       </View>
       <TouchableOpacity style={{display:'flex',flexDirection:'row-reverse',marginLeft:responsiveWidth(2),marginBottom:responsiveHeight(2)}}>
@@ -109,75 +220,35 @@ import DropDownPicker from 'react-native-dropdown-picker';
 درخواست مشاوره:    </Text>
     </View>
     <View style={{flexDirection:'row-reverse'}}>
-      <TouchableOpacity onPress={()=>toggleModal()}>
+      <TouchableOpacity onPress={()=>toggleModal("1",item.Name+" "+item.Family,item.Specialty,item.WaitTime,item.CustomerID )}>
 
     <Text style={styles.TypeCallText}>
 متنی    |    </Text>
       </TouchableOpacity>
+      <TouchableOpacity onPress={()=>toggleModal("2",item.Name+" "+item.Family,item.Specialty,item.WaitTime ,item.CustomerID)}>
+
     <Text style={styles.TypeCallText}>
      صوتی    |   </Text>
+     </TouchableOpacity>
+
+     <TouchableOpacity onPress={()=>toggleModal("3",item.Name+" "+item.Family,item.Specialty,item.WaitTime,item.CustomerID )}>
+
     <Text style={styles.TypeCallText}>
 تصویری    </Text>
+</TouchableOpacity>
+
     </View>
   </View>
 </View>
-<View style={styles.historyBox}>
-    <View style={{display:'flex',flexDirection:'row-reverse',paddingBottom:responsiveHeight(0.75),borderBottomWidth:1,borderBottomColor:"rgba(186, 186, 186, 0.25)"}}>
-  <View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>
-  <Image source={require('@assets/images/profile2.png')} style={styles.profilePic} />
-  <View style={{display:'flex',flexDirection:'column'}}>
-    <Text style={styles.ConsultantName}>
-     یاسمن طاهری
-    </Text>
-    <Text style={styles.ConsultantName2}>
-      کارشناس ارشد کشاورزی
-    </Text>
-    <Text style={styles.ConsultantName2}>
-      زمان انتظار جهت پاسخگویی : 20 دقیقه
-    </Text>
-  </View>
-  </View>
+      )
+    })
+   }
 
-  <View style={{display:'flex',flexDirection:'column',alignItems:'flex-end',justifyContent:'space-between'}}>
-  <View style={{display:'flex',flexDirection:'row-reverse',marginLeft:responsiveWidth(2),alignItems:'flex-start'}}>
-  <Icon name={"star-border"} color={'#000000'} size={15}/>
-      <Icon name={"star-border"} color={'#000000'} size={15}/>
-      <Icon name={"star"} color={'#ffb921'} size={15}/>
-      <Icon name={"star"} color={'#ffb921'} size={15}/>
-      <Icon name={"star"} color={'#ffb921'} size={15}/>
-     
-      </View>
-      <TouchableOpacity style={{display:'flex',flexDirection:'row-reverse',marginBottom:responsiveHeight(2)}}>
-      <Icon name={"favorite-border"} color={'#FF2525'} size={15}/>
-        <Text style={styles.heartBtnText}>
-          افزودن به برگزیده ها
-        </Text>
-      </TouchableOpacity>
-  </View>
-  </View>
-  <View style={{justifyContent:'space-between',flexDirection:'row-reverse',padding:responsiveWidth(1)}}>
-    <View>
-    <Text style={styles.reqCon}>
-درخواست مشاوره:    </Text>
-    </View>
-    <View style={{flexDirection:'row-reverse'}}>
-      <TouchableOpacity onPress={()=>toggleModal()}>
-
-    <Text style={styles.TypeCallText}>
-متنی    |    </Text>
-      </TouchableOpacity>
-    <Text style={styles.TypeCallText}>
-     صوتی    |   </Text>
-    <Text style={styles.TypeCallText}>
-تصویری    </Text>
-    </View>
-  </View>
-</View>
     </ScrollView>
     <Modal isVisible={isModalVisible} onBackdropPress={closeModal} animationIn={'slideInUp'} style={{display:'flex',justifyContent:'center',alignItems:'center'}}>
     {/* <KeyboardAvoidingView behavior='position' keyboardVerticalOffset={keyboardVerticalOffset}> */}
 
-        <View style={{ flex:0.48,backgroundColor:'#ffffff',borderRadius:1,width:'80%',padding:5}}>
+        <View style={{ flex:0.52,backgroundColor:'#ffffff',borderRadius:1,width:'80%',padding:5}}>
           <View style={styles.modalHeader}>
           {/* <Image source={require('@assets/images/blackSort.png')} style={styles.modalHeaderIcon} /> */}
           <Text style={styles.modalHeaderText}>
@@ -190,7 +261,7 @@ import DropDownPicker from 'react-native-dropdown-picker';
   نام مشاور :   
     </Text>
       <Text style={styles.modalText}>
-   امیرحسین مفید      </Text>
+      {name}       </Text>
     </View>
     <View style={{display:'flex',alignItems:'center',flexDirection:'row-reverse'}}>
     <Text style={styles.radioLable}>
@@ -198,7 +269,7 @@ import DropDownPicker from 'react-native-dropdown-picker';
 تحصیلات :
     </Text>
       <Text style={styles.modalText}>
-کارشناش ارشد کشاورزی      </Text>
+      {Specialty}     </Text>
     </View>
     <View style={{display:'flex',alignItems:'center',flexDirection:'row-reverse'}}>
     <Text style={styles.radioLable}>
@@ -206,7 +277,8 @@ import DropDownPicker from 'react-native-dropdown-picker';
 نوع مشاوره :
     </Text>
       <Text style={styles.modalText}>
-متنی      </Text>
+      {type==1?"متنی":type==2?"صوتی":"تصویری"}
+     </Text>
     </View>
     <View>
     <Text style={styles.radioLable}>
@@ -215,7 +287,7 @@ import DropDownPicker from 'react-native-dropdown-picker';
     </Text>
     </View>
  <View>
- <TextInput style={styles.textInputIcon}  onChangeText={(ss)=>setMobile(ss)}  placeholder=""/>
+ <TextInput style={styles.textInputIcon}  o onChange={(e)=>setubject(e.target.value)}  placeholder=""/>
 
  </View>
  <View>
@@ -231,7 +303,7 @@ import DropDownPicker from 'react-native-dropdown-picker';
   value={value}
   items={items}
   setOpen={setOpen}
-  // setValue={setValue}
+  setValue={setValue}
   // setValue={setValueDrop}
   setItems={setItems}
   // width={100}
@@ -254,7 +326,7 @@ alignSelf:'flex-end'
 }}
 />
     </View>
-    <TouchableOpacity onPress={()=>{closeModal();toggleModal2()}} style={styles.yellowBtn}>
+    <TouchableOpacity onPress={()=>{closeModal();GetCost()}} style={styles.yellowBtn}>
         <Text style={styles.yellowBtnTxt}>پرداخت</Text>
       </TouchableOpacity>
     </View>
@@ -279,7 +351,7 @@ alignSelf:'flex-end'
   نام مشاور :   
     </Text>
       <Text style={styles.modalText}>
-   امیرحسین مفید      </Text>
+      {name}      </Text>
     </View>
     <View style={{display:'flex',alignItems:'center',flexDirection:'row-reverse'}}>
     <Text style={styles.radioLable}>
@@ -287,7 +359,7 @@ alignSelf:'flex-end'
 تحصیلات :
     </Text>
       <Text style={styles.modalText}>
-کارشناش ارشد کشاورزی      </Text>
+      {Specialty}      </Text>
     </View>
     <View style={{display:'flex',alignItems:'center',flexDirection:'row-reverse'}}>
     <Text style={styles.radioLable}>
@@ -295,7 +367,8 @@ alignSelf:'flex-end'
 نوع مشاوره :
     </Text>
       <Text style={styles.modalText}>
-متنی      </Text>
+      {type==1?"متنی":type==2?"صوتی":"تصویری"}
+      </Text>
     </View>
     <View style={{display:'flex',alignItems:'center',flexDirection:'row-reverse'}}>
     <Text style={styles.radioLable}>
@@ -303,7 +376,7 @@ alignSelf:'flex-end'
 موضوع مشاوره :
     </Text>
     <Text style={styles.modalText}>
-متنی      </Text>
+    {subject}       </Text>
     </View>
 
  <View style={{display:'flex',alignItems:'center',flexDirection:'row-reverse'}}>
@@ -313,7 +386,7 @@ alignSelf:'flex-end'
     </Text>
     <Text style={styles.radioLable2}>
 
-125000تومان   
+    {cost}تومان   
  </Text>
     </View>
     <View>
