@@ -27,7 +27,7 @@ import AsyncStorage from  '@react-native-async-storage/async-storage';
 
       navigation.reset({
         index: 0,
-        routes: [{ name: 'Login' }]
+        routes: [{ name: 'TabBar' }]
    })
 
     }
