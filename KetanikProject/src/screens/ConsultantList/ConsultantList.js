@@ -81,13 +81,13 @@ import DropDownPicker from 'react-native-dropdown-picker';
       کارشناس ارشد کشاورزی
     </Text>
     <Text style={styles.ConsultantName2}>
-      زمان انتظار جهت پاسخگویی : 20 دقیقه
+      زمان انتظار : 20 دقیقه
     </Text>
   </View>
   </View>
 
-  <View style={{display:'flex',flexDirection:'column',alignItems:'flex-end',justifyContent:'space-between'}}>
-  <View style={{display:'flex',flexDirection:'row-reverse',marginLeft:responsiveWidth(2),alignItems:'flex-start'}}>
+  <View style={{flexDirection:'column',alignItems:'flex-start',justifyContent:'space-between'}}>
+  <View style={{flexDirection:'row-reverse',alignItems:'flex-start'}}>
   <Icon name={"star-border"} color={'#000000'} size={15}/>
       <Icon name={"star-border"} color={'#000000'} size={15}/>
       <Icon name={"star"} color={'#ffb921'} size={15}/>
@@ -95,7 +95,7 @@ import DropDownPicker from 'react-native-dropdown-picker';
       <Icon name={"star"} color={'#ffb921'} size={15}/>
      
       </View>
-      <TouchableOpacity style={{display:'flex',flexDirection:'row-reverse',marginBottom:responsiveHeight(2)}}>
+      <TouchableOpacity style={{display:'flex',flexDirection:'row-reverse',marginLeft:responsiveWidth(2),marginBottom:responsiveHeight(2)}}>
       <Icon name={"favorite-border"} color={'#FF2525'} size={15}/>
         <Text style={styles.heartBtnText}>
           افزودن به برگزیده ها
@@ -448,7 +448,7 @@ const shadow = {
       
     },historyBox:{
       width:responsiveWidth(84),
-  height:responsiveHeight(13),
+  height:responsiveHeight(16),
   marginRight:'auto',
   marginLeft:'auto',
  
