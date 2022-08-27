@@ -1,5 +1,5 @@
 import React, {useState,useEffect,useContext} from 'react';
-import {View,Text, TouchableOpacity,Image,ScrollView,TextInput,FlatList,BackHandler} from 'react-native';
+import {View,Text, TouchableOpacity,Image,ScrollView,TextInput,FlatList,BackHandler,Alert} from 'react-native';
 
 import { StyleSheet } from 'react-native';
 import { responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
@@ -123,7 +123,7 @@ mutLogin()
           setDisable(true)
         // navigation.navigate("ChangePass",{mobile:user,verify:response.data.Data})
                         }else{
-    alert(response.data.message)
+      Alert.alert("",response.data.message)
       }
     })
     .catch(function (error) {
@@ -149,7 +149,7 @@ mutLogin()
       if(result == "true"){
         navigation.navigate("Factor")        
                         }else{
-    alert(response.data.message)
+      Alert.alert("",response.data.message)
       }
     })
     .catch(function (error) {
@@ -180,19 +180,19 @@ mutLogin()
           console.log(userObj.id)
           navigation.navigate("Dargah",{id:userObj.id})        
         }else{
-          alert("با موفقیت اضافه شد")
+            Alert.alert("","با موفقیت اضافه شد")
 
         }
                         }else{
                           // let userObj2 = JSON.parse(response.data);
                           if(JSON.parse(response.data.message).errors[0].message){
 
-                            alert(JSON.parse(response.data.message).errors[0].message);
+                              Alert.alert("",JSON.parse(response.data.message).errors[0].message);
 
                           }
                           else{
 
-                            alert("کیف پول شما موجودی لازم را ندارد")
+                              Alert.alert("","کیف پول شما موجودی لازم را ندارد")
                           }
 
       }

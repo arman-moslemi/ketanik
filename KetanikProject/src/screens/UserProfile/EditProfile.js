@@ -1,7 +1,7 @@
 import React, { useState,useEffect ,useContext} from 'react';
 import { myFontStyle } from "@assets/Constance";
 
-import { responsiveFontSize, responsiveHeight, responsiveScreenWidth, responsiveWidth } from 'react-native-responsive-dimensions';
+import { responsiveFontSize, responsiveHeight, responsiveScreenWidth, responsiveWidth,Alert } from 'react-native-responsive-dimensions';
 import { Colors} from "@assets/Colors";
 
 import { View, Text , StyleSheet,Image, TouchableOpacity,ScrollView,TextInput} from 'react-native';
@@ -74,7 +74,7 @@ setEmail(response.data.Data.Email)
             console.log(message);
       
             if(result == "true"){
-        alert("تغییرات با موفقیت ذخیره شد")
+          Alert.alert("","تغییرات با موفقیت ذخیره شد")
               // navigation.navigate("ChangePass",{mobile:user,verify:response.data.Data})
                               }else{
       
@@ -129,13 +129,13 @@ setEmail(response.data.Data.Email)
               const result = response.data.result;
 console.log(888)
 console.log( response.data)
-// alert("",response.data.message)
+//   Alert.alert("","",response.data.message)
 if(result=="true"){
 
   console.log(222);
   
   console.log(response.data.result);
-  alert('عکس با موفقیت ثبت شد')
+    Alert.alert("",'عکس با موفقیت ثبت شد')
   AsyncStorage.setItem('@userPhoto',response.data.Data.Photo.toString())
 }
 

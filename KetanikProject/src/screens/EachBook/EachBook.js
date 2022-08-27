@@ -1,6 +1,6 @@
 import React, { useState,useEffect ,useContext} from 'react';
 import { myFontStyle } from "@assets/Constance";
-import { View, Text , StyleSheet,Image, TouchableOpacity,Button,ScrollView,FlatList} from 'react-native';
+import { View, Text , StyleSheet,Image, TouchableOpacity,Button,ScrollView,FlatList,Alert} from 'react-native';
 import { TabView, SceneMap,TabBar } from 'react-native-tab-view';
 import { responsiveFontSize, responsiveHeight, responsiveScreenWidth, responsiveWidth } from 'react-native-responsive-dimensions';
 import { Colors} from "@assets/Colors";
@@ -245,11 +245,11 @@ const {id} = route?.params ?? {};
   const  mutComment=async()=> {
     const state = await AsyncStorage.getItem("@user");
 if( rate==""|| income==""){
-  alert("موارد را وارد نمایید")
+    Alert.alert("","موارد را وارد نمایید")
 
 }
 if(state==""){
-  alert("لطفا وارد شوید")
+    Alert.alert("","لطفا وارد شوید")
 
 }
     axios.post(apiUrl+'InsertComment',{BookID:newID,CustomerID:state,Rate:rateNum,Text:income})
@@ -259,7 +259,7 @@ if(state==""){
       
       
       if(result == "true"){
-        alert("با موفقیت اضافه شد")
+          Alert.alert("","با موفقیت اضافه شد")
         setModalVisibleCom(false)
         // navigation.navigate("ChangePass",{mobile:user,verify:response.data.Data})
                         }else{
@@ -277,7 +277,7 @@ if(state==""){
     const state = await AsyncStorage.getItem("@user");
 
 if(state==""){
-  alert("لطفا وارد شوید")
+    Alert.alert("","لطفا وارد شوید")
 
 }
     axios.post(apiUrl+'SingleBookSave',{BookID:newID,CustomerID:state})
@@ -289,7 +289,7 @@ if(state==""){
       console.log(message);
       
       if(result == "true"){
-        alert("با موفقیت ذخیره شد")
+        Alert.alert("","با موفقیت ثبت شد")
         setModalVisibleCom(false)
         // navigation.navigate("ChangePass",{mobile:user,verify:response.data.Data})
                         }else{
@@ -315,7 +315,7 @@ if(state==""){
       console.log(message);
       
       if(result == "true"){
-        alert("با موفقیت ذخیره شد")
+          Alert.alert("","با موفقیت ذخیره شد")
                         }else{
 
       }
@@ -338,7 +338,7 @@ if(state==""){
         console.log(message);
         
         if(result == "true"){
-          alert("با موفقیت به سبدخریداضافه شد")
+            Alert.alert("","با موفقیت به سبدخریداضافه شد")
           navigation.reset({
             index: 0,
             routes: [{ name: 'TabBar' }]
@@ -671,7 +671,7 @@ return (
 
 
     {/* <View style={styles(theme).rightCol}>
-    <TouchableOpacity onPress={()=>alert(55)}>
+    <TouchableOpacity onPress={()=>  Alert.alert("",55)}>
     <Image source={require('@assets/images/save.png')} style={styles(theme).saveBtn}/>
       </TouchableOpacity>
       

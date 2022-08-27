@@ -1,5 +1,5 @@
 import React, {useState,useEffect,useContext} from 'react';
-import {View, TextInput, Text, TouchableOpacity,Image,ScrollView} from 'react-native';
+import {View, TextInput, Text, TouchableOpacity,Image,ScrollView,Alert} from 'react-native';
 
 
 import { StyleSheet } from 'react-native';
@@ -86,7 +86,7 @@ const  mutLogin=async()=> {
         console.log(userObj.id)
         navigation.navigate("Dargah",{id:userObj.id})        
                         }else{
-    alert(response.data.message)
+      Alert.alert("",response.data.message)
       }
     })
     .catch(function (error) {

@@ -94,11 +94,11 @@ export const Input = props => {
             onPress={() => {
               setPasswordHidden(!isPasswordHidden);
             }}>
-            <Icon
+            {/* <Icon
               size={25}
               name={isPasswordHidden === true ? 'remove-red-eye' : 'eye-off'}
               color={Colors.appColor}
-            />
+            /> */}
           </TouchableOpacity>
         ) : null}
                 {isIconLeft ? (
@@ -154,7 +154,7 @@ const styles =StyleSheet.create({
 
     borderRadius:15,
     paddingTop:10,
-    textAlign:'right'
+    textAlign:'left'
     // backgroundColor:'#f3f3f3'
   },
 
