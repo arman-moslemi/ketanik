@@ -190,25 +190,25 @@ return (
   <View style={{display:'flex',flexDirection:'row-reverse',marginTop:responsiveHeight(5),justifyContent:'space-between'}}>
    
     <TouchableOpacity onPress={()=>dargah()} style={styles(theme).payBtn}>
-       <Text style={styles(theme).btnText}>پرداخت</Text>
+       <Text style={styles(theme).btnText}>{getTranslation('پرداخت')}</Text>
      </TouchableOpacity>
     
 
-    <TouchableOpacity style={styles(theme).cancelBtn}>
-       <Text style={styles(theme).btnText2}>انصراف</Text>
+    <TouchableOpacity onPress={()=>navigation.navigate("TabBar")} style={styles(theme).cancelBtn}>
+       <Text style={styles(theme).btnText2}>{getTranslation('انصراف')}</Text>
      </TouchableOpacity>
    
   </View>
   <View style={styles(theme).greenBack}>
 <Icon name={'error'} color={'#dc3545'} size={30}/>
 <Text style={styles(theme).alertText}>
-لطفا توجه داشته باشید امکان استرداد مبلغ واریز شده وجود ندارد
+{getTranslation('لطفا توجه داشته باشید امکان استرداد مبلغ واریز شده وجود ندارد')}
   </Text>
   </View>
   <TouchableOpacity onPress={()=>navigation.navigate("Factor")} style={styles(theme).editProfileBtn2}>
       <View style={{display:'flex',flexDirection:'row-reverse'}}>
         
-        <Text style={styles(theme).btnText3}>مشاهده سابقه تراکنش های موفق</Text>
+        <Text style={styles(theme).btnText3}>{getTranslation('مشاهده سابقه تراکنش های موفق')}</Text>
       </View>
       <View>
         <Icon name={'chevron-left'} size={20} color={'#111'}/>
