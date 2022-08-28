@@ -53,7 +53,7 @@ return (
  <View style={styles(theme).container}>
   <View style={styles(theme).aboutView}>
     <Text style={styles(theme).aboutText}>
-    {getTranslation('لینک اختصاصی خود را از بخش زیر کپی کنید و آن را برای دوستان و آشنایان خود ارسال نمایید.هنگامی که دوستان شما به این لینک وارد شوند و ثبت نام کنند برای اولین خرید خود کد تخفیف 50 درصدی دریافت می کنند و پس از اولین خرید شما نیز یک کد تخفیف 50 درصدی هدیه می گیرید')}
+    {getTranslation('لینک اختصاصی')}
     </Text>
   </View>
   <View style={styles(theme).takhfifRow}>

@@ -383,7 +383,7 @@ const styles = (theme) => StyleSheet.create({
   },overImg:{
     height:responsiveHeight(35),
     borderRadius:10,
-    width:responsiveWidth(60),
+    width:responsiveWidth(65),
     marginRight:'auto',
     marginLeft:'auto',
     

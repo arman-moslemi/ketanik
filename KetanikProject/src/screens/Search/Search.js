@@ -295,7 +295,7 @@ color:theme.menuTitle,
     
     alignSelf:'center'
   },searchInput:{
-    ...myFontStyle.normalRegular,
+    // ...myFontStyle.normalRegular,
     borderWidth:0,
     // backgroundColor:theme.cardBack
   },headText:{

@@ -146,7 +146,7 @@ const styles =StyleSheet.create({
     paddingHorizontal: 15,
     borderColor: Colors.borderColor,
     // fontFamily:"IRANSans",
-...myFontStyle.mediumRegular,
+// ...myFontStyle.mediumRegular,
    // borderColor: '#CECECE',
     // backgroundColor: '#FFFFFF',
     marginTop: 10,

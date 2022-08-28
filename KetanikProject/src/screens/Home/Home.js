@@ -185,11 +185,11 @@ console.log(lang)
       {item.item.SpecialCost}sek
     </Text>
     <Text style={styles(theme).priceStroke}>
-    {item.item.Cost}sek
+    {item.item.Cost==100?"100":100}sek
     </Text>
     </>
           :
-<Text style={styles(theme).bookName}>
+<Text style={styles(theme).bookCost}>
       {item.item.Cost}sek
       </Text>
         }
@@ -526,16 +526,23 @@ const styles =(theme) =>  StyleSheet.create({
     marginLeft:'auto',
     marginTop:responsiveHeight(-4),
     borderRadius:10,
-},bookName:{
+},
+bookName:{
     color:'#111',
     ...myFontStyle.mediumRegular,
     marginTop:responsiveHeight(0.5),
-},priceRed:{
+},
+bookCost:{
+    color:'#111',
+    marginTop:responsiveHeight(0.5),
+},
+
+priceRed:{
     color:'#dc3545',
-    ...myFontStyle.normalRegular,
+    // ...myFontStyle.normalRegular,
     marginTop:responsiveHeight(0.5),
 },priceStroke:{
-...myFontStyle.normalRegular,
+// ...myFontStyle.normalRegular,
 color:'#111',
 textDecorationLine: 'line-through',
 marginTop:responsiveHeight(0.5),

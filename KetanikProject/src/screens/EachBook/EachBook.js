@@ -105,7 +105,7 @@ const _render = (item, index) => {
     {truncate(item.item.BookName,20)}
     </Text>
     <View style={{display:'flex',flexDirection:'row-reverse',justifyContent:'space-between'}}>
-    <Text style={styles(theme).bookName}>
+    <Text style={styles(theme).bookCost}>
     {item.item.Cost}sek
     </Text>
     <View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>
@@ -695,7 +695,7 @@ return (
 <Image source={{uri:apiAsset+data?.Pic}} style={styles(theme).bookImg2}/>
 <Text style={styles(theme).eachBookName}>{data.BookName}</Text>
 <Text style={styles(theme).eachBookDetail}>{data.Writer}</Text>
-<Text style={styles(theme).eachBookDetail}>{data.Cost} {getTranslation('sek')}</Text>
+<Text style={styles(theme).eachBookDetailCost}>{data.Cost} {getTranslation('sek')}</Text>
 <View style={styles(theme).rateRow}>
 <Text style={styles(theme).eachBookDetail2}>{rate[0]?.Average}</Text>
 <Icon name={'star'} color={'#ffc93d'} size={20}/>
@@ -1070,13 +1070,22 @@ marginTop:responsiveHeight(10),
 },bookDetailBox:{
  
   textAlign:'center',
-},eachBookDetail:{
+},
+eachBookDetail:{
   ...myFontStyle.bookWriter3,
   color:theme.textTitle,
   textAlign:'center',
   
   
-},eachBookDetail2:{
+},
+eachBookDetailCost:{
+  color:theme.textTitle,
+  textAlign:'center',
+  
+  
+},
+
+eachBookDetail2:{
   ...myFontStyle.UltraBold,
   color:theme.textTitle,
   textAlign:'center',
@@ -1152,11 +1161,18 @@ cardBox:{
   marginLeft:'auto',
   marginTop:responsiveHeight(-4),
   borderRadius:10,
-},bookName:{
+}
+,bookName:{
   color:'#111',
   ...myFontStyle.normalRegular,
   marginTop:responsiveHeight(0.5),
-},priceRed:{
+}
+,bookCost:{
+  color:'#111',
+  marginTop:responsiveHeight(0.5), 
+}
+,
+priceRed:{
   color:'#dc3545',
   ...myFontStyle.normalRegular,
   marginTop:responsiveHeight(0.5),
