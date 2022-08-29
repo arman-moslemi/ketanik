@@ -40,7 +40,29 @@ export const truncate = (str, len) => {
   
   
   }, []);
+  const  mutDel=async(id)=> {
 
+    const state = await AsyncStorage.getItem("@user");
+
+    axios.post(apiUrl+'SaveBookDelete',{BookID:id,CustomerID:state})
+    .then(function (response) {
+      const message = response.data;
+      const result = response.data.result;
+      console.log(message);
+    
+      if(result == "true"){
+mutLogin()    
+        // navigation.navigate("ChangePass",{mobile:user,verify:response.data.Data})
+                        }else{
+    
+      }
+    })
+    .catch(function (error) {
+      console.log(error);
+    })
+   
+      
+          };
     const  mutLogin=async()=> {
       const state = await AsyncStorage.getItem("@user");
       const lang = await AsyncStorage.getItem("@langs");
@@ -101,9 +123,12 @@ index+1>item.item.Rate?
                 </View>
             </View>
             <View style={{display:"flex",flexDirection:'column',alignContent:'flex-end',justifyContent:'space-between'}}>
-                <View style={styles(theme).headphone}>
+                {/* <View style={styles(theme).headphone}>
                 <Icon name={'headset'} color={'#111'} size={22}/>
-                </View>
+                </View> */}
+                  <TouchableOpacity onPress={()=>mutDel(item.item.BookID)}>
+       <Image source={require('@assets/images/delete.png')} style={styles(theme).deleteImg}/>
+       </TouchableOpacity>
                 <View>
                 {
           item.item.SpecialCost?
@@ -308,6 +333,10 @@ color:'#111',
 textDecorationLine: 'line-through',
 marginTop:responsiveHeight(0.5),
 marginRight:4,
+},deleteImg:{
+  width:responsiveWidth(7),
+  resizeMode:'contain',
+  height:35,
 },
 });
 

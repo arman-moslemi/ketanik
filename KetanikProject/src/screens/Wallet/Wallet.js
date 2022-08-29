@@ -14,6 +14,7 @@ import { ThemeContext } from '../../../theme/theme-context';
 import AsyncStorage from  '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import { apiUrl ,apiAsset} from "@commons/inFormTypes";
+import { getTranslation } from '@i18n/i18n';
 
 // create a component
 
@@ -32,7 +33,7 @@ import { apiUrl ,apiAsset} from "@commons/inFormTypes";
 
  const Wallet = ({navigation }) => {
   const {  theme } = useContext(ThemeContext);
-  const [cost,setCost]=useState(0);
+  const [cost,setCost]=useState(10);
   const [defcost,setDefCost]=useState(0);
 
   const [checked, setChecked] = React.useState('first');
