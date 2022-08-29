@@ -169,9 +169,9 @@ return (
 
 <TouchableOpacity onPress={()=>navigation.navigate("Ticket",{id:item.SupportID,title:item.Title,data:item.Date})} style={styles.subViewRead1}>
 <View style={{}}>
-<TouchableOpacity style={{flexDirection:'row',alignItems:'center'}}>
+<TouchableOpacity  style={{flexDirection:'row',alignItems:'center'}}>
 
-<Icon name="remove-red-eye" size={20} color={'#FFC444'}/>
+<Icon name="remove-red-eye" size={20} color={'#FF6900'}/>
 <Text style={{...myFontStyle.mediumBold,color:Colors.black,textAlign:'right',flexDirection:'column'}}>{"مشاهده تیکت"}</Text>
 
 </TouchableOpacity>

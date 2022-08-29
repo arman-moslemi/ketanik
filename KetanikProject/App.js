@@ -10,6 +10,9 @@ import ForgetPassword from '@screens/Login/ForgetPassword';
 import SignUp from "@screens/Login/SignUp";
 import Home from '@screens/Home/Home';
 import TicketList from '@screens/Ticket/TicketList';
+import Ticket from '@screens/Ticket/Ticket';
+import IotDashboard from '@screens/Iot/IotDashboard';
+import IotProject from '@screens/Iot/IotProject';
 import SignUpSecond from '@screens/Login/SignUpSecond';
 import Store from "@screens/Store/Store";
 import Profile from "@screens/Profile/Profile";
@@ -85,6 +88,9 @@ const StackNavigatorsHome = () => {
       headerShown: false
     }}>
       <Stack.Screen name="Home" component={Home} />
+      <Stack.Screen name="IotDashboard" component={IotDashboard} />
+      <Stack.Screen name="IotProject" component={IotProject} />
+
     
     </Stack.Navigator>
   );
@@ -136,6 +142,7 @@ const StackNavigatorsProfile = () => {
     }}>
              <Stack.Screen name="Profile" component={Profile} /> 
              <Stack.Screen name="TicketList" component={TicketList} />
+             <Stack.Screen name="Ticket" component={Ticket} />
 
     </Stack.Navigator>
   );
