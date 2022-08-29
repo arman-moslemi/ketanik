@@ -1,4 +1,4 @@
-import React, {useState,useContext ,useEffect} from 'react';
+import React, {useState,useRef ,useEffect} from 'react';
 import {View, TextInput, Text, TouchableOpacity,Image,ScrollView,FlatList,KeyboardAvoidingView} from 'react-native';
 
 
@@ -12,11 +12,14 @@ import Modal from "react-native-modal";
 import {RadioButton ,Switch,List} from 'react-native-paper';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { apiUrl ,apiAsset} from "@commons/inFormTypes";
-
+import DrawerPage from '@components/drawerContent/DrawerPage';
+import DrawerContent from '@components/drawerContent/DrawerContent';
+import Drawer from 'react-native-drawer'
  const ConsultantList = ({navigation }) => {
   const [isModalVisible, setModalVisible] = useState(false);
   const [isModalVisible2, setModalVisible2] = useState(false);
   const keyboardVerticalOffset = responsiveHeight(1);
+  const drawers = useRef(null);
 
   const [open, setOpen] = useState(false);
   const [items, setItems] = useState([
@@ -149,6 +152,24 @@ import { apiUrl ,apiAsset} from "@commons/inFormTypes";
 
     }, []);
   return (
+        <Drawer
+    // type="static"
+    type="overlay"
+    acceptDoubleTap ={true}
+        ref={drawers}
+        content={<DrawerContent navigation={navigation}/>}
+        tapToClose={true}
+        // open={true}
+  openDrawerOffset={0.4} // 20% gap on the right side of drawer
+  panCloseMask={0.2}
+  closedDrawerOffset={-3}
+  styles={styles.drawerStyles}
+  tweenHandler={(ratio) => ({
+    main: { opacity:(2-ratio)/2 }
+  })}
+        >
+  
+  <DrawerPage drawers={drawers} name={"مشاوران برگزیده"} navigation={navigation} />
     <View style={styles.container}>
     <ScrollView>
       <View style={{display:'flex',flexDirection:'row-reverse',alignContent:'center',alignItems:'center'}}>
@@ -408,8 +429,8 @@ alignSelf:'flex-end'
         </View>
         {/* </KeyboardAvoidingView> */}
       </Modal>
-     
     </View>
+     </Drawer>
   );
 };
  

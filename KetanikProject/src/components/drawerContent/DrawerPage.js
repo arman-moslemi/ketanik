@@ -17,22 +17,59 @@ import { myFontStyle } from "@assets/Constance";
  const DrawerPage = (props) => {
 
   return (
-    <View style={styles.customRow}>
-    <View style={{paddingLeft:0}}>
-     <TouchableOpacity onPress={()=>props.drawers.current.open()}>
-     <Icon name={"notes"} style={styles.menuIcon} size={responsiveHeight(5)} color={"#fff"}/>
+    
+      props.name=="صفحه اصلی"?
 
-     </TouchableOpacity>
+    <View style={styles.customRow2}>
+    <View >
+   
+
+        
+        <TouchableOpacity onPress={()=>props.navigation.goBack()} style={{        marginTop:responsiveHeight(2)}}>
+        <Image source={require('@assets/images/basket.png')} style={styles.basket} />
+
+        </TouchableOpacity>
+      
      </View>
-    <View style={{flex : 2,textAlign:"right"}}>
+
+    <View style={{textAlign:"right",flexDirection:'row',marginRight:5,marginBottom:5}}>
       <Text style={styles.menuTitle}>{props.name}</Text>
       </View>
-    <View style={{flex :0.5}}>
-      <TouchableOpacity onPress={()=>navigation.navigate("FlashCardSearch")} style={styles.searchBTN}>
-        <Icon name={"search"} color={"#16B2F5"} size={responsiveHeight(3.5)}/>
+    <View >
+      <TouchableOpacity onPress={()=>props.drawers.current.open()} style={styles.iconBTN}>
+        <Icon name={"notes"} color={"#000"} size={responsiveHeight(3)}/>
       </TouchableOpacity>
       </View>
 
+</View>
+:
+<View  style={{backgroundColor:'#fff'}}>
+
+    <View style={styles.customRow}>
+    <View >
+   
+
+ 
+        
+        <TouchableOpacity onPress={()=>props.navigation.goBack()}>
+        <Icon name={"arrow-forward-ios"} style={styles.menuIcon} size={responsiveHeight(2)} color={"#000"}/>
+   
+        </TouchableOpacity>
+      
+     </View>
+     <View style={{flexDirection:'row',alignItems:'center'}}>
+
+    <View style={{textAlign:"right",flexDirection:'row',marginRight:5}}>
+      <Text style={styles.menuTitle}>{props.name}</Text>
+      </View>
+    <View >
+      <TouchableOpacity onPress={()=>props.drawers.current.open()} style={styles.iconBTN}>
+        <Icon name={"notes"} color={"#000"} size={responsiveHeight(3)}/>
+      </TouchableOpacity>
+      </View>
+     </View>
+
+</View>
 </View>
 
   )
@@ -43,9 +80,22 @@ const styles = StyleSheet.create({
     customRow:{
       flexDirection:"row",
         // position:"absolute",
-        marginTop:responsiveHeight(3),
-        paddingRight:responsiveWidth(10),
-        paddingLeft:responsiveWidth(10),
+        marginTop:responsiveHeight(1.5),
+        paddingRight:responsiveWidth(5),
+        paddingLeft:responsiveWidth(5),
+        alignItems:'baseline',
+        justifyContent:'space-between',
+        backgroundColor:"#fff"
+      },
+    customRow2:{
+      flexDirection:"row",
+        // position:"absolute",
+        marginTop:responsiveHeight(1.5),
+        paddingRight:responsiveWidth(5),
+        paddingLeft:responsiveWidth(5),
+        // alignItems:'baseline',
+        justifyContent:'space-between',
+        // backgroundColor:"#fff"
       },
       menuIcon:{
         transform: [{rotateY: '180deg'}]
@@ -53,10 +103,16 @@ const styles = StyleSheet.create({
       ,menuTitle:{
         // fontFamily:"IRANSansBold",
         ...myFontStyle.largBold,
-        color:"#fff",
+        color:"#000",
         // fontSize:25,
         marginTop:responsiveHeight(1),
-      }
+      },
+      iconBTN:{
+        marginTop:responsiveHeight(1.2)
+      },
+      basket:{
+width:20,
+height:20      }
 
 })
 export default DrawerPage;

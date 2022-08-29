@@ -9,6 +9,7 @@ import Verify from '@screens/Login/Verify';
 import ForgetPassword from '@screens/Login/ForgetPassword';
 import SignUp from "@screens/Login/SignUp";
 import Home from '@screens/Home/Home';
+import TicketList from '@screens/Ticket/TicketList';
 import SignUpSecond from '@screens/Login/SignUpSecond';
 import Store from "@screens/Store/Store";
 import Profile from "@screens/Profile/Profile";
@@ -134,6 +135,8 @@ const StackNavigatorsProfile = () => {
       headerShown: false
     }}>
              <Stack.Screen name="Profile" component={Profile} /> 
+             <Stack.Screen name="TicketList" component={TicketList} />
+
     </Stack.Navigator>
   );
  }

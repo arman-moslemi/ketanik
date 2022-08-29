@@ -1,4 +1,4 @@
-import React, {useState,useContext ,useEffect} from 'react';
+import React, {useState,useRef ,useEffect} from 'react';
 import {View, TextInput, Text, TouchableOpacity,Image,ScrollView,FlatList,KeyboardAvoidingView} from 'react-native';
 
 
@@ -11,29 +11,82 @@ import { myFontStyle } from "@assets/Constance";
 import Modal from "react-native-modal";
 import {RadioButton ,Switch,List} from 'react-native-paper';
 import DropDownPicker from 'react-native-dropdown-picker';
-
+import { apiUrl ,apiAsset} from "@commons/inFormTypes";
+import axios from 'axios';
+import Spinner from '@components/Spinner';
+import AsyncStorage from  '@react-native-async-storage/async-storage';
+import { Button } from 'react-native-paper';
+import DrawerPage from '@components/drawerContent/DrawerPage';
+import DrawerContent from '@components/drawerContent/DrawerContent';
+import Drawer from 'react-native-drawer'
 // create a component
 
 
 
  const BestConsultant = ({navigation }) => {
+  const [fav, setFav] = useState([]);
+  const drawers = useRef(null);
+
+  const GetData=()=>{
+    const axios = require("axios");
+  var ss=AsyncStorage.getItem("CustomerID")
+
+    axios.post(apiUrl + "CustomerFavorite",{CustomerID:ss})
+    .then(function (response) {
+      if (response.data.result == "True") {
+        console.log(777)
+
+        setFav(response.data.Data)
+        console.log(response.data.Data);
+
+    }})
+    .catch(function (error) {
+      console.log(777)
+      alert(error)
+
+      console.log(error);
+    });
+   
  
+  }
+  useEffect(() => {
+    GetData();
+
+  }, []);
  
   return (
+    <Drawer
+    // type="static"
+    type="overlay"
+    acceptDoubleTap ={true}
+        ref={drawers}
+        content={<DrawerContent navigation={navigation}/>}
+        tapToClose={true}
+        // open={true}
+  openDrawerOffset={0.4} // 20% gap on the right side of drawer
+  panCloseMask={0.2}
+  closedDrawerOffset={-3}
+  styles={styles.drawerStyles}
+  tweenHandler={(ratio) => ({
+    main: { opacity:(2-ratio)/2 }
+  })}
+        >
+  
+  <DrawerPage drawers={drawers} name={"مشاوران برگزیده"} />
     <View style={styles.container}>
     <ScrollView>
-    
+    {
+                            fav.filter(x=>x.CustomerID2!=null).map((item)=>{
+                                return(
    <View style={styles.historyBox}>
     <View style={{display:'flex',flexDirection:'row-reverse',paddingBottom:responsiveHeight(0.75),justifyContent:'space-between',alignItems:'center'}}>
   <View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>
   <Image source={require('@assets/images/profile2.png')} style={styles.profilePic} />
   <View style={{display:'flex',flexDirection:'column'}}>
     <Text style={styles.ConsultantName}>
-     یاسمن طاهری
-    </Text>
+    {item.Name}{item.Family}     </Text>
     <Text style={styles.ConsultantName2}>
-      کارشناس ارشد کشاورزی
-    </Text>
+{item.Specialty}    </Text>
  
   </View>
   </View>
@@ -52,40 +105,13 @@ import DropDownPicker from 'react-native-dropdown-picker';
   </View>
  
 </View>
-<View style={styles.historyBox}>
-    <View style={{display:'flex',flexDirection:'row-reverse',paddingBottom:responsiveHeight(0.75),justifyContent:'space-between',alignItems:'center'}}>
-  <View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>
-  <Image source={require('@assets/images/profile2.png')} style={styles.profilePic} />
-  <View style={{display:'flex',flexDirection:'column'}}>
-    <Text style={styles.ConsultantName}>
-     یاسمن طاهری
-    </Text>
-    <Text style={styles.ConsultantName2}>
-      کارشناس ارشد کشاورزی
-    </Text>
- 
-  </View>
-  </View>
-
-  <View style={{display:'flex',flexDirection:'column',alignItems:'flex-end',justifyContent:'space-between'}}>
-  <View style={{display:'flex',flexDirection:'row-reverse',marginLeft:responsiveWidth(2),alignItems:'flex-start'}}>
-  <Icon name={"star-border"} color={'#000000'} size={15}/>
-      <Icon name={"star-border"} color={'#000000'} size={15}/>
-      <Icon name={"star"} color={'#ffb921'} size={15}/>
-      <Icon name={"star"} color={'#ffb921'} size={15}/>
-      <Icon name={"star"} color={'#ffb921'} size={15}/>
-     
-      </View>
-     
-  </View>
-  </View>
- 
-</View>
+                                )})}
     </ScrollView>
  
  
      
     </View>
+    </Drawer>
   );
 };
  

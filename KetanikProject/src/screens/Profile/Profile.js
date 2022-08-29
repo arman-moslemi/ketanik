@@ -53,7 +53,7 @@ return (
     محصولات برگزیده
   </Text>
   </TouchableOpacity>
-  <TouchableOpacity style={styles.bigBtn} onPress={()=>  navigation.navigate("BestConsultant")}>
+  <TouchableOpacity  style={styles.bigBtn} onPress={()=>  navigation.navigate("BestConsultant")}>
   <Image source={require('@assets/images/pHeadphone.png')} style={styles.bigBtnImg} />
   <Text style={styles.bigBtnText}>
     مشاوران برگزیده
@@ -89,7 +89,7 @@ return (
     مشاوران برگزیده
   </Text>
   </TouchableOpacity>
-  <TouchableOpacity style={styles.bigBtn}>
+  <TouchableOpacity style={styles.bigBtn} onPress={()=>  navigation.navigate("TicketList")}>
   <Image source={require('@assets/images/pTicket.png')} style={styles.bigBtnImg} />
   <Text style={styles.bigBtnText}>
     تیکت ها و پشتیبانی
