@@ -39,7 +39,7 @@ import {Collapse,CollapseHeader, CollapseBody, AccordionList} from 'accordion-co
         ,
   ]);
   const drawers = useRef(null);
-  const {id} = route?.params ?? {};
+  const {id,title} = route?.params ?? {};
   const [data,setData] = useState([]);
   function groupArrayOfObjects(list, key) {
     return list.reduce(function(rv, x) {
@@ -110,7 +110,7 @@ import {Collapse,CollapseHeader, CollapseBody, AccordionList} from 'accordion-co
 <View style={{}}>
 <TouchableOpacity  style={{flexDirection:'row',alignItems:'center'}}>
 
-<Icon name="remove-red-eye" size={20} color={'#FF6900'}/>
+<Icon name="keyboard-arrow-down" size={20} color={'#000'}/>
 
 </TouchableOpacity>
     </View>
@@ -138,8 +138,20 @@ const _body=(item)=>{
           {
             item.map((item2)=>{
               return(
+<View>
+<View style={styles.bodyView}>
+<Text style={{...myFontStyle.normalBold,color:Colors.Green,flexDirection:'column'}}>سالم</Text>
+<Text style={{...myFontStyle.normalBold,color:Colors.Orange,flexDirection:'column'}}>شماره دستگاه:{item2.Serial}</Text>
+</View>
+<View style={{flexDirection:'row',alignItems:'center'}}>
+  <View style={{height:responsiveHeight(10)}}>
+  <Text style={{...myFontStyle.normalBold,flexDirection:'column'}}>دمای هوا</Text>
+  <Text style={{...myFontStyle.normalBold,flexDirection:'column'}}>۳۷درجه</Text>
+  <Text style={{...myFontStyle.normalBold,color:Colors.Green,flexDirection:'column'}}>وضعیت:سالم</Text>
 
-                <Text style={{textAlign:'center'}}>{item2.Serial}</Text>
+  </View>
+  </View>
+</View>
               )
             })
           }
@@ -164,7 +176,7 @@ const _body=(item)=>{
   })}
         >
   
-  <DrawerPage drawers={drawers} name={"مشاوران برگزیده"} />
+  <DrawerPage drawers={drawers} name={title} />
     <View style={styles.container}>
    
     <AccordionList
@@ -407,7 +419,7 @@ const shadow = {
     },
     subViewRead1:{
       borderRightWidth:5,
-      borderRightColor:'#2DDB4E',
+      borderRightColor:'#FF6900',
       backgroundColor:"#fff",
       elevation:5,
       shadowOpacity:1,
@@ -433,14 +445,12 @@ const shadow = {
         shadowOpacity: 0.5,
         shadowRadius: 3.84,
         // backgroundColor:"#000",
-        
-        elevation: 5,}
-    
-    // textInputIcon:{
-    //   textAlign:'right',
-    //  ...myFontStyle.mediumRegular,
-    //  width:"100%",
-    // },
+        marginRight:responsiveHeight(2),
+        marginLeft:responsiveHeight(2),        
+        elevation: 5,},
+ bodyView:
+  {flexDirection:'row',justifyContent:'space-between',paddingHorizontal:responsiveWidth(1)}
+ 
   });
 
   export default IotProject;

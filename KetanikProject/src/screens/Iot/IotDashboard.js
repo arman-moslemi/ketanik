@@ -79,7 +79,7 @@ import Drawer from 'react-native-drawer'
   data.map((item)=>(
 
 
-<TouchableOpacity onPress={()=>navigation.navigate("IotProject",{id:item[0].ProjectID})} style={styles.subViewRead1}>
+<TouchableOpacity onPress={()=>navigation.navigate("IotProject",{id:item[0].ProjectID,title:item[0].ProjectName})} style={styles.subViewRead1}>
 <View style={{}}>
 <TouchableOpacity  style={{flexDirection:'row',alignItems:'center'}}>
 

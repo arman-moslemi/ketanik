@@ -7,7 +7,7 @@ export const Colors = {
     lightGreen:'#f1f5ec',
     gray:'#E8EAE6',
    Yellow:'#FFD200',
-    Green1:'#009959',
+    Green:'#009959',
     White:'#ffffff',
-    Orange:'#ffb921',
+    Orange:'#FF6900',
   }
