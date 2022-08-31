@@ -20,10 +20,22 @@ import DrawerPage from '@components/drawerContent/DrawerPage';
 import DrawerContent from '@components/drawerContent/DrawerContent';
 import Drawer from 'react-native-drawer'
 import {Collapse,CollapseHeader, CollapseBody, AccordionList} from 'accordion-collapse-react-native';
+import {
+  LineChart,
 
+} from "react-native-chart-kit";
 
 
  const IotProject = ({navigation ,route}) => {
+  const [isModalVisible, setModalVisible] = useState(false);
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible);
+   };
+ 
+   const closeModal=()=>{
+     setModalVisible(!isModalVisible);
+   }
+ 
   const [fav, setFav] = useState([
    
         {
@@ -138,19 +150,65 @@ const _body=(item)=>{
           {
             item.map((item2)=>{
               return(
-<View>
 <View style={styles.bodyView}>
+<View style={styles.bodyHeader}>
 <Text style={{...myFontStyle.normalBold,color:Colors.Green,flexDirection:'column'}}>سالم</Text>
 <Text style={{...myFontStyle.normalBold,color:Colors.Orange,flexDirection:'column'}}>شماره دستگاه:{item2.Serial}</Text>
 </View>
-<View style={{flexDirection:'row',alignItems:'center'}}>
-  <View style={{height:responsiveHeight(10)}}>
-  <Text style={{...myFontStyle.normalBold,flexDirection:'column'}}>دمای هوا</Text>
-  <Text style={{...myFontStyle.normalBold,flexDirection:'column'}}>۳۷درجه</Text>
-  <Text style={{...myFontStyle.normalBold,color:Colors.Green,flexDirection:'column'}}>وضعیت:سالم</Text>
+<View style={{flexDirection:'row',justifyContent:'space-between',marginBottom:responsiveHeight(2)}}>
+<TouchableOpacity onPress={()=>toggleModal()} style={styles.card}>
+  <Text style={{...myFontStyle.mediumBold,flexDirection:'column',color:"#000"}}>دمای آب</Text>
+  <Image source={require('@assets/images/temperarure.png')} style={styles.btnImg} />
+
+  <Text style={{...myFontStyle.mediumBold,flexDirection:'column',color:"#000"}}>28درجه</Text>
+  <Text style={{...myFontStyle.smallBold,color:Colors.Green,flexDirection:'column'}}>وضعیت:سالم</Text>
+
+  </TouchableOpacity>
+  <TouchableOpacity onPress={()=>toggleModal()}style={styles.card}>
+  <Text style={{...myFontStyle.mediumBold,flexDirection:'column',color:"#000"}}>دمای خاک</Text>
+  <Image source={require('@assets/images/soil.png')} style={styles.btnImg} />
+
+  <Text style={{...myFontStyle.mediumBold,flexDirection:'column',color:"#000"}}>28درجه</Text>
+  <Text style={{...myFontStyle.smallBold,color:Colors.Green,flexDirection:'column'}}>وضعیت:سالم</Text>
+
+  </TouchableOpacity>
+  <TouchableOpacity onPress={()=>toggleModal()} style={styles.card}>
+  <Text style={{...myFontStyle.mediumBold,flexDirection:'column',color:"#000"}}>دمای هوا</Text>
+  <Image source={require('@assets/images/celsius.png')} style={styles.btnImg} />
+
+  <Text style={{...myFontStyle.mediumBold,flexDirection:'column',color:"#000"}}>۳۷درجه</Text>
+  <Text style={{...myFontStyle.smallBold,color:Colors.Green,flexDirection:'column'}}>وضعیت:سالم</Text>
+
+  </TouchableOpacity>
+
+</View>
+<View style={{flexDirection:'row',justifyContent:'space-between',marginBottom:responsiveHeight(2)}}>
+<View style={styles.card}>
+  <Text style={{...myFontStyle.mediumBold,flexDirection:'column',color:"#000"}}>شیر آب کنترلی</Text>
+  <Image source={require('@assets/images/water-faucet.png')} style={styles.btnImg} />
+
+  <Text style={{...myFontStyle.mediumBold,flexDirection:'column',color:"#000"}}>بسته</Text>
+  <Text style={{...myFontStyle.smallBold,color:Colors.Green,flexDirection:'column'}}>وضعیت:سالم</Text>
 
   </View>
+  <View style={styles.card}>
+  <Text style={{...myFontStyle.mediumBold,flexDirection:'column',color:"#000"}}>رطوبت خاک</Text>
+  <Image source={require('@assets/images/sprout.png')} style={styles.btnImg} />
+
+  <Text style={{...myFontStyle.mediumBold,flexDirection:'column',color:"#000"}}>53٪</Text>
+  <Text style={{...myFontStyle.smallBold,color:Colors.Green,flexDirection:'column'}}>وضعیت:سالم</Text>
+
   </View>
+  <View style={styles.card}>
+  <Text style={{...myFontStyle.mediumBold,flexDirection:'column',color:"#000"}}>رظوبت هوا</Text>
+  <Image source={require('@assets/images/humidity.png')} style={styles.btnImg} />
+
+  <Text style={{...myFontStyle.mediumBold,flexDirection:'column',color:"#000"}}>68٪</Text>
+  <Text style={{...myFontStyle.smallBold,color:Colors.Green,flexDirection:'column'}}>وضعیت:سالم</Text>
+
+  </View>
+
+</View>
 </View>
               )
             })
@@ -187,6 +245,61 @@ const _body=(item)=>{
           />
      
     </View>
+    <Modal isVisible={isModalVisible} onBackdropPress={closeModal} style={{justifyContent:'center',alignItems:'center'}}>
+                <View style={styles.sortModal}>
+    <View style={{width:'100%',borderBottomColor:'#f4f4f4',borderBottomWidth:2,padding:10}}>
+                  <Text style={{...myFontStyle.normalBold,color:'#000'}}>سوابق دستگاه </Text>
+                </View>
+               <LineChart
+  data={{
+    labels: ["January", "February", "March", "April", "May", "June"],
+    datasets: [
+      {
+        data: [
+          Math.random() * 100,
+          Math.random() * 100,
+          Math.random() * 100,
+          Math.random() * 100,
+          Math.random() * 100,
+          Math.random() * 100
+        ]
+      }
+    ]
+  }}
+  width={responsiveWidth(85)} // from react-native
+  height={220}
+  // yAxisLabel="$"
+  // yAxisSuffix="k"
+  yAxisInterval={1} // optional, defaults to 1
+  chartConfig={{
+    backgroundColor: "#fff",
+    // backgroundGradientFrom: "rgba(244, 153, 127, 1)",
+    // backgroundGradientTo: "rgba(255, 105, 0, 0.03)",
+    backgroundGradientFrom: "#fff",
+    backgroundGradientTo: "#fff",
+    strokeWidth:5,
+    decimalPlaces: 2, // optional, defaults to 2dp
+    color: (opacity = 1) => `rgba(255, 105, 0, 0.3)`,
+    labelColor: (opacity = 1) => `#86909C`,
+    style: {
+      borderRadius: 16
+    },
+    // propsForDots: {
+    //   r: "6",
+    //   strokeWidth: "2",
+    //   stroke: "#ffa726"
+    // }
+  }}
+  withDots={false}
+  bezier
+  style={{
+    marginVertical: 8,
+    borderRadius: 16
+  }}
+
+/>
+               </View>
+              </Modal>
     </Drawer>
   );
 };
@@ -426,8 +539,8 @@ const shadow = {
       shadowRadius:10,
       shadowOffset:5,
       borderRadius:5,
-      marginRight:responsiveHeight(2),
-      marginLeft:responsiveHeight(2),
+      marginRight:responsiveWidth(1),
+      marginLeft:responsiveWidth(1),
       marginBottom:0,
     height:responsiveHeight(8),
     marginTop:responsiveHeight(3)
@@ -437,20 +550,71 @@ const shadow = {
     padding:responsiveWidth(3),
     paddingBottom:responsiveHeight(2)},
     body:
-      {padding:10,height:responsiveHeight(15), shadowColor: "#00000056",
+      {padding:10, 
+        shadowColor: "#00000056",
         shadowOffset: {
           width: 0,
           height: 2,
         },
         shadowOpacity: 0.5,
         shadowRadius: 3.84,
-        // backgroundColor:"#000",
-        marginRight:responsiveHeight(2),
-        marginLeft:responsiveHeight(2),        
-        elevation: 5,},
+        elevation: 5,
+        backgroundColor:"#fff",
+        borderRadius:5,
+        marginRight:responsiveWidth(1),
+        marginLeft:responsiveWidth(1),       
+      },
  bodyView:
-  {flexDirection:'row',justifyContent:'space-between',paddingHorizontal:responsiveWidth(1)}
- 
+  {
+  
+marginTop:2
+},
+ bodyHeader:
+  {flexDirection:'row',
+  justifyContent:'space-between',
+  paddingHorizontal:responsiveWidth(1),
+  marginBottom:10
+,
+},
+  btnImg:{
+    width:responsiveWidth(6),
+    height:responsiveHeight(4)
+  }
+ ,
+ card:
+  {
+  alignItems:'center',
+  justifyContent:'center',
+  width:responsiveWidth(25),
+  paddingVertical:responsiveHeight(0.5),
+  shadowColor:'#000',
+backgroundColor:"#fff",
+  shadowOffset: {
+    width: 0,
+    height: 2,
+  },
+  shadowOpacity: 0.5,
+  shadowRadius:0.5,
+  elevation: 10,
+  borderRadius:5
+},
+sortModal:{
+  width:responsiveWidth(95),
+  marginTop:responsiveHeight(-20),
+  backgroundColor:'#fff',
+  alignItems:'center',
+  borderRadius:5,
+  shadowColor: '#fff',
+  shadowOpacity: 0.1,
+  shadowOffset: { width: 2, height: 0},
+  shadowRadius: 700,
+  elevation: 20,
+  alignContent:'center',
+  paddingTop:responsiveHeight(1),
+  paddingBottom:responsiveHeight(3),
+  paddingRight:responsiveWidth(0),
+  paddingLeft:responsiveWidth(0),
+},
   });
 
   export default IotProject;

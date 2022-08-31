@@ -40,7 +40,7 @@ tweenHandler={(ratio) => ({
 })}
       >
 
-<DrawerPage drawers={drawers} name={"صفحه اصلی"} />
+<DrawerPage drawers={drawers} name={"صفحه اصلی"} navigation={navigation} />
 <View style={styles.container}>
     <View style={{display:'flex',flexDirection:'row-reverse',justifyContent:'space-between'}}>
       <TouchableOpacity onPress={()=>navigation.navigate("Store")} style={styles.seeProducts}>

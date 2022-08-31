@@ -18,65 +18,103 @@ import Drawer from 'react-native-drawer'
 import AsyncStorage from  '@react-native-async-storage/async-storage';
 
 // create a component
-const TicketsList = ({navigation}) => {
-  const [checked, setChecked] = useState('first');
-  const [open, setOpen] = useState(false);
+const Cart = ({navigation}) => {
+
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
   const [isModalVisible, setModalVisible] = useState(false);
   const [data,setData] = useState([]);
-  const [textSub,setTextSub]=useState("")
-  const [titleSup,setTitleSup]=useState("")
+  const [count,setCount]=useState(1);
+  const [costTotal,setCostTotal]=useState(0)
   const drawers = useRef(null);
-
-  useEffect(() => {
-
-    mutLogin();
-
-
-  }, []);
-
-  const  mutLogin=async()=> {
-    const state =  AsyncStorage.getItem("@CustomerID");
-
-    axios.post(apiUrl + "CustomerSupport",{CustomerID:1})
-    .then(function (response) {
-      if (response.data.result == "True") {
-        console.log(777);
-        setData(response.data.Data)
-
-    }})
-    .catch(function (error) {
-      console.log(777)
-      alert(error)
-
-      console.log(error);
-    });
-
-
-    };
-    const AddSupport=()=>{
-        const axios = require("axios");
+  const increment = (id,type) => {
+    setCount(count+1)
+    console.log(count)
+    const axios = require("axios");
       
+            axios.post(apiUrl + "ShoppingBasketValue",{ShoppingBasketID:id,Type:type})
+            .then(function (response) {
+              console.log(response)
     
-        axios.post(apiUrl + "InsertSupport",{CustomerID:1,Text:text,Title:title})
-        .then(function (response) {
-          if (response.data.result == "True") {
-            console.log(777)
-  
-            closeModal()
-            mutLogin()
-        }})
-        .catch(function (error) {
-          console.log(777)
-          alert(error)
-
-          console.log(error);
-        });
+              if (response.data.result == "True") {
+                console.log(777)
+                console.log(response.data.Data)
+                setCount(count+1)
+                GetData()
+            }})
+            .catch(function (error) {
+              console.log(777)
+              alert(error)
+    
+              console.log(error);
+            });
+       
         
-     
   
       }
+      const DeleteCart = (id) => {
+        setCount(count+1)
+        console.log(count)
+        const axios = require("axios");
+            
+                setCount(count+1)
+                axios.post(apiUrl + "ShoppingBasketDelete",{ShoppingBasketID:id})
+                .then(function (response) {
+                  console.log(response)
+        
+                  if (response.data.result == "True") {
+                    console.log(777)
+                    console.log(response.data.Data)
+                    GetData()
+             }})
+                .catch(function (error) {
+                  console.log(777)
+                  alert(error)
+        
+                  console.log(error);
+                });
+              
+            
+      
+          }
+     
+  
+          const GetData=()=>{
+            const axios = require("axios");
+          
+            var customer=AsyncStorage.getItem("CustomerID")
+            var guest=AsyncStorage.getItem("Guest")?AsyncStorage.getItem("Guest"):0;
+
+            console.log(123456)
+            console.log(customer)
+            axios.post(apiUrl + "ShoppingBasketView",{CustomerID:1,GuestID:0})
+            .then(function (response) {
+              console.log(response)
+    
+              if (response.data.result == "True") {
+                console.log(777)
+                console.log(response.data.Data)
+                setCostTotal(0)
+                setData(response.data.Data)
+                var dd=0;
+                response.data.Data.map((item)=>{
+dd=item.SpecialCost?dd+parseInt(item.SpecialCost*item.ShoppingBasketNumber):dd+parseInt(item.Cost*item.ShoppingBasketNumber)
+})
+setCostTotal(dd)
+}})
+            .catch(function (error) {
+              console.log(777)
+              alert(error)
+    
+              console.log(error);
+            });
+      
+      
+          }
+  useEffect(() => {
+    GetData();
+
+  }, []);
   const toggleModal = () => {
    setModalVisible(!isModalVisible);
   };
@@ -105,7 +143,7 @@ return (
   })}
         >
   
-  <DrawerPage drawers={drawers} name={"تیکت و پشتیبانی"} navigation={navigation} />
+  <DrawerPage drawers={drawers} name={"سبد خرید"} navigation={navigation} />
       
            <View >
 
@@ -119,94 +157,55 @@ return (
 </View>
 
 <View style={styles.container}>
-    <View style={{flexDirection:'row',marginTop:responsiveHeight(3),marginLeft:responsiveWidth(5),marginRight:responsiveWidth(5),justifyContent:'space-between'}}>
- 
-    <View>
-        <TouchableOpacity style={styles.sortBtn} onPress={toggleModal}>
-          <Text style={{...myFontStyle.normalBold,color:'#fff',alignSelf:'center'}}>ایجاد تیکت
-
-          </Text>
-        <Icon name={"add"} color={'#fff'} size={25} style={{marginTop:responsiveHeight(1),transform: [{rotateY: '180deg'}]}}></Icon>
-
-        </TouchableOpacity>
-        <Modal isVisible={isModalVisible} onBackdropPress={closeModal} style={{justifyContent:'center',alignItems:'center'}}>
-               <View style={styles.sortModal}>
-                <View style={{width:'100%',borderBottomColor:'#f4f4f4',borderBottomWidth:2,padding:10}}>
-                  <Text style={{...myFontStyle.textOnImg,color:'#000'}}>ارسال پیام جدید</Text>
-                </View>
-                <View style={{paddingRight:responsiveWidth(5),paddingTop:responsiveHeight(2)}}>
-                <Text style={{...myFontStyle.normalRegular,color:Colors.text,marginTop:responsiveHeight(2),}}>عنوان پیام: </Text>
-                <Input onChangeText={(ss)=>setTitle(ss)}  placeholder="عنوان پیام خود را بنویسید"  numberOfLines={1} inputStyle={styles.textInputLogin}containerStyle={{alignItems:"flex-end"}} />
-
-
-                </View>
-                <View style={{paddingRight:responsiveWidth(5),paddingTop:responsiveHeight(0)}}>
-                <Text style={{...myFontStyle.normalRegular,color:Colors.text,marginTop:responsiveHeight(2),}}>متن پیام:   </Text>
-                <Input onChangeText={(ss)=>setText(ss)}   placeholder="متن پیام خود را اینجا بنویسید"  inputStyle={styles.textInputLogin2}containerStyle={{alignItems:"flex-end"}} />
-
-
-                </View>
-             <View style={{justifyContent:'center',width:'100%',alignContent:'flex-end'}}>
-             <View style={{width:responsiveWidth(30) ,alignSelf:'flex-start',marginTop:responsiveHeight(2),marginLeft:responsiveWidth(5)}}>
-
-
-<TouchableOpacity onPress={()=>AddSupport()} style={styles.sendBtn}>
-<Text style={styles.modalBtnText}>ارسال پیام</Text>
-</TouchableOpacity>
-
-                 </View>
-               </View>
-               </View>
-              </Modal>
-    </View>
-    </View>
+   
 {/* <View style={styles.viewBody}> */}
 
-
-  {
+<ScrollView >
+{
   data.map((item)=>(
 
-
-<TouchableOpacity onPress={()=>navigation.navigate("Ticket",{id:item.SupportID,title:item.Title,data:item.Date})} style={styles.subViewRead1}>
+<View style={styles.subViewRead1}>
 <View style={{}}>
-<TouchableOpacity  style={{flexDirection:'row',alignItems:'center'}}>
+<TouchableOpacity onPress={()=>DeleteCart(item.ShoppingBasketID)} style={{flexDirection:'row',alignItems:'center'}}>
 
-<Icon name="remove-red-eye" size={20} color={'#FF6900'}/>
-<Text style={{...myFontStyle.mediumBold,color:Colors.black,textAlign:'right',flexDirection:'column'}}>{"مشاهده تیکت"}</Text>
+<Image source={require("@assets/images/deleteIcon.png")} resizeMode={"contain"} style={{width:15,height:20}}/> 
 
 </TouchableOpacity>
-    </View>
-    {
-      item.Status==1?
-      <View style={{width:responsiveWidth(25)}}>
-        <View style={styles.waited}>
-            <Text style={styles.waitedText}>در انتظار پاسخ</Text>
-            </View>
-        </View>
-      :
-      item.Status==2?
-      <View style={{width:responsiveWidth(25)}}>
-        <View style={styles.answered}>
-            <Text style={styles.answeredText}>پاسخ داده شد</Text>
-            </View>
-        </View>
-      :
-      item.Status==3?
-      <View style={{width:responsiveWidth(25)}}>
-        <View style={styles.closed}>
-            <Text style={styles.closedText}>بسته شده</Text>
-            </View>
-        </View>
-      :
-      null
-    }
+<Text style={{...myFontStyle.smallBold,color:Colors.black,textAlign:'right',flexDirection:'column',marginTop:5,textDecorationLine:"line-through"}}>{item.Cost}تومان</Text>
+<Text style={{...myFontStyle.mediumBold,color:Colors.black,textAlign:'right',flexDirection:'column'}}>{item.SpecialCost}تومان</Text>
 
-<View style={{flexDirection:'row',justifyContent:'flex-end',width:responsiveWidth(25)}}>
-<View>
-    <Text style={{...myFontStyle.normalBold,color:Colors.black,textAlign:'right',flexDirection:'column'}}>{item.Title?.substring(0, 20)}...</Text>
+    </View>
+    
+
+<View style={{flexDirection:'row',justifyContent:'flex-end',width:responsiveWidth(25),marginTop:5}}>
+<View >
+    <Text style={{...myFontStyle.normalBold,color:Colors.black,textAlign:'right',flexDirection:'column'}}>{item.Name}</Text>
+    <View style={{marginTop:responsiveHeight(1),flexDirection:'row-reverse'}}>
+    <Text style={{...myFontStyle.smallBold,color:Colors.black,textAlign:'right'}}>تعداد:</Text>
+        <View style={{marginRight:5,borderColor:'#000',borderWidth:1,width:60,alignItems:'center',flexDirection:'row',justifyContent:'center',borderRadius:25}}>
+        
+        <TouchableOpacity onPress={()=>increment(item.ShoppingBasketID,"mines")}>
+
+        <Text  style={{...myFontStyle.normalBold,color:Colors.Green,textAlign:'right',flexDirection:'column'}}>-</Text>
+        </TouchableOpacity>
+        <Text style={{...myFontStyle.normalBold,color:Colors.black,textAlign:'right',flexDirection:'column',marginHorizontal:10}}>{item.ShoppingBasketNumber}</Text>
+        <TouchableOpacity onPress={()=>increment(item.ShoppingBasketID,"add")}>
+
+        <Text  style={{...myFontStyle.normalBold,color:Colors.Green,textAlign:'right',flexDirection:'column'}}>+</Text>
+</TouchableOpacity>
+        </View>
+
+    </View>
 
 
       </View>
+      <View style={{}}>
+<TouchableOpacity  style={{flexDirection:'row',alignItems:'center'}}>
+
+<Image source={{uri:apiAsset+item.Pic}} resizeMode={"contain"} style={{width:responsiveWidth(18),height:responsiveHeight(9)}}/> 
+
+</TouchableOpacity>
+    </View>
 </View>
 
 
@@ -214,10 +213,26 @@ return (
 
 
 
-  </TouchableOpacity>
+  </View>
   ))
   }
+</ScrollView>
+ 
+<View style={styles.footer}>
 
+<TouchableOpacity style={styles.sortBtn} onPress={()=>navigation.navigate("CartAddress",{Cost:costTotal})}>
+          <Text style={{...myFontStyle.normalBold,color:'#fff'}}>
+ادامه فرآیند خرید       
+   </Text>
+
+        </TouchableOpacity>
+        <View>
+        <Text style={{...myFontStyle.normalBold,color:'#000'}}>
+مجموع سبد خرید:   </Text>
+   <Text style={{...myFontStyle.mediumBold,color:'#7B808C'}}>
+{costTotal}   تومان</Text>
+</View>
+</View>
 
 </View>
 
@@ -297,8 +312,7 @@ avatar: {
   justifyContent:'flex-end',
   paddingBottom:responsiveHeight(2)},
   subViewRead1:{
-    borderRightWidth:5,
-    borderRightColor:'#2DDB4E',
+
     backgroundColor:"#fff",
     elevation:5,
     shadowOpacity:1,
@@ -307,9 +321,9 @@ avatar: {
     borderRadius:5,
     marginRight:responsiveHeight(2),
     marginLeft:responsiveHeight(2),
-    marginBottom:0,
-  height:responsiveHeight(8),
-  marginTop:responsiveHeight(3)
+    marginBottom:8,
+  height:responsiveHeight(10),
+  marginTop:responsiveHeight(2)
   ,alignItems:'center',
   flexDirection:'row',
   justifyContent:'space-between',
@@ -366,14 +380,12 @@ alignItems:'flex-end'
   },
   sortBtn:{
       backgroundColor:'#FF6900',
-      width:responsiveScreenWidth(30),
-      height:responsiveHeight(5),
-      borderRadius:50,
-      elevation:5,
-    shadowOpacity:1,
-    shadowRadius:10,
-    shadowOffset:5,
+      width:responsiveScreenWidth(35),
+      height:responsiveHeight(6),
+      borderRadius:3,
+  
     justifyContent:'center',
+    alignItems:'center',
     flexDirection:'row',
   },
   sortModal:{
@@ -478,7 +490,17 @@ alignItems:'flex-end'
       marginLeft:responsiveWidth(2),
       height:responsiveHeight(15),
         },
+        footer:{height:responsiveHeight(9.5),backgroundColor:'#fff',borderRadius:5  ,  elevation:10,
+        shadowOpacity:1,
+        shadowRadius:10,
+        shadowOffset:5,
+    shadowColor:"#000",
+    flexDirection:'row',
+    justifyContent:'space-between',
+    paddingHorizontal:responsiveWidth(5),
+    alignItems:'center'
+    }
 });
 
-  export default TicketsList;
+  export default Cart;
 

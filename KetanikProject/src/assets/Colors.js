@@ -10,4 +10,6 @@ export const Colors = {
     Green:'#009959',
     White:'#ffffff',
     Orange:'#FF6900',
+    Black:"#000",
+    black:"#000",
   }

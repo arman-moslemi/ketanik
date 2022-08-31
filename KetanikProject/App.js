@@ -25,6 +25,9 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 
 
 import ConsultantList from '@screens/ConsultantList/ConsultantList';
+import HistoryConsultant from '@screens/ConsultantList/HistoryConsultant';
+import Cart from '@screens/Cart/Cart';
+import CartAddress from '@screens/Cart/CartAddress';
 import Search from "@screens/Search/Search";
 import { ThemeProvider} from './theme/theme-context';
 import { myFontStyle } from './src/assets/Constance';
@@ -90,6 +93,8 @@ const StackNavigatorsHome = () => {
       <Stack.Screen name="Home" component={Home} />
       <Stack.Screen name="IotDashboard" component={IotDashboard} />
       <Stack.Screen name="IotProject" component={IotProject} />
+      <Stack.Screen name="Cart" component={Cart} />
+      <Stack.Screen name="CartAddress" component={CartAddress} />
 
     
     </Stack.Navigator>
@@ -165,6 +170,7 @@ export default function App() {
         <Stack.Screen name="Store" component={Store}/>
         <Stack.Screen name="Wallet" component={Wallet}/>
         <Stack.Screen name="ConsultantList" component={ConsultantList}/>
+        <Stack.Screen name="HistoryConsultant" component={HistoryConsultant}/>
         <Stack.Screen name="BestConsultant" component={BestConsultant}/>
          <Stack.Screen name="TabBar" component={TabStack} />
   

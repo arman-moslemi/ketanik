@@ -25,7 +25,7 @@ import { myFontStyle } from "@assets/Constance";
    
 
         
-        <TouchableOpacity onPress={()=>props.navigation.goBack()} style={{        marginTop:responsiveHeight(2)}}>
+        <TouchableOpacity onPress={()=>props.navigation.navigate("Cart")} style={{        marginTop:responsiveHeight(2)}}>
         <Image source={require('@assets/images/basket.png')} style={styles.basket} />
 
         </TouchableOpacity>

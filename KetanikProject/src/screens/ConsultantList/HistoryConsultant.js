@@ -18,65 +18,40 @@ import Drawer from 'react-native-drawer'
 import AsyncStorage from  '@react-native-async-storage/async-storage';
 
 // create a component
-const TicketsList = ({navigation}) => {
-  const [checked, setChecked] = useState('first');
-  const [open, setOpen] = useState(false);
+const HistoryConsultant = ({navigation}) => {
+
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
   const [isModalVisible, setModalVisible] = useState(false);
   const [data,setData] = useState([]);
-  const [textSub,setTextSub]=useState("")
-  const [titleSup,setTitleSup]=useState("")
+
   const drawers = useRef(null);
 
-  useEffect(() => {
+  const GetData=()=>{
+    const axios = require("axios");
+  var ss=AsyncStorage.getItem("CustomerID")
 
-    mutLogin();
-
-
-  }, []);
-
-  const  mutLogin=async()=> {
-    const state =  AsyncStorage.getItem("@CustomerID");
-
-    axios.post(apiUrl + "CustomerSupport",{CustomerID:1})
+    axios.post(apiUrl + "HistoryConsultant",{CustomerID:1})
     .then(function (response) {
       if (response.data.result == "True") {
-        console.log(777);
+        console.log(777)
+
         setData(response.data.Data)
+        console.log(response.data.Data);
 
     }})
     .catch(function (error) {
       console.log(777)
-      alert(error)
 
       console.log(error);
     });
-
-
-    };
-    const AddSupport=()=>{
-        const axios = require("axios");
-      
-    
-        axios.post(apiUrl + "InsertSupport",{CustomerID:1,Text:text,Title:title})
-        .then(function (response) {
-          if (response.data.result == "True") {
-            console.log(777)
   
-            closeModal()
-            mutLogin()
-        }})
-        .catch(function (error) {
-          console.log(777)
-          alert(error)
+ 
+  }
+  useEffect(() => {
+    GetData();
 
-          console.log(error);
-        });
-        
-     
-  
-      }
+  }, []);
   const toggleModal = () => {
    setModalVisible(!isModalVisible);
   };
@@ -105,7 +80,7 @@ return (
   })}
         >
   
-  <DrawerPage drawers={drawers} name={"تیکت و پشتیبانی"} navigation={navigation} />
+  <DrawerPage drawers={drawers} name={"تاریخچه مشاوره"} navigation={navigation} />
       
            <View >
 
@@ -121,44 +96,6 @@ return (
 <View style={styles.container}>
     <View style={{flexDirection:'row',marginTop:responsiveHeight(3),marginLeft:responsiveWidth(5),marginRight:responsiveWidth(5),justifyContent:'space-between'}}>
  
-    <View>
-        <TouchableOpacity style={styles.sortBtn} onPress={toggleModal}>
-          <Text style={{...myFontStyle.normalBold,color:'#fff',alignSelf:'center'}}>ایجاد تیکت
-
-          </Text>
-        <Icon name={"add"} color={'#fff'} size={25} style={{marginTop:responsiveHeight(1),transform: [{rotateY: '180deg'}]}}></Icon>
-
-        </TouchableOpacity>
-        <Modal isVisible={isModalVisible} onBackdropPress={closeModal} style={{justifyContent:'center',alignItems:'center'}}>
-               <View style={styles.sortModal}>
-                <View style={{width:'100%',borderBottomColor:'#f4f4f4',borderBottomWidth:2,padding:10}}>
-                  <Text style={{...myFontStyle.textOnImg,color:'#000'}}>ارسال پیام جدید</Text>
-                </View>
-                <View style={{paddingRight:responsiveWidth(5),paddingTop:responsiveHeight(2)}}>
-                <Text style={{...myFontStyle.normalRegular,color:Colors.text,marginTop:responsiveHeight(2),}}>عنوان پیام: </Text>
-                <Input onChangeText={(ss)=>setTitle(ss)}  placeholder="عنوان پیام خود را بنویسید"  numberOfLines={1} inputStyle={styles.textInputLogin}containerStyle={{alignItems:"flex-end"}} />
-
-
-                </View>
-                <View style={{paddingRight:responsiveWidth(5),paddingTop:responsiveHeight(0)}}>
-                <Text style={{...myFontStyle.normalRegular,color:Colors.text,marginTop:responsiveHeight(2),}}>متن پیام:   </Text>
-                <Input onChangeText={(ss)=>setText(ss)}   placeholder="متن پیام خود را اینجا بنویسید"  inputStyle={styles.textInputLogin2}containerStyle={{alignItems:"flex-end"}} />
-
-
-                </View>
-             <View style={{justifyContent:'center',width:'100%',alignContent:'flex-end'}}>
-             <View style={{width:responsiveWidth(30) ,alignSelf:'flex-start',marginTop:responsiveHeight(2),marginLeft:responsiveWidth(5)}}>
-
-
-<TouchableOpacity onPress={()=>AddSupport()} style={styles.sendBtn}>
-<Text style={styles.modalBtnText}>ارسال پیام</Text>
-</TouchableOpacity>
-
-                 </View>
-               </View>
-               </View>
-              </Modal>
-    </View>
     </View>
 {/* <View style={styles.viewBody}> */}
 
@@ -167,34 +104,34 @@ return (
   data.map((item)=>(
 
 
-<TouchableOpacity onPress={()=>navigation.navigate("Ticket",{id:item.SupportID,title:item.Title,data:item.Date})} style={styles.subViewRead1}>
+<TouchableOpacity style={styles.subViewRead1}>
 <View style={{}}>
 <TouchableOpacity  style={{flexDirection:'row',alignItems:'center'}}>
 
 <Icon name="remove-red-eye" size={20} color={'#FF6900'}/>
-<Text style={{...myFontStyle.mediumBold,color:Colors.black,textAlign:'right',flexDirection:'column'}}>{"مشاهده تیکت"}</Text>
+<Text style={{...myFontStyle.mediumBold,color:Colors.black,textAlign:'right',flexDirection:'column'}}>{"تکرار مشاوره"}</Text>
 
 </TouchableOpacity>
     </View>
     {
-      item.Status==1?
+      item.Type==1?
       <View style={{width:responsiveWidth(25)}}>
         <View style={styles.waited}>
-            <Text style={styles.waitedText}>در انتظار پاسخ</Text>
+            <Text style={styles.waitedText}>متنی</Text>
             </View>
         </View>
       :
-      item.Status==2?
+      item.Type==2?
       <View style={{width:responsiveWidth(25)}}>
         <View style={styles.answered}>
-            <Text style={styles.answeredText}>پاسخ داده شد</Text>
+            <Text style={styles.answeredText}>صوتی</Text>
             </View>
         </View>
       :
-      item.Status==3?
+      item.Type==3?
       <View style={{width:responsiveWidth(25)}}>
         <View style={styles.closed}>
-            <Text style={styles.closedText}>بسته شده</Text>
+            <Text style={styles.closedText}>تصویری</Text>
             </View>
         </View>
       :
@@ -203,7 +140,7 @@ return (
 
 <View style={{flexDirection:'row',justifyContent:'flex-end',width:responsiveWidth(25)}}>
 <View>
-    <Text style={{...myFontStyle.normalBold,color:Colors.black,textAlign:'right',flexDirection:'column'}}>{item.Title?.substring(0, 20)}...</Text>
+    <Text style={{...myFontStyle.normalBold,color:Colors.black,textAlign:'right',flexDirection:'column'}}>{item.Name}{item.Family}</Text>
 
 
       </View>
@@ -480,5 +417,5 @@ alignItems:'flex-end'
         },
 });
 
-  export default TicketsList;
+  export default HistoryConsultant;
 
