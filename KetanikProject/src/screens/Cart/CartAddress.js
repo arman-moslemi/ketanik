@@ -16,6 +16,7 @@ import DrawerPage from '@components/drawerContent/DrawerPage';
 import DrawerContent from '@components/drawerContent/DrawerContent';
 import Drawer from 'react-native-drawer'
 import AsyncStorage from  '@react-native-async-storage/async-storage';
+import DropDownPicker from 'react-native-dropdown-picker';
 
 // create a component
 const CartAddress = ({navigation,route}) => {
@@ -37,56 +38,48 @@ const CartAddress = ({navigation,route}) => {
   const [editCity,setEditCity]=useState()
   const [newAddress,setNewAddress]=useState("")
   const [editAddressID,setEditAddressID]=useState("")
-  const increment = (id,type) => {
-    setCount(count+1)
-    console.log(count)
-    const axios = require("axios");
-      
-            axios.post(apiUrl + "ShoppingBasketValue",{ShoppingBasketID:id,Type:type})
-            .then(function (response) {
-              console.log(response)
-    
-              if (response.data.result == "True") {
-                console.log(777)
-                console.log(response.data.Data)
-                setCount(count+1)
-                GetData()
-            }})
-            .catch(function (error) {
-              console.log(777)
-              alert(error)
-    
-              console.log(error);
-            });
-       
-        
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState(null);
+  const [items, setItems] = useState([]);
+  const [items2, setItems2] = useState([]);
+  const [open2, setOpen2] = useState(false);
+  const [value2, setValue2] = useState(null);
   
+  const  setValueDrop=async(vals)=> {
+    setValue(vals)
+     console.log(44);
+     console.log(vals);
+
+    axios.post(apiUrl+'GetCity',{ProvinceID:value})
+    .then(function (response) {
+      const message = response.data.Data;
+      const result = response.data.result;
+      console.log(888);
+      console.log(result);
+      console.log(message);
+      const charity = [];
+
+      // console.log(response.data.DataSlider.Slider1);
+      // console.log(response.data.DataSlider.Slider1);
+      if(result == "True"){
+    // setGroup(response.data.Data)
+    response.data.Data.map((item, index) => (
+      charity.push({
+        label: item.CityName,
+        value: item.CityID
+      })
+    ))
+    setItems2(charity)
+
+                        }else{
+
       }
-      const DeleteCart = (id) => {
-        setCount(count+1)
-        console.log(count)
-        const axios = require("axios");
-            
-                setCount(count+1)
-                axios.post(apiUrl + "ShoppingBasketDelete",{ShoppingBasketID:id})
-                .then(function (response) {
-                  console.log(response)
-        
-                  if (response.data.result == "True") {
-                    console.log(777)
-                    console.log(response.data.Data)
-                    GetData()
-             }})
-                .catch(function (error) {
-                  console.log(777)
-                  alert(error)
-        
-                  console.log(error);
-                });
-              
-            
-      
-          }
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+
+  }
      
   
           const GetAddress=()=>{
@@ -96,24 +89,33 @@ const CartAddress = ({navigation,route}) => {
         console.log(123456)
         console.log(customer)
          
-            axios.post(apiUrl + "ReadAddress",{CustomerID:1})
-            .then(function (response) {
-                
-                console.log(999)
-                console.log(response)
-              if (response.data.result == "True") {
-                console.log(response.data.Data)
-                setData(response.data.Data)
+        axios.post(apiUrl + "ReadAddress",{CustomerID:1})
+        .then(function (response) {
+            
+            console.log(999)
+            console.log(response)
+          if (response.data.result == "True") {
+            console.log(response.data.Data)
+            setDataAddress(response.data.Data)
 
-            }})
+        }})
             axios.get(apiUrl + "GetProvince")
             .then(function (response) {
                 
                 console.log(999)
                 console.log(response)
               if (response.data.result == "True") {
+                const charity = [];
+
+                console.log(555)
                 console.log(response.data.Data)
-                setDataProvince(response.data.Data)
+                response.data.Data.map((item, index) => (
+                  charity.push({
+                    label: item.ProvinceName,
+                    value: item.ProvinceID
+                  })
+                ))
+                setItems(charity)
 
             }})
             .catch(function (error) {
@@ -125,6 +127,8 @@ const CartAddress = ({navigation,route}) => {
       
           }
           const GetCity=(id)=>{
+            setValue(val)
+            console.log(value);
             const axios = require("axios");
           
         
@@ -149,8 +153,9 @@ const CartAddress = ({navigation,route}) => {
           }
           const AddAddress=()=>{
             const axios = require("axios");
-        
-            axios.post(apiUrl + "InsertAddress",{CustomerID:state.CustomerID,CityID:newCity,PostalCode:newPostalCode,Address:newAddress})
+            var customer=AsyncStorage.getItem("CustomerID")
+
+            axios.post(apiUrl + "InsertAddress",{CustomerID:customer,CityID:value2,PostalCode:title,Address:text})
             .then(function (response) {
               if (response.data.result == "True") {
                 console.log(111)
@@ -350,13 +355,111 @@ return (
                   <Text style={{...myFontStyle.textOnImg,color:'#000'}}>افزودن آدرس جدید</Text>
                 </View>
                 <View style={{paddingRight:responsiveWidth(5),paddingTop:responsiveHeight(2)}}>
-                <Text style={{...myFontStyle.normalRegular,color:Colors.text,marginTop:responsiveHeight(2),}}>عنوان پیام: </Text>
+               <View style={{flexDirection:'row'}}>
+               <View>
+       <Text> شهر</Text>
+
+       <DropDownPicker
+  open={open2}
+  value={value2}
+  items={items2}
+  setOpen={setOpen2}
+  setValue={setValue2}
+  setItems={setItems2}
+  // width={100}
+  style={{
+    borderColor:'#F1F1F1',
+    borderWidth:2,
+    // margin:5,
+    width:responsiveWidth(38),
+    marginRight:5,
+backgroundColor:"rgba(247, 246, 249, 1)",
+alignSelf:'flex-end'
+  }}
+  placeholder="انتخاب کنید"
+  zIndex={1000}
+  dropDownContainerStyle={{
+    borderColor:'#F1F1F1',
+    borderWidth:2,
+  borderRadius:5,
+
+}}
+/>
+       </View>
+                <View>
+                  <Text> استان</Text>
+                <DropDownPicker
+  open={open}
+  value={value}
+  items={items}
+  setOpen={setOpen}
+  // setValue={setValue}
+  setValue={(vals)=> {setValue(vals)
+    console.log(44);
+    console.log(vals);
+
+   axios.post(apiUrl+'GetCity',{ProvinceID:value})
+   .then(function (response) {
+     const message = response.data.Data;
+     const result = response.data.result;
+     console.log(888);
+     console.log(result);
+     console.log(message);
+     const charity = [];
+
+     // console.log(response.data.DataSlider.Slider1);
+     // console.log(response.data.DataSlider.Slider1);
+     if(result == "True"){
+   // setGroup(response.data.Data)
+   response.data.Data.map((item, index) => (
+     charity.push({
+       label: item.CityName,
+       value: item.CityID
+     })
+   ))
+   setItems2(charity)
+
+                       }else{
+
+     }
+   })
+   .catch(function (error) {
+     console.log(error);
+   });
+}}
+  setItems={setItems}
+  // width={100}
+  ite
+  style={{
+    borderColor:'#F1F1F1',
+    borderWidth:2,
+    // margin:5,
+    width:responsiveWidth(38),
+backgroundColor:"rgba(247, 246, 249, 1)",
+alignSelf:'flex-end'
+  }}
+  placeholder="انتخاب کنید"
+  zIndex={1000}
+  dropDownContainerStyle={{
+    borderColor:'#F1F1F1',
+    borderWidth:2,
+  borderRadius:5,
+
+}}
+/>
+
+                </View>
+     
+
+               </View>
+               <Text style={{...myFontStyle.normalRegular,color:Colors.text,marginTop:responsiveHeight(2),}}>کدپستی: </Text>
+
                 <Input onChangeText={(ss)=>setTitle(ss)}  placeholder="کدپستی"  numberOfLines={1} inputStyle={styles.textInputLogin}containerStyle={{alignItems:"flex-end"}} />
 
 
                 </View>
                 <View style={{paddingRight:responsiveWidth(5),paddingTop:responsiveHeight(0)}}>
-                <Text style={{...myFontStyle.normalRegular,color:Colors.text,marginTop:responsiveHeight(2),}}>متن پیام:   </Text>
+                <Text style={{...myFontStyle.normalRegular,color:Colors.text,marginTop:responsiveHeight(2),}}>آدرس:   </Text>
                 <Input onChangeText={(ss)=>setText(ss)}   placeholder="آدرس"  inputStyle={styles.textInputLogin2}containerStyle={{alignItems:"flex-end"}} />
 
 
@@ -365,7 +468,7 @@ return (
              <View style={{width:responsiveWidth(30) ,alignSelf:'flex-start',marginTop:responsiveHeight(2),marginLeft:responsiveWidth(5)}}>
 
 
-<TouchableOpacity onPress={()=>AddSupport()} style={styles.sendBtn}>
+<TouchableOpacity onPress={()=>AddAddress()} style={styles.sendBtn}>
 <Text style={styles.modalBtnText}>ارسال پیام</Text>
 </TouchableOpacity>
 
