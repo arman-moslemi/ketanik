@@ -52,6 +52,9 @@ initialRouteName={"StackNavigatorsHome"}
 shifting={false}
 activeColor={Colors.darkGreen}
 // tabBar={props => <TabBar {...props} />}
+  // screenOptions={{
+  //   unmountOnBlur:true
+  // }}
 >
   <Tab.Screen
     // name="home"

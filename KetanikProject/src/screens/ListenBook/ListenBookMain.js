@@ -208,7 +208,9 @@ if(state==""){
 return (
    <ScrollView>
       <View style={{display:'flex',justifyContent:'center',alignContent:'center',alignItems:'center'}} >
-        <Image source={{uri:apiAsset+data[0]?.Pic}} style={styles.backgroundImage}  blurRadius={5}/>
+        <Image source={{uri:apiAsset+data[0]?.Pic}} style={styles.backgroundImage}  
+        // blurRadius={5}
+        />
         <View style={styles.backView}>
          <TouchableOpacity onPress={()=>navigation.goBack()}>
       <Icon name={'west'} size={30} color={'#fff'} style={{}}/>
@@ -216,7 +218,7 @@ return (
      </TouchableOpacity>
       
      </View>
-        <Image source={{uri:apiAsset+data[0]?.Pic}} style={styles.overImg}/>
+        {/* <Image source={{uri:apiAsset+data[0]?.Pic}} style={styles.overImg}/> */}
       </View>
       <View style={styles.whiteBack}>
       <Text style={styles.eachBookName}>{data[0]?.BookName}</Text>

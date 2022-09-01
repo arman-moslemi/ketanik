@@ -98,7 +98,13 @@ return (
           data.map((item,index)=>{
               return(
 
-    <TouchableOpacity onPress={()=>navigation.navigate("ListenBookMain",{id:id,num:index})} style={styles(theme).episodeList}>
+    <TouchableOpacity onPress={()=>
+    // navigation.navigate("ListenBookMain",{id:id,num:index})
+    navigation.reset({
+      index: 0,
+      routes: [{ name: 'ListenBookMain',params:{id:id,num:index} }]
+ })
+    } style={styles(theme).episodeList}>
        <View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center',flex:1}}>
        <View>
             <Icon name={'headset'} color={'#111'} size={40}/>
@@ -108,7 +114,7 @@ return (
                 {item.Title}
             </Text>
             <Text style={styles(theme).episodeTime}>
-            {item.Size} {getTranslation('دقیقه')} _{item.Time} {getTranslation('مگابایت')}
+            {item.Time} {getTranslation('دقیقه')} _{item.Size} {getTranslation('مگابایت')}
             </Text>
         </View>
        </View>

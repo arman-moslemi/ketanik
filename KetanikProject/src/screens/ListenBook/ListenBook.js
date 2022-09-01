@@ -179,7 +179,9 @@ setPlay(true)
 return (
    <ScrollView>
       <View style={{display:'flex',justifyContent:'center',alignContent:'center',alignItems:'center'}} >
-        <Image source={{uri:apiAsset+image}} style={styles(theme).backgroundImage}  blurRadius={5}/>
+        <Image source={{uri:apiAsset+image}} style={styles(theme).backgroundImage}  
+        // blurRadius={5}
+        />
         <View style={styles(theme).backView}>
          <TouchableOpacity onPress={()=>navigation.goBack()}>
       <Icon name={'west'} size={30} color={'#fff'} style={{}}/>
@@ -187,7 +189,7 @@ return (
      </TouchableOpacity>
       
      </View>
-        <Image source={{uri:apiAsset+image}} style={styles(theme).overImg}/>
+        {/* <Image source={{uri:apiAsset+image}} style={styles(theme).overImg}/> */}
       </View>
       <View style={styles(theme).whiteBack}>
       <Text style={styles(theme).eachBookName}>{BookName}</Text>
