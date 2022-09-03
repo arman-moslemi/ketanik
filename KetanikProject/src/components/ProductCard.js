@@ -21,7 +21,9 @@ export const ProductCard = (props) => {
   const[alternateImage, setAlternateImage] = useState(true);
   
   return (
- <View style={styles.productCard}>
+ <TouchableOpacity onPress={()=>props.navigation.navigate("SingleProduct",{
+  params:props.Name2
+ })} style={styles.productCard}>
   <TouchableOpacity style={styles.hBtn}>
     <Image source={require('@assets/images/heart.png')} style={styles.heartBtn}/>
   </TouchableOpacity>
@@ -51,7 +53,7 @@ export const ProductCard = (props) => {
             </Text>
             </View>
         </View>
- </View>
+ </TouchableOpacity>
 
   );
 };

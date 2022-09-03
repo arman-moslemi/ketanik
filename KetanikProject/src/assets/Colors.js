@@ -12,4 +12,5 @@ export const Colors = {
     Orange:'#FF6900',
     Black:"#000",
     black:"#000",
+    Red:"#FF2525",
   }

@@ -44,7 +44,7 @@ import { apiUrl ,apiAsset} from "@commons/inFormTypes";
   };
   const _render = (item, index) => {
     return (
-      <ProductCard Name={item.item[0]?.Name} Unit={item.item[0]?.Unit} Number={item.item[0]?.Number} Cost={item.item[0]?.Cost} />
+      <ProductCard navigation={navigation} Name={item.item[0]?.Name}Name2={item.item[0]?.Name2} Unit={item.item[0]?.Unit} Number={item.item[0]?.Number} Cost={item.item[0]?.Cost} />
 
     );
   };
@@ -142,15 +142,7 @@ setData(Object.values(response.data.Data))
         </TouchableOpacity>
       </View>
       </View>
-     {/* <View style={{display:'flex',flexDirection:'row'}}>
-      <View style={{width:'48%',marginRight:'1%'}}>
-        <ProductCard/>
-      </View>
-      <View style={{width:'48%',marginLeft:'1%'}}>
-        <ProductCard/>
-      </View>
-      
-     </View> */}
+
      <FlatList
           numColumns={2}
           columnWrapperStyle={{width:'50%'}}

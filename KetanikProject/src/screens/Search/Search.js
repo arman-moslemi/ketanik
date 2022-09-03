@@ -10,6 +10,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import { myFontStyle } from "@assets/Constance";
 import { apiUrl ,apiAsset} from "@commons/inFormTypes";
 import { ProductCard } from '@components/ProductCard';
+import ViewSlider from 'react-native-view-slider';
 
 
 export const truncate = (str, len) => {
@@ -53,7 +54,7 @@ export const truncate = (str, len) => {
         };
         const _render = (item, index) => {
           return (
-            <ProductCard Name={item.item.Name} Unit={item.item.Unit} Number={item.item.Number} Cost={item.item.Cost} />
+            <ProductCard navigation={navigation} Name={item.item.Name} Name2={item.item.Name2} Unit={item.item.Unit} Number={item.item.Number} Cost={item.item.Cost} />
       
           );
         };

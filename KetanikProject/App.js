@@ -14,6 +14,7 @@ import Ticket from '@screens/Ticket/Ticket';
 import IotDashboard from '@screens/Iot/IotDashboard';
 import IotProject from '@screens/Iot/IotProject';
 import SignUpSecond from '@screens/Login/SignUpSecond';
+import SingleProduct from '@screens/Product/SingleProduct';
 import Store from "@screens/Store/Store";
 import Profile from "@screens/Profile/Profile";
 import Wallet from "@screens/Wallet/Wallet";
@@ -95,6 +96,7 @@ const StackNavigatorsHome = () => {
       <Stack.Screen name="IotProject" component={IotProject} />
       <Stack.Screen name="Cart" component={Cart} />
       <Stack.Screen name="CartAddress" component={CartAddress} />
+      <Stack.Screen name="SingleProduct" component={SingleProduct} />
 
     
     </Stack.Navigator>
