@@ -65,7 +65,7 @@ tweenHandler={(ratio) => ({
       </View>
 
       </TouchableOpacity>
-      <TouchableOpacity style={styles.news}>
+      <TouchableOpacity onPress={()=>navigation.navigate("BlogList")} style={styles.news}>
       <View style={{display:'flex',flexDirection:'column',alignContent:'center',alignItems:'center'}}>
       <Image source={require('@assets/images/newspaper.png')} style={styles.btnImg} />
       <Text style={styles.btnText}>اخبار و مقالات</Text>

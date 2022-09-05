@@ -18,114 +18,104 @@ import Drawer from 'react-native-drawer'
 import AsyncStorage from  '@react-native-async-storage/async-storage';
 import ViewSlider from 'react-native-view-slider';
 import { Rating, AirbnbRating } from 'react-native-ratings';
+import DOMParser from 'react-native-html-parser';
 
 // create a component
-const SingleProduct = ({navigation,route}) => {
+const SingleBlog = ({navigation,route}) => {
 
   const [title, setTitle] = useState("");
-  const [text, setText] = useState("");
-  const [isModalVisible, setModalVisible] = useState(false);
-  const [data,setData] = useState([]);
-  const [count,setCount]=useState(1);
-  const [costTotal,setCostTotal]=useState(0)
-  const drawers = useRef(null);
-  const [rate,setRate]=useState(5)
-  const [com, setCom] = useState([]);
-  const [property, setProperty] = useState([]);
-  const [number, setNumber] = useState(1);
-  const [rateNum, setRateNum] = useState();
+
 
   const {params} = route?.params ?? {};
 
 
      
   
-          const GetData=()=>{
-            const axios = require("axios");
-          
-            var customer=AsyncStorage.getItem("CustomerID")
-            var guest=AsyncStorage.getItem("Guest")?AsyncStorage.getItem("Guest"):0;
+  const [data, setData] = useState([]);
+  const [type, setType] = useState([]);
+  const [rate,setRate]=useState(5)
+  const [com, setCom] = useState([]);
+  const [text, setText] = useState([]);
+  const [des, setDes] = useState();
 
-            console.log(123456)
-            console.log(params)
-            axios.post(apiUrl +  "SingleProduct",{ProductName:params})
-            .then(function (response) {
-              console.log(response.data)
-    
-              if (response.data.result == "True") {
-                console.log(777)
-                console.log(response.data.Data)
+  const GetData=()=>{
+      const axios = require("axios");
+      axios.post(apiUrl + "SingleBlog",{Title:params})
+      .then(function (response) {
+        if (response.data.result == "True") {
+            console.log(777)
+            console.log(response.data.Data[0])
 
-                setData(response.data.Data[0])
-              }
-            });
-      
-            axios.post(apiUrl + "ProductProperty",{ProductName:params})
-            .then(function (response) {
-              console.log(response)
-    
-              if (response.data.result == "True") {
-                console.log(789456)
-                console.log(response.data.Data)
-                setProperty(Object.values(response.data.Data))
-    
-            }})
-            .catch(function (error) {
+            setData(response.data.Data[0])
+            const html = `<p>Hello world <b>world</b> <i>foo</i> abc</p>`;    
+const parser = new DOMParser.DOMParser();
+// const parsed = parser.parseFromString(response.data.Data[0].Text, 'text/html')
+const parsed = parser.parseFromString(html, 'text/html')
+// setDes(parsed)
+console.log(parsed)
+          }})
+          .catch(function (error) {
               console.log(777)
               alert(error)
-    
+              
               console.log(error);
-            });
-            axios.post(apiUrl + "ProductComment",{Title:params})
-            .then(function (response) {
-                if (response.data.result == "True") {
-              console.log(response.data.Data)
-    
-            setCom(response.data.Data)
-    
-        }})
-        .catch(function (error) {
-          console.log(777)
-          alert(error)
-    
-          console.log(error);
-        });
-          }
-          const AddCart=()=>{
-            const axios = require("axios");
-    
-          
-        var customer=AsyncStorage.getItem("CustomerID");
-            axios.post(apiUrl + "ShoppingBasketAdd",{ProductID:data?.ProductID, 
-                // CustomerID:customer,
-                CustomerID:1,
-               GuestID:0,
-              ShoppingBasketNumber:number,
-              Cost:data?.SpecialCost?data.SpecialCost:data.Cost
-            })
-            .then(function (response) {
-              console.log(response)
-    
+          });
+          axios.post(apiUrl + "SingleBlogComment",{Title:params})
+          .then(function (response) {
               if (response.data.result == "True") {
-                console.log(222)
-                console.log(response.data.Data)
-                alert("محصول با موفقیت به سبدخرید اضافه شد")
-            }})
-            .catch(function (error) {
+            console.log(response.data.Data)
+
+          setCom(response.data.Data)
+
+      }})
+      .catch(function (error) {
+        console.log(777)
+        alert(error)
+
+        console.log(error);
+      });
+      axios.get(apiUrl + "AllBlogType")
+      .then(function (response) {
+        if (response.data.result == "True") {
+          setType(response.data.Data)
+      }})
+      .catch(function (error) {
+        console.log(777)
+        alert(error)
+        console.log(error);
+      });
+      
+      
+
+    }
+    const InsertComment=()=>{
+      var ss=AsyncStorage.getItem("CustomerID")
+      if(ss==null){
+alert("لطفاابتدا وارد شوید")
+      }
+      else{
+
+      
+      const axios = require("axios");
+      axios.post(apiUrl + "InsertBlogComment",{CustomerID:1,BlogID:data[0].BlogID,Text:text,Rate:rate})
+      .then(function (response) {
+        if (response.data.result == "True") {
+          alert("پیام با موفقیت ثبت شد")
+GetData()              
+          }})
+          .catch(function (error) {
               console.log(777)
               alert(error)
-    
+              
               console.log(error);
-            });
-        
-          
-         
-      
-          }
-  useEffect(() => {
-    GetData();
+          });
+        ;
+  }
+  }
+    useEffect(() => {
+      GetData();
 
-  }, []);
+    }, []);
   const toggleModal = () => {
    setModalVisible(!isModalVisible);
   };
@@ -133,27 +123,7 @@ const SingleProduct = ({navigation,route}) => {
   const closeModal=()=>{
     setModalVisible(!isModalVisible);
   }
-  const InsertComment=()=>{
-    var ss=AsyncStorage.getItem("CustomerID")
-   
 
-    
-    const axios = require("axios");
-    axios.post(apiUrl + "InsertProductComment",{CustomerID:1,ProductID:data.ProductID,Text:text,Rate:rateNum})
-    .then(function (response) {
-      if (response.data.result == "True") {
-        alert("پیام با موفقیت ثبت شد")
-GetData()              
-        }})
-        .catch(function (error) {
-            console.log(777)
-            alert(error)
-            
-            console.log(error);
-        });
-      ;
-
-}
 const InsertFavorite=()=>{
   const axios = require("axios");
   var ss= AsyncStorage.getItem("CustomerID")
@@ -173,6 +143,7 @@ const InsertFavorite=()=>{
   
 
 }
+const drawers = useRef(null);
 
 return (
     <Drawer
@@ -210,39 +181,12 @@ return (
 {/* <View style={styles.viewBody}> */}
 
 <ScrollView >
-<ViewSlider
-
-        renderSlides = {
-          <>
-            <TouchableOpacity onPress={()=>Linking.openURL(data?.Link1)} style={styles.viewBox}>
-            <Image source={{uri:apiAsset + data?.Pic1}} resizeMode={"stretch"} style={styles.imageSlider}/>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={()=>Linking.openURL(data?.Link2)} style={styles.viewBox}><Image source={{uri:apiAsset+data?.Pic2}}  resizeMode={"stretch"} style={styles.imageSlider}></Image></TouchableOpacity>
-            <TouchableOpacity onPress={()=>Linking.openURL(data?.Link3)} style={styles.viewBox}><Image source={{uri:apiAsset+data?.Pic3}}  resizeMode={"stretch"} style={styles.imageSlider}></Image></TouchableOpacity>
-            <TouchableOpacity onPress={()=>Linking.openURL(data?.Link4)} style={styles.viewBox}><Image source={{uri:apiAsset+data?.Pic4}}  resizeMode={"stretch"} style={styles.imageSlider}></Image></TouchableOpacity>
-
-            </>
-      }
-      style={styles.slider}     //Main slider container style
-      height = {responsiveHeight(26)}    //Height of your slider
-      slideCount = {4}    //How many views you are adding to slide
-      dots = {true}     // Pagination dots visibility true for visibile
-      dotActiveColor = '#FFCC00'     //Pagination dot active color
-      dotInactiveColor = '#fff'    // Pagination do inactive color
-      dotsContainerStyle={styles.dotContainer}     // Container style of the pagination dots
-      autoSlide = {false}    //The views will slide automatically
-      slideInterval = {5000}    //In Miliseconds
-     />
+<Image source={{uri:apiAsset+data?.Pic}}  resizeMode={"contain"} style={styles.imageSlider}></Image>
      <View style={{flexDirection:'row-reverse',justifyContent:'space-between',paddingHorizontal:responsiveWidth(8)}}>
 <View>
-    <Text style={styles.productName}>{data.Name}</Text>
-    <Text style={styles.productValue}>مدل:{data.BrandName}</Text>
-    <View style={{flexDirection:'row'}}>
-    <Text style={styles.GroupText}>{data.Title}</Text>
-    <Text style={styles.GroupTitle}>دسته بندی:</Text>
-<Text >{data.RateAVG?data.RateAVG:0}</Text>
-    <Icon name={"star"} color={'#ffb921'} size={20}/>
-    </View>
+    <Text style={styles.productValue}>{data?.Date}</Text>
+    <Text style={styles.productName}>{data?.Title}</Text>
+  
 </View>
 <View>
 
@@ -256,45 +200,13 @@ return (
 </View>
 
 </View>
-<View style={styles.viwProperty}>
-    <View style={{width:"100%",borderBottomColor:"#DADADA",color:Colors.Orange,borderBottomWidth:1,alignItems:'flex-end'}}>
-
-
-    <Text style={styles.ProTitle}>مشخصات فنی</Text>
-    </View>
-    {property?.map((item,index)=>{
-return(
-    <View style={{flexDirection:'row',alignItems:'flex-end'}}>
-<View style={{width:responsiveWidth(60),height:responsiveHeight(4),margin:10,backgroundColor:"#FAFAFA",padding:5,flexDirection:'row-reverse'}}>
-    {  item.map((item2)=>{
-        return(
-        <Text style={styles.ProText}>
-{item2.SubGroupPropertyTitle}     </Text>
-    )
-})}
+<View style={{paddingHorizontal:responsiveWidth(6),paddingVertical:responsiveHeight(1)}}>
+<Text style={{...myFontStyle.normalRegular,color:Colors.Black}}>
+{data?.Text}
+{/* {des} */}
+</Text>
 </View>
-<View style={{width:responsiveWidth(20),margin:10,height:responsiveHeight(4),backgroundColor:"#FAFAFA",marginLeft:10,padding:5}}>
-<Text style={styles.ProText}>
-{item[0].MainGroupPropertyTitle}    </Text>
-</View>
-    </View>
 
-)
-        })}
-
-</View>
-<View style={styles.viwProperty}>
-    <View style={{width:"100%",borderBottomColor:"#DADADA",color:Colors.Orange,borderBottomWidth:1,alignItems:'flex-end'}}>
-
-
-    <Text style={styles.ProTitle}>نقد و بررسی</Text>
-    </View>
-    <View style={{flexDirection:'row',alignItems:'flex-end'}}>
-    <Text style={styles.des}>
-    {data.Description}    </Text>
-
-    </View>
-</View>
 <View style={styles.viwProperty}>
     <View style={{width:"100%",borderBottomColor:"#DADADA",color:Colors.Orange,borderBottomWidth:1,alignItems:'flex-end'}}>
 
@@ -398,50 +310,6 @@ index+1>item.Rate?
 
 </ScrollView>
  
-<View style={styles.footer}>
-
-<TouchableOpacity style={styles.sortBtn} onPress={()=>AddCart()}>
-          <Text style={{...myFontStyle.normalBold,color:'#fff'}}>
-افزودن به سبد خرید       
-   </Text>
-
-        </TouchableOpacity>
-        <View style={{marginRight:5,borderColor:'#000',borderWidth:1,width:60,alignItems:'center',flexDirection:'row',justifyContent:'center',borderRadius:25}}>
-        
-        <TouchableOpacity onPress={()=>number>1?setNumber(number-1):null}>
-
-        <Text  style={{...myFontStyle.normalBold,color:Colors.Green,textAlign:'right',flexDirection:'column'}}>-</Text>
-        </TouchableOpacity>
-        <Text style={{...myFontStyle.normalBold,color:Colors.black,textAlign:'right',flexDirection:'column',marginHorizontal:10}}>{number}</Text>
-        <TouchableOpacity onPress={()=>setNumber(number+1)}>
-
-        <Text  style={{...myFontStyle.normalBold,color:Colors.Green,textAlign:'right',flexDirection:'column'}}>+</Text>
-</TouchableOpacity>
-        </View>
-        <View>
-        <Text style={{...myFontStyle.normalBold,color:'#000'}}>
-مجموع سبد خرید:   </Text>
-{
-  !data.SpecialCost?
-
-   <Text style={{...myFontStyle.normalBold,color:Colors.Black}}>
-{data.Cost}   تومان</Text>
-  :
-<View>
-<View style={{flexDirection:'row'}}>
-
-  <View style={{backgroundColor:Colors.Red,width:35,borderRadius:50,alignItems:'center'}}>
-<Text style={{color:Colors.White}}>{parseInt(((data.Cost-data.SpecialCost)/data.SpecialCost)*100)}%</Text></View>
-<Text style={{...myFontStyle.mediumBold,color:Colors.Grey,textDecorationLine: 'line-through'}}>
-
-{data.Cost}   تومان</Text>
-</View>
-   <Text style={{...myFontStyle.normalBold,color:Colors.Black}}>
-{data.SpecialCost}   تومان</Text>
-</View>
-}
-</View>
-</View>
 
 </View>
 
@@ -748,7 +616,7 @@ slider: {
        },
        productName:{
         ...myFontStyle.largBold,
-        color:Colors.Green,
+        color:Colors.Black,
         marginLeft:responsiveWidth(2),
         marginRight:responsiveWidth(2),
         marginTop:responsiveHeight(1),
@@ -799,5 +667,5 @@ slider: {
     }
 });
 
-  export default SingleProduct;
+  export default SingleBlog;
 
