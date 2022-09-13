@@ -10,6 +10,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 // import DrawerContent from './drewerContent/DrawerContent';
 import { myFontStyle } from "@assets/Constance";
 import { ThemeContext } from '../../../theme/theme-context';
+import AsyncStorage from  '@react-native-async-storage/async-storage';
 
 // create a component
 

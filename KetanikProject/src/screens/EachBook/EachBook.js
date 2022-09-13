@@ -343,7 +343,8 @@ if(state==""){
             index: 0,
             routes: [{ name: 'TabBar' }]
        })                          }else{
-  
+        Alert.alert("",getTranslation("قبلا به سبد خرید اضافه شده است"))
+
         }
       })
       .catch(function (error) {
