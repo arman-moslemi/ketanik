@@ -938,7 +938,9 @@ return (
   null
 }
 
-
+{
+  relTran.length!=0?
+<>
  <View style={{display:'flex',flexDirection:'row-reverse',justifyContent:'space-between',marginBottom:responsiveHeight(5),marginTop:responsiveHeight(5)}}>
      <View style={{flex:1}}>
      <Text style={styles(theme).rowTitle}>
@@ -962,6 +964,10 @@ return (
           
         />
    </View>
+   </>
+  :
+null
+}
    </View>
   
   </ScrollView>

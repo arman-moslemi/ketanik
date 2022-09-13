@@ -111,7 +111,9 @@
 "با موفقیت ثبت شد":"Register is Successful",
 "با موفقیت به سبدخریداضافه شد":"Insert To Cart is Successful",
 "تغییرات با موفقیت ذخیره شد":"Success",
-"عکس با موفقیت ثبت شد":"Photo Saved"
+"عکس با موفقیت ثبت شد":"Photo Saved",
+"درگاه":"Port",
+"کیف پول شما موجودی لازم را ندارد":"Your wallet does not have the required balance"
 
 
 

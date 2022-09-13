@@ -180,7 +180,7 @@ mutLogin()
           console.log(userObj.id)
           navigation.navigate("Dargah",{id:userObj.id})        
         }else{
-            Alert.alert("","با موفقیت اضافه شد")
+            Alert.alert("",getTranslation("با موفقیت اضافه شد"))
 
         }
                         }else{
@@ -192,7 +192,7 @@ mutLogin()
                           }
                           else{
 
-                              Alert.alert("","کیف پول شما موجودی لازم را ندارد")
+                              Alert.alert("",getTranslation("کیف پول شما موجودی لازم را ندارد"))
                           }
 
       }

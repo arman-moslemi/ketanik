@@ -57,7 +57,7 @@ return (
     <View style={styles(theme).topBar}>
 
     <View style={{flex : 2,textAlign:"right"}}> 
-          <Text style={styles(theme).menuTitle}>درگاه</Text>
+          <Text style={styles(theme).menuTitle}>{getTranslation("درگاه")}</Text>
           </View>
     
         
@@ -87,7 +87,7 @@ return (
 } 
  style={styles(theme).payBtn}>
 
-       <Text style={styles(theme).btnText}>بازگشت</Text>
+       <Text style={styles(theme).btnText}>{getTranslation("بازگشت")}</Text>
      </TouchableOpacity>   
       </ScrollView>
     </View>
