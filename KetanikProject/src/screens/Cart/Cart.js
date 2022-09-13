@@ -20,11 +20,11 @@ import CheckBox from '@react-native-community/checkbox';
 
 export const truncate = (str, len) => {
     // console.log("truncate", str, str.length, len);
-    if (str.length > len && str.length > 0) {
+    if (str?.length > len && str?.length > 0) {
       let new_str = str + " ";
-      new_str = str.substr(0, len);
-      new_str = str.substr(0, new_str.lastIndexOf(" "));
-      new_str = new_str.length > 0 ? new_str : str.substr(0, len);
+      new_str = str?.substr(0, len);
+      new_str = str?.substr(0, new_str.lastIndexOf(" "));
+      new_str = new_str?.length > 0 ? new_str : str?.substr(0, len);
       return new_str + "...";
     }
     return str;
@@ -220,9 +220,14 @@ mutLogin()
             <Text style={styles(theme).bookWriter}>
             {truncate(item.item.Writer,20)}
             </Text>
-            <Text style={styles(theme).bookWriter}>
-            {truncate("ناشر :"+item.item.Publisher,30)}
-            </Text>
+            {item.item.Publisher?
+ <Text style={styles(theme).bookWriter}>
+ {truncate("ناشر :"+item.item.Publisher,30)}
+ </Text>
+:
+null
+}
+            
             <View style={{display:'flex',flexDirection:'row-reverse'}}>
             {[...new Array(5)].map((index)=>{
                     return(
@@ -321,7 +326,8 @@ renderItem={_render}
 </View>
 {/* <TouchableOpacity onPress={()=>{buy()}} style={styles(theme).purchaseBtn}> */}
 <TouchableOpacity onPress={()=>{dargah()}} style={styles(theme).purchaseBtn}>
-       <Text style={styles(theme).purchaseBtnText}>{getTranslation('پرداخت')} | {cost}</Text>
+       <Text style={styles(theme).purchaseBtnText}>{getTranslation('پرداخت')} </Text>
+       <Text style={styles(theme).purchaseBtnText2}> |{cost}</Text>
      </TouchableOpacity>
    </View>
   </ScrollView>
@@ -438,7 +444,7 @@ const styles = (theme) => StyleSheet.create({
     justifyContent:'center',
     marginTop:responsiveHeight(1),
 },price:{
-      ...myFontStyle.largBold,
+      // ...myFontStyle.largBold,
       color:Colors.darkGreen,
   },moreBtn:{
       width:'85%',
@@ -495,7 +501,7 @@ const styles = (theme) => StyleSheet.create({
       borderColor:Colors.darkGreen,
       borderWidth:1,
       borderRadius:10,
-      width:responsiveWidth(38),
+      width:responsiveWidth(25),
       marginRight:responsiveWidth(2),
       height:responsiveHeight(6),
       color:'#111',
@@ -518,15 +524,20 @@ const styles = (theme) => StyleSheet.create({
     width:responsiveWidth(75),
     marginTop:responsiveHeight(2),
     height:responsiveHeight(7),
+    flexDirection:'row',
     alignContent:'center',
     alignItems:'center',
 justifyContent:'center',
     borderRadius:10,
     marginRight:'auto',
     marginLeft:'auto',
-  },purchaseBtnText:{
+  },
+  purchaseBtnText:{
     ...myFontStyle.bookTitle,
     color:'#fff',
+  },
+  purchaseBtnText2:{
+fontSize:20,    color:'#fff',
   }
   });
 

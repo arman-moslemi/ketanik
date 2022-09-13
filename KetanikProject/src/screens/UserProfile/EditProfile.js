@@ -74,7 +74,7 @@ setEmail(response.data.Data.Email)
             console.log(message);
       
             if(result == "true"){
-          Alert.alert("","تغییرات با موفقیت ذخیره شد")
+          Alert.alert("",getTranslation("تغییرات با موفقیت ذخیره شد"))
               // navigation.navigate("ChangePass",{mobile:user,verify:response.data.Data})
                               }else{
       
@@ -135,7 +135,7 @@ if(result=="true"){
   console.log(222);
   
   console.log(response.data.result);
-    Alert.alert("",'عکس با موفقیت ثبت شد')
+    Alert.alert("",getTranslation('عکس با موفقیت ثبت شد'))
   AsyncStorage.setItem('@userPhoto',response.data.Data.Photo.toString())
 }
 

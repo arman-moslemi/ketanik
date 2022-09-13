@@ -245,11 +245,11 @@ const {id} = route?.params ?? {};
   const  mutComment=async()=> {
     const state = await AsyncStorage.getItem("@user");
 if( rate==""|| income==""){
-    Alert.alert("","موارد را وارد نمایید")
+    Alert.alert("",getTranslation("موارد را وارد نمایید"))
 
 }
 if(state==""){
-    Alert.alert("","لطفا وارد شوید")
+    Alert.alert("",getTranslation("لطفا وارد شوید"))
 
 }
     axios.post(apiUrl+'InsertComment',{BookID:newID,CustomerID:state,Rate:rateNum,Text:income})
@@ -259,7 +259,7 @@ if(state==""){
       
       
       if(result == "true"){
-          Alert.alert("","با موفقیت اضافه شد")
+          Alert.alert("",getTranslation("با موفقیت اضافه شد"))
         setModalVisibleCom(false)
         // navigation.navigate("ChangePass",{mobile:user,verify:response.data.Data})
                         }else{
@@ -277,7 +277,7 @@ if(state==""){
     const state = await AsyncStorage.getItem("@user");
 
 if(state==""){
-    Alert.alert("","لطفا وارد شوید")
+    Alert.alert("",getTranslation("لطفا وارد شوید"))
 
 }
     axios.post(apiUrl+'SingleBookSave',{BookID:newID,CustomerID:state})
@@ -289,7 +289,7 @@ if(state==""){
       console.log(message);
       
       if(result == "true"){
-        Alert.alert("","با موفقیت ثبت شد")
+        Alert.alert("",getTranslation("با موفقیت ثبت شد"))
         setModalVisibleCom(false)
         // navigation.navigate("ChangePass",{mobile:user,verify:response.data.Data})
                         }else{
@@ -315,7 +315,7 @@ if(state==""){
       console.log(message);
       
       if(result == "true"){
-          Alert.alert("","با موفقیت ذخیره شد")
+          Alert.alert("",getTranslation("با موفقیت ذخیره شد"))
                         }else{
 
       }
@@ -338,7 +338,7 @@ if(state==""){
         console.log(message);
         
         if(result == "true"){
-            Alert.alert("","با موفقیت به سبدخریداضافه شد")
+            Alert.alert("",getTranslation("با موفقیت به سبدخریداضافه شد"))
           navigation.reset({
             index: 0,
             routes: [{ name: 'TabBar' }]
@@ -906,7 +906,9 @@ return (
         />
    </View>
 
-
+{
+  data.Publisher?
+<>
  <View style={{display:'flex',flexDirection:'row-reverse',justifyContent:'space-between',marginBottom:responsiveHeight(5),marginTop:responsiveHeight(5)}}>
      <View style={{flex:1}}>
      <Text style={styles(theme).rowTitle}>
@@ -931,6 +933,10 @@ return (
           
         />
    </View>
+   </>
+  :
+  null
+}
 
 
  <View style={{display:'flex',flexDirection:'row-reverse',justifyContent:'space-between',marginBottom:responsiveHeight(5),marginTop:responsiveHeight(5)}}>

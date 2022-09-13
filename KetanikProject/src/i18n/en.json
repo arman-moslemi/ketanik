@@ -14,7 +14,7 @@
 "تازه های برگزیده":"New Selected",
 
 "پر فروش ترین ها":"Most Sold",
-"مشاهده همه":"All",
+"مشاهده همه":"All ",
 "درباره ما بیشتر بخوانید !":"Read more about us",
 "پرداخت":"Payment",
 "ثبت":"Register",
@@ -96,7 +96,23 @@
 "خانه":"Home",
 "حساب کاربری":"Profile",
 "لطفا توجه داشته باشید امکان استرداد مبلغ واریز شده وجود ندارد":"Please note that it is not possible to refund the amount.",
-"مشاهده سابقه تراکنش های موفق":"View the history of successful transactions"
+"مشاهده سابقه تراکنش های موفق":"View the history of successful transactions",
+"ویرایش تصویر":"Edit Image",
+"نام کاربری":"UserName",
+"ایمیل":"Email",
+"خانم":"Female",
+"آقا":"Male",
+"رمز عبور فعلی":"Current Password",
+"رمز عبور جدید":"New Password",
+"تکرار رمز عبور جدید":"Repeat New Password",
+"موارد را وارد نمایید":"Please Fill Inputs",
+"لطفا وارد شوید":"Please Login",
+"با موفقیت اضافه شد":"Success",
+"با موفقیت ثبت شد":"Register is Successful",
+"با موفقیت به سبدخریداضافه شد":"Insert To Cart is Successful",
+"تغییرات با موفقیت ذخیره شد":"Success",
+"عکس با موفقیت ثبت شد":"Photo Saved"
+
 
 
 
