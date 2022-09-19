@@ -342,7 +342,9 @@ if(state==""){
           navigation.reset({
             index: 0,
             routes: [{ name: 'TabBar' }]
-       })                          }else{
+       })                
+                }
+       else{
         Alert.alert("",getTranslation("قبلا به سبد خرید اضافه شده است"))
 
         }
