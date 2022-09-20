@@ -35,26 +35,26 @@ const DrawerContent = ({ navigation }) => {
 
   }, []);
   const  mutLogin=async()=> {
-    setName(await AsyncStorage.getItem('@userName'))
+    setName(await AsyncStorage.getItem('Name'))
     setPhoto(await AsyncStorage.getItem('@userPhoto'))
     console.log(1111)
     console.log(photo)
   }
   const  exit=async()=> {
 
-    AsyncStorage.setItem('@user',"")
+ await   AsyncStorage.setItem('CustomerID',"")
 navigation.navigate('Login')
   }
 
   const txtDarawerItem = [
-    {id:1, title: "راهنمای استفاده از اپلیکیشن", icon: "lightbulb", navigateName: "About" },
+    {id:1, title: "محصولات برگزیده", icon: "card-travel", navigateName: "Store" },
     { id:2,title: "تیکت ها و پشتیبانی", icon: "textsms", navigateName: "TicketsList" },
     // {id:3, title: "تخفیف ها", icon: "people-alt", navigateName: "" },
     // { title: Strings.inviteFriends, icon: invitefriends, navigateName: "" },
-    {id:4, title: "درباره ما", icon: "people-alt", navigateName: "AboutUs" },
-    {id:5, title: "تماس با ما", icon: "call", navigateName: "" },
-    {id:6, title: "قوانین و مقررات", icon: "sticky-note-2", navigateName: "Rules" },
-    {id:7, title: "به روز رسانی", icon: "cached", navigateName: "" },
+    {id:4, title: "کیف پول", icon: "wallet-travel", navigateName: "Wallet" },
+    {id:5, title: "مقالات", icon: "library-books", navigateName: "BlogList" },
+    {id:6, title: "مشاوران", icon: "sticky-note-2", navigateName: "ConsultantList" },
+    // {id:7, title: "به روز رسانی", icon: "cached", navigateName: "" },
     { id:8,title: "خروج", icon: "login", navigateName: "" },
     // { title: Strings.signIn, icon: exit, navigateName: "" },
   ]
@@ -96,7 +96,7 @@ key={item.id}
     <View style={drawerStyles.container}>
 
       <View style={drawerStyles.header}>
-        <LinearGradient colors={['#16B2F5', '#0385BC']} style={drawerStyles.child}>
+        <LinearGradient colors={[Colors.Green, Colors.Green]} style={drawerStyles.child}>
 
         </LinearGradient>
 </View>
@@ -104,7 +104,7 @@ key={item.id}
         <View style={drawerStyles.subViewAvatar}>
       <TouchableOpacity
 
-onPress={() => navigation.navigate('Profile')}
+onPress={() => navigation.navigate('EditProfile')}
 
 >
 

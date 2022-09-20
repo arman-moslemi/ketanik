@@ -88,8 +88,8 @@ console.log(parsed)
       
 
     }
-    const InsertComment=()=>{
-      var ss=AsyncStorage.getItem("CustomerID")
+    const InsertComment=async()=>{
+      var ss= await AsyncStorage.getItem("CustomerID")
       if(ss==null){
 alert("لطفاابتدا وارد شوید")
       }
@@ -97,7 +97,7 @@ alert("لطفاابتدا وارد شوید")
 
       
       const axios = require("axios");
-      axios.post(apiUrl + "InsertBlogComment",{CustomerID:1,BlogID:data[0].BlogID,Text:text,Rate:rate})
+      axios.post(apiUrl + "InsertBlogComment",{CustomerID:ss,BlogID:data[0].BlogID,Text:text,Rate:rate})
       .then(function (response) {
         if (response.data.result == "True") {
           alert("پیام با موفقیت ثبت شد")
@@ -124,10 +124,10 @@ GetData()
     setModalVisible(!isModalVisible);
   }
 
-const InsertFavorite=()=>{
+const InsertFavorite=async ()=>{
   const axios = require("axios");
-  var ss= AsyncStorage.getItem("CustomerID")
-  axios.post(apiUrl + "InsertFavorite",{CustomerID:1,ProductID:data.ProductID})
+  var ss=await AsyncStorage.getItem("CustomerID")
+  axios.post(apiUrl + "InsertFavorite",{CustomerID:ss,ProductID:data.ProductID})
   .then(function (response) {
     if (response.data.result == "True") {
         alert("با موفقیت ثبت شد")

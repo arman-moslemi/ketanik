@@ -6,8 +6,10 @@ import { StyleSheet } from 'react-native';
 import { responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
 import { Colors } from '@assets/Colors';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import AsyncStorage from  '@react-native-async-storage/async-storage';
 
 import { myFontStyle } from "@assets/Constance";
+import { apiUrl ,apiAsset} from "@commons/inFormTypes";
 
 
 export const truncate = (str, len) => {
@@ -23,24 +25,61 @@ export const truncate = (str, len) => {
 };
 
  const Profile = ({navigation }) => {
+  const  exit=async()=> {
 
+    await   AsyncStorage.setItem('CustomerID',"")
+   navigation.navigate('Login')
+     }
+     const [name, setName] = useState(false);
+     const [family, setFamily] = useState(false);
+     const [national, setNational] = useState(false);
+     const [mobile, setMobile] = useState(false);
+     const GetData=async()=>{
+      const axios = require("axios");
+    
+      const state = await AsyncStorage.getItem("CustomerID");
+
+      axios.post(apiUrl + "ReadCustomer",{CustomerID:state})
+          .then(function (response) {
+            if (response.data.result == "True") {
+              console.log(777)
+              console.log(response.data.Data)
+              console.log(response.data.Data[0]?.Name)
+           setMobile(response.data.Data[0]?.Mobile)
+           setName(response.data.Data[0]?.Name)
+           setFamily(response.data.Data[0]?.Family)
+     
+
+          
+  
+          }})
+          .catch(function (error) {
+            console.log(777)
+            alert(error)
+  
+            console.log(error);
+          });
+    }
+     useEffect(() => {
+      GetData();
+  
+    }, []);
 return (
   <View style={styles.container}>
 
  <View style={styles.profileBox}>
  <ScrollView>
   <View style={{display:'flex',alignItems:'center',borderBottomColor:'#BABABA8E',borderBottomWidth:0.5}}>
-  <Image source={require('@assets/images/profile2.png')} style={styles.profile} />
-   <TouchableOpacity style={[styles.editBtn,shadow]}>
+  <Image source={require('@assets/images/user.png')} resizeMode="contain" style={styles.profile} />
+   {/* <TouchableOpacity style={[styles.editBtn,shadow]}>
    <Image source={require('@assets/images/EditImg.png')} style={styles.pencil} />
-    </TouchableOpacity>     
+    </TouchableOpacity>      */}
     <Text style={styles.userName}>
-      یاسمن طاهری صراف
-    </Text>
+{name} {family}    </Text>
     <Text style={styles.userNumber}>
-      09120760760
+      {mobile}
     </Text>
-    <TouchableOpacity style={styles.editBtn2}>
+    <TouchableOpacity onPress={()=>navigation.navigate("EditProfile")}style={styles.editBtn2}>
     <Image source={require('@assets/images/pencil2.png')} style={styles.pencil2} />
     <Text style={styles.editText}>
       ویرایش حساب کاربری
@@ -101,7 +140,7 @@ return (
     انتخاب زبان
   </Text>
   </TouchableOpacity>
-  <TouchableOpacity style={styles.bigBtn}>
+  <TouchableOpacity onPress={()=>exit()} style={styles.bigBtn}>
   <Image source={require('@assets/images/pExit.png')} style={styles.bigBtnImg} />
   <Text style={styles.bigBtnText}>
     خروج از حساب کاربری
@@ -150,8 +189,9 @@ const styles = StyleSheet.create({
   
   },profile:{
     
-    width:90,
-    height:90,
+    width:responsiveWidth(15),
+    height:responsiveHeight(11),
+
     
   },editBtn:{
     backgroundColor:'#4BA064',
@@ -173,7 +213,7 @@ const styles = StyleSheet.create({
   },userName:{
     ...myFontStyle.registerText,
     color:'#000000',
-    marginTop:responsiveHeight(2),
+    marginTop:responsiveHeight(1),
   },userNumber:{
     ...myFontStyle.checkBox2,
     color:'#7B808C',

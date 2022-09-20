@@ -48,7 +48,7 @@ export const myFontStyle = {
     fontSize: RFPercentage(2),
   },
   smallRegular: {
-    fontFamily: myFontFamily.regularItalic,
+    fontFamily: myFontFamily.Medium,
     // fontSize: 10,
     fontSize: RFPercentage(1.25),
 

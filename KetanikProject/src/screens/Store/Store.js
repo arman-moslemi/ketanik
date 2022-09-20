@@ -23,6 +23,9 @@ import { apiUrl ,apiAsset} from "@commons/inFormTypes";
   const [isSwitchOn, setIsSwitchOn] = useState(false);
   const [expanded, setExpanded] = useState(true);
   const [search, setSearch] = useState("");
+  const [group, setGroup] = useState([]);
+  const [main, setMain] = useState([]);
+  const [groupShow, setGroupShow] = useState(false);
 
   const handlePress = () => setExpanded(!expanded);
   const onToggleSwitch = () => setIsSwitchOn(!isSwitchOn);
@@ -42,9 +45,29 @@ import { apiUrl ,apiAsset} from "@commons/inFormTypes";
   const keyExtractor = item => {
     return item[0]?.ProductID;
   };
+  const  GetGroup = async(aa) => {
+    const axios = require("axios");
+
+        axios.post(apiUrl + "MenuAll",{
+                GroupID:aa
+            })
+        .then(function (response) {
+          if (response.data.result == "True") {
+  
+            setGroup(response.data.Data)
+            // console.log(Object.values(response.data.Data))
+  
+        }
+        else{
+          console.log(response.data.result)
+  
+        }})
+        .catch(function (error) {
+          console.log(error);
+        });}
   const _render = (item, index) => {
     return (
-      <ProductCard navigation={navigation} Name={item.item[0]?.Name}Name2={item.item[0]?.Name2} Unit={item.item[0]?.Unit} Number={item.item[0]?.Number} Cost={item.item[0]?.Cost} />
+      <ProductCard navigation={navigation} Name={item.item[0]?.Name}Name2={item.item[0]?.Name2} Unit={item.item[0]?.Unit} Number={item.item[0]?.Number} Cost={item.item[0]?.Cost} SpecialCost={item.item[0]?.SpecialCost} />
 
     );
   };
@@ -103,7 +126,7 @@ setData(Object.values(response.data.Data))
       if (response.data.result == "True") {
 
         setData( Object.values(response.data.Data))
-
+console.log(Object.values(response.data.Data))
     }})
     .catch(function (error) {
       console.log(777)
@@ -114,6 +137,22 @@ setData(Object.values(response.data.Data))
    ;
     
     
+   axios
+   .get(apiUrl + "MainMenu")
+.then(function (response) {
+ if (response.data.result == "True") {
+
+   setMain(response.data.Data)
+   console.log(response.data.Data)
+
+}
+else{
+ console.log(response.data.result)
+
+}})
+.catch(function (error) {
+ console.log(error);
+});
 
   }
   useEffect(() => {
@@ -226,24 +265,47 @@ setData(Object.values(response.data.Data))
       </Text>
           <Switch value={isSwitchOn} onValueChange={onToggleSwitch} color={'#ffb921'}/>
           </View>
-          <List.Section title="Accordions" backgroundColor={'#ffffff'} style={{...myFontStyle.productPriceText,color:'#ffffff'}}>
-      <List.Accordion
-        title="دسته بندی یک"
-        style={{...myFontStyle.productPriceText,color:'#ffffff'}}
-        
-        >
-        <List.Item title="First item" />
-        <List.Item title="Second item" />
-      </List.Accordion>
+          
+       
+          <List.Section title=""  backgroundColor={'#ffffff'} style={{...myFontStyle.productPriceText,color:'#ffffff'}}>
 
-      <List.Accordion
-        title="Controlled Accordion"
-        style={styles.accardionStyle}
+{
+      main?.map((item)=>{
+        return(
+
+  <List.Accordion
+  title={item.MainTitle}
+  style={{...myFontStyle.productPriceText,color:'#ffffff'}}
+  onPress={()=>{GetGroup(item?.MainGroupID);setGroupShow(!groupShow)}}
+  >
+    {
+         Object.values(group)?.map((item2,index)=>{
+      return(
+        
+         
+
+        
+        <List.Accordion
+        title={Object?.values(group)[0]?  Object?.values(group)[0][0]?.GroupTitle:null}
+        style={{...myFontStyle.productPriceText,color:'#ffffff'}}
+        onPress={()=>{GetGroup(item?.MainGroupID);setGroupShow(!groupShow)}}
         >
-        <List.Item title="First item" />
-        <List.Item title="Second item" />
-      </List.Accordion>
+       <List.Item title={item2[0]?.Title} onPress={()=>{setData(data.filter(x=>x[0].SubGroupID==item2[0].SubGroupID));closeModal2()}} /> 
+       </List.Accordion>
+
+      )
+      }
+      )}
+</List.Accordion>
+    )
+  })
+
+ 
+}
+     
+
     </List.Section>
+            
     </View>
       
         </View>
@@ -311,13 +373,13 @@ const shadow2 = {
      
       height:responsiveHeight(6),
       borderRadius:15,
-      backgroundColor:'#ffb921',
+      backgroundColor:Colors.Green,
       justifyContent:'center',    
       
     },sort2:{
       borderRadius:15,
       height:responsiveHeight(6),
-      backgroundColor:Colors.Green1,
+      backgroundColor:"#ffb921",
       display:'flex',
       alignContent:'center',
       alignItems:'center',

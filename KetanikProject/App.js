@@ -19,6 +19,7 @@ import BlogList from '@screens/Blog/BlogList';
 import SingleBlog from '@screens/Blog/SingleBlog';
 import Store from "@screens/Store/Store";
 import Profile from "@screens/Profile/Profile";
+import EditProfile from "@screens/Profile/EditProfile";
 import Wallet from "@screens/Wallet/Wallet";
 import BestConsultant from '@screens/ConsultantList/BestConsultant';
 import { Colors } from '@assets/Colors';
@@ -101,6 +102,7 @@ const StackNavigatorsHome = () => {
       <Stack.Screen name="SingleProduct" component={SingleProduct} />
       <Stack.Screen name="BlogList" component={BlogList} />
       <Stack.Screen name="SingleBlog" component={SingleBlog} />
+      <Stack.Screen name="EditProfile" component={EditProfile} /> 
 
     
     </Stack.Navigator>
@@ -114,7 +116,9 @@ const StackNavigatorsLibrary = () => {
       headerShown: false
     }}>
      
-      
+     <Stack.Screen name="BlogList" component={BlogList} />
+     <Stack.Screen name="SingleBlog" component={SingleBlog} />
+
 
     </Stack.Navigator>
   );
@@ -139,7 +143,8 @@ const StackNavigatorsCat = () => {
       headerShown: false
     }}>
     
-    
+    <Stack.Screen name="IotDashboard" component={IotDashboard} />
+      <Stack.Screen name="IotProject" component={IotProject} />
       
     </Stack.Navigator>
   );
@@ -152,6 +157,7 @@ const StackNavigatorsProfile = () => {
       headerShown: false
     }}>
              <Stack.Screen name="Profile" component={Profile} /> 
+             <Stack.Screen name="EditProfile" component={EditProfile} /> 
              <Stack.Screen name="TicketList" component={TicketList} />
              <Stack.Screen name="Ticket" component={Ticket} />
 

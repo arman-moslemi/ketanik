@@ -27,9 +27,9 @@ import Drawer from 'react-native-drawer'
   const [fav, setFav] = useState([]);
   const drawers = useRef(null);
 
-  const GetData=()=>{
+  const GetData=async ()=>{
     const axios = require("axios");
-  var ss=AsyncStorage.getItem("CustomerID")
+  var ss= await AsyncStorage.getItem("CustomerID")
 
     axios.post(apiUrl + "CustomerFavorite",{CustomerID:ss})
     .then(function (response) {

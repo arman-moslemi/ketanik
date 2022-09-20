@@ -32,15 +32,18 @@ const SignUp = ({navigation }) => {
     axios.post(apiUrl + "Register",{Mobile:mobile})
     .then(function (response) {
       console.log(response.data)
-      if (response.data.result == "True") {
+      var mm=String(response.data).substring(16,20)
+
+      if (mm == "True") {
         console.log(777)
         console.log(response.data.Data)
         // auth.login(response.data.Data.CustomerID);
         console.log(88)
         navigation.navigate("Verify",{
     Mobile:mobile,
-    VerifyCode:response.data.Data
-});
+    // VerifyCode:response.data.Data
+    VerifyCode:String(response.data).substring(29,33)
+  });
 
         // console.log("auth", auth.isLoggedIn);
         // localStorage.setItem("guest","");

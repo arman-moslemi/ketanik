@@ -79,15 +79,15 @@ const Cart = ({navigation}) => {
           }
      
   
-          const GetData=()=>{
+          const GetData=async()=>{
             const axios = require("axios");
           
-            var customer=AsyncStorage.getItem("CustomerID")
+            var customer=await AsyncStorage.getItem("CustomerID")
             var guest=AsyncStorage.getItem("Guest")?AsyncStorage.getItem("Guest"):0;
 
             console.log(123456)
             console.log(customer)
-            axios.post(apiUrl + "ShoppingBasketView",{CustomerID:1,GuestID:0})
+            axios.post(apiUrl + "ShoppingBasketView",{CustomerID:customer,GuestID:0})
             .then(function (response) {
               console.log(response)
     
@@ -202,7 +202,7 @@ return (
       <View style={{}}>
 <TouchableOpacity  style={{flexDirection:'row',alignItems:'center'}}>
 
-<Image source={{uri:apiAsset+item.Pic}} resizeMode={"contain"} style={{width:responsiveWidth(18),height:responsiveHeight(9)}}/> 
+<Image source={{uri:apiAsset+item.Pic1}} resizeMode={"contain"} style={{width:responsiveWidth(18),height:responsiveHeight(9)}}/> 
 
 </TouchableOpacity>
     </View>

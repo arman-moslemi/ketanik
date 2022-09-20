@@ -91,14 +91,14 @@ const SingleProduct = ({navigation,route}) => {
           console.log(error);
         });
           }
-          const AddCart=()=>{
+          const AddCart=async ()=>{
             const axios = require("axios");
     
           
-        var customer=AsyncStorage.getItem("CustomerID");
+        var customer=await AsyncStorage.getItem("CustomerID");
             axios.post(apiUrl + "ShoppingBasketAdd",{ProductID:data?.ProductID, 
                 // CustomerID:customer,
-                CustomerID:1,
+                CustomerID:customer,
                GuestID:0,
               ShoppingBasketNumber:number,
               Cost:data?.SpecialCost?data.SpecialCost:data.Cost
@@ -133,13 +133,13 @@ const SingleProduct = ({navigation,route}) => {
   const closeModal=()=>{
     setModalVisible(!isModalVisible);
   }
-  const InsertComment=()=>{
-    var ss=AsyncStorage.getItem("CustomerID")
+  const InsertComment=async()=>{
+    var ss=await AsyncStorage.getItem("CustomerID")
    
 
     
     const axios = require("axios");
-    axios.post(apiUrl + "InsertProductComment",{CustomerID:1,ProductID:data.ProductID,Text:text,Rate:rateNum})
+    axios.post(apiUrl + "InsertProductComment",{CustomerID:ss,ProductID:data.ProductID,Text:text,Rate:rateNum})
     .then(function (response) {
       if (response.data.result == "True") {
         alert("پیام با موفقیت ثبت شد")
@@ -154,10 +154,10 @@ GetData()
       ;
 
 }
-const InsertFavorite=()=>{
+const InsertFavorite=async()=>{
   const axios = require("axios");
-  var ss= AsyncStorage.getItem("CustomerID")
-  axios.post(apiUrl + "InsertFavorite",{CustomerID:1,ProductID:data.ProductID})
+  var ss=await AsyncStorage.getItem("CustomerID")
+  axios.post(apiUrl + "InsertFavorite",{CustomerID:ss,ProductID:data.ProductID})
   .then(function (response) {
     if (response.data.result == "True") {
         alert("با موفقیت ثبت شد")

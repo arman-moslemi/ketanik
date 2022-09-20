@@ -3,7 +3,6 @@ import {View, TextInput, Text, TouchableOpacity,Image,ScrollView,FlatList,Keyboa
 
 
 import { StyleSheet } from 'react-native';
-import { responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
 import { Colors } from '@assets/Colors';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { ProductCard } from '@components/ProductCard';
@@ -19,6 +18,8 @@ import { Button } from 'react-native-paper';
 import DrawerPage from '@components/drawerContent/DrawerPage';
 import DrawerContent from '@components/drawerContent/DrawerContent';
 import Drawer from 'react-native-drawer'
+import { responsiveFontSize, responsiveHeight, responsiveScreenWidth, responsiveWidth } from 'react-native-responsive-dimensions';
+import {Input} from '@components/Input';
 
 
 
@@ -26,12 +27,19 @@ import Drawer from 'react-native-drawer'
 
   const drawers = useRef(null);
   const [data,setData] = useState([]);
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible);
+   };
+   const [isModalVisible, setModalVisible] = useState(false);
 
-  const GetData=()=>{
+   const closeModal=()=>{
+     setModalVisible(!isModalVisible);
+   }
+  const GetData=async()=>{
     const axios = require("axios");
-  var ss=AsyncStorage.getItem("CustomerID")
+  var ss=await AsyncStorage.getItem("CustomerID")
 
-    axios.post(apiUrl + "CustomerPart",{CustomerID:1})
+    axios.post(apiUrl + "CustomerPart",{CustomerID:ss})
     .then(function (response) {
       if (response.data.result == "True") {
         console.log(777)
@@ -48,6 +56,27 @@ import Drawer from 'react-native-drawer'
   
    
  
+  }
+  const [projectName, setProjectName] = useState("");
+  const [partName, setPartName] = useState("");
+
+  const InsertProject=async ()=>{
+    const axios = require("axios");
+    var ss=await AsyncStorage.getItem("CustomerID")
+  
+      axios.post(apiUrl + "InsertProject",{CustomerID:ss,ProjectName:projectName,PartName:partName})
+      .then(function (response) {
+        if (response.data.result == "True") {
+          console.log(777)
+          closeModal()
+GetData()  
+      }})
+      .catch(function (error) {
+        console.log(777)
+        alert(error)
+
+        console.log(error);
+      });
   }
   useEffect(() => {
     GetData();
@@ -72,9 +101,45 @@ import Drawer from 'react-native-drawer'
   })}
         >
   
-  <DrawerPage drawers={drawers} name={"داشبورد Iot"} />
+  <DrawerPage drawers={drawers} name={"داشبورد Iot"} navigation={navigation} />
     <View style={styles.container}>
-   
+    <TouchableOpacity style={styles.sortBtn} onPress={toggleModal}>
+          <Text style={{...myFontStyle.normalBold,color:'#fff',alignSelf:'center'}}>ایجاد پروژه
+
+          </Text>
+        <Icon name={"add"} color={'#fff'} size={25} style={{marginTop:responsiveHeight(1),transform: [{rotateY: '180deg'}]}}></Icon>
+
+        </TouchableOpacity>
+
+        <Modal isVisible={isModalVisible} onBackdropPress={closeModal} style={{justifyContent:'center',alignItems:'center'}}>
+               <View style={styles.sortModal}>
+                <View style={{width:'100%',borderBottomColor:'#f4f4f4',borderBottomWidth:2,padding:10}}>
+                  <Text style={{...myFontStyle.textOnImg,color:'#000'}}>افزودن پروژه</Text>
+                </View>
+                <View style={{paddingRight:responsiveWidth(5),paddingTop:responsiveHeight(2)}}>
+                <Text style={{...myFontStyle.normalRegular,color:Colors.text,marginTop:responsiveHeight(2),}}>نام پروژه </Text>
+                <Input onChangeText={(ss)=>setProjectName(ss)}  placeholder="نام پروژه خود را وارد کنید : "  numberOfLines={1} inputStyle={styles.textInputLogin}containerStyle={{alignItems:"flex-end"}} />
+
+
+                </View>
+                <View style={{paddingRight:responsiveWidth(5),paddingTop:responsiveHeight(0)}}>
+                <Text style={{...myFontStyle.normalRegular,color:Colors.text,marginTop:responsiveHeight(2),}}>عنوان بخش اول:   </Text>
+                <Input onChangeText={(ss)=>setPartName(ss)}   placeholder="نام بخش اول را وارد نمایید"  inputStyle={styles.textInputLogin2}containerStyle={{alignItems:"flex-end"}} />
+
+
+                </View>
+             <View style={{justifyContent:'center',width:'100%',alignContent:'flex-end'}}>
+             <View style={{width:responsiveWidth(30) ,alignSelf:'flex-start',marginTop:responsiveHeight(2),marginLeft:responsiveWidth(5)}}>
+
+
+<TouchableOpacity onPress={()=>InsertProject()} style={styles.sendBtn}>
+<Text style={styles.modalBtnText}>افزودن</Text>
+</TouchableOpacity>
+
+                 </View>
+               </View>
+               </View>
+              </Modal>
     {
   data.map((item)=>(
 
@@ -305,6 +370,26 @@ const shadow = {
   
   elevation: 5,
     },
+    sendBtn:{
+      backgroundColor:'#FF6900',
+      width:responsiveWidth(30),
+      height:responsiveHeight(4.5),
+      borderRadius:50,
+      justifyContent:'center',
+      elevation:5,
+   shadowOpacity:0.5,
+   shadowRadius:50,
+   shadowOffset:50,
+  },notShowBtn:{
+    textAlign:'center',
+    width:responsiveWidth(25),
+   },
+   modalBtnText:{
+     ...myFontStyle.normalBold,
+     color:'#fff',
+     textAlign:'center',
+
+   },
     costBtn2:{
       backgroundColor:"#fff",
       height:responsiveHeight(5),
@@ -362,6 +447,35 @@ const shadow = {
       justifyContent:'space-between',
       padding:responsiveWidth(3),
       paddingBottom:responsiveHeight(2)},
+      sortBtn:{
+        backgroundColor:'#FF6900',
+        width:responsiveScreenWidth(30),
+        height:responsiveHeight(5),
+        borderRadius:50,
+        elevation:5,
+      shadowOpacity:1,
+      shadowRadius:10,
+      shadowOffset:5,
+      justifyContent:'center',
+      flexDirection:'row',
+    },
+    sortModal:{
+      width:responsiveWidth(95),
+      marginTop:responsiveHeight(-20),
+      backgroundColor:'#fff',
+      alignItems:'flex-end',
+      borderRadius:5,
+      shadowColor: '#fff',
+      shadowOpacity: 0.1,
+      shadowOffset: { width: 2, height: 0},
+      shadowRadius: 700,
+      elevation: 20,
+      alignContent:'center',
+      paddingTop:responsiveHeight(1),
+      paddingBottom:responsiveHeight(3),
+      paddingRight:responsiveWidth(0),
+      paddingLeft:responsiveWidth(0),
+    }, 
       
   });
 

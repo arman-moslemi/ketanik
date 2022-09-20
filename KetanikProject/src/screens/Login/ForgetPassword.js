@@ -1,6 +1,6 @@
 import React, { useState,useEffect } from 'react';
 import { myFontStyle } from "@assets/Constance";
-import { View, Text , StyleSheet,Image, TouchableOpacity,KeyboardAvoidingView,TextInput} from 'react-native';
+import { View, Text , StyleSheet,Image, TouchableOpacity,KeyboardAvoidingView,TextInput, Alert} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { responsiveFontSize, responsiveHeight, responsiveScreenWidth, responsiveWidth } from 'react-native-responsive-dimensions';
 import { Colors} from "@assets/Colors";
@@ -32,15 +32,16 @@ const FogetPassword = ({navigation }) => {
     axios.post(apiUrl + "Forgetting",{Mobile:mobile})
     .then(function (response) {
       console.log(response.data)
-      if (response.data.result == "True") {
+      var mm=String(response.data).substring(16,20)
+
+      if (mm == "True") {
         console.log(777)
         console.log(response.data.Data)
+       console.log( String(response.data).substring(29,33))
         // auth.login(response.data.Data.CustomerID);
         console.log(88)
-        navigation.navigate("Verify",{
-    Mobile:mobile,
-    VerifyCode:response.data.Data
-});
+        Alert.alert("","رمز عبور جدید برای شما فرستاده شد")
+        navigation.navigate("Login");
 
         // console.log("auth", auth.isLoggedIn);
         // localStorage.setItem("guest","");

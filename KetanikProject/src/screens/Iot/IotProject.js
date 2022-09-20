@@ -59,9 +59,9 @@ import {
       return rv;
     }, {});
   }
-  const GetData=()=>{
+  const GetData=async ()=>{
     const axios = require("axios");
-  var mm=AsyncStorage.getItem("CustomerID")
+  var mm=await AsyncStorage.getItem("CustomerID")
 
 //     axios.post(apiUrl + "CustomerPart",{CustomerID:1})
 //     .then(function (response) {
@@ -234,7 +234,7 @@ const _body=(item)=>{
   })}
         >
   
-  <DrawerPage drawers={drawers} name={title} />
+  <DrawerPage drawers={drawers} name={title} navigation={navigation} />
     <View style={styles.container}>
    
     <AccordionList

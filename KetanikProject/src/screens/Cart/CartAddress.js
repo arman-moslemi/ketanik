@@ -82,14 +82,14 @@ const CartAddress = ({navigation,route}) => {
   }
      
   
-          const GetAddress=()=>{
+          const GetAddress=async()=>{
             const axios = require("axios");
           
-        var customer=AsyncStorage.getItem("CustomerID")
+        var customer= await AsyncStorage.getItem("CustomerID")
         console.log(123456)
         console.log(customer)
          
-        axios.post(apiUrl + "ReadAddress",{CustomerID:1})
+        axios.post(apiUrl + "ReadAddress",{CustomerID:customer})
         .then(function (response) {
             
             console.log(999)
@@ -151,9 +151,9 @@ const CartAddress = ({navigation,route}) => {
             });
           
           }
-          const AddAddress=()=>{
+          const AddAddress=async ()=>{
             const axios = require("axios");
-            var customer=AsyncStorage.getItem("CustomerID")
+            var customer=await AsyncStorage.getItem("CustomerID")
 
             axios.post(apiUrl + "InsertAddress",{CustomerID:customer,CityID:value2,PostalCode:title,Address:text})
             .then(function (response) {

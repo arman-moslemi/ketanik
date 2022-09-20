@@ -39,7 +39,7 @@ const TicketsList = ({navigation}) => {
   const  mutLogin=async()=> {
     const state =  AsyncStorage.getItem("@CustomerID");
 
-    axios.post(apiUrl + "CustomerSupport",{CustomerID:1})
+    axios.post(apiUrl + "CustomerSupport",{CustomerID:state})
     .then(function (response) {
       if (response.data.result == "True") {
         console.log(777);
@@ -59,7 +59,7 @@ const TicketsList = ({navigation}) => {
         const axios = require("axios");
       
     
-        axios.post(apiUrl + "InsertSupport",{CustomerID:1,Text:text,Title:title})
+        axios.post(apiUrl + "InsertSupport",{CustomerID:ss,Text:text,Title:title})
         .then(function (response) {
           if (response.data.result == "True") {
             console.log(777)
@@ -392,7 +392,8 @@ alignItems:'flex-end'
     paddingBottom:responsiveHeight(3),
     paddingRight:responsiveWidth(0),
     paddingLeft:responsiveWidth(0),
-  }, viewRadio: {flexDirection:'row',alignItems:'center',marginTop:responsiveHeight(1)}
+  }, 
+  viewRadio: {flexDirection:'row',alignItems:'center',marginTop:responsiveHeight(1)}
   ,txtRadio: {
     color: Colors.text,
     ...myFontStyle.mediumBold,

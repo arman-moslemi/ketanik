@@ -39,7 +39,10 @@ else{
       if (response.data.result == "True") {
         console.log(777)
         // auth.login(response.data.Data.CustomerID);
-        AsyncStorage.setItem("CustomerID",response.data.Data[0].CustomerID);
+        console.log(response.data.Data[0])
+        AsyncStorage.setItem("CustomerID",response.data.Data[0].CustomerID.toString());
+        AsyncStorage.setItem("Name",response.data.Data[0].Name.toString()+" "+response.data.Data[0].Family.toString());
+        // AsyncStorage.setItem("Photo",response.data.Data[0].Photo.toString());
 navigation.navigate("TabBar", { CustomerID:response.data.Data[0].CustomerID});
 
 

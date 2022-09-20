@@ -48,9 +48,22 @@ export const ProductCard = (props) => {
         </TouchableOpacity>
           </View>
           <View>
+            {
+              props.SpecialCost?
+              <>
+              <Text style={styles.specialproductPrice}>
+              {props.Cost}تومان
+              </Text>
+              <Text style={styles.productPrice}>
+              {props.SpecialCost}تومان
+              </Text>
+              
+              </>
+              :
             <Text style={styles.productPrice}>
             {props.Cost}تومان
             </Text>
+            }
             </View>
         </View>
  </TouchableOpacity>
@@ -127,9 +140,15 @@ width:responsiveWidth(44),
  },addImg:{
   width:20,
   height:20,
- },productPrice:{
+ },
+ productPrice:{
   ...myFontStyle.productPriceText,
   color:'#000000',
- }
+ },
+ specialproductPrice:{
+  ...myFontStyle.smallRegular,
+  textDecorationLine:'line-through',
+  color:'#000000',
+ },
 });
 
