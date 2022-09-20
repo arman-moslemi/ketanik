@@ -12,10 +12,10 @@ import AsyncStorage from  '@react-native-async-storage/async-storage';
  const Splash = ({navigation }) => {
   const  mutLogin=async()=> {
 
-    const state = await AsyncStorage.getItem("@user");
+    const state = await AsyncStorage.getItem("CustomerID");
   
 
-   
+   console.log(state)
     if(state!=null && state!="" && state!="false"){
 
     console.log(state)
@@ -27,7 +27,7 @@ import AsyncStorage from  '@react-native-async-storage/async-storage';
 
       navigation.reset({
         index: 0,
-        routes: [{ name: 'TabBar' }]
+        routes: [{ name: 'Login' }]
    })
 
     }
