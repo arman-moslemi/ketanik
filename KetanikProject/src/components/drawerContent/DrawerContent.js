@@ -48,7 +48,7 @@ navigation.navigate('Login')
 
   const txtDarawerItem = [
     {id:1, title: "محصولات برگزیده", icon: "card-travel", navigateName: "Store" },
-    { id:2,title: "تیکت ها و پشتیبانی", icon: "textsms", navigateName: "TicketsList" },
+    { id:2,title: "تیکت ها و پشتیبانی", icon: "textsms", navigateName: "TicketList" },
     // {id:3, title: "تخفیف ها", icon: "people-alt", navigateName: "" },
     // { title: Strings.inviteFriends, icon: invitefriends, navigateName: "" },
     {id:4, title: "کیف پول", icon: "wallet-travel", navigateName: "Wallet" },

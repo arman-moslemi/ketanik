@@ -96,7 +96,7 @@ const CartAddress = ({navigation,route}) => {
             console.log(response)
           if (response.data.result == "True") {
             console.log(response.data.Data)
-            setDataAddress(response.data.Data)
+            setData(response.data.Data)
 
         }})
             axios.get(apiUrl + "GetProvince")
@@ -160,7 +160,7 @@ const CartAddress = ({navigation,route}) => {
               if (response.data.result == "True") {
                 console.log(111)
                 console.log(response.data.Data)
-                setNewPostalCode("")
+                setTitle("")
                 setNewAddress("")
                 GetData(response.data.Data)
                 handleClose();
@@ -207,7 +207,7 @@ const CartAddress = ({navigation,route}) => {
               if (response.data.result == "True") {
                 console.log(111)
                 console.log(response.data.Data)
-                GetData(response.data.Data)
+                GetAddress(response.data.Data)
 
             
     
@@ -393,12 +393,12 @@ alignSelf:'flex-end'
   value={value}
   items={items}
   setOpen={setOpen}
-  // setValue={setValue}
-  setValue={(vals)=> {setValue(vals)
+  setValue={setValue}
+  onChangeValue={(vals)=> {
     console.log(44);
     console.log(vals);
 
-   axios.post(apiUrl+'GetCity',{ProvinceID:value})
+   axios.post(apiUrl+'GetCity',{ProvinceID:vals})
    .then(function (response) {
      const message = response.data.Data;
      const result = response.data.result;
@@ -469,7 +469,7 @@ alignSelf:'flex-end'
 
 
 <TouchableOpacity onPress={()=>AddAddress()} style={styles.sendBtn}>
-<Text style={styles.modalBtnText}>ارسال پیام</Text>
+<Text style={styles.modalBtnText}>ذخیره</Text>
 </TouchableOpacity>
 
                  </View>

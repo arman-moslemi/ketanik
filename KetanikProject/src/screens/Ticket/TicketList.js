@@ -37,7 +37,7 @@ const TicketsList = ({navigation}) => {
   }, []);
 
   const  mutLogin=async()=> {
-    const state =  AsyncStorage.getItem("@CustomerID");
+    const state = await AsyncStorage.getItem("CustomerID");
 
     axios.post(apiUrl + "CustomerSupport",{CustomerID:state})
     .then(function (response) {
@@ -55,11 +55,12 @@ const TicketsList = ({navigation}) => {
 
 
     };
-    const AddSupport=()=>{
+    const AddSupport=async()=>{
         const axios = require("axios");
       
-    
-        axios.post(apiUrl + "InsertSupport",{CustomerID:ss,Text:text,Title:title})
+        const state = await AsyncStorage.getItem("CustomerID");
+
+        axios.post(apiUrl + "InsertSupport",{CustomerID:state,Text:text,Title:title})
         .then(function (response) {
           if (response.data.result == "True") {
             console.log(777)

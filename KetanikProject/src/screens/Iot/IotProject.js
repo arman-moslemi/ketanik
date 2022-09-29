@@ -24,10 +24,13 @@ import {
   LineChart,
 
 } from "react-native-chart-kit";
+import {Input} from '@components/Input';
 
 
  const IotProject = ({navigation ,route}) => {
   const [isModalVisible, setModalVisible] = useState(false);
+  const [isModalVisible2, setModalVisible2] = useState(false);  //part
+  const [isModalVisible3, setModalVisible3] = useState(false);  //device
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
    };
@@ -35,29 +38,71 @@ import {
    const closeModal=()=>{
      setModalVisible(!isModalVisible);
    }
+  const toggleModal2 = () => {
+    setModalVisible2(!isModalVisible2);
+   };
  
-  const [fav, setFav] = useState([
-   
-        {
-          id:1,
-          title: 'Getting Started',
-          body: 'React native Accordion/Collapse component, very good to use in toggles & show/hide content'
-        },
-        {
-          id:2,
-          title: 'Components',
-          body: 'AccordionList,Collapse,CollapseHeader & CollapseBody'
-        }
-        ,
-  ]);
+   const closeModal2=()=>{
+     setModalVisible2(!isModalVisible2);
+   }
+  const toggleModal3 = () => {
+    setModalVisible3(!isModalVisible3);
+   };
+ 
+   const closeModal3=()=>{
+     setModalVisible3(!isModalVisible3);
+   }
+ 
+
   const drawers = useRef(null);
   const {id,title} = route?.params ?? {};
   const [data,setData] = useState([]);
+  const [projectName, setProjectName] = useState("");
+  const [partName, setPartName] = useState("");
+  const [deviceName, setDeviceName] = useState("");
+  const [pid, setPid] = useState(0);
   function groupArrayOfObjects(list, key) {
     return list.reduce(function(rv, x) {
       (rv[x[key]] = rv[x[key]] || []).push(x);
       return rv;
     }, {});
+  }
+
+  const InsertPart=async()=>{
+    const axios = require("axios");
+    var ss=await AsyncStorage.getItem("CustomerID")
+  
+      axios.post(apiUrl + "InsertPart",{CustomerID:ss,ProjectID:id,PartName:partName})
+      .then(function (response) {
+        if (response.data.result == "True") {
+          console.log(777)
+          closeModal2()
+GetData()  
+      }})
+      .catch(function (error) {
+        console.log(777)
+        alert(error)
+
+        console.log(error);
+      });
+  }
+  const InsertDevice=async()=>{
+    const axios = require("axios");
+    var ss=await AsyncStorage.getItem("CustomerID")
+  
+      axios.post(apiUrl + "InsertDevice",{PartID:id,Serial:deviceName})
+      .then(function (response) {
+        if (response.data.result == "True") {
+          console.log(777)
+          closeModal3()
+GetData()  
+      }})
+      .catch(function (error) {
+        console.log(777)
+        alert(error)
+
+        console.log(error);
+      });
   }
   const GetData=async ()=>{
     const axios = require("axios");
@@ -146,10 +191,19 @@ import {
 }
 const _body=(item)=>{
     return (
+      
         <View style={styles.body}>
+           <TouchableOpacity style={styles.sortBtn} onPress={()=>{toggleModal3();setPid(item[0].PartID)}}>
+          <Text style={{...myFontStyle.normalBold,color:'#fff',alignSelf:'center'}}>ایجاد دستگاه
+
+          </Text>
+        <Icon name={"add"} color={'#fff'} size={25} style={{marginTop:responsiveHeight(1),transform: [{rotateY: '180deg'}]}}></Icon>
+
+        </TouchableOpacity>
           {
             item.map((item2)=>{
               return(
+                item2.DeviceID?
 <View style={styles.bodyView}>
 <View style={styles.bodyHeader}>
 <Text style={{...myFontStyle.normalBold,color:Colors.Green,flexDirection:'column'}}>سالم</Text>
@@ -210,6 +264,8 @@ const _body=(item)=>{
 
 </View>
 </View>
+:
+null
               )
             })
           }
@@ -236,7 +292,64 @@ const _body=(item)=>{
   
   <DrawerPage drawers={drawers} name={title} navigation={navigation} />
     <View style={styles.container}>
-   
+    <TouchableOpacity style={styles.sortBtn} onPress={toggleModal2}>
+          <Text style={{...myFontStyle.normalBold,color:'#fff',alignSelf:'center'}}>ایجاد بخش
+
+          </Text>
+        <Icon name={"add"} color={'#fff'} size={25} style={{marginTop:responsiveHeight(1),transform: [{rotateY: '180deg'}]}}></Icon>
+
+        </TouchableOpacity>
+        <Modal isVisible={isModalVisible2} onBackdropPress={closeModal2} style={{justifyContent:'center',alignItems:'center'}}>
+               <View style={styles.sortModal}>
+                <View style={{width:'100%',borderBottomColor:'#f4f4f4',borderBottomWidth:2,padding:10}}>
+                  <Text style={{...myFontStyle.textOnImg,color:'#000'}}>افزودن بخش</Text>
+                </View>
+            
+                <View style={{paddingRight:responsiveWidth(5),paddingTop:responsiveHeight(0)}}>
+                <Text style={{...myFontStyle.normalRegular,color:Colors.text,marginTop:responsiveHeight(2),}}>عنوان بخش :   </Text>
+                <Input onChangeText={(ss)=>setPartName(ss)}   placeholder="نام بخش  را وارد نمایید"  inputStyle={styles.textInputLogin2}containerStyle={{alignItems:"flex-end"}} />
+
+
+                </View>
+             <View style={{justifyContent:'center',width:'100%',alignContent:'flex-end'}}>
+             <View style={{width:responsiveWidth(30) ,alignSelf:'flex-start',marginTop:responsiveHeight(2),marginLeft:responsiveWidth(5)}}>
+
+
+<TouchableOpacity onPress={()=>InsertPart()} style={styles.sendBtn}>
+<Text style={styles.modalBtnText}>افزودن</Text>
+</TouchableOpacity>
+
+                 </View>
+               </View>
+               </View>
+              </Modal>
+        <Modal isVisible={isModalVisible3} onBackdropPress={closeModal3} style={{justifyContent:'center',alignItems:'center'}}>
+               <View style={styles.sortModal}>
+                <View style={{width:'100%',borderBottomColor:'#f4f4f4',borderBottomWidth:2,padding:10}}>
+                  <Text style={{...myFontStyle.textOnImg,color:'#000'}}>افزودن دستگاه</Text>
+                </View>
+            
+                <View style={{paddingRight:responsiveWidth(5),paddingTop:responsiveHeight(0)}}>
+                <Text style={{...myFontStyle.normalRegular,color:Colors.text,marginTop:responsiveHeight(2),}}>شماره سریال:   </Text>
+                <Input onChangeText={(ss)=>setDeviceName(ss)}   placeholder="شماره سریال  را وارد نمایید"  inputStyle={styles.textInputLogin2}containerStyle={{alignItems:"flex-end"}} />
+
+
+                </View>
+             <View style={{justifyContent:'center',width:'100%',alignContent:'flex-end'}}>
+             <View style={{width:responsiveWidth(30) ,alignSelf:'flex-start',marginTop:responsiveHeight(2),marginLeft:responsiveWidth(5)}}>
+
+
+<TouchableOpacity onPress={()=>InsertDevice()} style={styles.sendBtn}>
+<Text style={styles.modalBtnText}>افزودن</Text>
+</TouchableOpacity>
+
+                 </View>
+               </View>
+               </View>
+              </Modal>
+
+
+
     <AccordionList
             list={data}
             header={_head}
@@ -614,6 +727,34 @@ sortModal:{
   paddingBottom:responsiveHeight(3),
   paddingRight:responsiveWidth(0),
   paddingLeft:responsiveWidth(0),
+},
+sortBtn:{
+  backgroundColor:'#FF6900',
+  width:responsiveWidth(30),
+  height:responsiveHeight(5),
+  borderRadius:50,
+  elevation:5,
+shadowOpacity:1,
+shadowRadius:10,
+shadowOffset:5,
+justifyContent:'center',
+flexDirection:'row',
+},
+sendBtn:{
+  backgroundColor:'#FF6900',
+  width:responsiveWidth(30),
+  height:responsiveHeight(4.5),
+  borderRadius:50,
+  justifyContent:'center',
+  elevation:5,
+shadowOpacity:0.5,
+shadowRadius:50,
+shadowOffset:50,
+}, modalBtnText:{
+  ...myFontStyle.normalBold,
+  color:'#fff',
+  textAlign:'center',
+
 },
   });
 

@@ -40,6 +40,7 @@ const EditProfile = ({navigation}) => {
   const [specialty,setSpecialty]=useState("")
   const [pass,setPass]=useState("")
   const [again,setAgain]=useState("")
+  const [isConsultant,setIsConsultant]=useState("")
   useEffect(() => {
 
     mutLogin();
@@ -66,6 +67,7 @@ const EditProfile = ({navigation}) => {
              setSpecialty(response.data.Data[0]?.Specialty)
              setCardNumber(response.data.Data[0]?.CardNumber)
              setSheba(response.data.Data[0]?.Sheba)
+             setIsConsultant(response.data.Data[0]?.IsConsultant)
 
             
     
@@ -260,7 +262,10 @@ return (
 </LinearGradient>
 </TouchableOpacity>
 </View>
-  <View style={styles.viewHeadContainer2}>
+
+{
+isConsultant?
+<View style={styles.viewHeadContainer2}>
 <View style={styles.header}>
 <TouchableOpacity style={{flexDirection:'row',justifyContent:'space-around' }}>
 <View style={{  width:responsiveWidth(40),borderBottomColor:"#CBCBCB",borderBottomWidth:1 }}>
@@ -291,7 +296,7 @@ return (
 
 
 <View style={styles.header}>
-<TouchableOpacity onPress={()=>setModalVisible4(true)} style={{flexDirection:'row',justifyContent:'space-around' }}>
+<TouchableOpacity style={{flexDirection:'row',justifyContent:'space-around' }}>
 <View style={{  width:responsiveWidth(40),borderBottomColor:"#CBCBCB",borderBottomWidth:1 }}>
 <Text style={styles.txtTitleInput}> شماره کارت</Text>
 <View style={{flexDirection:'row-reverse',justifyContent:'space-between'}}>
@@ -301,7 +306,7 @@ return (
 </View>
 </View>
 </TouchableOpacity>
-<TouchableOpacity onPress={()=>setModalVisible3(true)} style={{  width:responsiveWidth(40),borderBottomColor:"#CBCBCB",borderBottomWidth:1 }}>
+<TouchableOpacity  style={{  width:responsiveWidth(40),borderBottomColor:"#CBCBCB",borderBottomWidth:1 }}>
 <Text style={styles.txtTitleInput}>شماره شبا</Text>
 <View style={{flexDirection:'row-reverse',justifyContent:'space-between'}}>
 
@@ -319,6 +324,10 @@ return (
 </View>
 
 </View>
+:
+null
+}
+ 
 
 <Modal
   // animationType="slide"
@@ -348,7 +357,7 @@ style={{alignSelf:'center'}}
 </View>
 <View style={{flexDirection:'row-reverse',justifyContent:'space-between',marginTop:responsiveHeight(4)}}>
 <TouchableOpacity onPress={()=>setModalVisible(false)}>
-<LinearGradient   colors={['#CC1111', '#F43535']} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={styles.viewNext}>
+<LinearGradient   colors={["#ffb921", "#ffb921"]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={styles.viewNext}>
 
 <Text style={{...myFontStyle.mediumBold,color:Colors.White}}>
 بستن</Text>
@@ -357,7 +366,7 @@ style={{alignSelf:'center'}}
 </TouchableOpacity>
 <TouchableOpacity onPress={()=>setModalVisible(false)}>
 
-<LinearGradient   colors={['#3AC3FE', '#0284BB']} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={styles.viewNext}>
+<LinearGradient   colors={[Colors.Green,Colors.Green]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={styles.viewNext}>
 
 <Text style={{...myFontStyle.mediumBold,color:Colors.White}}>
 ویرایش</Text>
@@ -399,7 +408,7 @@ style={{alignSelf:'center'}}
 <View style={{flexDirection:'row-reverse',justifyContent:'space-between',marginTop:responsiveHeight(4)}}>
 <TouchableOpacity onPress={()=>setModalVisible2(false)}>
 
-<LinearGradient   colors={['#CC1111', '#F43535']} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={styles.viewNext}>
+<LinearGradient   colors={["#ffb921", "#ffb921"]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={styles.viewNext}>
 
 <Text style={{...myFontStyle.mediumBold,color:Colors.White}}>
 بستن</Text>
@@ -408,7 +417,7 @@ style={{alignSelf:'center'}}
 </TouchableOpacity>
 <TouchableOpacity onPress={()=>setModalVisible2(false)}>
 
-<LinearGradient   colors={['#3AC3FE', '#0284BB']} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={styles.viewNext}>
+<LinearGradient   colors={[Colors.Green,Colors.Green]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={styles.viewNext}>
 
 <Text style={{...myFontStyle.mediumBold,color:Colors.White}}>
 ویرایش</Text>
@@ -450,7 +459,7 @@ style={{alignSelf:'center'}}
 <View style={{flexDirection:'row-reverse',justifyContent:'space-between',marginTop:responsiveHeight(4)}}>
 <TouchableOpacity onPress={()=>setModalVisible3(false)}>
 
-<LinearGradient   colors={['#CC1111', '#F43535']} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={styles.viewNext}>
+<LinearGradient   colors={["#ffb921", "#ffb921"]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={styles.viewNext}>
 
 <Text style={{...myFontStyle.mediumBold,color:Colors.White}}>
 بستن</Text>
@@ -459,7 +468,7 @@ style={{alignSelf:'center'}}
 </TouchableOpacity>
 <TouchableOpacity onPress={()=>setModalVisible3(false)}>
 
-<LinearGradient   colors={['#3AC3FE', '#0284BB']} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={styles.viewNext}>
+<LinearGradient   colors={[Colors.Green,Colors.Green]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={styles.viewNext}>
 
 <Text style={{...myFontStyle.mediumBold,color:Colors.White}}>
 ویرایش</Text>
@@ -501,7 +510,7 @@ style={{alignSelf:'center'}}
 <View style={{flexDirection:'row-reverse',justifyContent:'space-between',marginTop:responsiveHeight(4)}}>
 <TouchableOpacity onPress={()=>setModalVisible4(false)}>
 
-<LinearGradient   colors={['#CC1111', '#F43535']} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={styles.viewNext}>
+<LinearGradient   colors={["#ffb921", "#ffb921"]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={styles.viewNext}>
 
 <Text style={{...myFontStyle.mediumBold,color:Colors.White}}>
 بستن</Text>
@@ -510,7 +519,7 @@ style={{alignSelf:'center'}}
 </TouchableOpacity>
 <TouchableOpacity onPress={()=>setModalVisible4(false)}>
 
-<LinearGradient   colors={['#3AC3FE', '#0284BB']} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={styles.viewNext}>
+<LinearGradient   colors={[Colors.Green,Colors.Green]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={styles.viewNext}>
 
 <Text style={{...myFontStyle.mediumBold,color:Colors.White}}>
 ویرایش</Text>
@@ -552,7 +561,7 @@ style={{alignSelf:'center'}}
 <View style={{flexDirection:'row-reverse',justifyContent:'space-between',marginTop:responsiveHeight(4)}}>
 <TouchableOpacity onPress={()=>setModalVisible5(false)}>
 
-<LinearGradient   colors={['#CC1111', '#F43535']} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={styles.viewNext}>
+<LinearGradient   colors={["#ffb921", "#ffb921"]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={styles.viewNext}>
 
 <Text style={{...myFontStyle.mediumBold,color:Colors.White}}>
 بستن</Text>
@@ -561,7 +570,7 @@ style={{alignSelf:'center'}}
 </TouchableOpacity>
 <TouchableOpacity onPress={()=>setModalVisible5(false)}>
 
-<LinearGradient   colors={['#3AC3FE', '#0284BB']} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={styles.viewNext}>
+<LinearGradient   colors={[Colors.Green,Colors.Green]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={styles.viewNext}>
 
 <Text style={{...myFontStyle.mediumBold,color:Colors.White}}>
 ویرایش</Text>
@@ -603,7 +612,7 @@ style={{alignSelf:'center'}}
 <View style={{flexDirection:'row-reverse',justifyContent:'space-between',marginTop:responsiveHeight(4)}}>
 <TouchableOpacity onPress={()=>setModalVisible6(false)}>
 
-<LinearGradient   colors={['#CC1111', '#F43535']} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={styles.viewNext}>
+<LinearGradient   colors={["#ffb921", "#ffb921"]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={styles.viewNext}>
 
 <Text style={{...myFontStyle.mediumBold,color:Colors.White}}>
 بستن</Text>
@@ -612,7 +621,7 @@ style={{alignSelf:'center'}}
 </TouchableOpacity>
 <TouchableOpacity onPress={()=>setModalVisible6(false)}>
 
-<LinearGradient   colors={['#3AC3FE', '#0284BB']} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={styles.viewNext}>
+<LinearGradient   colors={[Colors.Green,Colors.Green]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={styles.viewNext}>
 
 <Text style={{...myFontStyle.mediumBold,color:Colors.White}}>
 ویرایش</Text>

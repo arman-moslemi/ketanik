@@ -24,9 +24,9 @@ export const ProductCard = (props) => {
  <TouchableOpacity onPress={()=>props.navigation.navigate("SingleProduct",{
   params:props.Name2
  })} style={styles.productCard}>
-  <TouchableOpacity style={styles.hBtn}>
+  {/* <TouchableOpacity onPress={()=>InsertFavorite()} style={styles.hBtn}>
     <Image source={require('@assets/images/heart.png')} style={styles.heartBtn}/>
-  </TouchableOpacity>
+  </TouchableOpacity> */}
     <Image source={require('@assets/images/p1.png')} style={styles.productCardImg} />
     {/* <View style={{display:'flex',flexDirection:'row-reverse',justifyContent:'flex-start',marginLeft:responsiveWidth(2)}}>
       <Icon name={"star"} color={'#ffb921'} size={15}/>
@@ -43,9 +43,9 @@ export const ProductCard = (props) => {
       </Text>
       <View style={{display:'flex',justifyContent:'space-between',alignItems:'center',flexDirection:'row-reverse',marginRight:responsiveWidth(2),marginLeft:responsiveWidth(2),marginTop:responsiveHeight(1)}}>
         <View>
-        <TouchableOpacity style={[styles.addBtn,shadow]}>
+        {/* <TouchableOpacity style={[styles.addBtn,shadow]}>
         <Image source={require('@assets/images/add.png')} style={styles.addImg} />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
           </View>
           <View>
             {

@@ -152,8 +152,8 @@ return (
 <View>
 <View style={styles.viewBack}>
 <View  style={styles.viewHeaderBack2}>
-<Text style={{...myFontStyle.mediumRegular,color:Colors.white}}>پشتیبان فنی</Text>
-<Text style={{...myFontStyle.mediumRegular,color:Colors.white}}>
+<Text style={{...myFontStyle.mediumRegular,color:Colors.White}}>پشتیبان فنی</Text>
+<Text style={{...myFontStyle.mediumRegular,color:Colors.White}}>
         تاریخ ایجاد تیکت:{item.Date}
     </Text>
 </View>
@@ -174,8 +174,8 @@ return (
 <View>
 <View style={styles.viewBack}>
 <View  style={styles.viewHeaderBack}>
-<Text style={{...myFontStyle.mediumRegular,color:Colors.white}}> کاربر</Text>
-<Text style={{...myFontStyle.mediumRegular,color:Colors.white}}>
+<Text style={{...myFontStyle.mediumRegular,color:Colors.White}}> کاربر</Text>
+<Text style={{...myFontStyle.mediumRegular,color:Colors.White}}>
         تاریخ ایجاد تیکت:{item.Date}
     </Text>
 </View>
@@ -200,8 +200,8 @@ return (
 <View>
 <View style={styles.viewBack3}>
 <View  style={styles.viewHeaderBack}>
-<Text style={{...myFontStyle.mediumRegular,color:Colors.white}}> کاربر</Text>
-{/* <Text style={{...myFontStyle.mediumRegular,color:Colors.white}}>
+<Text style={{...myFontStyle.mediumRegular,color:Colors.White}}> کاربر</Text>
+{/* <Text style={{...myFontStyle.mediumRegular,color:Colors.White}}>
         تاریخ ایجاد تیکت:1400/08/08
     </Text> */}
 </View>
@@ -257,7 +257,7 @@ const styles = StyleSheet.create({
     width: responsiveWidth(70),
     // justifyContent: 'center',
     // alignItems: 'flex-start',
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.White,
     borderRadius: 20,
     padding:  responsiveWidth(4),
   },
@@ -309,7 +309,7 @@ const styles = StyleSheet.create({
         viewHeaderBack:{borderTopLeftRadius:5,borderTopEndRadius:5, flexDirection:'row',backgroundColor:"#09B5DB",
         justifyContent:'space-between'
         ,alignItems:'center',paddingHorizontal:responsiveWidth(3)},
-        viewHeaderBack2:{borderTopLeftRadius:5,borderTopEndRadius:5, flexDirection:'row',backgroundColor:"#068CC5"
+        viewHeaderBack2:{borderTopLeftRadius:5,borderTopEndRadius:5, flexDirection:'row',backgroundColor:Colors.Green
         ,justifyContent:'space-between',alignItems:'center',paddingHorizontal:responsiveWidth(3)},
         button:{marginTop:responsiveHeight(2),width:responsiveWidth(25)
           ,height:responsiveHeight(3),backgroundColor:Colors.Yellow,alignSelf:'flex-start',

@@ -53,7 +53,25 @@ import Drawer from 'react-native-drawer'
     GetData();
 
   }, []);
+  const InsertFavorite=async(id)=>{
+    const axios = require("axios");
+    var ss=await AsyncStorage.getItem("CustomerID")
+    axios.post(apiUrl + "InsertFavorite",{CustomerID:ss,CustomerID2:id})
+    .then(function (response) {
+      if (response.data.result == "True") {
+          alert("با موفقیت ثبت شد")
+        }})
+        .catch(function (error) {
+            console.log(777)
+            alert(error)
+            
+            console.log(error);
+        });
+
  
+    
+
+  }
   return (
     <Drawer
     // type="static"

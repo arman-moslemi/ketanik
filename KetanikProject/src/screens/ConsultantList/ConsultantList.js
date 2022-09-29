@@ -15,6 +15,7 @@ import { apiUrl ,apiAsset} from "@commons/inFormTypes";
 import DrawerPage from '@components/drawerContent/DrawerPage';
 import DrawerContent from '@components/drawerContent/DrawerContent';
 import Drawer from 'react-native-drawer'
+import AsyncStorage from '@react-native-async-storage/async-storage';
  const ConsultantList = ({navigation }) => {
   const [isModalVisible, setModalVisible] = useState(false);
   const [isModalVisible2, setModalVisible2] = useState(false);
@@ -58,7 +59,29 @@ import Drawer from 'react-native-drawer'
   }
   const [data, setData] = useState([]);
   const [recent, setRecent] = useState([]);
+  const  _handleKeyDownAuto = async(aa) => {
+    const axios = require("axios");
 
+        axios
+            .post(apiUrl + "SearchProductApp",{
+                ProductName:aa
+            })
+        .then(function (response) {
+          if (response.data.result == "True") {
+            // data.filter((el)=>el[0].Name.includes(aa))
+setData(Object.values(response.data.Data)) 
+           console.log(response.data.Data)
+  
+        }
+        else{
+          setData([])
+          console.log(response.data.result)
+  
+        }})
+        .catch(function (error) {
+          console.log(error);
+        });
+      }
 
   const GetData=()=>{
       const axios = require("axios");
@@ -128,9 +151,9 @@ import Drawer from 'react-native-drawer'
         
   
       }
-    const InsertFavorite=(id)=>{
+    const InsertFavorite=async(id)=>{
         const axios = require("axios");
-        var ss= localStorage.getItem("CustomerID")
+        var ss=await AsyncStorage.getItem("CustomerID")
         axios.post(apiUrl + "InsertFavorite",{CustomerID:ss,CustomerID2:id})
         .then(function (response) {
           if (response.data.result == "True") {
@@ -175,7 +198,9 @@ import Drawer from 'react-native-drawer'
       <View style={{display:'flex',flexDirection:'row-reverse',alignContent:'center',alignItems:'center'}}>
       <View style={styles.inputIcon}>
       <Icon name={"search"} color={'#CECECE'} size={30}/>
-      <TextInput style={styles.textInputIcon}  placeholder="جستجو کنید ..."/>
+      <TextInput style={styles.textInputIcon}
+      // onChangeText={(aa)=>_handleKeyDownAuto(aa)} 
+       placeholder="جستجو کنید ..."/>
       </View>
       <View style={{width:"14%",marginRight:"1%"}}>
         <TouchableOpacity style={[styles.sort,shadow]} onPress={toggleModal}>
@@ -227,7 +252,7 @@ index+1>item.Rate?
   
      
       </View>
-      <TouchableOpacity style={{display:'flex',flexDirection:'row-reverse',marginLeft:responsiveWidth(2),marginBottom:responsiveHeight(2)}}>
+      <TouchableOpacity onPress={()=>InsertFavorite(item.CustomerID)} style={{display:'flex',flexDirection:'row-reverse',marginLeft:responsiveWidth(2),marginBottom:responsiveHeight(2)}}>
       <Icon name={"favorite-border"} color={'#FF2525'} size={15}/>
         <Text style={styles.heartBtnText}>
           افزودن به برگزیده ها

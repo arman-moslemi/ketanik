@@ -103,6 +103,8 @@ const StackNavigatorsHome = () => {
       <Stack.Screen name="BlogList" component={BlogList} />
       <Stack.Screen name="SingleBlog" component={SingleBlog} />
       <Stack.Screen name="EditProfile" component={EditProfile} /> 
+      <Stack.Screen name="TicketList" component={TicketList} />
+      <Stack.Screen name="Ticket" component={Ticket} />
 
     
     </Stack.Navigator>

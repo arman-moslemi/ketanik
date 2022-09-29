@@ -57,7 +57,31 @@ const SignUpSecond = ({navigation,route }) => {
 
           alert("ثبت نام با موفقیت انجام شد")
         }
-navigation.navigate("Login");
+        axios.post(apiUrl + "Login",{Mobile:Mobile,Password:pass})
+        .then(function (response2) {
+          if (response2.data.result == "True") {
+            console.log(777)
+            // auth.login(response.data.Data.CustomerID);
+            console.log(response2.data.Data[0])
+            AsyncStorage.setItem("CustomerID",response2.data.Data[0].CustomerID.toString());
+            AsyncStorage.setItem("Name",response2.data.Data[0].Name.toString()+" "+response2.data.Data[0].Family.toString());
+            // AsyncStorage.setItem("Photo",response.data.Data[0].Photo.toString());
+    navigation.navigate("TabBar", { CustomerID:response2.data.Data[0].CustomerID});
+    
+    
+    
+        }
+        else{
+          alert("نام کاربری یا رمز عبور نادرست می باشد")
+    
+        }})
+        .catch(function (error) {
+          console.log(568)
+          alert(error)
+    
+          console.log(error);
+        });
+// navigation.navigate("Login");
 
         // console.log("auth", auth.isLoggedIn);
         // localStorage.setItem("guest","");

@@ -86,6 +86,7 @@ setData(Object.values(response.data.Data))
   
         }
         else{
+          setData([])
           console.log(response.data.result)
   
         }})
