@@ -355,6 +355,8 @@ color:theme.menuTitle,
       flexDirection:'row-reverse',
       alignContent:'center',
       alignItems:'center',
+      padding:5
+
   },categoryBox2:{
     height:responsiveHeight(10),
       // flex:0.5,
@@ -366,6 +368,8 @@ color:theme.menuTitle,
     flexDirection:'row-reverse',
     alignContent:'center',
     alignItems:'center',
+    padding:5
+
   },categoryBox3:{
     height:responsiveHeight(10),
       // flex:0.5,
@@ -377,6 +381,8 @@ color:theme.menuTitle,
     flexDirection:'row-reverse',
     alignContent:'center',
     alignItems:'center',
+    padding:5
+
   },categoryBox4:{
     height:responsiveHeight(10),
       // flex:0.5,
@@ -388,6 +394,8 @@ color:theme.menuTitle,
     flexDirection:'row-reverse',
     alignContent:'center',
     alignItems:'center',
+    padding:5
+
   },
   categoryBox5:{
     height:responsiveHeight(10),
@@ -413,6 +421,8 @@ color:theme.menuTitle,
     flexDirection:'row-reverse',
     alignContent:'center',
     alignItems:'center',
+    padding:5
+
   },
   categoryBox7:{
     height:responsiveHeight(10),
@@ -425,6 +435,8 @@ color:theme.menuTitle,
     flexDirection:'row-reverse',
     alignContent:'center',
     alignItems:'center',
+    padding:5
+
   },
   categoryBox8:{
     height:responsiveHeight(10),
@@ -437,6 +449,8 @@ color:theme.menuTitle,
     flexDirection:'row-reverse',
     alignContent:'center',
     alignItems:'center',
+    padding:5
+
   },
   categoryBox9:{
     height:responsiveHeight(10),
@@ -449,6 +463,8 @@ color:theme.menuTitle,
     flexDirection:'row-reverse',
     alignContent:'center',
     alignItems:'center',
+    padding:5
+
   },
   categoryBox10:{
     height:responsiveHeight(10),
@@ -461,6 +477,8 @@ color:theme.menuTitle,
     flexDirection:'row-reverse',
     alignContent:'center',
     alignItems:'center',
+    padding:5
+
   },
   categoryBox11:{
     height:responsiveHeight(10),
@@ -473,6 +491,8 @@ color:theme.menuTitle,
     flexDirection:'row-reverse',
     alignContent:'center',
     alignItems:'center',
+    padding:5
+
   },
   categoryBox12:{
     height:responsiveHeight(10),
@@ -485,6 +505,8 @@ color:theme.menuTitle,
     flexDirection:'row-reverse',
     alignContent:'center',
     alignItems:'center',
+    padding:5
+
   },
   categoryBox13:{
     height:responsiveHeight(10),
@@ -497,6 +519,8 @@ color:theme.menuTitle,
     flexDirection:'row-reverse',
     alignContent:'center',
     alignItems:'center',
+    padding:5
+
   },
   categoryBox14:{
     height:responsiveHeight(10),
@@ -509,6 +533,8 @@ color:theme.menuTitle,
     flexDirection:'row-reverse',
     alignContent:'center',
     alignItems:'center',
+    padding:5
+
   },
   bookImg:{
       width:50,
@@ -516,11 +542,10 @@ color:theme.menuTitle,
       height:responsiveHeight(13),
       marginTop:responsiveHeight(-5),
       transform: [{rotate: '20deg'}],
-   
   },cateTitle:{
     color:'#fff',
     ...myFontStyle.normalBold,
-    marginRight:responsiveWidth(5),
+    marginRight:responsiveWidth(3),
     width:responsiveWidth(30),
   },imageBook:{
     width:responsiveWidth(15),

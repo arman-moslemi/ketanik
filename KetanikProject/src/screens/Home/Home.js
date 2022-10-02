@@ -182,15 +182,15 @@ console.log(lang)
           item.item.SpecialCost?
 <>
       <Text style={styles(theme).priceRed}>
-      {item.item.SpecialCost}sek
+      {item.item.SpecialCost} sek
     </Text>
     <Text style={styles(theme).priceStroke}>
-    {item.item.Cost==100?"100":100}sek
+    {item.item.Cost==100?"100":100} sek
     </Text>
     </>
           :
 <Text style={styles(theme).bookCost}>
-      {item.item.Cost}sek
+      {item.item.Cost} sek
       </Text>
         }
   <View style={{flexDirection:'row-reverse',alignItems:'center',width:"10%"}}>
@@ -326,18 +326,15 @@ return (
        <ScrollView >
   <View style={styles(theme).container}>
   <View style={{display:'flex',flexDirection:'row-reverse',justifyContent:'space-between',marginBottom:responsiveHeight(5)}}>
-     <View style={{flex:1}}>
+      <TouchableOpacity style={{flex:1,flexDirection:'row-reverse',justifyContent:'space-between'}} onPress={()=>navigation.navigate("SelectedNews")}>
      <Text style={styles(theme).rowTitle}>
      {getTranslation('تازه های برگزیده')}
       </Text>
-     </View>
-      <View>
-      <TouchableOpacity onPress={()=>navigation.navigate("SelectedNews")}>
+  
       <Text style={styles(theme).seeAll}>
       {getTranslation('مشاهده همه')}
       </Text>
       </TouchableOpacity>
-      </View>
       </View>
 
               <FlatList
@@ -353,19 +350,16 @@ return (
         
    
   
-   <View style={{display:'flex',flexDirection:'row-reverse',justifyContent:'space-between',marginBottom:responsiveHeight(5),marginTop:responsiveHeight(5)}}>
-     <View style={{flex:1}}>
+   <View style={{flexDirection:'row',alignItems:'flex-start',justifyContent:'space-between',marginBottom:responsiveHeight(5),marginTop:responsiveHeight(5)}}>
+      <TouchableOpacity style={{flex:1,flexDirection:'row-reverse',justifyContent:'space-between'}} onPress={()=>navigation.navigate("SelectedNews",{type:"best"})}>
+ 
      <Text style={styles(theme).rowTitle}>
      {getTranslation('پر فروش ترین ها')}
       </Text>
-     </View>
-      <View>
-      <TouchableOpacity onPress={()=>navigation.navigate("SelectedNews",{type:"best"})}>
       <Text style={styles(theme).seeAll}>
       {getTranslation('مشاهده همه')}
       </Text>
       </TouchableOpacity>
-      </View>
       </View>
    <View style={{display:'flex',flexDirection:'row-reverse'}}>
    <FlatList
@@ -550,9 +544,12 @@ marginRight:4,
 },rowTitle:{
     ...myFontStyle.largBold,
     color:theme.textTitle,
+    // marginLeft:responsiveWidth(30)
 },seeAll:{
     ...myFontStyle.largeRegular,
     color:theme.textTitle,
+    // marginRight:responsiveWidth(10)
+
 },
 dotContainer: {
   backgroundColor: 'transparent',

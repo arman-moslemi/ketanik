@@ -4,7 +4,7 @@ import { myFontStyle } from "@assets/Constance";
 import { responsiveFontSize, responsiveHeight, responsiveScreenWidth, responsiveWidth } from 'react-native-responsive-dimensions';
 import { Colors} from "@assets/Colors";
 
-import { View, Text , StyleSheet,Image, TouchableOpacity,ScrollView,TextInput} from 'react-native';
+import { View, Text , StyleSheet,Image, TouchableOpacity,ScrollView,Alert} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Modal from 'react-native-modal';
 import { RadioButton } from 'react-native-paper';
@@ -152,7 +152,7 @@ setPlay(true)
       const state = await AsyncStorage.getItem("@user");
   
   if(state==""){
-    alert("لطفا وارد شوید")
+    Alert.alert("",getTranslation("لطفا وارد شوید"))
   
   }
       axios.post(apiUrl+'SingleBookSave',{BookID:id,CustomerID:state})

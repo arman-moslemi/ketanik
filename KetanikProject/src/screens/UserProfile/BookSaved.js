@@ -106,9 +106,12 @@ mutLogin()
                 <Text style={styles(theme).bookWriter}>
                 {truncate(item.item.Writer,20)}
                 </Text>
+                {item.item.Publisher?
                 <Text style={styles(theme).bookWriter}>
                 {truncate(getTranslation("ناشر :")+item.item.Publisher,30)}
                 </Text>
+                :
+                null}
                 <View style={{display:'flex',flexDirection:'row-reverse'}}>
                 {[...new Array(5)].map((index)=>{
                         return(
@@ -134,15 +137,15 @@ index+1>item.item.Rate?
           item.item.SpecialCost?
 <>
       <Text style={styles(theme).priceRed}>
-      {item.item.SpecialCost}sek
+      {item.item.SpecialCost} sek
     </Text>
     <Text style={styles(theme).priceStroke}>
-    {item.item.Cost}sek
+    {item.item.Cost} sek
     </Text>
     </>
           :
 <Text style={styles(theme).bookName}>
-      {item.item.Cost}sek
+      {item.item.Cost} sek
       </Text>
         }
                 </View>

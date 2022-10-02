@@ -15,6 +15,8 @@ import { apiUrl ,apiAsset} from "@commons/inFormTypes";
 import { Input } from '@components/Input';
 import { ThemeContext } from '../../../theme/theme-context';
 import { getTranslation } from '@i18n/i18n';
+import AsyncStorage from  '@react-native-async-storage/async-storage';
+
 
 export const truncate = (str, len) => {
   // console.log("truncate", str, str.length, len);
@@ -85,9 +87,11 @@ null
             <Text style={styles(theme).bookWriter}>
             {truncate(item.item.Writer,20)}
             </Text>
+            {item.item.Publisher?
             <Text style={styles(theme).bookWriter}>
             {truncate("ناشر :"+item.item.Publisher,30)}
             </Text>
+            :null}
             <View style={{display:'flex',flexDirection:'row-reverse'}}>
             {[...new Array(5)].map((index)=>{
                     return(
@@ -110,15 +114,15 @@ index+1>item.item.Rate?
           item.item.SpecialCost?
 <>
       <Text style={styles(theme).priceRed}>
-      {item.item.SpecialCost}sek
+      {item.item.SpecialCost} sek
     </Text>
     <Text style={styles(theme).priceStroke}>
-    {item.item.Cost}sek
+    {item.item.Cost} sek
     </Text>
     </>
           :
 <Text style={styles(theme).bookName}>
-      {item.item.Cost}sek
+      {item.item.Cost} sek
       </Text>
         }
             </View>
