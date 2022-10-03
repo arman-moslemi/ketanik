@@ -423,7 +423,7 @@ const styles =(theme) =>  StyleSheet.create({
         paddingLeft:responsiveWidth(5),
         paddingBottom:responsiveHeight(2),
         alignItems:"flex-end",
-        marginTop:responsiveHeight(5),
+        marginTop:responsiveHeight(8),
     },
 
     menuTitle:{
