@@ -80,7 +80,7 @@ return (
 
         //   uri: 'http://www.google.com'
         }}
-        style={{ marginTop: responsiveHeight(5),height:responsiveHeight(75) }}
+        style={{ marginTop: responsiveHeight(5),height:responsiveHeight(79) }}
       />
     {/* </View> */}
     <TouchableOpacity

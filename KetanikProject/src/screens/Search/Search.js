@@ -143,12 +143,12 @@ return (
           <Text style={styles(theme).menuTitle}>{getTranslation('جستجو')}</Text>
           </View>
     
-        
         <View style={{flex :0.5}}>
           <TouchableOpacity onPress={()=>navigation.goBack()} style={{}}>
             <Icon name={"arrow-back"} color={'#111'} size={30}/>
           </TouchableOpacity>
           </View>
+        
     </View>
      
   <ScrollView>
@@ -157,10 +157,10 @@ return (
   <View style={styles(theme).aboutView}>
     <View style={styles(theme).lightGreenBack}>
 <View>
-  <Icon name={'search'} size={40} color={'#c1c1c1'}/>
+  <Input onChangeText={(ss)=>setName(ss)} placeholder={getTranslation('جستجو')} inputStyle={styles(theme).searchInput} />
 </View>
 <View>
-  <Input onChangeText={(ss)=>setName(ss)} placeholder={getTranslation('جستجو')} inputStyle={styles(theme).searchInput} />
+  <Icon name={'search'} size={40} color={'#c1c1c1'}/>
 </View>
     </View>
     {/* <View style={{display:'flex',justifyContent:'space-between',alignItems:'center',flexDirection:'row-reverse',marginTop:responsiveHeight(3),marginBottom:responsiveHeight(3)}}>
@@ -301,6 +301,7 @@ color:theme.menuTitle,
   },searchInput:{
     // ...myFontStyle.normalRegular,
     borderWidth:0,
+    textAlign:'right'
     // backgroundColor:theme.cardBack
   },headText:{
     ...myFontStyle.textOnImg,
