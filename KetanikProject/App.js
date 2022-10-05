@@ -30,6 +30,8 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 
 import ConsultantList from '@screens/ConsultantList/ConsultantList';
 import HistoryConsultant from '@screens/ConsultantList/HistoryConsultant';
+import FavoriteProduct from '@screens/Favorite/FavoriteProduct';
+import FavoriteBlog from '@screens/Favorite/FavoriteBlog';
 import Cart from '@screens/Cart/Cart';
 import CartAddress from '@screens/Cart/CartAddress';
 import Search from "@screens/Search/Search";
@@ -64,25 +66,31 @@ activeColor={'#fff'}
     // name="home"
     name={"StackNavigatorsHome"}
     component={StackNavigatorsHome}
-    options={{          tabBarLabel:<Text style={{...myFontStyle.menu,marginTop:10,textAlign:'center'}}></Text>,  tabBarIcon: ({ color }) => (            <Icon name="home" color={Colors.darkGreen}  size={25} />          ),        }}      />
-<Tab.Screen
-   name="Library" component={StackNavigatorsLibrary}
-   options={{          tabBarLabel:<Text style={{...myFontStyle.menu}}></Text>,    tabBarIcon: ({ color }) => (    <Icon name="library-books" color={Colors.darkGreen} size={25} />         ),           }}      />
-<Tab.Screen
-   name="Searchs" component={StackNavigatorsSearch}
-   options={{          tabBarLabel: <Text style={{...myFontStyle.menu}}></Text>, tabBarIcon: ({ color }) => (    <Icon name="search" color={Colors.darkGreen} size={25} />         ),           }}      />
-
-  
-<Tab.Screen
+    options={{     
+      
+      // tabBarLabel:<Text style={{...myFontStyle.menu,marginTop:10,textAlign:'center'}}></Text>,  tabBarIcon: ({ color }) => (            <Icon name="home" color={Colors.darkGreen}  size={25} /> 
+      // ),        }}      />
+      tabBarLabel:"", 
+      tabBarIcon: ({ color }) => (            <Icon name="home" color={Colors.darkGreen} style={{height:responsiveHeight(10),width:responsiveWidth(8)}} size={35} />          ),        }}      />
+      <Tab.Screen
        // name="home"
        name={"Categorys"}
        component={StackNavigatorsCat}
 
-       options={{          tabBarLabel:<Text style={{...myFontStyle.menu}}></Text>,          tabBarIcon: ({ color }) => (            <Icon name="apps" color={Colors.darkGreen} size={25} />          ),        }}      />
+       options={{          tabBarLabel:"",          tabBarIcon: ({ color }) => (            <Icon name="apps"color={Colors.darkGreen}style={{height:responsiveHeight(10),width:responsiveWidth(8)}} size={35} />          ),        }}    color={Colors.darkGreen} size={35} />   
+<Tab.Screen
+   name="Searchs" component={StackNavigatorsSearch}
+   options={{          tabBarLabel: "", tabBarIcon: ({ color }) => (    <Icon name="search"color={Colors.darkGreen} style={{height:responsiveHeight(10),width:responsiveWidth(8)}} size={35} />          ),        }}    color={Colors.darkGreen} size={35} />         
+<Tab.Screen
+   name="Library" component={StackNavigatorsLibrary}
+   options={{          tabBarLabel:"",    tabBarIcon: ({ color }) => (    <Icon name="library-books"color={Colors.darkGreen} style={{height:responsiveHeight(10),width:responsiveWidth(8)}} size={35} />          ),        }}   color={Colors.darkGreen} size={35} />            
+
+  
+       
 <Tab.Screen
    name="Profile" component={StackNavigatorsProfile}
    style={{...myFontStyle.UltraBold}}
-   options={{          tabBarLabel: <Text style={{...myFontStyle.menu}}></Text>,    tabBarIcon: ({ color }) => (    <Icon name="person-outline" color={Colors.darkGreen} size={25} />         ),           }}      />
+   options={{          tabBarLabel: "",    tabBarIcon: ({ color }) => (    <Icon name="person-outline"color={Colors.darkGreen} style={{height:responsiveHeight(10),width:responsiveWidth(8)}} size={35} />          ),        }}    color={Colors.darkGreen} size={35} />         
 
 </Tab.Navigator>
   );
@@ -105,6 +113,8 @@ const StackNavigatorsHome = () => {
       <Stack.Screen name="EditProfile" component={EditProfile} /> 
       <Stack.Screen name="TicketList" component={TicketList} />
       <Stack.Screen name="Ticket" component={Ticket} />
+      <Stack.Screen name="FavoriteProduct" component={FavoriteProduct} />
+      <Stack.Screen name="FavoriteBlog" component={FavoriteBlog} />
 
     
     </Stack.Navigator>

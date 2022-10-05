@@ -12,32 +12,40 @@ import Modal from "react-native-modal";
 import {RadioButton ,Switch,List} from 'react-native-paper';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { apiUrl ,apiAsset} from "@commons/inFormTypes";
-import axios from 'axios';
-import Spinner from '@components/Spinner';
-import AsyncStorage from  '@react-native-async-storage/async-storage';
-import { Button } from 'react-native-paper';
 import DrawerPage from '@components/drawerContent/DrawerPage';
 import DrawerContent from '@components/drawerContent/DrawerContent';
-import Drawer from 'react-native-drawer'
-// create a component
-
-
-
- const BestConsultant = ({navigation }) => {
-  const [fav, setFav] = useState([]);
+import Drawer from 'react-native-drawer';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+export const truncate = (str, len) => {
+  // console.log("truncate", str, str.length, len);
+  if (str.length > len && str.length > 0) {
+    let new_str = str + " ";
+    new_str = str.substr(0, len);
+    new_str = str.substr(0, new_str.lastIndexOf(" "));
+    new_str = new_str.length > 0 ? new_str : str.substr(0, len);
+    return new_str + "...";
+  }
+  return str;
+};
+ const FavoriteBlog = ({navigation }) => {
+  const [data, setData] = useState([]);
+  const [type, setType] = useState([]);
+  const [active, setActive] = useState(0);
   const drawers = useRef(null);
 
-  const GetData=async ()=>{
+  const GetData=async()=>{
     const axios = require("axios");
-  var ss= await AsyncStorage.getItem("CustomerID")
+  
 
+    var ss=await AsyncStorage.getItem("CustomerID")
+    
     axios.post(apiUrl + "CustomerFavorite",{CustomerID:ss})
     .then(function (response) {
       if (response.data.result == "True") {
         console.log(777)
 
-        setFav(response.data.Data)
-        console.log(response.data.Data);
+        console.log(response.data.Data.filter(x=>x.BlogID!=null));
+        setData(response.data.Data.filter(x=>x.BlogID!=null))
 
     }})
     .catch(function (error) {
@@ -46,34 +54,41 @@ import Drawer from 'react-native-drawer'
 
       console.log(error);
     });
-   
- 
+
   }
   useEffect(() => {
     GetData();
 
   }, []);
-  const InsertFavorite=async(id)=>{
-    const axios = require("axios");
-    var ss=await AsyncStorage.getItem("CustomerID")
-    axios.post(apiUrl + "InsertFavorite",{CustomerID:ss,CustomerID2:id})
-    .then(function (response) {
-      if (response.data.result == "True") {
-          alert("با موفقیت ثبت شد")
-        }})
-        .catch(function (error) {
-            console.log(777)
-            alert(error)
-            
-            console.log(error);
-        });
 
- 
+    const DeleteFavorite=async(mm)=>{
+      var ss=await AsyncStorage.getItem("CustomerID")
     
 
+      
+      const axios = require("axios");
+      axios.post(apiUrl + "DeleteFavorite",{CustomerID:ss,BlogID:mm})
+      .then(function (response) {
+        if (response.data.result == "True") {
+          alert("با موفقیت حذف شد")
+GetData()              
+          }})
+          .catch(function (error) {
+              console.log(777)
+              alert(error)
+              
+              console.log(error);
+          });
+        ;
   }
+  
+
+    useEffect(() => {
+      GetData();
+
+    }, [active]);
   return (
-    <Drawer
+        <Drawer
     // type="static"
     type="overlay"
     acceptDoubleTap ={true}
@@ -90,46 +105,75 @@ import Drawer from 'react-native-drawer'
   })}
         >
   
-  <DrawerPage drawers={drawers} name={"مشاوران برگزیده"} navigation={navigation} />
+  <DrawerPage drawers={drawers} name={"اخبار و مقالات"} navigation={navigation} />
     <View style={styles.container}>
     <ScrollView>
-    {
-                            fav.filter(x=>x.CustomerID2!=null).map((item)=>{
-                                return(
+    <View style={{display:'flex',flexDirection:'row-reverse',alignContent:'center',alignItems:'center'}}>
+      <View style={[styles.inputIcon]}>
+      <TextInput style={styles.textInputIcon} onChangeText={(aa)=>_handleKeyDownAuto(aa)}  placeholder="جستجو کنید ..."/>
+      </View>
+      <View style={{width:"14%",marginRight:"1%"}}>
+        <TouchableOpacity style={[styles.sort,shadow]} >
+        <Icon name={"search"} color={'#fff'} size={40}/>
+
+        </TouchableOpacity>
+      </View>
+  
+  
+      </View>
+     <ScrollView horizontal={true} style={{display:'flex',flexDirection:'row-reverse'}}>
+  
+   </ScrollView>
+   {
+    data?.map((item)=>{
+      return(
    <View style={styles.historyBox}>
-    <View style={{display:'flex',flexDirection:'row-reverse',paddingBottom:responsiveHeight(0.75),justifyContent:'space-between',alignItems:'center'}}>
+    <View style={{display:'flex',flexDirection:'row-reverse',paddingBottom:responsiveHeight(0),justifyContent:'space-between'}}>
   <View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>
-  <Image source={require('@assets/images/profile2.png')} style={styles.profilePic} />
-  <View style={{display:'flex',flexDirection:'column'}}>
-    <Text style={styles.ConsultantName}>
-    {item.Name}{item.Family}     </Text>
+  <Image source={{uri:apiAsset+item.Pic}} style={styles.profilePic} />
+  <View style={{alignItems:'flex-end'}}>
     <Text style={styles.ConsultantName2}>
-{item.Specialty}    </Text>
- 
+    {item.Date}</Text>
+    <Text style={styles.ConsultantName}>
+    {item.Title}</Text>
+    {/* <Text style={styles.des}>
+   {truncate(item.Text,70)}
+
+    </Text> */}
   </View>
   </View>
 
-  <View style={{display:'flex',flexDirection:'column',alignItems:'flex-end',justifyContent:'space-between'}}>
-  <View style={{display:'flex',flexDirection:'row-reverse',marginLeft:responsiveWidth(2),alignItems:'flex-start'}}>
-  <Icon name={"star-border"} color={'#000000'} size={15}/>
-      <Icon name={"star-border"} color={'#000000'} size={15}/>
-      <Icon name={"star"} color={'#ffb921'} size={15}/>
-      <Icon name={"star"} color={'#ffb921'} size={15}/>
-      <Icon name={"star"} color={'#ffb921'} size={15}/>
-     
-      </View>
-     
+  <View style={{flexDirection:'column',alignItems:'flex-start',justifyContent:'space-between'}}>
+ 
+      <TouchableOpacity onPress={()=>DeleteFavorite(item.BlogID)} style={{display:'flex',flexDirection:'row-reverse',marginLeft:responsiveWidth(2),marginBottom:responsiveHeight(2)}}>
+      <Icon name={"favorite-border"} color={'#FF2525'} size={15}/>
+        <Text style={styles.heartBtnText}>
+          حذف از برگزیده ها
+        </Text>
+      </TouchableOpacity>
   </View>
   </View>
+  <View style={{justifyContent:'space-between',flexDirection:'row',padding:responsiveWidth(1)}}>
  
-</View>
-                                )})}
-    </ScrollView>
- 
- 
-     
+    <View style={{flexDirection:'row-reverse'}}>
+      <TouchableOpacity onPress={()=>navigation.navigate("SingleBlog",{params:item.BlogTitle})}>
+
+    <Text style={styles.TypeCallText}>
+ادامه مطلب        </Text>
+      </TouchableOpacity>
+
+
     </View>
-    </Drawer>
+  </View>
+</View>
+      )
+    })
+   }
+
+    </ScrollView>
+
+    </View>
+     </Drawer>
   );
 };
  
@@ -178,16 +222,24 @@ const shadow = {
     },textInputIcon:{
       textAlign:'right',
    ...myFontStyle.mediumRegular,
-   backgroundColor:'#F7F6F9',
+   backgroundColor:'#fff',
    width:"100%",
-   borderRadius:3
+   borderRadius:3,
+   shadowColor: "#000",
+   shadowRadius: 100,
+   shadowOpacity:10,
+   elevation: 10,
+   shadowOffset: {
+     width: 10,
+     height: 6
+   }
     },sort:{
      
       height:responsiveHeight(6),
       borderRadius:15,
       backgroundColor:'#ffb921',
       justifyContent:'center',    
-      
+      alignItems:'center'
     },logo:{
       width:25,
       height:25,
@@ -198,9 +250,8 @@ const shadow = {
       
     },modalHeader:{
       display:'flex',
-      alignItems:'center'
-      ,borderBottomColor:"rgba(186, 186, 186, 0.25)" ,
-           borderBottomWidth:1,
+      alignItems:'center',
+
       borderStyle:'solid',
       justifyContent:'flex-start',
       flexDirection:'row-reverse',
@@ -234,14 +285,15 @@ const shadow = {
       direction:'rtl',
       backgroundColor:'#ffffff',
     },paragraph:{
-      ...myFontStyle.productPriceText,
+      ...myFontStyle.normalBold,
       color:'#000',
       marginTop:responsiveHeight(2),
       marginBottom:responsiveHeight(2),
+      margin:5
       
     },historyBox:{
       width:responsiveWidth(84),
-  height:responsiveHeight(10),
+  height:responsiveHeight(15),
   marginRight:'auto',
   marginLeft:'auto',
  
@@ -262,21 +314,26 @@ const shadow = {
   justifyContent:'space-between',
   padding:15,
     },profilePic:{
-      width:50,
-      height:50,
-      borderRadius:200,
+      width:responsiveWidth(20),
+      height:responsiveHeight(10),
       marginLeft:responsiveWidth(2),
-    },ConsultantName:{
+    }
+    ,ConsultantName:{
       ...myFontStyle.ConsultantName,
+  color:'#000',
+    }
+    ,des:{
+      ...myFontStyle.mediumRegular,
   color:'#000',
     },
     ConsultantName2:{
-      ...myFontStyle.ConsultantName2,
+      ...myFontStyle.smallRegular,
   color:'#000',
     },
     TypeCallText:{
-      ...myFontStyle.productPriceText,
-  color:'green',
+      ...myFontStyle.mediumRegular,
+  color:'green'
+  ,
     },
     reqCon:{
       ...myFontStyle.ConsultantName,
@@ -366,6 +423,6 @@ const shadow = {
     // },
   });
 
-  export default BestConsultant;
+  export default FavoriteBlog;
 
 //make this component available to the <app></app>

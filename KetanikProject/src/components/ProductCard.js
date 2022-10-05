@@ -6,6 +6,7 @@ import { StyleSheet } from 'react-native';
 import { Colors } from '../assets/Colors';
 import { responsiveFontSize, responsiveHeight, responsiveWidth } from "react-native-responsive-dimensions";
 import { myFontStyle } from '../assets/Constance';
+import { apiUrl ,apiAsset} from "@commons/inFormTypes";
 
 export const truncate = (str, len) => {
   if (str?.length > len && str?.length > 0) {
@@ -27,7 +28,10 @@ export const ProductCard = (props) => {
   {/* <TouchableOpacity onPress={()=>InsertFavorite()} style={styles.hBtn}>
     <Image source={require('@assets/images/heart.png')} style={styles.heartBtn}/>
   </TouchableOpacity> */}
-    <Image source={require('@assets/images/p1.png')} style={styles.productCardImg} />
+    <Image 
+    // source={require('@assets/images/p1.png')}
+    source={{uri:apiAsset + props?.Photo}}
+     style={styles.productCardImg} />
     {/* <View style={{display:'flex',flexDirection:'row-reverse',justifyContent:'flex-start',marginLeft:responsiveWidth(2)}}>
       <Icon name={"star"} color={'#ffb921'} size={15}/>
       <Icon name={"star"} color={'#ffb921'} size={15}/>

@@ -63,8 +63,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
     const axios = require("axios");
 
         axios
-            .post(apiUrl + "SearchProductApp",{
-                ProductName:aa
+            .post(apiUrl + "SearchConsultant",{
+                Name:aa
             })
         .then(function (response) {
           if (response.data.result == "True") {
@@ -199,7 +199,7 @@ setData(Object.values(response.data.Data))
       <View style={styles.inputIcon}>
       <Icon name={"search"} color={'#CECECE'} size={30}/>
       <TextInput style={styles.textInputIcon}
-      // onChangeText={(aa)=>_handleKeyDownAuto(aa)} 
+      onChangeText={(aa)=>_handleKeyDownAuto(aa)} 
        placeholder="جستجو کنید ..."/>
       </View>
       <View style={{width:"14%",marginRight:"1%"}}>

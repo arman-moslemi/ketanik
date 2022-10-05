@@ -19,6 +19,8 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import LinearGradient from 'react-native-linear-gradient';
 import { apiUrl ,apiAsset} from "@commons/inFormTypes";
+import {RadioButton ,Switch,List} from 'react-native-paper';
+import { myFontStyle } from "@assets/Constance";
 
 
 // create a component
@@ -47,15 +49,29 @@ navigation.navigate('Login')
   }
 
   const txtDarawerItem = [
-    {id:1, title: "محصولات برگزیده", icon: "card-travel", navigateName: "Store" },
-    { id:2,title: "تیکت ها و پشتیبانی", icon: "textsms", navigateName: "TicketList" },
+    {id:1, title: "برگزیده ها", icon: "card-travel", navigateName: "Store",
+      name1:"محصولات",
+      name2:"مشاوران",
+      name3:"اخبار",
+      navigateName1:"FavoriteProduct",
+      navigateName2:"BestConsultant",
+      navigateName3:"FavoriteBlog",
+    } ,
+    {id:2, title: "کیف پول", icon: "wallet-travel", navigateName: "Wallet" },
+    {id:3, title: "تاریخچه", icon: "library-books", navigateName: "HistoryConsultant" 
+    //   ,  name1:"محصولات",
+    // name2:"مشاوران",
+    // name3:"اخبار",
+    // navigateName1:"FavoriteProduct",
+    // navigateName2:"BestConsultant",
+    // navigateName3:"FavoriteBlog",
+  },
+    { id:4,title: "تیکت ها و پشتیبانی", icon: "textsms", navigateName: "TicketList" },
     // {id:3, title: "تخفیف ها", icon: "people-alt", navigateName: "" },
     // { title: Strings.inviteFriends, icon: invitefriends, navigateName: "" },
-    {id:4, title: "کیف پول", icon: "wallet-travel", navigateName: "Wallet" },
-    {id:5, title: "مقالات", icon: "library-books", navigateName: "BlogList" },
-    {id:6, title: "مشاوران", icon: "sticky-note-2", navigateName: "ConsultantList" },
+    // {id:5, title: "انتخاب زبان", icon: "sticky-note-2", navigateName: "" },
     // {id:7, title: "به روز رسانی", icon: "cached", navigateName: "" },
-    { id:8,title: "خروج", icon: "login", navigateName: "" },
+    { id:6,title: "خروج", icon: "login", navigateName: "" },
     // { title: Strings.signIn, icon: exit, navigateName: "" },
   ]
 
@@ -66,28 +82,67 @@ navigation.navigate('Login')
 
 
 
-    <TouchableOpacity
-key={item.id}
-      onPress={() => item.id!=8? navigation.navigate(item.navigateName):exit()}
+//     <TouchableOpacity
+// key={item.id}
+//       onPress={() => item.id!=8? navigation.navigate(item.navigateName):exit()}
 
-      style={drawerStyles.subBtn}>
-
-
-      <Icon color={Colors.black}  name={"chevron-left"} size={responsiveFontSize(1.5)} />
+//       style={drawerStyles.subBtn}>
 
 
-
-      <View style={drawerStyles.subViewDetails}>
-
-      <Icon color={"#000"} name={item.icon} size={responsiveFontSize(3)} />
-        <Text style={[drawerStyles.txtHeader, { marginRight: responsiveWidth(2) }]}>{item.title}</Text>
-
-        {/* <Image style={drawerStyles.imgItem} source={item.icon} /> */}
+//       <Icon color={Colors.black}  name={"chevron-left"} size={responsiveFontSize(1.5)} />
 
 
-      </View>
 
-    </TouchableOpacity>
+//       <View style={drawerStyles.subViewDetails}>
+
+//       <Icon color={"#000"} name={item.icon} size={responsiveFontSize(3)} />
+//         <Text style={[drawerStyles.txtHeader, { marginRight: responsiveWidth(2) }]}>{item.title}</Text>
+
+
+//       </View>
+
+//     </TouchableOpacity>
+
+<List.Accordion
+title={item.title}
+style={{
+  ...myFontStyle.productPriceText,
+width:responsiveWidth(50),
+backgroundColor:"#fff",
+  color:'#000'}}
+  // titleStyle={{color:"#000",...myFontStyle.productPriceText}}
+  titleStyle={[drawerStyles.txtHeader, { marginRight: responsiveWidth(2) }]}
+  onPress={() =>item.name1?null: item.id!=6? navigation.navigate(item.navigateName):exit()}>
+  {
+    item.name1?
+<List.Item title={item.name1}
+  titleStyle={[drawerStyles.txtHeader, { marginRight: responsiveWidth(2) }]}
+
+ onPress={()=>navigation.navigate(item.navigateName1)}
+  /> 
+    :
+    null
+  }
+  {
+    item.name2?
+<List.Item title={item.name2}
+  titleStyle={[drawerStyles.txtHeader, { marginRight: responsiveWidth(2) }]}
+ onPress={()=>navigation.navigate(item.navigateName2)}
+  /> 
+    :
+    null
+  }
+  {
+    item.name3?
+<List.Item title={item.name3}
+  titleStyle={[drawerStyles.txtHeader, { marginRight: responsiveWidth(2) }]}
+ onPress={()=>navigation.navigate(item.navigateName3)}
+  /> 
+    :
+    null
+  }
+
+  </List.Accordion>
 
 
   )
@@ -135,12 +190,15 @@ onPress={() => navigation.navigate('EditProfile')}
       </View>
 
       <View style={drawerStyles.subViemItem}>
+      <List.Section title=""  backgroundColor={'#ffffff'} style={{...myFontStyle.productPriceText,color:'#ffffff'}}>
 
         {txtDarawerItem.map((item, index) => (
 
           _renderMapView(item, index)
 
         ))}
+       
+        </List.Section>
 
       </View>
 

@@ -15,6 +15,7 @@ import { apiUrl ,apiAsset} from "@commons/inFormTypes";
 import DrawerPage from '@components/drawerContent/DrawerPage';
 import DrawerContent from '@components/drawerContent/DrawerContent';
 import Drawer from 'react-native-drawer';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 export const truncate = (str, len) => {
   // console.log("truncate", str, str.length, len);
   if (str.length > len && str.length > 0) {
@@ -63,6 +64,28 @@ console.log(response.data.Data)
       
 
     }
+
+    const InsertFavorite=async(mm)=>{
+      var ss=await AsyncStorage.getItem("CustomerID")
+    
+
+      
+      const axios = require("axios");
+      axios.post(apiUrl + "InsertFavorite",{CustomerID:ss,BlogID:mm})
+      .then(function (response) {
+        if (response.data.result == "True") {
+          alert("با موفقیت اضافه شد")
+GetData()              
+          }})
+          .catch(function (error) {
+              console.log(777)
+              alert(error)
+              
+              console.log(error);
+          });
+        ;
+  }
+  
 
     useEffect(() => {
       GetData();
@@ -130,16 +153,16 @@ console.log(response.data.Data)
     {item.Date}</Text>
     <Text style={styles.ConsultantName}>
     {item.Title}</Text>
-    <Text style={styles.des}>
+    {/* <Text style={styles.des}>
    {truncate(item.Text,70)}
 
-    </Text>
+    </Text> */}
   </View>
   </View>
 
   <View style={{flexDirection:'column',alignItems:'flex-start',justifyContent:'space-between'}}>
  
-      <TouchableOpacity style={{display:'flex',flexDirection:'row-reverse',marginLeft:responsiveWidth(2),marginBottom:responsiveHeight(2)}}>
+      <TouchableOpacity onPress={()=>InsertFavorite(item.BlogID)} style={{display:'flex',flexDirection:'row-reverse',marginLeft:responsiveWidth(2),marginBottom:responsiveHeight(2)}}>
       <Icon name={"favorite-border"} color={'#FF2525'} size={15}/>
         <Text style={styles.heartBtnText}>
           افزودن به برگزیده ها

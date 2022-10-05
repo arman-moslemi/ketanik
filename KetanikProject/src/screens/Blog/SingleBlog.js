@@ -19,6 +19,7 @@ import AsyncStorage from  '@react-native-async-storage/async-storage';
 import ViewSlider from 'react-native-view-slider';
 import { Rating, AirbnbRating } from 'react-native-ratings';
 import DOMParser from 'react-native-html-parser';
+import HTMLView from 'react-native-htmlview';
 
 // create a component
 const SingleBlog = ({navigation,route}) => {
@@ -97,7 +98,7 @@ alert("لطفاابتدا وارد شوید")
 
       
       const axios = require("axios");
-      axios.post(apiUrl + "InsertBlogComment",{CustomerID:ss,BlogID:data[0].BlogID,Text:text,Rate:rate})
+      axios.post(apiUrl + "InsertBlogComment",{CustomerID:ss,BlogID:params,Text:text,Rate:rate})
       .then(function (response) {
         if (response.data.result == "True") {
           alert("پیام با موفقیت ثبت شد")
@@ -202,7 +203,11 @@ return (
 </View>
 <View style={{paddingHorizontal:responsiveWidth(6),paddingVertical:responsiveHeight(1)}}>
 <Text style={{...myFontStyle.normalRegular,color:Colors.Black}}>
-{data?.Text}
+{/* {data?.Text} */}
+<HTMLView
+        value={data?.Text}
+        // stylesheet={styles}
+      />
 {/* {des} */}
 </Text>
 </View>
@@ -225,7 +230,7 @@ return (
 
                     ratingTextColor={'#fff'}
                     ratingColor={'#FFC444'}
-                    onFinishRating={(ss)=>setRateNum(ss)}
+                    onFinishRating={(ss)=>setRate(ss)}
                     // style={{transform: [{rotateY: '180deg'}]}}
                   />
                 <Text style={{...myFontStyle.normalRegular,color:Colors.text,}}>امتیاز شما:   </Text>

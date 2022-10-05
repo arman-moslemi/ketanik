@@ -86,7 +86,7 @@ return (
     </Text>
     </TouchableOpacity>
   </View>
-  <TouchableOpacity style={styles.bigBtn} >
+  <TouchableOpacity style={styles.bigBtn} onPress={()=>  navigation.navigate("FavoriteProduct")} >
   <Image source={require('@assets/images/pCart.png')} style={styles.bigBtnImg} />
   <Text style={styles.bigBtnText}>
     محصولات برگزیده
@@ -98,7 +98,7 @@ return (
     مشاوران برگزیده
   </Text>
   </TouchableOpacity>
-  <TouchableOpacity style={styles.bigBtn}>
+  <TouchableOpacity style={styles.bigBtn} onPress={()=>  navigation.navigate("FavoriteBlog")}>
   <Image source={require('@assets/images/pNews.png')} style={styles.bigBtnImg} />
   <Text style={styles.bigBtnText}>
     اخبار برگزیده

@@ -67,7 +67,8 @@ import { apiUrl ,apiAsset} from "@commons/inFormTypes";
         });}
   const _render = (item, index) => {
     return (
-      <ProductCard navigation={navigation} Name={item.item[0]?.Name}Name2={item.item[0]?.Name2} Unit={item.item[0]?.Unit} Number={item.item[0]?.Number} Cost={item.item[0]?.Cost} SpecialCost={item.item[0]?.SpecialCost} />
+      <ProductCard navigation={navigation} Name={item.item[0]?.Name}Name2={item.item[0]?.Name2} Unit={item.item[0]?.Unit} 
+      Number={item.item[0]?.Number} Cost={item.item[0]?.Cost} SpecialCost={item.item[0]?.SpecialCost}  Photo={item.item[0]?.Pic1}/>
 
     );
   };

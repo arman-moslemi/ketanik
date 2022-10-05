@@ -360,9 +360,9 @@ return(
                         return(
 index+1>item.Rate?
 
-<Icon name={"star"} color={'#ffb921'} size={15}/>
-:
 <Icon name={"star-border"} color={'#000000'} size={15}/>
+:
+<Icon name={"star"} color={'#ffb921'} size={15}/>
 
 
                         )
