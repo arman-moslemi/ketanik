@@ -22,6 +22,7 @@ import Profile from "@screens/Profile/Profile";
 import EditProfile from "@screens/Profile/EditProfile";
 import Wallet from "@screens/Wallet/Wallet";
 import BestConsultant from '@screens/ConsultantList/BestConsultant';
+import Chat from '@screens/Chat/Chat';
 import { Colors } from '@assets/Colors';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
@@ -115,6 +116,7 @@ const StackNavigatorsHome = () => {
       <Stack.Screen name="Ticket" component={Ticket} />
       <Stack.Screen name="FavoriteProduct" component={FavoriteProduct} />
       <Stack.Screen name="FavoriteBlog" component={FavoriteBlog} />
+      <Stack.Screen name="Chat" component={Chat} />
 
     
     </Stack.Navigator>

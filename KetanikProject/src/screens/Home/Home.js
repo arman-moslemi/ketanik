@@ -50,7 +50,8 @@ tweenHandler={(ratio) => ({
       </View>
 
       </TouchableOpacity>
-      <TouchableOpacity onPress={()=>navigation.navigate("IotDashboard")} style={styles.iotProducts} >
+      {/* <TouchableOpacity onPress={()=>navigation.navigate("IotDashboard")} style={styles.iotProducts} > */}
+      <TouchableOpacity onPress={()=>navigation.navigate("Chat")} style={styles.iotProducts} >
       <View style={{display:'flex',flexDirection:'column',alignContent:'center',alignItems:'center'}}>
       <Image source={require('@assets/images/Iot.png')} style={styles.btnImg} />
       <Text style={styles.btnText}>کشاورزی هوشمند</Text>
