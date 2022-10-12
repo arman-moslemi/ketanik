@@ -13,6 +13,7 @@ import DrawerContent from '@components/drawerContent/DrawerContent';
 import Drawer from 'react-native-drawer';
 import AsyncStorage from  '@react-native-async-storage/async-storage';
 import { apiUrl ,apiAsset} from "@commons/inFormTypes";
+import GetLocation from 'react-native-get-location'
 
 // import ReactWeather, { useOpenWeather } from 'react-open-weather';
 // create a component
@@ -43,31 +44,40 @@ import { apiUrl ,apiAsset} from "@commons/inFormTypes";
 
   const  mutLogin=async()=> {
     console.log(999);
-
-    axios.get("https://api.openweathermap.org/data/2.5/weather?lat=44.34&lon=10.99&appid=c57c3e45897952d7fb5d7e4bcb519dc6")
-    .then(function (response) {
-      // const message = response;
-      console.log(999);
-      console.log(response.data.main.temp);
-      setTemp(response.data.main.temp?parseInt( response.data.main.temp-273):0)
-      setHumidity(response.data.main.humidity)
-      setWind(response.data.wind.speed)
-      // setIco(require('@assets/icons/'+response.data.main.icon+'.png'))
-      setIco(require('@assets/icons/01d.png'))
-      const result = response.data;
-      console.log(result);
-
-      if(result ){
-//         setData(response.data.Data)
-// setText("")
-        // navigation.navigate("ChangePass",{mobile:user,verify:response.data.Data})
-                        }else{
-
-      }
-    })
-    .catch(function (error) {
-      console.log(error); 
-    });
+    GetLocation.getCurrentPosition({
+      enableHighAccuracy: true,
+      timeout: 15000,
+  })
+  .then(location => {
+      console.log(123);
+      console.log(location);
+      console.log(location.latitude);
+      console.log(location.longitude);
+      axios.get("https://api.openweathermap.org/data/2.5/weather?lat="+location.latitude+"&lon="+location.longitude+"&appid=c57c3e45897952d7fb5d7e4bcb519dc6")
+      .then(function (response) {
+        // const message = response;
+        console.log(999);
+        console.log(response.data.main.temp);
+        setTemp(response.data.main.temp?parseInt( response.data.main.temp-273):0)
+        setHumidity(response.data.main.humidity)
+        setWind(response.data.wind.speed)
+        // setIco(require('@assets/icons/'+response.data.main.icon+'.png'))
+        setIco(require('@assets/icons/01d.png'))
+        const result = response.data;
+        console.log(result);
+  
+       
+      })
+      .catch(function (error) {
+        console.log(333333); 
+        console.log(error); 
+      });
+  })
+  .catch(error => {
+      const { code, message } = error;
+      console.warn(code, message);
+  })
+   
     var CustomerID= await AsyncStorage.getItem("CustomerID")
 
     axios.post(apiUrl + "CustomerDevice",{CustomerID:CustomerID})
@@ -85,6 +95,9 @@ import { apiUrl ,apiAsset} from "@commons/inFormTypes";
 
       console.log(error);
     });
+
+
+  
 
     };
   return (
