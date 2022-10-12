@@ -18,7 +18,7 @@ import Drawer from 'react-native-drawer'
 import AsyncStorage from  '@react-native-async-storage/async-storage';
 // create a component
 const Chat = ({navigation,route}) => {
-  const {id,title,date} = route?.params ?? {};
+  const {id} = route?.params ?? {};
   const [data,setData] = useState([]);
   const [text,setText] = useState('');
   const drawers = useRef(null);
@@ -35,7 +35,7 @@ const Chat = ({navigation,route}) => {
 
   const  mutLogin=()=> {
 
-    axios.post(apiUrl + 'ChatDetail',{ConsultantReqID:7})
+    axios.post(apiUrl + 'ChatDetail',{ConsultantReqID:id})
     .then(function (response) {
       const message = response.data.Data;
       console.log(55);
@@ -58,8 +58,8 @@ setText("")
 
     };
   const  NewMessage=async()=> {
-    var id= await AsyncStorage.getItem("CustomerID")
-    axios.post(apiUrl + 'ChatSend',{CustomerID:id,CustomerID2:17,Text:text})
+    var CustomerID= await AsyncStorage.getItem("CustomerID")
+    axios.post(apiUrl + 'ChatSend',{CustomerID:CustomerID,Text:text,ConsultantReqID:id})
     .then(function (response) {
       const message = response.data.Data;
       console.log(7456);
@@ -112,10 +112,11 @@ return (
       <View style={{flexDirection:'row',paddingHorizontal:responsiveWidth(4),marginTop:responsiveHeight(2),alignSelf:'flex-end'}}>
 <View style={{marginLeft:5}}>
     <Text style={styles.txtTitle}>
-{title}    </Text>
+{/* {title}    */}
+ </Text>
     <View style={{flexDirection:'row'}}>
     <Text style={styles.textInput}>
-        تاریخ ایجاد تیکت:{date}
+        {/* تاریخ ایجاد تیکت:{date} */}
     </Text>
     <Icon name="query-builder" size={15} color={Colors.gray}/>
 

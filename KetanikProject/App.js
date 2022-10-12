@@ -38,6 +38,7 @@ import CartAddress from '@screens/Cart/CartAddress';
 import Search from "@screens/Search/Search";
 import { ThemeProvider} from './theme/theme-context';
 import { myFontStyle } from './src/assets/Constance';
+import ChatList from '@screens/Chat/ChatList';
 
 const Stack = createNativeStackNavigator();
 const Tab = createMaterialBottomTabNavigator();
@@ -117,6 +118,7 @@ const StackNavigatorsHome = () => {
       <Stack.Screen name="FavoriteProduct" component={FavoriteProduct} />
       <Stack.Screen name="FavoriteBlog" component={FavoriteBlog} />
       <Stack.Screen name="Chat" component={Chat} />
+      <Stack.Screen name="ChatList" component={ChatList} />
 
     
     </Stack.Navigator>

@@ -39,10 +39,11 @@ const ChatList = ({navigation}) => {
   const  mutLogin=async()=> {
     const state = await AsyncStorage.getItem("CustomerID");
 
-    axios.post(apiUrl + "CustomerSupport",{CustomerID:state})
+    axios.post(apiUrl + "ChatHistory",{CustomerID:state})
     .then(function (response) {
       if (response.data.result == "True") {
         console.log(777);
+        console.log(response.data.Data);
         setData(response.data.Data)
 
     }})
@@ -106,7 +107,7 @@ return (
   })}
         >
   
-  <DrawerPage drawers={drawers} name={"تیکت و پشتیبانی"} navigation={navigation} />
+  <DrawerPage drawers={drawers} name={"چت"} navigation={navigation} />
       
            <View >
 
@@ -123,13 +124,13 @@ return (
     <View style={{flexDirection:'row',marginTop:responsiveHeight(3),marginLeft:responsiveWidth(5),marginRight:responsiveWidth(5),justifyContent:'space-between'}}>
  
     <View>
-        <TouchableOpacity style={styles.sortBtn} onPress={toggleModal}>
+        {/* <TouchableOpacity style={styles.sortBtn} onPress={toggleModal}>
           <Text style={{...myFontStyle.normalBold,color:'#fff',alignSelf:'center'}}>ایجاد تیکت
 
           </Text>
         <Icon name={"add"} color={'#fff'} size={25} style={{marginTop:responsiveHeight(1),transform: [{rotateY: '180deg'}]}}></Icon>
 
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         <Modal isVisible={isModalVisible} onBackdropPress={closeModal} style={{justifyContent:'center',alignItems:'center'}}>
                <View style={styles.sortModal}>
                 <View style={{width:'100%',borderBottomColor:'#f4f4f4',borderBottomWidth:2,padding:10}}>
@@ -168,12 +169,12 @@ return (
   data.map((item)=>(
 
 
-<TouchableOpacity onPress={()=>navigation.navigate("Ticket",{id:item.SupportID,title:item.Title,data:item.Date})} style={styles.subViewRead1}>
+<TouchableOpacity onPress={()=>navigation.navigate("Chat",{id:item.ConsultantReqID})} style={styles.subViewRead1}>
 <View style={{}}>
 <TouchableOpacity  style={{flexDirection:'row',alignItems:'center'}}>
 
 <Icon name="remove-red-eye" size={20} color={'#FF6900'}/>
-<Text style={{...myFontStyle.mediumBold,color:Colors.black,textAlign:'right',flexDirection:'column'}}>{"مشاهده تیکت"}</Text>
+<Text style={{...myFontStyle.mediumBold,color:Colors.black,textAlign:'right',flexDirection:'column'}}>{"مشاهده"}</Text>
 
 </TouchableOpacity>
     </View>
@@ -204,7 +205,7 @@ return (
 
 <View style={{flexDirection:'row',justifyContent:'flex-end',width:responsiveWidth(25)}}>
 <View>
-    <Text style={{...myFontStyle.normalBold,color:Colors.black,textAlign:'right',flexDirection:'column'}}>{item.Title?.substring(0, 20)}...</Text>
+    <Text style={{...myFontStyle.normalBold,color:Colors.black,textAlign:'right',flexDirection:'column'}}>{item.Subject?.substring(0, 20)}...</Text>
 
 
       </View>
