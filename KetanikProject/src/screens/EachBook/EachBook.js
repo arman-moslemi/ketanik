@@ -82,7 +82,21 @@ export const truncate = (str, len) => {
   const [lib, setlib] = useState();
   const [newID, setNewID] = useState();
   const refs = React.useRef();
-
+  const [book,setBook]=useState(null);
+    const [bookID,setBookID]=useState();
+    const [episode,setEpisode]=useState();
+    const [cart,setCart]=useState([]);
+    const [isplay, setPlay] = useState(false);
+    const [track,setTrack]=useState([]);
+    const  setNull=async()=> {
+      const books = await AsyncStorage.removeItem("@bookid");
+      const episode = await AsyncStorage.removeItem("@epid");
+  setBook()
+    
+  console.log(books)
+  console.log(episode)
+  
+      };
   useEffect(() => {
 
 mutLogin(id)
@@ -93,6 +107,56 @@ mutLogin(id)
 const keyExtractor = item => {
   return item.id;
 };
+async function TogglePlayback() {
+  const currentTrack = await TrackPlayer.getPosition();
+  const currentTrack2 = await TrackPlayer.getDuration();
+  console.log(444)
+  
+  // console.log(num)
+  // console.log(currentTrack.toFixed(1))
+  // console.log(currentTrack2)
+  if (currentTrack.toFixed(1) == currentTrack2.toFixed(1)) {
+    console.log(775)
+    
+    // setPlay(true)
+    await TrackPlayer.reset();
+    await TrackPlayer.add(track);
+        TrackPlayer.updateOptions({
+        stopWithApp: true,
+        capabilities: [
+          Capability.Play,
+          Capability.Pause,
+          // Capability.SkipToNext,
+          // Capability.SkipToPrevious,
+          Capability.Stop,
+        ],
+        compactCapabilities: [
+          Capability.Play,
+          Capability.Pause,
+          // Capability.SkipToNext,
+          // Capability.SkipToPrevious,
+        ],
+    });
+
+    await TrackPlayer.play();
+    setPlay(true)
+  }
+  else{
+
+    if(isplay)
+   { await TrackPlayer.pause()
+setPlay(false)}
+else{
+
+await TrackPlayer.play()
+setPlay(true)
+}
+  }
+  
+
+
+  // }
+}
 // const data=[1,2,3,4,5]
 const _render = (item, index) => {
   return (
@@ -234,7 +298,60 @@ const {id} = route?.params ?? {};
       console.log(error);
     });
 
-    
+    const books = await AsyncStorage.getItem("@bookid");
+    const episode = await AsyncStorage.getItem("@epid");
+
+    axios.post(apiUrl+'SingleBook',{CustomerID:state,BookID:books})
+    .then(function (response) {
+      const message = response.data;
+      const result = response.data.result;
+      console.log(message);
+
+      if(result == "true"){
+        setBook(response.data.GroupData)
+        setEpisode(episode)
+        setBookID(books)
+
+
+        // navigation.navigate("ChangePass",{mobile:user,verify:response.data.Data})
+                        }else{
+
+      }
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+ 
+    axios.post(apiUrl+'SubBookShow',{BookID:books,CustomerID:state})
+    .then(function (response) {
+      const message = response.data;
+      const result = response.data.result;
+      console.log(777);
+      console.log(message);
+  
+      if(result == "true"){
+        var ss=[]
+        response.data.GroupData.map((item,ii)=>{
+          ii>=episode?
+          ss.push({
+            id: "local-track",
+            url: apiAsset+item?.Link,
+            title: "Ketanic",
+            artwork: "https://i.picsum.photos/id/500/200/200.jpg",
+          })
+          :
+          null
+        })
+        setTrack(ss)
+        // togglePlayback()
+        // navigation.navigate("ChangePass",{mobile:user,verify:response.data.Data})
+                        }else{
+  
+      }
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
     };
 
     const  gotoExample=async()=> {
@@ -972,7 +1089,40 @@ return (
 null
 }
    </View>
+   <View >
+    {
+      book?
   
+    <TouchableOpacity onPress={()=>navigation.navigate("ListenBookMain",{id:bookID,num:episode})} style={{borderRadius:10,backgroundColor:Colors.lightGreen,flexDirection:'row-reverse',height:responsiveHeight(6),justifyContent:'space-between'}}>
+        {
+        isplay?
+        // <TouchableOpacity onPress={stop} style={{borderRadius:50,backgroundColor:Colors.white}}>
+        <TouchableOpacity onPress={TogglePlayback} >
+
+<Icon name={"pause-circle-filled"} size={50} color={Colors.darkGreen}/>
+</TouchableOpacity>
+:
+<TouchableOpacity onPress={TogglePlayback}>
+
+<Icon name={"play-circle-filled"} size={50} color={Colors.darkGreen}/>
+</TouchableOpacity>
+    }
+    
+    <Image source={{uri:apiAsset+book.Pic}} style={styles(theme).imageBook}/>
+    <View>
+
+      <Text style={styles(theme).miniText}>{book.BookName}</Text>
+      <Text style={styles(theme).miniText}>درحال مطالعه</Text>
+      </View>
+      <TouchableOpacity onPress={()=>setNull()}> 
+      <Icon name={"close"} color={'#111'} style={{marginRight:responsiveWidth(30)}} size={30}/>
+</TouchableOpacity>
+      {/* <Text style={styles(theme).miniText}>درحال مطالعه</Text> */}
+    </TouchableOpacity>
+      :
+      null
+    }
+  </View>
   </ScrollView>
 
     
@@ -1373,7 +1523,18 @@ height: "100%",
 justifyContent:"center",paddingBottom:responsiveHeight(3),borderBottomColor:theme.darkGreen}
  ,
   tabINActive:{borderBottomWidth:1,width:responsiveWidth(30),alignItems:'center',
-justifyContent:"center",paddingBottom:responsiveHeight(3),borderBottomColor:"#f1f1f1"}
+justifyContent:"center",paddingBottom:responsiveHeight(3),borderBottomColor:"#f1f1f1"},
+imageBook:{
+  width:responsiveWidth(15),
+  height:"100%",
+  resizeMode:'cover',
+  borderRadius:10,
+  marginLeft:10
+  
+},miniText:{
+  ...myFontStyle.mediumRegular,
+  color:'#111'
+},
 
 });
 

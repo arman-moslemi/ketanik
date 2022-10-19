@@ -33,6 +33,21 @@ export const truncate = (str, len) => {
  const SelectedNews = ({navigation,route }) => {
   const {  theme } = useContext(ThemeContext);
     const [data,setData]=useState([]);
+    const [book,setBook]=useState(null);
+    const [bookID,setBookID]=useState();
+    const [episode,setEpisode]=useState();
+    const [cart,setCart]=useState([]);
+    const [isplay, setPlay] = useState(false);
+    const [track,setTrack]=useState([]);
+    const  setNull=async()=> {
+      const books = await AsyncStorage.removeItem("@bookid");
+      const episode = await AsyncStorage.removeItem("@epid");
+  setBook()
+    
+  console.log(books)
+  console.log(episode)
+  
+      };
     useEffect(() => {
   
       mutLogin();
@@ -166,9 +181,113 @@ axios.post(apiUrl+'RelatedBook',{GroupID:GroupID},{ headers: {
       .catch(function (error) {
         console.log(error);
       });
+      const books = await AsyncStorage.getItem("@bookid");
+      const episode = await AsyncStorage.getItem("@epid");
+      const state = await AsyncStorage.getItem("@user");
+
+      axios.post(apiUrl+'SingleBook',{CustomerID:state,BookID:books})
+      .then(function (response) {
+        const message = response.data;
+        const result = response.data.result;
+        console.log(message);
   
+        if(result == "true"){
+          setBook(response.data.GroupData)
+          setEpisode(episode)
+          setBookID(books)
+  
+  
+          // navigation.navigate("ChangePass",{mobile:user,verify:response.data.Data})
+                          }else{
+  
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+   
+      axios.post(apiUrl+'SubBookShow',{BookID:books,CustomerID:state})
+      .then(function (response) {
+        const message = response.data;
+        const result = response.data.result;
+        console.log(777);
+        console.log(message);
+    
+        if(result == "true"){
+          var ss=[]
+          response.data.GroupData.map((item,ii)=>{
+            ii>=episode?
+            ss.push({
+              id: "local-track",
+              url: apiAsset+item?.Link,
+              title: "Ketanic",
+              artwork: "https://i.picsum.photos/id/500/200/200.jpg",
+            })
+            :
+            null
+          })
+          setTrack(ss)
+          // togglePlayback()
+          // navigation.navigate("ChangePass",{mobile:user,verify:response.data.Data})
+                          }else{
+    
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   
       };
+      async function TogglePlayback() {
+        const currentTrack = await TrackPlayer.getPosition();
+        const currentTrack2 = await TrackPlayer.getDuration();
+        console.log(444)
+        
+        // console.log(num)
+        // console.log(currentTrack.toFixed(1))
+        // console.log(currentTrack2)
+        if (currentTrack.toFixed(1) == currentTrack2.toFixed(1)) {
+          console.log(775)
+          
+          // setPlay(true)
+          await TrackPlayer.reset();
+          await TrackPlayer.add(track);
+              TrackPlayer.updateOptions({
+              stopWithApp: true,
+              capabilities: [
+                Capability.Play,
+                Capability.Pause,
+                // Capability.SkipToNext,
+                // Capability.SkipToPrevious,
+                Capability.Stop,
+              ],
+              compactCapabilities: [
+                Capability.Play,
+                Capability.Pause,
+                // Capability.SkipToNext,
+                // Capability.SkipToPrevious,
+              ],
+          });
+     
+          await TrackPlayer.play();
+          setPlay(true)
+        }
+        else{
+    
+          if(isplay)
+         { await TrackPlayer.pause()
+    setPlay(false)}
+    else{
+    
+    await TrackPlayer.play()
+    setPlay(true)
+    }
+        }
+        
+    
+    
+        // }
+      }
     const keyExtractor = item => {
         return item.BookID;
       };
@@ -298,6 +417,40 @@ return (
 </TouchableOpacity> */}
    </View>
   </ScrollView>
+  <View >
+    {
+      book?
+  
+    <TouchableOpacity onPress={()=>navigation.navigate("ListenBookMain",{id:bookID,num:episode})} style={{borderRadius:10,backgroundColor:Colors.lightGreen,flexDirection:'row-reverse',height:responsiveHeight(6),justifyContent:'space-between'}}>
+        {
+        isplay?
+        // <TouchableOpacity onPress={stop} style={{borderRadius:50,backgroundColor:Colors.white}}>
+        <TouchableOpacity onPress={TogglePlayback} >
+
+<Icon name={"pause-circle-filled"} size={50} color={Colors.darkGreen}/>
+</TouchableOpacity>
+:
+<TouchableOpacity onPress={TogglePlayback}>
+
+<Icon name={"play-circle-filled"} size={50} color={Colors.darkGreen}/>
+</TouchableOpacity>
+    }
+    
+    <Image source={{uri:apiAsset+book.Pic}} style={styles(theme).imageBook}/>
+    <View>
+
+      <Text style={styles(theme).miniText}>{book.BookName}</Text>
+      <Text style={styles(theme).miniText}>درحال مطالعه</Text>
+      </View>
+      <TouchableOpacity onPress={()=>setNull()}> 
+      <Icon name={"close"} color={'#111'} style={{marginRight:responsiveWidth(30)}} size={30}/>
+</TouchableOpacity>
+      {/* <Text style={styles(theme).miniText}>درحال مطالعه</Text> */}
+    </TouchableOpacity>
+      :
+      null
+    }
+  </View>
     </View>
 );
 };
@@ -436,6 +589,17 @@ color:'#111',
 textDecorationLine: 'line-through',
 marginTop:responsiveHeight(0.5),
 marginRight:4,
+},
+imageBook:{
+  width:responsiveWidth(15),
+  height:"100%",
+  resizeMode:'cover',
+  borderRadius:10,
+  marginLeft:10
+  
+},miniText:{
+  ...myFontStyle.mediumRegular,
+  color:'#111'
 },
   });
 

@@ -165,7 +165,8 @@ const styles= (theme) => StyleSheet.create({
   ...myFontStyle.largBold,
   color:'#fff',
 },textCode:{
-  ...myFontStyle.largeRegular,
+  // ...myFontStyle.largeRegular,
+  fontSize:20,
   marginTop:responsiveHeight(1),
   color:theme.textTitle,
 }

@@ -91,9 +91,9 @@ async function seeks(type) {
   const currentTrack = await TrackPlayer.getPosition();
   const currentTrack2 = await TrackPlayer.getDuration();
 
-console.log(currentTrack-10)
+console.log(currentTrack-30)
   if(type=="prev"){
-    TrackPlayer.seekTo(currentTrack-10)
+    TrackPlayer.seekTo(currentTrack-30)
   }
   else{
     if(currentTrack+30<currentTrack2)
@@ -190,8 +190,8 @@ mutLogin()  }
         {/* <ControlButton title={middleButtonText} onPress={onTogglePlayback} /> */}
         <TouchableOpacity onPress={()=> seeks("prev")}  style={{flexDirection:'row'}}>
 
-        <Icon name={"refresh"} size={40} color={Colors.darkGreen} style={{transform: [{rotateY: '180deg'}],marginHorizontal:responsiveWidth(5)}}/>
-        <Text style={styles.prevSec}>10</Text>
+        <Icon name={"refresh"} size={60} color={Colors.darkGreen} style={{transform: [{rotateY: '180deg'}],marginHorizontal:responsiveWidth(5)}}/>
+        <Text style={styles.prevSec}>30</Text>
 
 </TouchableOpacity>
         {
@@ -199,17 +199,17 @@ mutLogin()  }
             // <TouchableOpacity onPress={stop} style={{borderRadius:50,backgroundColor:Colors.white}}>
             <TouchableOpacity onPress={onTogglePlayback} >
 
-<Icon name={"pause-circle-filled"} size={50} color={Colors.darkGreen}/>
+<Icon name={"pause-circle-filled"} size={60} color={Colors.darkGreen}/>
 </TouchableOpacity>
 :
 <TouchableOpacity onPress={onTogglePlayback}>
 
-<Icon name={"play-circle-filled"} size={50} color={Colors.darkGreen}/>
+<Icon name={"play-circle-filled"} size={60} color={Colors.darkGreen}/>
 </TouchableOpacity>
         }
 <TouchableOpacity onPress={()=> seeks("next")} style={{flexDirection:'row'}}>
 
-<Icon name={"refresh"} size={45} color={Colors.darkGreen}style={{marginHorizontal:responsiveWidth(5)}} />
+<Icon name={"refresh"} size={60} color={Colors.darkGreen}style={{marginHorizontal:responsiveWidth(5)}} />
 <Text style={styles.nextSec}>30</Text>
 </TouchableOpacity>
 <TouchableOpacity onPress={toggleModal2} style={{marginHorizontal:responsiveWidth(1),}}>
@@ -354,15 +354,17 @@ const styles = StyleSheet.create({
   nextSec: {
     color:Colors.darkGreen,
     position:"absolute",
-  right:responsiveWidth(9.5),
-  top:responsiveHeight(2),
-   ...myFontStyle.smallRegular},
+  right:responsiveWidth(11.4),
+  top:responsiveHeight(2.4),
+  //  ...myFontStyle.smallRegular
+  },
   prevSec: {
     color:Colors.darkGreen,
     position:"absolute",
-  left:responsiveWidth(8.5),
-  top:responsiveHeight(1.9),
-   ...myFontStyle.smallRegular},
+  left:responsiveWidth(11.4),
+  top:responsiveHeight(2.5),
+  //  ...myFontStyle.smallRegular
+  },
   labelContainer: {
     width: responsiveWidth(90),
     flexDirection: 'row',
