@@ -107,7 +107,7 @@ return (
   })}
         >
   
-  <DrawerPage drawers={drawers} name={"چت"} navigation={navigation} />
+  <DrawerPage drawers={drawers} name={"تاریخچه و چت های دریافتی"} navigation={navigation} />
       
            <View >
 
@@ -174,7 +174,7 @@ return (
 <TouchableOpacity  style={{flexDirection:'row',alignItems:'center'}}>
 
 <Icon name="remove-red-eye" size={20} color={'#FF6900'}/>
-<Text style={{...myFontStyle.mediumBold,color:Colors.black,textAlign:'right',flexDirection:'column'}}>{"مشاهده"}</Text>
+{/* <Text style={{...myFontStyle.mediumBold,color:Colors.black,textAlign:'right',flexDirection:'column'}}>{"مشاهده"}</Text> */}
 
 </TouchableOpacity>
     </View>
@@ -197,6 +197,30 @@ return (
       <View style={{width:responsiveWidth(25)}}>
         <View style={styles.closed}>
             <Text style={styles.closedText}>بسته شده</Text>
+            </View>
+        </View>
+      :
+      null
+    }
+   {
+      item.Type==1?
+      <View style={{width:responsiveWidth(25)}}>
+        <View style={styles.waited}>
+            <Text style={styles.waitedText}>متنی</Text>
+            </View>
+        </View>
+      :
+      item.Type==2?
+      <View style={{width:responsiveWidth(25)}}>
+        <View style={styles.answered}>
+            <Text style={styles.answeredText}>صوتی</Text>
+            </View>
+        </View>
+      :
+      item.Type==3?
+      <View style={{width:responsiveWidth(25)}}>
+        <View style={styles.closed}>
+            <Text style={styles.closedText}>تصویری</Text>
             </View>
         </View>
       :

@@ -110,7 +110,7 @@ return (
     تاریخچه سفارشات
   </Text>
   </TouchableOpacity>
-  <TouchableOpacity onPress={()=>navigation.navigate("HistoryConsultant")} style={styles.bigBtn}>
+  <TouchableOpacity onPress={()=>navigation.navigate("ChatList")} style={styles.bigBtn}>
   <Image source={require('@assets/images/pHistory.png')} style={styles.bigBtnImg} />
   <Text style={styles.bigBtnText}>
     تاریخچه مشاوره های دریافتی

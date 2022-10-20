@@ -117,8 +117,12 @@ setData(Object.values(response.data.Data))
         const axios = require("axios");
         console.log(4444)
         console.log(consultant)
-        axios.post(apiUrl + "SetCostConsultant",{CustomerID:consultant,Time:time,Type:type})
+        console.log(type)
+        console.log(value)
+        axios.post(apiUrl + "SetCostConsultant",{CustomerID:consultant,Time:value,Type:type})
         .then(function (response) {
+          console.log(response.data)
+
           if (response.data.result == "True") {
               setCost(response.data.Data)
               toggleModal2()
@@ -131,14 +135,21 @@ setData(Object.values(response.data.Data))
             }); 
   
       }
-    const InsertConsultant=()=>{
+    const InsertConsultant=async()=>{
         const axios = require("axios");
-        var ss= localStorage.getItem("CustomerID")
-        axios.post(apiUrl + "SetConsultant",{Customer:ss,Consultant:consultant,Cost:cost,Time:time,Type:type,Subject:subject})
+        var ss= await AsyncStorage.getItem("CustomerID");
+        console.log(ss)
+        console.log(consultant)
+        console.log(cost)
+        console.log(value)
+        console.log(subject)
+        console.log(type)
+        axios.post(apiUrl + "SetConsultant",{Customer:ss,Consultant:consultant,Cost:cost,Time:value,Type:type,Subject:subject})
         .then(function (response) {
+          console.log(response.data)
           if (response.data.result == "True") {
-              handleClose2()
-              alert("با موفقیت ثبت شد")
+            toggleModal2()
+            alert("با موفقیت ثبت شد")
             }})
             .catch(function (error) {
                 console.log(777)
@@ -333,7 +344,7 @@ index+1>item.Rate?
     </Text>
     </View>
  <View>
- <TextInput style={styles.textInputIcon}  o onChange={(e)=>setubject(e.target.value)}  placeholder=""/>
+ <TextInput style={styles.textInputIcon}   onChangeText={(ss)=>setubject(ss)}  placeholder=""/>
 
  </View>
  <View>
@@ -442,11 +453,11 @@ alignSelf:'flex-end'
     <View style={{flexDirection:'row',justifyContent:'space-between'}}>
 
 
-    <TouchableOpacity   style={styles.costBtn}>
+    <TouchableOpacity onPress={()=>InsertConsultant()}   style={styles.costBtn}>
         <Text style={styles.yellowBtnTxt}>پرداخت آنلاین</Text>
       </TouchableOpacity>
     <TouchableOpacity   style={styles.costBtn2}>
-        <Text style={styles.yellowBtnTxt2}>پرداخت از کیف پول</Text>
+        <Text style={styles.yellowBtnTxt2}>پرداخت از کیف </Text>
       </TouchableOpacity>
     </View>
     </View>

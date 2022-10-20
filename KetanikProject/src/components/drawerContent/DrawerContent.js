@@ -58,7 +58,7 @@ navigation.navigate('Login')
       navigateName3:"FavoriteBlog",
     } ,
     {id:2, title: "کیف پول", icon: "wallet-travel", navigateName: "Wallet" },
-    {id:3, title: "تاریخچه", icon: "library-books", navigateName: "HistoryConsultant" 
+    {id:3, title: "تاریخچه", icon: "library-books", navigateName: "ChatList" 
     //   ,  name1:"محصولات",
     // name2:"مشاوران",
     // name3:"اخبار",

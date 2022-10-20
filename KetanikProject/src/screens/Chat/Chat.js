@@ -45,7 +45,7 @@ const Chat = ({navigation,route}) => {
 
       if(result == "True"){
         setData(response.data.Data)
-setText("")
+// setText("")
         // navigation.navigate("ChangePass",{mobile:user,verify:response.data.Data})
                         }else{
 
@@ -63,10 +63,13 @@ setText("")
     .then(function (response) {
       const message = response.data.Data;
       console.log(7456);
+      console.log(text);
+      console.log(id);
       console.log(message);
       const result = response.data.result;
       console.log(result);
       if(result == "True"){
+        setText("")
         // setData(response.data.Data)
         // Alert.alert("","با موفقیت اضافه شد")
         mutLogin();
@@ -129,27 +132,6 @@ return (
 {
   data.map((item)=>(
     item.isCustomer?
-<View style={styles.viewTicket2}>
-
-
-<Image source={require("@assets/images/customer-support.png")} />
-<View>
-<View style={styles.viewBack}>
-{/* <View  style={styles.viewHeaderBack2}>
-<Text style={{...myFontStyle.mediumRegular,color:Colors.White}}>پشتیبان فنی</Text>
-<Text style={{...myFontStyle.mediumRegular,color:Colors.White}}>
-        تاریخ ایجاد تیکت:{item.Date}
-    </Text>
-</View> */}
-<ScrollView>
-
-<Text style={{...myFontStyle.mediumRegular,color:Colors.text,marginHorizontal:responsiveWidth(3)}}>{item.Text}</Text>
-</ScrollView>
-</View>
-
-</View>
-</View>
-    :
 
 <View style={styles.viewTicket}>
 
@@ -172,13 +154,41 @@ return (
 
 </View>
 </View>
+    :
 
+<View style={styles.viewTicket2}>
+
+
+<Image source={require("@assets/images/customer-support.png")} />
+<View>
+<View style={styles.viewBack}>
+{/* <View  style={styles.viewHeaderBack2}>
+<Text style={{...myFontStyle.mediumRegular,color:Colors.White}}>پشتیبان فنی</Text>
+<Text style={{...myFontStyle.mediumRegular,color:Colors.White}}>
+        تاریخ ایجاد تیکت:{item.Date}
+    </Text>
+</View> */}
+<ScrollView>
+
+<Text style={{...myFontStyle.mediumRegular,color:Colors.text,marginHorizontal:responsiveWidth(3)}}>{item.Text}</Text>
+</ScrollView>
+</View>
+
+</View>
+</View>
 ))
   }
 
 
 <View style={styles.viewTicket}>
 
+
+
+</View>
+
+
+
+</ScrollView>
 
 <View style={{flexDirection:'row-reverse'}}>
 <View style={styles.viewBack3}>
@@ -188,26 +198,20 @@ return (
         تاریخ ایجاد تیکت:1400/08/08
     </Text>
 </View> */}
-<Input placeholder={"پیام خودرا بنویسید"} onChangeText={(ss)=>setText(ss)} 
+<TextInput placeholder={"پیام خودرا بنویسید"} onChangeText={(ss)=>setText(ss)} 
+value={text}
 inputStyle={{borderColor:Colors.gray,height:responsiveHeight(5),color:Colors.text,width:responsiveWidth(60)}}
 //  containerStyle={{height:responsiveHeight(10)}}
  />
 
 </View>
+
 <TouchableOpacity onPress={()=>NewMessage()} style={styles.button}>
       <Text style={{...myFontStyle.mediumBold,color:Colors.White}}>
         ارسال 
       </Text>
     </TouchableOpacity>
-
 </View>
-</View>
-
-
-
-</ScrollView>
-
-
     </View>
 
 
