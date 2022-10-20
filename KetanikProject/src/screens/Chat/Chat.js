@@ -135,12 +135,12 @@ return (
 <Image source={require("@assets/images/customer-support.png")} />
 <View>
 <View style={styles.viewBack}>
-<View  style={styles.viewHeaderBack2}>
+{/* <View  style={styles.viewHeaderBack2}>
 <Text style={{...myFontStyle.mediumRegular,color:Colors.White}}>پشتیبان فنی</Text>
 <Text style={{...myFontStyle.mediumRegular,color:Colors.White}}>
         تاریخ ایجاد تیکت:{item.Date}
     </Text>
-</View>
+</View> */}
 <ScrollView>
 
 <Text style={{...myFontStyle.mediumRegular,color:Colors.text,marginHorizontal:responsiveWidth(3)}}>{item.Text}</Text>
@@ -157,12 +157,12 @@ return (
 <Image source={require("@assets/images/questionProf.png")} />
 <View>
 <View style={styles.viewBack}>
-<View  style={styles.viewHeaderBack}>
+{/* <View  style={styles.viewHeaderBack}>
 <Text style={{...myFontStyle.mediumRegular,color:Colors.White}}> کاربر</Text>
 <Text style={{...myFontStyle.mediumRegular,color:Colors.White}}>
         تاریخ ایجاد تیکت:{item.Date}
     </Text>
-</View>
+</View> */}
 <ScrollView>
 
 <Text style={{...myFontStyle.mediumRegular,color:Colors.text,marginHorizontal:responsiveWidth(3)}}>{item.Text}</Text>
@@ -180,25 +180,25 @@ return (
 <View style={styles.viewTicket}>
 
 
-<Image source={require("../../assets/images/questionProf.png")} />
-<View>
+<View style={{flexDirection:'row-reverse'}}>
 <View style={styles.viewBack3}>
-<View  style={styles.viewHeaderBack}>
+{/* <View  style={styles.viewHeaderBack}>
 <Text style={{...myFontStyle.mediumRegular,color:Colors.White}}> کاربر</Text>
-{/* <Text style={{...myFontStyle.mediumRegular,color:Colors.White}}>
+<Text style={{...myFontStyle.mediumRegular,color:Colors.White}}>
         تاریخ ایجاد تیکت:1400/08/08
-    </Text> */}
-</View>
-<View style={{alignItems:'center'}}>
-<Input placeholder={"پیام خودرا بنویسید"} onChangeText={(ss)=>setText(ss)} inputStyle={{borderColor:Colors.gray,height:responsiveHeight(10),color:Colors.text,width:responsiveWidth(60)}} containerStyle={{height:responsiveHeight(10)}}/>
+    </Text>
+</View> */}
+<Input placeholder={"پیام خودرا بنویسید"} onChangeText={(ss)=>setText(ss)} 
+inputStyle={{borderColor:Colors.gray,height:responsiveHeight(5),color:Colors.text,width:responsiveWidth(60)}}
+//  containerStyle={{height:responsiveHeight(10)}}
+ />
 
 </View>
 <TouchableOpacity onPress={()=>NewMessage()} style={styles.button}>
       <Text style={{...myFontStyle.mediumBold,color:Colors.White}}>
-        ارسال پیام
+        ارسال 
       </Text>
     </TouchableOpacity>
-</View>
 
 </View>
 </View>
@@ -289,19 +289,19 @@ const styles = StyleSheet.create({
         viewTicket:{flexDirection:'row-reverse',alignItems:'flex-end',marginTop:responsiveHeight(2),padding:5},
         viewTicket2:{flexDirection:'row',alignItems:'flex-end',marginTop:responsiveHeight(2),padding:5},
         viewBack:{backgroundColor:"#ECEDEF",height:responsiveHeight(15),width:responsiveWidth(70),borderRadius:5},
-        viewBack3:{backgroundColor:"#ECEDEF",height:responsiveHeight(20),width:responsiveWidth(70),borderRadius:5},
+        viewBack3:{backgroundColor:"#ECEDEF",height:responsiveHeight(6),width:responsiveWidth(85),borderRadius:5,alignItems:'flex-end'},
         viewHeaderBack:{borderTopLeftRadius:5,borderTopEndRadius:5, flexDirection:'row',backgroundColor:"#09B5DB",
         justifyContent:'space-between'
         ,alignItems:'center',paddingHorizontal:responsiveWidth(3)},
         viewHeaderBack2:{borderTopLeftRadius:5,borderTopEndRadius:5, flexDirection:'row',backgroundColor:Colors.Green
         ,justifyContent:'space-between',alignItems:'center',paddingHorizontal:responsiveWidth(3)},
-        button:{marginTop:responsiveHeight(2),width:responsiveWidth(25)
-          ,height:responsiveHeight(3),backgroundColor:Colors.Yellow,alignSelf:'flex-start',
-        borderRadius:25,
+        button:{width:responsiveWidth(12)
+          ,height:responsiveHeight(5.5),backgroundColor:Colors.Green,alignSelf:'flex-start',
+        borderRadius:50,
         alignItems:'center',
         justifyContent:'center',
         alignSelf:'flex-end',
-        margin:5
+        marginHorizontal:5
 
         },
 });

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Text } from 'react-native';
+import { View, Image } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
@@ -73,26 +73,41 @@ activeColor={'#fff'}
       // tabBarLabel:<Text style={{...myFontStyle.menu,marginTop:10,textAlign:'center'}}></Text>,  tabBarIcon: ({ color }) => (            <Icon name="home" color={Colors.darkGreen}  size={25} /> 
       // ),        }}      />
       tabBarLabel:"", 
-      tabBarIcon: ({ color }) => (            <Icon name="home" color={Colors.darkGreen} style={{height:responsiveHeight(10),width:responsiveWidth(8)}} size={35} />          ),        }}      />
+      tabBarIcon: ({ color }) => (         
+           <Icon name="home" color={Colors.darkGreen} style={{height:responsiveHeight(10),width:responsiveWidth(8)}} size={35} />          ),        }}      />
       <Tab.Screen
        // name="home"
        name={"Categorys"}
        component={StackNavigatorsCat}
 
-       options={{          tabBarLabel:"",          tabBarIcon: ({ color }) => (            <Icon name="apps"color={Colors.darkGreen}style={{height:responsiveHeight(10),width:responsiveWidth(8)}} size={35} />          ),        }}    color={Colors.darkGreen} size={35} />   
-<Tab.Screen
-   name="Searchs" component={StackNavigatorsSearch}
-   options={{          tabBarLabel: "", tabBarIcon: ({ color }) => (    <Icon name="search"color={Colors.darkGreen} style={{height:responsiveHeight(10),width:responsiveWidth(8)}} size={35} />          ),        }}    color={Colors.darkGreen} size={35} />         
-<Tab.Screen
-   name="Library" component={StackNavigatorsLibrary}
-   options={{          tabBarLabel:"",    tabBarIcon: ({ color }) => (    <Icon name="library-books"color={Colors.darkGreen} style={{height:responsiveHeight(10),width:responsiveWidth(8)}} size={35} />          ),        }}   color={Colors.darkGreen} size={35} />            
+       options={{          tabBarLabel:"",          tabBarIcon: ({ color }) => (      
+        <Image resizeMode='contain' source={require('@assets/images/agronomy.png')} style={{height:responsiveHeight(4),width:responsiveWidth(8)}} />
+        ),        }}    color={Colors.darkGreen} size={35} />   
 
-  
-       
 <Tab.Screen
    name="Profile" component={StackNavigatorsProfile}
    style={{...myFontStyle.UltraBold}}
-   options={{          tabBarLabel: "",    tabBarIcon: ({ color }) => (    <Icon name="person-outline"color={Colors.darkGreen} style={{height:responsiveHeight(10),width:responsiveWidth(8)}} size={35} />          ),        }}    color={Colors.darkGreen} size={35} />         
+   options={{          tabBarLabel: "",    tabBarIcon: ({ color }) => ( 
+      //  <Icon name="person-outline"color={Colors.darkGreen} style={{height:responsiveHeight(10),width:responsiveWidth(8)}} size={35} />          
+      <Image resizeMode='contain' source={require('@assets/images/consultingMenu.png')} style={{height:responsiveHeight(4),width:responsiveWidth(8)}} />
+       ),        }}    color={Colors.darkGreen} size={35} />     
+<Tab.Screen
+   name="Searchs" component={StackNavigatorsSearch}
+   options={{          tabBarLabel: "", tabBarIcon: ({ color }) => ( 
+      //  <Icon name="search"color={Colors.darkGreen} style={{height:responsiveHeight(10),width:responsiveWidth(8)}} size={35} />       
+      <Image resizeMode='contain' source={require('@assets/images/box.png')} style={{height:responsiveHeight(4),width:responsiveWidth(8)}} />
+
+       
+       ),        }}    color={Colors.darkGreen} size={35} />         
+<Tab.Screen
+   name="Library" component={StackNavigatorsLibrary}
+   options={{          tabBarLabel:"",    tabBarIcon: ({ color }) => ( 
+    <Image resizeMode='contain' source={require('@assets/images/promotion.png')} style={{height:responsiveHeight(4),width:responsiveWidth(8)}} />
+    ),        }}   color={Colors.darkGreen} size={35} />            
+
+  
+       
+    
 
 </Tab.Navigator>
   );

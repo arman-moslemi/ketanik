@@ -33,6 +33,7 @@ const HistoryConsultant = ({navigation}) => {
 
     axios.post(apiUrl + "HistoryConsultant",{CustomerID:ss})
     .then(function (response) {
+      console.log(response.data)
       if (response.data.result == "True") {
         console.log(777)
 
