@@ -130,10 +130,11 @@ export default function Player(props) {
     console.log(8956)
     console.log(index)
     // setPlay(false)
-    if(type=="main")
-   { 
-    //  setIndex(index+1)
-mutLogin()  }
+  //   if(type=="main")
+  //  { 
+mutLogin()  
+
+// }
     // if (event.type === TrackPlayer.TrackPlayerEvents.PLAYBACK_TRACK_CHANGED) {
     //   const track = await TrackPlayer.getTrack(event.nextTrack);
     //   const { title, artist, artwork } = track || {};
@@ -156,7 +157,8 @@ mutLogin()  }
     AsyncStorage.setItem('@bookid',id.toString())
     AsyncStorage.setItem('@epid',index.toString())
     const currentTrack2 = await TrackPlayer.getDuration();
-
+    if(type=="main")
+    { 
     axios.post(apiUrl+'ReadCustomerWrite',{BookID:id,CustomerID:state,ReadTime:convertHMS(currentTrack2)})
     .then(function (response) {
       const message = response.data;
@@ -176,7 +178,7 @@ mutLogin()  }
     .catch(function (error) {
       console.log(error);
     });
-  
+    }
   
     };
   return (
@@ -354,15 +356,18 @@ const styles = StyleSheet.create({
   nextSec: {
     color:Colors.darkGreen,
     position:"absolute",
-  right:responsiveWidth(11.4),
-  top:responsiveHeight(2.4),
+  right:responsiveWidth(12),
+  top:responsiveHeight(2.8),
+  fontSize:11
+
   //  ...myFontStyle.smallRegular
   },
   prevSec: {
     color:Colors.darkGreen,
     position:"absolute",
-  left:responsiveWidth(11.4),
-  top:responsiveHeight(2.5),
+  left:responsiveWidth(12),
+  top:responsiveHeight(2.8),
+  fontSize:11
   //  ...myFontStyle.smallRegular
   },
   labelContainer: {

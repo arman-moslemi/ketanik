@@ -357,7 +357,14 @@ const {id} = route?.params ?? {};
     const  gotoExample=async()=> {
       await TrackPlayer.stop();
       await TrackPlayer.destroy();
-      navigation.navigate("ListenBook",{id:data.BookID,link:data.Link,image:data?.Pic,BookName:data.BookName,writer:data.Writer,SpecialCost:data.SpecialCost,Cost:data.Cost})
+   
+   
+   //   navigation.navigate("ListenBook",{id:data.BookID,link:data.Link,image:data?.Pic,BookName:data.BookName,writer:data.Writer,SpecialCost:data.SpecialCost,Cost:data.Cost})
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'ListenBook',params:{id:data.BookID,link:data.Link,image:data?.Pic,BookName:data.BookName,writer:data.Writer,SpecialCost:data.SpecialCost,Cost:data.Cost} }]
+   })
+    
     }
   const  mutComment=async()=> {
     const state = await AsyncStorage.getItem("@user");

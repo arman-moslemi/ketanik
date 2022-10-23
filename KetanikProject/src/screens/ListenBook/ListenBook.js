@@ -137,8 +137,8 @@ setPlay(true)
       console.log(message);
       
       if(result == "true"){
-        alert("با موفقیت به سبدخرید شد")
-                        }else{
+        Alert.alert("",getTranslation("با موفقیت به سبدخریداضافه شد"))
+      }else{
 
       }
     })
@@ -222,7 +222,9 @@ return (
         stop={stop}
         isplay={isplay}
         setPlay={setPlay}
-
+        index={1}
+        // type="main"
+        id={id}
       />
                   </View>
       {/* <TouchableOpacity onPress={toggleModal2} style={{marginTop:50,marginLeft:100,}}>

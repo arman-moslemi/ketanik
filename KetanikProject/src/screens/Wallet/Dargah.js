@@ -50,7 +50,7 @@ const backs=()=> {
 })
 }
 return (
-    <View style={{backgroundColor:theme.backgroundColor,flex:1}}>
+    <ScrollView style={{backgroundColor:theme.backgroundColor,flex:1}}>
 
 <View style={styles(theme).customRow}>
         
@@ -70,7 +70,7 @@ return (
           </View>
 
     </View>
-    <ScrollView >
+    <View >
  {/* <View style={styles(theme).container}> */}
  <WebView
         source={{
@@ -80,7 +80,7 @@ return (
 
         //   uri: 'http://www.google.com'
         }}
-        style={{ marginTop: responsiveHeight(5),height:responsiveHeight(79) }}
+        style={{ marginTop: responsiveHeight(5),height:responsiveHeight(95) }}
       />
     {/* </View> */}
     <TouchableOpacity
@@ -91,8 +91,8 @@ return (
 
        <Text style={styles(theme).btnText}>{getTranslation("بازگشت")}</Text>
      </TouchableOpacity>   
-      </ScrollView>
-    </View>
+      </View>
+    </ScrollView>
 );
 };
 
@@ -121,7 +121,7 @@ const styles = (theme) =>  StyleSheet.create({
     paddingLeft:responsiveWidth(5),
     backgroundColor:theme.topRowBack,
     marginTop:responsiveHeight(-13),
-    height : responsiveHeight(25),
+    height : responsiveHeight(22),
     width : '100%',
     transform : [ { scaleX : 1.7 } ],
     borderBottomStartRadius : 800,
