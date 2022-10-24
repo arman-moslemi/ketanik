@@ -92,21 +92,22 @@ activeColor={Colors.darkGreen}
       //  tabBarLabel:<Text style={{...myFontStyle.menu,marginTop:10,textAlign:'center'}}>Home</Text>, 
        tabBarLabel:"", 
         tabBarIcon: ({ color }) => (            <Icon name="home" color={Colors.darkGreen} style={{height:responsiveHeight(10),width:responsiveWidth(8)}} size={35} />          ),        }}      />
-<Tab.Screen
-   name="Library" component={StackNavigatorsLibrary}
-   options={{          tabBarLabel:"",    tabBarIcon: ({ color }) => (    <Icon name="library-books" style={{height:responsiveHeight(10),width:responsiveWidth(8)}}color={Colors.darkGreen} size={35} />         ),           }}      />
-<Tab.Screen
-   name="Searchs" component={StackNavigatorsSearch}
-   options={{          tabBarLabel:"", tabBarIcon: ({ color }) => (    <Icon name="search"style={{height:responsiveHeight(10),width:responsiveWidth(8)}} color={Colors.darkGreen} size={35} />         ),           }}      />
-
-  
-<Tab.Screen
+ 
+ <Tab.Screen
        // name="home"
        name={"Categorys"}
        component={StackNavigatorsCat}
 
        options={{          tabBarLabel:"",          tabBarIcon: ({ color }) => (            <Icon name="apps" style={{height:responsiveHeight(10),width:responsiveWidth(8)}}color={Colors.darkGreen} size={35} />          ),        }}      />
+
 <Tab.Screen
+   name="Searchs" component={StackNavigatorsSearch}
+   options={{          tabBarLabel:"", tabBarIcon: ({ color }) => (    <Icon name="search"style={{height:responsiveHeight(10),width:responsiveWidth(8)}} color={Colors.darkGreen} size={35} />         ),           }}      />
+<Tab.Screen
+   name="Library" component={StackNavigatorsLibrary}
+   options={{          tabBarLabel:"",    tabBarIcon: ({ color }) => (    <Icon name="library-books" style={{height:responsiveHeight(10),width:responsiveWidth(8)}}color={Colors.darkGreen} size={35} />         ),           }}      />
+
+ <Tab.Screen
    name="Profile" component={StackNavigatorsProfile}
    style={{...myFontStyle.UltraBold}}
    options={{          tabBarLabel: "",    tabBarIcon: ({ color }) => (    <Icon name="person-outline" style={{height:responsiveHeight(10),width:responsiveWidth(8)}}color={Colors.darkGreen} size={35} />         ),           }}      />

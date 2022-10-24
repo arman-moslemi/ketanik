@@ -581,10 +581,10 @@ const styles = (theme) =>  StyleSheet.create({
   }
   ,priceRed:{
     color:'#dc3545',
-    ...myFontStyle.normalRegular,
+    // ...myFontStyle.normalRegular,
     marginTop:responsiveHeight(0.5),
 },priceStroke:{
-...myFontStyle.normalRegular,
+// ...myFontStyle.normalRegular,
 color:'#111',
 textDecorationLine: 'line-through',
 marginTop:responsiveHeight(0.5),
