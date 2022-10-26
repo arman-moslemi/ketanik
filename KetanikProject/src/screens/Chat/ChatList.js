@@ -120,7 +120,7 @@ return (
 
 </View>
 
-<View style={styles.container}>
+<ScrollView style={styles.container}>
     <View style={{flexDirection:'row',marginTop:responsiveHeight(3),marginLeft:responsiveWidth(5),marginRight:responsiveWidth(5),justifyContent:'space-between'}}>
  
     <View>
@@ -245,7 +245,7 @@ return (
   }
 
 
-</View>
+</ScrollView>
 
         </Drawer>
 );
