@@ -1,5 +1,5 @@
 import React, { useState,useEffect,useRef } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, TextInput,Image,Alert } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, TextInput,Image,Alert,Linking } from 'react-native';
 import { myFontStyle } from "@assets/Constance";
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
@@ -169,7 +169,7 @@ return (
   data.map((item)=>(
 
 
-<TouchableOpacity onPress={()=>navigation.navigate("Chat",{id:item.ConsultantReqID})} style={styles.subViewRead1}>
+<TouchableOpacity onPress={()=>item.Type==1 && item.Status==3?navigation.navigate("Chat",{id:item.ConsultantReqID}):  Linking.openURL("https://chat.gsmartnet.com")} style={styles.subViewRead1}>
 <View style={{}}>
 <TouchableOpacity  style={{flexDirection:'row',alignItems:'center'}}>
 
