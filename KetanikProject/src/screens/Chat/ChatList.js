@@ -169,7 +169,7 @@ return (
   data.map((item)=>(
 
 
-<TouchableOpacity onPress={()=>item.Type==1 && item.Status==3?navigation.navigate("Chat",{id:item.ConsultantReqID}):  Linking.openURL("https://chat.gsmartnet.com")} style={styles.subViewRead1}>
+<TouchableOpacity onPress={()=>item.Type==1 ?navigation.navigate("Chat",{id:item.ConsultantReqID}):  Linking.openURL("https://chat.gsmartnet.com")} style={styles.subViewRead1}>
 <View style={{}}>
 <TouchableOpacity  style={{flexDirection:'row',alignItems:'center'}}>
 
