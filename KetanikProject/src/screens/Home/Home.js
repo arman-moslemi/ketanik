@@ -44,6 +44,25 @@ import GetLocation from 'react-native-get-location'
 
   const  mutLogin=async()=> {
     console.log(999);
+    var CustomerID= await AsyncStorage.getItem("CustomerID")
+
+    axios.post(apiUrl + "CustomerDevice",{CustomerID:CustomerID})
+    .then(function (response) {
+      // console.log(666)
+      // console.log(response);
+      // console.log(response.data.Data);
+      if (response.data.result == "True") {
+        console.log(666)
+        console.log(response.data.Data);
+  
+        setData(response.data.Data[0])
+ 
+    }})
+    .catch(function (error) {
+      console.log(777)
+
+      console.log(error);
+    });
     GetLocation.getCurrentPosition({
       enableHighAccuracy: true,
       timeout: 15000,
@@ -78,23 +97,7 @@ import GetLocation from 'react-native-get-location'
       console.warn(code, message);
   })
    
-    var CustomerID= await AsyncStorage.getItem("CustomerID")
-
-    axios.post(apiUrl + "CustomerDevice",{CustomerID:CustomerID})
-    .then(function (response) {
-      if (response.data.result == "True") {
-        console.log(666)
-        console.log(response.data.Data);
-        var ss=[]
-  
-        setData(response.data.Data[0])
-
-    }})
-    .catch(function (error) {
-      console.log(777)
-
-      console.log(error);
-    });
+ 
 
 
   

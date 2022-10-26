@@ -45,7 +45,13 @@ const DrawerContent = ({ navigation }) => {
   const  exit=async()=> {
 
  await   AsyncStorage.setItem('CustomerID',"")
-navigation.navigate('Login')
+
+
+ navigation.reset({
+  index: 0,
+  routes: [{ name: 'Login' }]
+})
+// navigation.navigate('Login')
   }
 
   const txtDarawerItem = [
