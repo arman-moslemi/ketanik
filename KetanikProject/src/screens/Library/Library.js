@@ -130,12 +130,12 @@ console.log(episode)
     </View>
     <View style={{marginTop:30,alignItems:'center'}}>
       <View style={{marginBottom:10,flexDirection:'row'}}>
-      <TouchableOpacity onPress={()=>setDate(parseInt(date)>1?parseInt(date)<11?"0"+(parseInt(date)-1):parseInt(date)-1:null)}>
+      <TouchableOpacity onPress={()=>setDate(parseInt(date)>1 &&parseInt(date)<12?parseInt(date)<11?"0"+(parseInt(date)-1):parseInt(date)-1:null)}>
 
       <Icon name={"keyboard-arrow-left"} color={'#111'} size={30}/>
       </TouchableOpacity>
         <Text style={styles(theme).largeText}>{month[date-1]}</Text>
-        <TouchableOpacity onPress={()=>setDate(parseInt(date)<12?parseInt(date)<9?"0"+(parseInt(date)+1):parseInt(date)+1:null)}>
+        <TouchableOpacity onPress={()=>setDate(parseInt(date)<12 && parseInt(date)>1 ?parseInt(date)<9?"0"+(parseInt(date)+1):parseInt(date)+1:null)}>
 
         <Icon name={"keyboard-arrow-right"} color={'#111'} size={30}/>
         </TouchableOpacity>
