@@ -128,7 +128,7 @@ GetData()
 const InsertFavorite=async ()=>{
   const axios = require("axios");
   var ss=await AsyncStorage.getItem("CustomerID")
-  axios.post(apiUrl + "InsertFavorite",{CustomerID:ss,ProductID:data.ProductID})
+  axios.post(apiUrl + "InsertFavorite",{CustomerID:ss,BlogID:data.BlogID})
   .then(function (response) {
     if (response.data.result == "True") {
         alert("با موفقیت ثبت شد")
