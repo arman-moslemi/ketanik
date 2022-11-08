@@ -197,6 +197,9 @@ const StackNavigatorsProfile = () => {
  }
 export default function App() {
   return (
+    // <View>
+    //   <Text>salam</Text>
+    // </View>
     <ThemeProvider>
 
     <NavigationContainer>

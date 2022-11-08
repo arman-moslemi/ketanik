@@ -67,7 +67,7 @@ export const truncate = (str, len) => {
 
       
       const axios = require("axios");
-      axios.post(apiUrl + "DeleteFavorite",{CustomerID:ss,BlogID:mm})
+      axios.post(apiUrl + "DeleteFavorite",{FavoriteID:mm})
       .then(function (response) {
         if (response.data.result == "True") {
           alert("با موفقیت حذف شد")
