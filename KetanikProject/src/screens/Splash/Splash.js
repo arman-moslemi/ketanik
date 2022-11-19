@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
     },logo:{
         position:'absolute',
         width:responsiveWidth(80),
-       top:responsiveHeight(-50),
+       top:responsiveHeight(-20),
         resizeMode:'contain',
     }  ,overlay: {
         ...StyleSheet.absoluteFillObject,

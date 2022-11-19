@@ -425,7 +425,7 @@ color:theme.menuTitle,
   topBar:{
       display:'flex',
       flexDirection:'row-reverse',
-      paddingTop:responsiveHeight(2),
+      paddingTop:responsiveHeight(5),
       paddingRight:responsiveWidth(7),
       paddingLeft:responsiveWidth(7),
       zIndex:1000,

@@ -141,7 +141,7 @@ const styles =StyleSheet.create({
   },
   textInput: {
     width: responsiveWidth(75),
-    height: responsiveHeight(8),
+    height: responsiveHeight(7),
    borderWidth: 1,
     paddingHorizontal: 15,
     borderColor: Colors.borderColor,
@@ -153,7 +153,7 @@ const styles =StyleSheet.create({
     color: '#000000',
 
     borderRadius:15,
-    paddingTop:10,
+    // paddingTop:10,
     textAlign:'left'
     // backgroundColor:'#f3f3f3'
   },

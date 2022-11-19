@@ -273,7 +273,7 @@ const styles = StyleSheet.create({
 loginImg:{
   width:responsiveWidth(100),
   resizeMode:'contain',
-  marginTop:responsiveHeight(-10)
+  // marginTop:responsiveHeight(-5)
 },
 tabBar:{
   backgroundColor:"transparent",
