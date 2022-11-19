@@ -10,7 +10,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 // import DrawerContent from './drewerContent/DrawerContent';
 import { myFontStyle } from "@assets/Constance";
 import { ThemeContext } from '../../../theme/theme-context';
-// create a component
+import { getTranslation } from '@i18n/i18n';
 
 
 // export const truncate = (str, len) => {
@@ -38,7 +38,7 @@ return (
     <View style={styles(theme).topBar}>
 
     <View style={{flex : 2,textAlign:"right"}}>
-          <Text style={styles(theme).menuTitle}>معرفی به دوستان</Text>
+          <Text style={styles(theme).menuTitle}>{getTranslation('معرفی به دوستان')}</Text>
           </View>
     
         
@@ -53,7 +53,7 @@ return (
  <View style={styles(theme).container}>
   <View style={styles(theme).aboutView}>
     <Text style={styles(theme).aboutText}>
-      لینک اختصاصی خود را از بخش زیر کپی کنید و آن را برای دوستان و آشنایان خود ارسال نمایید.هنگامی که دوستان شما به این لینک وارد شوند و ثبت نام کنند برای اولین خرید خود کد تخفیف 50 درصدی دریافت می کنند و پس از اولین خرید شما نیز یک کد تخفیف 50 درصدی هدیه می گیرید
+    {getTranslation('لینک اختصاصی')}
     </Text>
   </View>
   <View style={styles(theme).takhfifRow}>
@@ -65,7 +65,7 @@ return (
     </View>
     <View>
     <TouchableOpacity style={styles(theme).loginBtn}>
-       <Text style={styles(theme).btnText}>کپی</Text>
+       <Text style={styles(theme).btnText}>{getTranslation('کپی')}</Text>
      </TouchableOpacity>
     </View>
 </View>
@@ -165,7 +165,8 @@ const styles= (theme) => StyleSheet.create({
   ...myFontStyle.largBold,
   color:'#fff',
 },textCode:{
-  ...myFontStyle.largeRegular,
+  // ...myFontStyle.largeRegular,
+  fontSize:20,
   marginTop:responsiveHeight(1),
   color:theme.textTitle,
 }

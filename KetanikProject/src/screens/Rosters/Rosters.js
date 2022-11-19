@@ -12,6 +12,7 @@ import { myFontStyle } from "@assets/Constance";
 import axios from 'axios';
 import { apiUrl ,apiAsset} from "@commons/inFormTypes";
 // create a component
+import { getTranslation } from '@i18n/i18n';
 
 
 export const truncate = (str, len) => {
@@ -37,7 +38,11 @@ export const truncate = (str, len) => {
   const {id} = route?.params ?? {};
 
     const  mutLogin=async()=> {
-      axios.post(apiUrl+'SubBookShow',{BookID:id})
+        const lang = await AsyncStorage.getItem("@langs");
+
+      axios.post(apiUrl+'SubBookShow',{BookID:id},{ headers: {
+        lang: lang
+      }})
       .then(function (response) {
         const message = response.data;
         const result = response.data.result;
@@ -94,7 +99,7 @@ return (
                 {truncate(data[0]?.Writer,30)}
                 </Text>
                 <Text style={styles.bookWriter}>
-                {truncate("ناشر :"+data[0]?.Publisher,30)}
+                {truncate(getTranslation("ناشر :")+data[0]?.Publisher,30)}
                 </Text>
                 <View style={{display:'flex',flexDirection:'row-reverse'}}>
                     <Icon name={'star'} size={18} color={'#ffc93d'} style={{marginLeft:2}}/>
@@ -110,7 +115,7 @@ return (
                 </View>
                 <View>
                     <Text style={styles.price}>
-                        {data[0]?.Cost} تومان
+                        {data[0]?.Cost} {getTranslation('sek')}
                     </Text>
                 </View>
             </View>
@@ -141,7 +146,7 @@ return (
         </View>
         <View>
             <Text style={styles.price}>
-                25.000 تومان
+                25.000 sek
             </Text>
         </View>
     </View>

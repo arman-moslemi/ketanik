@@ -1,7 +1,7 @@
 import React, { useState,useEffect ,useContext} from 'react';
 import { myFontStyle } from "@assets/Constance";
 
-import { responsiveFontSize, responsiveHeight, responsiveScreenWidth, responsiveWidth } from 'react-native-responsive-dimensions';
+import { responsiveFontSize, responsiveHeight, responsiveScreenWidth, responsiveWidth,Alert } from 'react-native-responsive-dimensions';
 import { Colors} from "@assets/Colors";
 
 import { View, Text , StyleSheet,Image, TouchableOpacity,ScrollView,TextInput} from 'react-native';
@@ -15,6 +15,7 @@ import AsyncStorage from  '@react-native-async-storage/async-storage';
 import {launchImageLibrary} from 'react-native-image-picker';
 import ImgToBase64 from 'react-native-image-base64';
 import { ThemeContext } from '../../../theme/theme-context';
+import { getTranslation } from '@i18n/i18n';
 
  const EditProfile = ({navigation }) => {
   const {  theme } = useContext(ThemeContext);
@@ -32,9 +33,12 @@ import { ThemeContext } from '../../../theme/theme-context';
   };
   const  mutLogin=async()=> {
     const state = await AsyncStorage.getItem("@user");
+    const lang = await AsyncStorage.getItem("@langs");
 
 console.log(state)
-    axios.post(apiUrl+'OneCustomer',{CustomerID :state})
+    axios.post(apiUrl+'OneCustomer',{CustomerID :state},{ headers: {
+      lang: lang
+    }})
     .then(function (response) {
       const message = response.data;
       const result = response.data.result;
@@ -70,7 +74,7 @@ setEmail(response.data.Data.Email)
             console.log(message);
       
             if(result == "true"){
-        alert("تغییرات با موفقیت ذخیره شد")
+          Alert.alert("",getTranslation("تغییرات با موفقیت ذخیره شد"))
               // navigation.navigate("ChangePass",{mobile:user,verify:response.data.Data})
                               }else{
       
@@ -125,13 +129,13 @@ setEmail(response.data.Data.Email)
               const result = response.data.result;
 console.log(888)
 console.log( response.data)
-// alert("",response.data.message)
+//   Alert.alert("","",response.data.message)
 if(result=="true"){
 
   console.log(222);
   
   console.log(response.data.result);
-  alert('عکس با موفقیت ثبت شد')
+    Alert.alert("",getTranslation('عکس با موفقیت ثبت شد'))
   AsyncStorage.setItem('@userPhoto',response.data.Data.Photo.toString())
 }
 
@@ -181,7 +185,7 @@ return (
       ()=>{handleChoosePhoto()}
     }
      >
-       <Text style={styles(theme).btnText}>ویرایش تصویر</Text>
+       <Text style={styles(theme).btnText}>{getTranslation('ویرایش تصویر')}</Text>
      </TouchableOpacity>
    
      
@@ -193,13 +197,13 @@ return (
   <ScrollView>
   <View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center',width:responsiveWidth(90),marginRight:'auto',marginLeft:'auto',marginBottom:responsiveHeight(2),marginTop:responsiveHeight(2),justifyContent:'space-between'}}>
   <Text style={styles(theme).inputText}>
-نام کاربری
+  {getTranslation('نام کاربری')}
   </Text>
   <TextInput value={name} onChangeText={(ss)=>setName(ss)} placeholder="نام کاربری" style={styles(theme).discountInput} placeholderTextColor={theme.white} />
 </View>
 <View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center',width:responsiveWidth(90),marginRight:'auto',marginLeft:'auto',marginBottom:responsiveHeight(2),marginTop:responsiveHeight(2),justifyContent:'space-between'}}>
   <Text style={styles(theme).inputText}>
-ایمیل
+  {getTranslation('ایمیل')}
   </Text>
   <TextInput disableFullscreenUI={true} value={email} editable={false} placeholder="ایمیل" style={styles(theme).discountInput} placeholderTextColor={'#111'} />
 </View>
@@ -214,7 +218,7 @@ return (
         color={Colors.darkGreen}
       />
   <Text style={styles(theme).radionText}>
-    خانم
+  {getTranslation('خانم')}
   </Text>
       
   </View>
@@ -226,7 +230,7 @@ return (
         color={Colors.darkGreen}
       />
         <Text style={styles(theme).radionText}>
-    آقا
+        {getTranslation('آقا')}
   </Text>
     </View>
     </View>
@@ -236,7 +240,7 @@ return (
 <TouchableOpacity onPress={()=>navigation.navigate("EditPassword")} style={styles(theme).editProfileBtn2}>
       <View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>
         
-        <Text style={styles(theme).btnText2}>تغییر رمزعبور</Text>
+        <Text style={styles(theme).btnText2}>{getTranslation('تغییر رمزعبور')}</Text>
       </View>
       <View>
         <Icon name={'chevron-left'} size={20} color={'#111'}/>
@@ -245,12 +249,12 @@ return (
     <View style={styles(theme).btnRow}>
     <View style={styles(theme).btnBox}>
     <TouchableOpacity onPress={()=>mutEdit()} style={styles(theme).purchaseBtn}>
-       <Text style={styles(theme).purchaseBtnText}>ذخیره تغییرات</Text>
+       <Text style={styles(theme).purchaseBtnText}>{getTranslation('ذخیره تغییرات')}</Text>
      </TouchableOpacity>
     </View>
     <View style={styles(theme).btnBox}>
     <TouchableOpacity onPress={()=>navigation.goBack()} style={styles(theme).purchaseBtn2}>
-       <Text style={styles(theme).purchaseBtnText2}>انصراف</Text>
+       <Text style={styles(theme).purchaseBtnText2}>{getTranslation('انصراف')}</Text>
      </TouchableOpacity>
     </View>
 </View>
@@ -264,21 +268,21 @@ return (
    <TouchableOpacity style={styles(theme).editProfileBtn}>
       <View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>
         <Image source={require('@assets/images/trash.png')} style={styles(theme).btnImg}/>
-        <Text style={styles(theme).btnText3}>حذف تصویر</Text>
+        <Text style={styles(theme).btnText3}>{getTranslation('حذف تصویر')}</Text>
       </View>
      
     </TouchableOpacity>
     <TouchableOpacity style={styles(theme).editProfileBtn}>
       <View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>
         <Image source={require('@assets/images/gallery.png')} style={styles(theme).btnImg}/>
-        <Text style={styles(theme).btnText3}>گالری</Text>
+        <Text style={styles(theme).btnText3}>{getTranslation('گالری')}</Text>
       </View>
      
     </TouchableOpacity>
     <TouchableOpacity style={styles(theme).editProfileBtn}>
       <View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>
         <Image source={require('@assets/images/camera.png')} style={styles(theme).btnImg}/>
-        <Text style={styles(theme).btnText3}>دوربین</Text>
+        <Text style={styles(theme).btnText3}>{getTranslation('دوربین')}</Text>
       </View>
      
     </TouchableOpacity>

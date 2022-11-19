@@ -4,7 +4,7 @@ import { myFontStyle } from "@assets/Constance";
 import { responsiveFontSize, responsiveHeight, responsiveScreenWidth, responsiveWidth } from 'react-native-responsive-dimensions';
 import { Colors} from "@assets/Colors";
 
-import { View, Text , StyleSheet,Image, TouchableOpacity,ScrollView,TextInput} from 'react-native';
+import { View, Text , StyleSheet,Image, TouchableOpacity,ScrollView,TextInput,Alert} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Modal from 'react-native-modal';
 import TrackPlayer, { Capability  } from "react-native-track-player";
@@ -12,6 +12,7 @@ import Player from "@components/Player";
 import axios from 'axios';
 import { apiUrl ,apiAsset} from "@commons/inFormTypes";
 import AsyncStorage from  '@react-native-async-storage/async-storage';
+import { getTranslation } from '@i18n/i18n';
 
  const ListenBookMain = ({navigation,route }) => {
   const [data,setData]=useState([]);
@@ -180,7 +181,7 @@ setPlay(true)
     const state = await AsyncStorage.getItem("@user");
 
 if(state==""){
-  alert("لطفا وارد شوید")
+  Alert.alert("",getTranslation("لطفا وارد شوید"))
 
 }
     axios.post(apiUrl+'SingleBookSave',{BookID:id,CustomerID:state})
@@ -207,7 +208,9 @@ if(state==""){
 return (
    <ScrollView>
       <View style={{display:'flex',justifyContent:'center',alignContent:'center',alignItems:'center'}} >
-        <Image source={{uri:apiAsset+data[0]?.Pic}} style={styles.backgroundImage}  blurRadius={5}/>
+        <Image source={{uri:apiAsset+data[0]?.Pic}} style={styles.backgroundImage}  
+        // blurRadius={5}
+        />
         <View style={styles.backView}>
          <TouchableOpacity onPress={()=>navigation.goBack()}>
       <Icon name={'west'} size={30} color={'#fff'} style={{}}/>
@@ -215,7 +218,7 @@ return (
      </TouchableOpacity>
       
      </View>
-        <Image source={{uri:apiAsset+data[0]?.Pic}} style={styles.overImg}/>
+        {/* <Image source={{uri:apiAsset+data[0]?.Pic}} style={styles.overImg}/> */}
       </View>
       <View style={styles.whiteBack}>
       <Text style={styles.eachBookName}>{data[0]?.BookName}</Text>
@@ -227,15 +230,15 @@ return (
         </TouchableOpacity> */}
         <TouchableOpacity style={styles.btnBox}>
           <Image source={require('@assets/images/share.png')} style={styles.btnBoxImg}/>
-          <Text style={styles.btnBoxTxt}>اشتراک گذاری</Text>
+          <Text style={styles.btnBoxTxt}>{getTranslation('اشتراک گذاری')}</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={()=>mutSave()} style={styles.btnBox}>
           <Image source={require('@assets/images/save.png')} style={styles.btnBoxImg}/>
-          <Text style={styles.btnBoxTxt}>نشان کردن</Text>
+          <Text style={styles.btnBoxTxt}>{getTranslation('نشان کردن')}</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.btnBox} onPress={toggleModal} >
           <Image source={require('@assets/images/car.png')} style={styles.btnBoxImg}/>
-          <Text style={styles.btnBoxTxt}>حالت ماشین</Text>
+          <Text style={styles.btnBoxTxt}>{getTranslation('حالت ماشین')}</Text>
         </TouchableOpacity>
       </View>
       {/* player Code is Here */}
@@ -297,7 +300,7 @@ const styles = StyleSheet.create({
   },overImg:{
     height:responsiveHeight(35),
     borderRadius:10,
-    width:responsiveWidth(60),
+    width:responsiveWidth(65),
     marginRight:'auto',
     marginLeft:'auto',
     

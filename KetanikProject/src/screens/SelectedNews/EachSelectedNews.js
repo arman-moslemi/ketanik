@@ -10,6 +10,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 // import DrawerContent from './drewerContent/DrawerContent';
 import { myFontStyle } from "@assets/Constance";
 import { ThemeContext } from '../../../theme/theme-context';
+import AsyncStorage from  '@react-native-async-storage/async-storage';
 
 // create a component
 
@@ -80,7 +81,7 @@ return (
         </View>
         <View>
             <Text style={styles(theme).price}>
-                25.000 تومان
+                25.000 sek
             </Text>
         </View>
     </View>

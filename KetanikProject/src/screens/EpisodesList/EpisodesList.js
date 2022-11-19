@@ -15,6 +15,7 @@ import { apiUrl ,apiAsset} from "@commons/inFormTypes";
 // create a component
 import { ThemeContext } from '../../../theme/theme-context';
 import TrackPlayer, { usePlaybackState } from "react-native-track-player";
+import { getTranslation } from '@i18n/i18n';
 
 
 export const truncate = (str, len) => {
@@ -42,8 +43,11 @@ export const truncate = (str, len) => {
 
     const  mutLogin=async()=> {
       await TrackPlayer.destroy()
+      const lang = await AsyncStorage.getItem("@langs");
 
-      axios.post(apiUrl+'SubBookShow',{BookID:id})
+      axios.post(apiUrl+'SubBookShow',{BookID:id},{ headers: {
+        lang: lang
+      }})
       .then(function (response) {
         const message = response.data;
         const result = response.data.result;
@@ -78,7 +82,7 @@ return (
     <View style={styles(theme).topBar}>
 
     <View style={{flex : 2,textAlign:"right"}}>
-          <Text style={styles(theme).menuTitle}>{data[0]?.BookName} ({data.length} اپیزود)</Text>
+          <Text style={styles(theme).menuTitle}>{data[0]?.BookName} ({data.length} {getTranslation('اپیزود')})</Text>
           </View>
     
         
@@ -94,7 +98,13 @@ return (
           data.map((item,index)=>{
               return(
 
-    <TouchableOpacity onPress={()=>navigation.navigate("ListenBookMain",{id:id,num:index})} style={styles(theme).episodeList}>
+    <TouchableOpacity onPress={()=>
+    // navigation.navigate("ListenBookMain",{id:id,num:index})
+    navigation.reset({
+      index: 0,
+      routes: [{ name: 'ListenBookMain',params:{id:id,num:index} }]
+ })
+    } style={styles(theme).episodeList}>
        <View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center',flex:1}}>
        <View>
             <Icon name={'headset'} color={'#111'} size={40}/>
@@ -104,7 +114,7 @@ return (
                 {item.Title}
             </Text>
             <Text style={styles(theme).episodeTime}>
-            {item.Size} دقیقه _{item.Time} مگابایت
+            {item.Time} {getTranslation('دقیقه')} _{item.Size} {getTranslation('مگابایت')}
             </Text>
         </View>
        </View>

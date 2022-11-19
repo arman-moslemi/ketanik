@@ -55,7 +55,11 @@ console.log(545)
                console.log(22);
               //  console.log(response.data.Data);
               //  console.log(response.data.Data.code);
-               navigation.navigate("Login")
+              //  navigation.navigate("Login")
+               navigation.reset({
+                index: 0,
+                routes: [{ name: 'Login' }]
+           })
              
                                 }else{
                  setLoading(false);

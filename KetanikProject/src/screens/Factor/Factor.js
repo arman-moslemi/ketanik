@@ -13,6 +13,7 @@ import AsyncStorage from  '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import { apiUrl ,apiAsset} from "@commons/inFormTypes"
 import { ThemeContext } from '../../../theme/theme-context';
+import { getTranslation } from '@i18n/i18n';
 
 
  const Factor = ({navigation }) => {
@@ -27,9 +28,12 @@ import { ThemeContext } from '../../../theme/theme-context';
 }, []);
 const  mutLogin=async()=> {
   const state = await AsyncStorage.getItem("@user");
+  const lang = await AsyncStorage.getItem("@langs");
 
   
-  axios.post(apiUrl+'FactorCustomer',{CustomerID:state})
+  axios.post(apiUrl+'FactorCustomer',{CustomerID:state},{ headers: {
+    lang: lang
+  }})
   .then(function (response) {
     const message = response.data;
     const result = response.data.result;
@@ -61,7 +65,7 @@ return (
     <View style={styles(theme).topBar}>
 
     <View style={{flex : 2,textAlign:"right"}}>
-          <Text style={styles(theme).menuTitle}>تراکنش های موفق</Text>
+          <Text style={styles(theme).menuTitle}>{getTranslation('تراکنش های موفق')}</Text>
           </View>
     
         
@@ -81,22 +85,22 @@ return (
     <View style={{display:'flex',flexDirection:'row-reverse'}}>
       <View style={{width:responsiveWidth(25),padding:5,borderLeftColor:'#d3d3d3',borderLeftWidth:0.5}}>
         <Text style={styles(theme).tableHeader}>
-          تاریخ
+        {getTranslation('تاریخ')}
         </Text>
       </View>
       <View style={{width:responsiveWidth(20),padding:5,borderLeftColor:'#d3d3d3',borderLeftWidth:0.5}}>
         <Text style={styles(theme).tableHeader}>
-         واریز/برداشت
+        {getTranslation('واریز/برداشت')}
         </Text>
       </View>
       <View style={{width:responsiveWidth(25),padding:5,borderLeftColor:'#d3d3d3',borderLeftWidth:0.5}}>
         <Text style={styles(theme).tableHeader}>
-         توضیحات
+        {getTranslation('توضیحات')}
         </Text>
       </View>
       <View style={{width:responsiveWidth(20),padding:5}}>
         <Text style={styles(theme).tableHeader}>
-          وضعیت
+        {getTranslation('وضعیت')}
         </Text>
       </View>
     </View>
@@ -111,12 +115,12 @@ return (
       </View>
       <View style={{width:responsiveWidth(20),padding:5,borderLeftColor:'#d3d3d3',borderLeftWidth:0.5}}>
         <Text style={styles(theme).tableContentGreen}>
-         {item.Cost} تومان
+         {item.Cost} {getTranslation('sek')}
         </Text>
       </View>
       <View style={{width:responsiveWidth(25),padding:5,borderLeftColor:'#d3d3d3',borderLeftWidth:0.5}}>
         <Text style={styles(theme).tableContent}>
-         خرید
+        {getTranslation('خرید')}
         </Text>
         <Text style={styles(theme).tableContent}>
        {item.BookName}
@@ -125,10 +129,10 @@ return (
       <View style={{width:responsiveWidth(20),padding:5}}> 
         <Text style={styles(theme).tableContent}>
           {/* کیف پول */}
-          آنلاین
+          {getTranslation('آنلاین')}
         </Text>
         <Text style={styles(theme).tableContentGreen}>
-         موفق
+        {getTranslation('موفق')}
         </Text>
       </View>
     </View>

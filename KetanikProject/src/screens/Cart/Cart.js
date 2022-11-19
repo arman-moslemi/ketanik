@@ -1,5 +1,5 @@
 import React, {useState,useEffect,useContext} from 'react';
-import {View,Text, TouchableOpacity,Image,ScrollView,TextInput,FlatList,BackHandler} from 'react-native';
+import {View,Text, TouchableOpacity,Image,ScrollView,TextInput,FlatList,BackHandler,Alert} from 'react-native';
 
 import { StyleSheet } from 'react-native';
 import { responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
@@ -14,15 +14,17 @@ import axios from 'axios';
 import { apiUrl ,apiAsset} from "@commons/inFormTypes";
 // create a component
 import { ThemeContext } from '../../../theme/theme-context';
+import { getTranslation } from '@i18n/i18n';
+import CheckBox from '@react-native-community/checkbox';
 
 
 export const truncate = (str, len) => {
     // console.log("truncate", str, str.length, len);
-    if (str.length > len && str.length > 0) {
+    if (str?.length > len && str?.length > 0) {
       let new_str = str + " ";
-      new_str = str.substr(0, len);
-      new_str = str.substr(0, new_str.lastIndexOf(" "));
-      new_str = new_str.length > 0 ? new_str : str.substr(0, len);
+      new_str = str?.substr(0, len);
+      new_str = str?.substr(0, new_str.lastIndexOf(" "));
+      new_str = new_str?.length > 0 ? new_str : str?.substr(0, len);
       return new_str + "...";
     }
     return str;
@@ -30,6 +32,7 @@ export const truncate = (str, len) => {
 
  const Cart = ({navigation }) => {
   const {  theme } = useContext(ThemeContext);
+  const [toggleCheckBox, setToggleCheckBox] = useState(false)
 
     const [data,setData]=useState([]);
     const [cost,setCost]=useState(0);
@@ -50,9 +53,12 @@ export const truncate = (str, len) => {
   }, []);
   const  mutLogin=async()=> {
     const state = await AsyncStorage.getItem("@user");
+    const lang = await AsyncStorage.getItem("@langs");
 
     
-    axios.post(apiUrl+'ShoppingBasketView',{CustomerID:state})
+    axios.post(apiUrl+'ShoppingBasketView',{CustomerID:state},{ headers: {
+      lang: lang
+    }})
     .then(function (response) {
       const message = response.data;
       const result = response.data.result;
@@ -117,7 +123,7 @@ mutLogin()
           setDisable(true)
         // navigation.navigate("ChangePass",{mobile:user,verify:response.data.Data})
                         }else{
-    alert(response.data.message)
+      Alert.alert("",response.data.message)
       }
     })
     .catch(function (error) {
@@ -141,9 +147,9 @@ mutLogin()
       console.log(message);
     
       if(result == "true"){
-        navigation.navigate("Factor")        // navigation.navigate("ChangePass",{mobile:user,verify:response.data.Data})
+        navigation.navigate("Factor")        
                         }else{
-    alert(response.data.message)
+      Alert.alert("",response.data.message)
       }
     })
     .catch(function (error) {
@@ -152,6 +158,52 @@ mutLogin()
    
       
           };
+  const  dargah=async()=> {
+    const state = await AsyncStorage.getItem("@user");
+
+    console.log(discount);
+    console.log(state);
+    console.log(cost);
+    console.log(discountID);
+
+    axios.post(apiUrl+'Dargah',{CostTotal:cost,CustomerID:state,Type:toggleCheckBox?3:1})
+    .then(function (response) {
+      const message = response.data;
+      const result = response.data.result;
+      console.log(response.data);
+
+      if(result == "true"){
+        console.log(response.data.Data)
+        if(response.data.Data){
+
+          let userObj = JSON.parse(response.data.Data);
+          console.log(userObj.id)
+          navigation.navigate("Dargah",{id:userObj.id})        
+        }else{
+            Alert.alert("",getTranslation("با موفقیت اضافه شد"))
+
+        }
+                        }else{
+                          // let userObj2 = JSON.parse(response.data);
+                          if(JSON.parse(response.data.message).errors[0].message){
+
+                              Alert.alert("",JSON.parse(response.data.message).errors[0].message);
+
+                          }
+                          else{
+
+                              Alert.alert("",getTranslation("کیف پول شما موجودی لازم را ندارد"))
+                          }
+
+      }
+    })
+    .catch(function (error) {
+      console.log(error);
+    })
+   
+      
+          };
+
         const keyExtractor = item => {
             return item.BookID;
           };
@@ -168,9 +220,14 @@ mutLogin()
             <Text style={styles(theme).bookWriter}>
             {truncate(item.item.Writer,20)}
             </Text>
-            <Text style={styles(theme).bookWriter}>
-            {truncate("ناشر :"+item.item.Publisher,30)}
-            </Text>
+            {item.item.Publisher?
+ <Text style={styles(theme).bookWriter}>
+ {truncate("ناشر :"+item.item.Publisher,30)}
+ </Text>
+:
+null
+}
+            
             <View style={{display:'flex',flexDirection:'row-reverse'}}>
             {[...new Array(5)].map((index)=>{
                     return(
@@ -190,7 +247,7 @@ index+1>item.item.Rate?
        </TouchableOpacity>
             <View>
                 <Text style={styles(theme).price}>
-                    {item.item.Cost} تومان
+                    {item.item.Cost} sek
                 </Text>
             </View>
         </View>
@@ -210,12 +267,11 @@ return (
     <View style={styles(theme).topBar}>
 
     <View style={{flex : 2,textAlign:"right",display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>
-          <Text style={styles(theme).menuTitle}>سبد خرید</Text>
+          <Text style={styles(theme).menuTitle}>{getTranslation('سبد خرید')}</Text>
           <View style={styles(theme).badget}>
               <Text style={styles(theme).badgetText}>{data.length}</Text>
           </View>
           </View>
-    
         
         <View style={{flex :0.5}}>
           <TouchableOpacity onPress={()=>navigation.goBack()} style={{}}>
@@ -241,20 +297,37 @@ renderItem={_render}
     </View>
     <View>
         <Text style={styles(theme).discountText}>
-            کد تخفیف : 
+        {getTranslation('کد تخفیف :')}
         </Text>
     </View>
     <View>
         <TextInput onChangeText={(ee)=>setDis(ee)} placeholder="" style={styles(theme).discountInput} />
     </View>
     <View>
+    
     <TouchableOpacity onPress={()=>dis()} disabled={discountDisable} style={styles(theme).loginBtn}>
-       <Text style={styles(theme).btnText}>ثبت</Text>
+       <Text style={styles(theme).btnText}>{getTranslation('ثبت')}</Text>
      </TouchableOpacity>
     </View>
 </View>
-<TouchableOpacity onPress={()=>{buy()}} style={styles(theme).purchaseBtn}>
-       <Text style={styles(theme).purchaseBtnText}>پرداخت | {cost}</Text>
+    <View style={styles(theme).takhfifRow}>
+    <View>
+        <Text style={styles(theme).discountText}>
+        {getTranslation('پرداخت از کیف پول:')}
+        </Text>
+    </View>
+    <View>
+    <CheckBox
+    disabled={false}
+    value={toggleCheckBox}
+    onValueChange={(newValue) => setToggleCheckBox(newValue)}
+  />   
+   </View>
+</View>
+{/* <TouchableOpacity onPress={()=>{buy()}} style={styles(theme).purchaseBtn}> */}
+<TouchableOpacity onPress={()=>{dargah()}} style={styles(theme).purchaseBtn}>
+       <Text style={styles(theme).purchaseBtnText}>{getTranslation('پرداخت')} </Text>
+       <Text style={styles(theme).purchaseBtnText2}> |{cost}</Text>
      </TouchableOpacity>
    </View>
   </ScrollView>
@@ -371,7 +444,7 @@ const styles = (theme) => StyleSheet.create({
     justifyContent:'center',
     marginTop:responsiveHeight(1),
 },price:{
-      ...myFontStyle.largBold,
+      // ...myFontStyle.largBold,
       color:Colors.darkGreen,
   },moreBtn:{
       width:'85%',
@@ -428,7 +501,7 @@ const styles = (theme) => StyleSheet.create({
       borderColor:Colors.darkGreen,
       borderWidth:1,
       borderRadius:10,
-      width:responsiveWidth(38),
+      width:responsiveWidth(25),
       marginRight:responsiveWidth(2),
       height:responsiveHeight(6),
       color:'#111',
@@ -451,15 +524,20 @@ const styles = (theme) => StyleSheet.create({
     width:responsiveWidth(75),
     marginTop:responsiveHeight(2),
     height:responsiveHeight(7),
+    flexDirection:'row',
     alignContent:'center',
     alignItems:'center',
 justifyContent:'center',
     borderRadius:10,
     marginRight:'auto',
     marginLeft:'auto',
-  },purchaseBtnText:{
+  },
+  purchaseBtnText:{
     ...myFontStyle.bookTitle,
     color:'#fff',
+  },
+  purchaseBtnText2:{
+fontSize:20,    color:'#fff',
   }
   });
 

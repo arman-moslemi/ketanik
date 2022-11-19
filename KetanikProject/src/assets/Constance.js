@@ -7,6 +7,10 @@ const myFontFamily = {
   regularItalic: "RadomirTinkov-Gilroy-RegularItalic",
   Medium: "IRANSansFaNum",
   UltraLight: "RadomirTinkov-Gilroy-UltraLight",
+  // Bold: "",
+  // regularItalic: "",
+  // Medium: "",
+  // UltraLight: "",
 }
 
 //myFontStyle

@@ -14,6 +14,7 @@ import { apiUrl ,apiAsset} from "@commons/inFormTypes";
 import axios from 'axios';
 import AsyncStorage from  '@react-native-async-storage/async-storage';
 import { ThemeContext } from '../../../theme/theme-context';
+import { getTranslation } from '@i18n/i18n';
 
 
 export const truncate = (str, len) => {
@@ -94,13 +95,13 @@ return (
 <View style={styles(theme).takhfifRow}>
   
     <View>
-        <Input onChangeText={(ss)=>setOldPass(ss)} placeholder="رمز عبور فعلی" style={styles(theme).discountInput} />
+        <Input onChangeText={(ss)=>setOldPass(ss)} placeholder={getTranslation("رمز عبور فعلی")} style={styles(theme).discountInput} />
     </View>
     <View>
-        <Input onChangeText={(ss)=>setNewPass(ss)} placeholder="رمز عبور جدید" style={styles(theme).discountInput} />
+        <Input onChangeText={(ss)=>setNewPass(ss)} placeholder={getTranslation("رمز عبور جدید")} style={styles(theme).discountInput} />
     </View>
     <View>
-        <Input onChangeText={(ss)=>setAginPass(ss)} placeholder="تکرار رمز عبور جدید" style={styles(theme).discountInput} />
+        <Input onChangeText={(ss)=>setAginPass(ss)} placeholder={getTranslation("تکرار رمز عبور جدید")} style={styles(theme).discountInput} />
     </View>
     <View>
    
@@ -109,12 +110,12 @@ return (
 <View style={styles(theme).btnRow}>
     <View style={styles(theme).btnBox}>
     <TouchableOpacity onPress={()=>mutEdit()} style={styles(theme).purchaseBtn}>
-       <Text style={styles(theme).purchaseBtnText}>ذخیره تغییرات</Text>
+       <Text style={styles(theme).purchaseBtnText}>{getTranslation('ذخیره تغییرات')}</Text>
      </TouchableOpacity>
     </View>
     <View style={styles(theme).btnBox}>
     <TouchableOpacity style={styles(theme).purchaseBtn2}>
-       <Text style={styles(theme).purchaseBtnText2}>انصراف</Text>
+       <Text style={styles(theme).purchaseBtnText2}>{getTranslation('انصراف')}</Text>
      </TouchableOpacity>
     </View>
 </View>

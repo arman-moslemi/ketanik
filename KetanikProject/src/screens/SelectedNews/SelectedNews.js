@@ -12,6 +12,8 @@ import { myFontStyle } from "@assets/Constance";
 import axios from 'axios';
 import { apiUrl ,apiAsset} from "@commons/inFormTypes";
 import { ThemeContext } from '../../../theme/theme-context';
+import { getTranslation } from '@i18n/i18n';
+import AsyncStorage from  '@react-native-async-storage/async-storage';
 
 // create a component
 
@@ -31,6 +33,21 @@ export const truncate = (str, len) => {
  const SelectedNews = ({navigation,route }) => {
   const {  theme } = useContext(ThemeContext);
     const [data,setData]=useState([]);
+    const [book,setBook]=useState(null);
+    const [bookID,setBookID]=useState();
+    const [episode,setEpisode]=useState();
+    const [cart,setCart]=useState([]);
+    const [isplay, setPlay] = useState(false);
+    const [track,setTrack]=useState([]);
+    const  setNull=async()=> {
+      const books = await AsyncStorage.removeItem("@bookid");
+      const episode = await AsyncStorage.removeItem("@epid");
+  setBook()
+    
+  console.log(books)
+  console.log(episode)
+  
+      };
     useEffect(() => {
   
       mutLogin();
@@ -40,9 +57,13 @@ export const truncate = (str, len) => {
   const {type,writer,translator,publisher,GroupID,GroupName} = route?.params ?? {};
 
     const  mutLogin=async()=> {
+      const lang = await AsyncStorage.getItem("@langs");
+
 type=="best"?
 
-axios.get(apiUrl+'BestSellerBook')
+axios.get(apiUrl+'BestSellerBook',{ headers: {
+  lang: lang
+}})
 .then(function (response) {
   const message = response.data;
   const result = response.data.result;
@@ -60,7 +81,9 @@ axios.get(apiUrl+'BestSellerBook')
   console.log(error);
 })
 :type=="writer"?
-axios.post(apiUrl+'WriterBook',{Writer:writer})
+axios.post(apiUrl+'WriterBook',{Writer:writer},{ headers: {
+  lang: lang
+}})
 .then(function (response) {
   const message = response.data;
   const result = response.data.result;
@@ -77,7 +100,9 @@ axios.post(apiUrl+'WriterBook',{Writer:writer})
 .catch(function (error) {
   console.log(error);
 }):type=="translator"?
-axios.post(apiUrl+'TranslatorBook',{Translator:translator})
+axios.post(apiUrl+'TranslatorBook',{Translator:translator},{ headers: {
+  lang: lang
+}})
 .then(function (response) {
   const message = response.data;
   const result = response.data.result;
@@ -95,7 +120,9 @@ axios.post(apiUrl+'TranslatorBook',{Translator:translator})
   console.log(error);
 })
 :type=="publisher"?
-axios.post(apiUrl+'PublisherBook',{Publisher:publisher})
+axios.post(apiUrl+'PublisherBook',{Publisher:publisher},{ headers: {
+  lang: lang
+}})
 .then(function (response) {
   const message = response.data;
   const result = response.data.result;
@@ -115,7 +142,9 @@ axios.post(apiUrl+'PublisherBook',{Publisher:publisher})
 :type=="group"?
 
 
-axios.post(apiUrl+'RelatedBook',{GroupID:GroupID})
+axios.post(apiUrl+'RelatedBook',{GroupID:GroupID},{ headers: {
+  lang: lang
+}})
 .then(function (response) {
   const message = response.data;
   const result = response.data.result;
@@ -133,7 +162,9 @@ axios.post(apiUrl+'RelatedBook',{GroupID:GroupID})
   console.log(error);
 })
 :
-      axios.get(apiUrl+'LastNewBook')
+      axios.get(apiUrl+'LastNewBook',{ headers: {
+        lang: lang
+      }})
       .then(function (response) {
         const message = response.data;
         const result = response.data.result;
@@ -150,9 +181,113 @@ axios.post(apiUrl+'RelatedBook',{GroupID:GroupID})
       .catch(function (error) {
         console.log(error);
       });
+      const books = await AsyncStorage.getItem("@bookid");
+      const episode = await AsyncStorage.getItem("@epid");
+      const state = await AsyncStorage.getItem("@user");
+
+      axios.post(apiUrl+'SingleBook',{CustomerID:state,BookID:books})
+      .then(function (response) {
+        const message = response.data;
+        const result = response.data.result;
+        console.log(message);
   
+        if(result == "true"){
+          setBook(response.data.GroupData)
+          setEpisode(episode)
+          setBookID(books)
+  
+  
+          // navigation.navigate("ChangePass",{mobile:user,verify:response.data.Data})
+                          }else{
+  
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+   
+      axios.post(apiUrl+'SubBookShow',{BookID:books,CustomerID:state})
+      .then(function (response) {
+        const message = response.data;
+        const result = response.data.result;
+        console.log(777);
+        console.log(message);
+    
+        if(result == "true"){
+          var ss=[]
+          response.data.GroupData.map((item,ii)=>{
+            ii>=episode?
+            ss.push({
+              id: "local-track",
+              url: apiAsset+item?.Link,
+              title: "Ketanic",
+              artwork: "https://i.picsum.photos/id/500/200/200.jpg",
+            })
+            :
+            null
+          })
+          setTrack(ss)
+          // togglePlayback()
+          // navigation.navigate("ChangePass",{mobile:user,verify:response.data.Data})
+                          }else{
+    
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   
       };
+      async function TogglePlayback() {
+        const currentTrack = await TrackPlayer.getPosition();
+        const currentTrack2 = await TrackPlayer.getDuration();
+        console.log(444)
+        
+        // console.log(num)
+        // console.log(currentTrack.toFixed(1))
+        // console.log(currentTrack2)
+        if (currentTrack.toFixed(1) == currentTrack2.toFixed(1)) {
+          console.log(775)
+          
+          // setPlay(true)
+          await TrackPlayer.reset();
+          await TrackPlayer.add(track);
+              TrackPlayer.updateOptions({
+              stopWithApp: true,
+              capabilities: [
+                Capability.Play,
+                Capability.Pause,
+                // Capability.SkipToNext,
+                // Capability.SkipToPrevious,
+                Capability.Stop,
+              ],
+              compactCapabilities: [
+                Capability.Play,
+                Capability.Pause,
+                // Capability.SkipToNext,
+                // Capability.SkipToPrevious,
+              ],
+          });
+     
+          await TrackPlayer.play();
+          setPlay(true)
+        }
+        else{
+    
+          if(isplay)
+         { await TrackPlayer.pause()
+    setPlay(false)}
+    else{
+    
+    await TrackPlayer.play()
+    setPlay(true)
+    }
+        }
+        
+    
+    
+        // }
+      }
     const keyExtractor = item => {
         return item.BookID;
       };
@@ -169,9 +304,15 @@ axios.post(apiUrl+'RelatedBook',{GroupID:GroupID})
                 <Text style={styles(theme).bookWriter}>
                 {truncate(item.item.Writer,20)}
                 </Text>
+                {
+                  item.item.Publisher?
+
                 <Text style={styles(theme).bookWriter}>
-                {truncate("ناشر :"+item.item.Publisher,30)}
+                {truncate(getTranslation("ناشر :")+item.item.Publisher,30)}
                 </Text>
+                  :
+                  null
+                }
                 <View style={{display:'flex',flexDirection:'row-reverse'}}>
                 {[...new Array(5)].map((index)=>{
                         return(
@@ -194,15 +335,15 @@ index+1>item.item.Rate?
           item.item.SpecialCost?
 <>
       <Text style={styles(theme).priceRed}>
-      {item.item.SpecialCost}ت
+      {item.item.SpecialCost}sek
     </Text>
     <Text style={styles(theme).priceStroke}>
-    {item.item.Cost}ت
+    {item.item.Cost}sek
     </Text>
     </>
           :
 <Text style={styles(theme).bookName}>
-      {item.item.Cost}ت
+      {item.item.Cost}sek
       </Text>
         }
                 </View>
@@ -225,26 +366,26 @@ return (
 
     <View style={{flex : 2,textAlign:"right"}}>
     {type=="writer"?
-        <Text style={styles(theme).menuTitle}>کتابهای {writer}</Text>
+        <Text style={styles(theme).menuTitle}>{getTranslation('کتابهای')} {writer}</Text>
      
     : type=="publisher"?
-    <Text style={styles(theme).menuTitle}>انتشارات {publisher}</Text>
+    <Text style={styles(theme).menuTitle}>{getTranslation('انتشارات')} {publisher}</Text>
  
 : type=="translator"?
-<Text style={styles(theme).menuTitle}>کتابهای {translator}</Text>
+<Text style={styles(theme).menuTitle}>{getTranslation('کتابهای')} {translator}</Text>
 
 : type=="translator"?
-<Text style={styles(theme).menuTitle}>پرفروش ترین ها</Text>
+<Text style={styles(theme).menuTitle}>{getTranslation('پرفروش ترین ها')}</Text>
 
 :type=="group"?
 <Text style={styles(theme).menuTitle}>{GroupName}</Text>
 
 
 :type=="best"?
-<Text style={styles(theme).menuTitle}>پرفروش ترین ها</Text>
+<Text style={styles(theme).menuTitle}>{getTranslation('پرفروش ترین ها')}</Text>
 
 :
-    <Text style={styles(theme).menuTitle}>تازه های برگزیده</Text>
+    <Text style={styles(theme).menuTitle}>{getTranslation('تازه های برگزیده')}</Text>
     }
           </View>
     
@@ -276,6 +417,40 @@ return (
 </TouchableOpacity> */}
    </View>
   </ScrollView>
+  <View >
+    {
+      book?
+  
+    <TouchableOpacity onPress={()=>navigation.navigate("ListenBookMain",{id:bookID,num:episode})} style={{borderRadius:10,backgroundColor:Colors.lightGreen,flexDirection:'row-reverse',height:responsiveHeight(6),justifyContent:'space-between'}}>
+        {
+        isplay?
+        // <TouchableOpacity onPress={stop} style={{borderRadius:50,backgroundColor:Colors.white}}>
+        <TouchableOpacity onPress={TogglePlayback} >
+
+<Icon name={"pause-circle-filled"} size={50} color={Colors.darkGreen}/>
+</TouchableOpacity>
+:
+<TouchableOpacity onPress={TogglePlayback}>
+
+<Icon name={"play-circle-filled"} size={50} color={Colors.darkGreen}/>
+</TouchableOpacity>
+    }
+    
+    <Image source={{uri:apiAsset+book.Pic}} style={styles(theme).imageBook}/>
+    <View>
+
+      <Text style={styles(theme).miniText}>{book.BookName}</Text>
+      <Text style={styles(theme).miniText}>درحال مطالعه</Text>
+      </View>
+      <TouchableOpacity onPress={()=>setNull()}> 
+      <Icon name={"close"} color={'#111'} style={{marginRight:responsiveWidth(30)}} size={30}/>
+</TouchableOpacity>
+      {/* <Text style={styles(theme).miniText}>درحال مطالعه</Text> */}
+    </TouchableOpacity>
+      :
+      null
+    }
+  </View>
     </View>
 );
 };
@@ -406,14 +581,25 @@ const styles = (theme) =>  StyleSheet.create({
   }
   ,priceRed:{
     color:'#dc3545',
-    ...myFontStyle.normalRegular,
+    // ...myFontStyle.normalRegular,
     marginTop:responsiveHeight(0.5),
 },priceStroke:{
-...myFontStyle.normalRegular,
+// ...myFontStyle.normalRegular,
 color:'#111',
 textDecorationLine: 'line-through',
 marginTop:responsiveHeight(0.5),
 marginRight:4,
+},
+imageBook:{
+  width:responsiveWidth(15),
+  height:"100%",
+  resizeMode:'cover',
+  borderRadius:10,
+  marginLeft:10
+  
+},miniText:{
+  ...myFontStyle.mediumRegular,
+  color:'#111'
 },
   });
 

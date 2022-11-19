@@ -1,5 +1,5 @@
-import React, {useState,useRef,useContext} from 'react';
-import {View, TextInput, Text, TouchableOpacity,Image,ScrollView} from 'react-native';
+import React, {useState,useEffect,useContext} from 'react';
+import {View, TextInput, Text, TouchableOpacity,Image,ScrollView,Alert} from 'react-native';
 
 
 import { StyleSheet } from 'react-native';
@@ -11,6 +11,10 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import { myFontStyle } from "@assets/Constance";
 import { RadioButton } from 'react-native-paper';
 import { ThemeContext } from '../../../theme/theme-context';
+import AsyncStorage from  '@react-native-async-storage/async-storage';
+import axios from 'axios';
+import { apiUrl ,apiAsset} from "@commons/inFormTypes";
+import { getTranslation } from '@i18n/i18n';
 
 // create a component
 
@@ -29,8 +33,69 @@ import { ThemeContext } from '../../../theme/theme-context';
 
  const Wallet = ({navigation }) => {
   const {  theme } = useContext(ThemeContext);
-   
+  const [cost,setCost]=useState(10);
+  const [defcost,setDefCost]=useState(0);
+
   const [checked, setChecked] = React.useState('first');
+  useEffect(() => {
+  
+    mutLogin();
+
+
+}, []);
+const  mutLogin=async()=> {
+  const state = await AsyncStorage.getItem("@user");
+  const lang = await AsyncStorage.getItem("@langs");
+
+  
+  axios.post(apiUrl+'FactorWallet',{CustomerID:state},{ headers: {
+    lang: lang
+  }})
+  .then(function (response) {
+    const message = response.data;
+    const result = response.data.result;
+    console.log(message);
+  
+    if(result == "true"){
+        
+  
+  setDefCost(response.data.CostData?.Money)
+      // navigation.navigate("ChangePass",{mobile:user,verify:response.data.Data})
+                      }else{
+    }
+  })
+  .catch(function (error) {
+    console.log(error);
+  })
+ 
+    
+        };
+  const  dargah=async()=> {
+    const state = await AsyncStorage.getItem("@user");
+
+    console.log(state);
+    console.log(cost);
+
+    axios.post(apiUrl+'Dargah',{CostTotal:cost,CustomerID:state,Type:2})
+    .then(function (response) {
+      const message = response.data;
+      const result = response.data.result;
+    
+      if(result == "true"){
+        console.log(response.data.Data)
+        let userObj = JSON.parse(response.data.Data);
+        console.log(userObj.id)
+        navigation.navigate("Dargah",{id:userObj.id})        
+                        }else{
+      Alert.alert("",response.data.message)
+      }
+    })
+    .catch(function (error) {
+      console.log(error);
+    })
+   
+      
+          };
 return (
     <View style={{backgroundColor:theme.backgroundColor,flex:1}}>
 
@@ -56,18 +121,18 @@ return (
  <View style={styles(theme).container}>
   <View style={styles(theme).aboutView}>
     <Text style={styles(theme).aboutTitle}>
-     مبلغ فعلی کیف پول : 0
+     مبلغ فعلی کیف پول : {defcost}
     </Text>
     <View style={styles(theme).radioRow}>
   <View style={styles(theme).radioView}>
   <RadioButton
         value="first"
         status={ checked === 'first' ? 'checked' : 'unchecked' }
-        onPress={() => setChecked('first')}
+        onPress={() => {setChecked('first');setCost(10)}}
         color={Colors.darkGreen}
       />
   <Text style={styles(theme).radionText}>
-     10 یورو
+     10 sek
   </Text>
       </View>
   </View>
@@ -76,11 +141,11 @@ return (
   <RadioButton
         value="second"
         status={ checked === 'second' ? 'checked' : 'unchecked' }
-        onPress={() => setChecked('second')}
+        onPress={() => {setChecked('second');setCost(20)}}
         color={Colors.darkGreen}
       />
   <Text style={styles(theme).radionText}>
-     20 یورو
+     20 sek
   </Text>
       </View>
   </View>
@@ -89,11 +154,11 @@ return (
   <RadioButton
         value="third"
         status={ checked === 'third' ? 'checked' : 'unchecked' }
-        onPress={() => setChecked('third')}
+        onPress={() => {setChecked('third');setCost(50)}}
         color={Colors.darkGreen}
       />
   <Text style={styles(theme).radionText}>
-    50 یورو
+    50 sek
   </Text>
       </View>
   </View>
@@ -102,11 +167,11 @@ return (
   <RadioButton
         value="four"
         status={ checked === 'four' ? 'checked' : 'unchecked' }
-        onPress={() => setChecked('four')}
+        onPress={() => {setChecked('four');setCost(100)}}
         color={Colors.darkGreen}
       />
   <Text style={styles(theme).radionText}>
-     100 یورو
+     100 sek
   </Text>
       </View>
   </View>
@@ -119,32 +184,32 @@ return (
         color={Colors.darkGreen}
       />
   <Text style={styles(theme).radionText}>
-     200 یورو
+     200 sek
   </Text>
       </View>
   </View>
   <View style={{display:'flex',flexDirection:'row-reverse',marginTop:responsiveHeight(5),justifyContent:'space-between'}}>
    
-    <TouchableOpacity style={styles(theme).payBtn}>
-       <Text style={styles(theme).btnText}>پرداخت</Text>
+    <TouchableOpacity onPress={()=>dargah()} style={styles(theme).payBtn}>
+       <Text style={styles(theme).btnText}>{getTranslation('پرداخت')}</Text>
      </TouchableOpacity>
     
 
-    <TouchableOpacity style={styles(theme).cancelBtn}>
-       <Text style={styles(theme).btnText2}>انصراف</Text>
+    <TouchableOpacity onPress={()=>navigation.navigate("TabBar")} style={styles(theme).cancelBtn}>
+       <Text style={styles(theme).btnText2}>{getTranslation('انصراف')}</Text>
      </TouchableOpacity>
    
   </View>
   <View style={styles(theme).greenBack}>
 <Icon name={'error'} color={'#dc3545'} size={30}/>
 <Text style={styles(theme).alertText}>
-لطفا توجه داشته باشید امکان استرداد مبلغ واریز شده وجود ندارد
+{getTranslation('لطفا توجه داشته باشید امکان استرداد مبلغ واریز شده وجود ندارد')}
   </Text>
   </View>
   <TouchableOpacity onPress={()=>navigation.navigate("Factor")} style={styles(theme).editProfileBtn2}>
       <View style={{display:'flex',flexDirection:'row-reverse'}}>
         
-        <Text style={styles(theme).btnText3}>مشاهده سابقه تراکنش های موفق</Text>
+        <Text style={styles(theme).btnText3}>{getTranslation('مشاهده سابقه تراکنش های موفق')}</Text>
       </View>
       <View>
         <Icon name={'chevron-left'} size={20} color={'#111'}/>

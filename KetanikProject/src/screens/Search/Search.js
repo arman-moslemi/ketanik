@@ -14,6 +14,9 @@ import axios from 'axios';
 import { apiUrl ,apiAsset} from "@commons/inFormTypes";
 import { Input } from '@components/Input';
 import { ThemeContext } from '../../../theme/theme-context';
+import { getTranslation } from '@i18n/i18n';
+import AsyncStorage from  '@react-native-async-storage/async-storage';
+
 
 export const truncate = (str, len) => {
   // console.log("truncate", str, str.length, len);
@@ -30,7 +33,12 @@ export const truncate = (str, len) => {
  const Search = ({navigation }) => {
   const {  theme } = useContext(ThemeContext);
   const [name,setName]=useState("");
-
+  const [book,setBook]=useState(null);
+  const [bookID,setBookID]=useState();
+  const [episode,setEpisode]=useState();
+  const [cart,setCart]=useState([]);
+  const [isplay, setPlay] = useState(false);
+  const [track,setTrack]=useState([]);
    
   const [checked, setChecked] = React.useState('first');
 
@@ -46,8 +54,69 @@ export const truncate = (str, len) => {
   }, [name]);
 
     const  mutLogin=async()=> {
+      const lang = await AsyncStorage.getItem("@langs");
+
+      const books = await AsyncStorage.getItem("@bookid");
+      const episode = await AsyncStorage.getItem("@epid");
+      const state = await AsyncStorage.getItem("@user");
+
+      axios.post(apiUrl+'SingleBook',{CustomerID:state,BookID:books})
+      .then(function (response) {
+        const message = response.data;
+        const result = response.data.result;
+        console.log(message);
+  
+        if(result == "true"){
+          setBook(response.data.GroupData)
+          setEpisode(episode)
+          setBookID(books)
+  
+  
+          // navigation.navigate("ChangePass",{mobile:user,verify:response.data.Data})
+                          }else{
+  
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+   
+      axios.post(apiUrl+'SubBookShow',{BookID:books,CustomerID:state})
+      .then(function (response) {
+        const message = response.data;
+        const result = response.data.result;
+        console.log(777);
+        console.log(message);
+    
+        if(result == "true"){
+          var ss=[]
+          response.data.GroupData.map((item,ii)=>{
+            ii>=episode?
+            ss.push({
+              id: "local-track",
+              url: apiAsset+item?.Link,
+              title: "Ketanic",
+              artwork: "https://i.picsum.photos/id/500/200/200.jpg",
+            })
+            :
+            null
+          })
+          setTrack(ss)
+          // togglePlayback()
+          // navigation.navigate("ChangePass",{mobile:user,verify:response.data.Data})
+                          }else{
+    
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  
+
     name.length!=0?
-      axios.post(apiUrl+'SearchBook',{Search:name})
+      axios.post(apiUrl+'SearchBook',{Search:name},{ headers: {
+        lang: lang
+      }})
       .then(function (response) {
         const message = response.data;
         const result = response.data.result;
@@ -67,6 +136,57 @@ export const truncate = (str, len) => {
 :
 null
     }
+
+    async function TogglePlayback() {
+      const currentTrack = await TrackPlayer.getPosition();
+      const currentTrack2 = await TrackPlayer.getDuration();
+      console.log(444)
+      
+      // console.log(num)
+      // console.log(currentTrack.toFixed(1))
+      // console.log(currentTrack2)
+      if (currentTrack.toFixed(1) == currentTrack2.toFixed(1)) {
+        console.log(775)
+        
+        // setPlay(true)
+        await TrackPlayer.reset();
+        await TrackPlayer.add(track);
+            TrackPlayer.updateOptions({
+            stopWithApp: true,
+            capabilities: [
+              Capability.Play,
+              Capability.Pause,
+              // Capability.SkipToNext,
+              // Capability.SkipToPrevious,
+              Capability.Stop,
+            ],
+            compactCapabilities: [
+              Capability.Play,
+              Capability.Pause,
+              // Capability.SkipToNext,
+              // Capability.SkipToPrevious,
+            ],
+        });
+   
+        await TrackPlayer.play();
+        setPlay(true)
+      }
+      else{
+  
+        if(isplay)
+       { await TrackPlayer.pause()
+  setPlay(false)}
+  else{
+  
+  await TrackPlayer.play()
+  setPlay(true)
+  }
+      }
+      
+  
+  
+      // }
+    }
   const _render = (item) => {
     console.log(item.item.BookName)
     return (
@@ -80,9 +200,11 @@ null
             <Text style={styles(theme).bookWriter}>
             {truncate(item.item.Writer,20)}
             </Text>
+            {item.item.Publisher?
             <Text style={styles(theme).bookWriter}>
             {truncate("ناشر :"+item.item.Publisher,30)}
             </Text>
+            :null}
             <View style={{display:'flex',flexDirection:'row-reverse'}}>
             {[...new Array(5)].map((index)=>{
                     return(
@@ -105,15 +227,15 @@ index+1>item.item.Rate?
           item.item.SpecialCost?
 <>
       <Text style={styles(theme).priceRed}>
-      {item.item.SpecialCost}ت
+      {item.item.SpecialCost} sek
     </Text>
     <Text style={styles(theme).priceStroke}>
-    {item.item.Cost}ت
+    {item.item.Cost} sek
     </Text>
     </>
           :
 <Text style={styles(theme).bookName}>
-      {item.item.Cost}ت
+      {item.item.Cost} sek
       </Text>
         }
             </View>
@@ -131,15 +253,15 @@ return (
     <View style={styles(theme).topBar}>
 
     <View style={{flex : 2,textAlign:"right"}}>
-          <Text style={styles(theme).menuTitle}>جستجو</Text>
+          <Text style={styles(theme).menuTitle}>{getTranslation('جستجو')}</Text>
           </View>
     
-        
         <View style={{flex :0.5}}>
           <TouchableOpacity onPress={()=>navigation.goBack()} style={{}}>
             <Icon name={"arrow-back"} color={'#111'} size={30}/>
           </TouchableOpacity>
           </View>
+        
     </View>
      
   <ScrollView>
@@ -148,10 +270,10 @@ return (
   <View style={styles(theme).aboutView}>
     <View style={styles(theme).lightGreenBack}>
 <View>
-  <Icon name={'search'} size={40} color={'#c1c1c1'}/>
+  <Input onChangeText={(ss)=>setName(ss)} placeholder={getTranslation('جستجو')} inputStyle={styles(theme).searchInput} />
 </View>
 <View>
-  <Input onChangeText={(ss)=>setName(ss)} placeholder='جستجو کتاب،نویسنده و ناشر...' inputStyle={styles(theme).searchInput} />
+  <Icon name={'search'} size={40} color={'#c1c1c1'}/>
 </View>
     </View>
     {/* <View style={{display:'flex',justifyContent:'space-between',alignItems:'center',flexDirection:'row-reverse',marginTop:responsiveHeight(3),marginBottom:responsiveHeight(3)}}>
@@ -212,6 +334,40 @@ renderItem={_render}
 
  </View>
   </ScrollView>
+  <View >
+    {
+      book?
+  
+    <TouchableOpacity onPress={()=>navigation.navigate("ListenBookMain",{id:bookID,num:episode})} style={{borderRadius:10,backgroundColor:Colors.lightGreen,flexDirection:'row-reverse',height:responsiveHeight(6),justifyContent:'space-between'}}>
+        {
+        isplay?
+        // <TouchableOpacity onPress={stop} style={{borderRadius:50,backgroundColor:Colors.white}}>
+        <TouchableOpacity onPress={TogglePlayback} >
+
+<Icon name={"pause-circle-filled"} size={50} color={Colors.darkGreen}/>
+</TouchableOpacity>
+:
+<TouchableOpacity onPress={TogglePlayback}>
+
+<Icon name={"play-circle-filled"} size={50} color={Colors.darkGreen}/>
+</TouchableOpacity>
+    }
+    
+    <Image source={{uri:apiAsset+book.Pic}} style={styles(theme).imageBook}/>
+    <View>
+
+      <Text style={styles(theme).miniText}>{book.BookName}</Text>
+      <Text style={styles(theme).miniText}>درحال مطالعه</Text>
+      </View>
+      <TouchableOpacity onPress={()=>setNull()}> 
+      <Icon name={"close"} color={'#111'} style={{marginRight:responsiveWidth(30)}} size={30}/>
+</TouchableOpacity>
+      {/* <Text style={styles(theme).miniText}>درحال مطالعه</Text> */}
+    </TouchableOpacity>
+      :
+      null
+    }
+  </View>
     </View>
 );
 };
@@ -290,8 +446,9 @@ color:theme.menuTitle,
     
     alignSelf:'center'
   },searchInput:{
-    ...myFontStyle.normalRegular,
+    // ...myFontStyle.normalRegular,
     borderWidth:0,
+    textAlign:'right'
     // backgroundColor:theme.cardBack
   },headText:{
     ...myFontStyle.textOnImg,
@@ -355,7 +512,18 @@ color:theme.menuTitle,
 },price:{
     ...myFontStyle.largBold,
     color:Colors.darkGreen,
-}
+},
+imageBook:{
+  width:responsiveWidth(15),
+  height:"100%",
+  resizeMode:'cover',
+  borderRadius:10,
+  marginLeft:10
+  
+},miniText:{
+  ...myFontStyle.mediumRegular,
+  color:'#111'
+},
   });
 
   export default Search;

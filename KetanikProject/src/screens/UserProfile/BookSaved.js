@@ -13,6 +13,7 @@ import axios from 'axios';
 import { apiUrl ,apiAsset} from "@commons/inFormTypes";
 import AsyncStorage from  '@react-native-async-storage/async-storage';
 import { ThemeContext } from '../../../theme/theme-context';
+import { getTranslation } from '@i18n/i18n';
 
 // create a component
 
@@ -39,11 +40,36 @@ export const truncate = (str, len) => {
   
   
   }, []);
+  const  mutDel=async(id)=> {
 
+    const state = await AsyncStorage.getItem("@user");
+
+    axios.post(apiUrl+'SaveBookDelete',{BookID:id,CustomerID:state})
+    .then(function (response) {
+      const message = response.data;
+      const result = response.data.result;
+      console.log(message);
+    
+      if(result == "true"){
+mutLogin()    
+        // navigation.navigate("ChangePass",{mobile:user,verify:response.data.Data})
+                        }else{
+    
+      }
+    })
+    .catch(function (error) {
+      console.log(error);
+    })
+   
+      
+          };
     const  mutLogin=async()=> {
       const state = await AsyncStorage.getItem("@user");
+      const lang = await AsyncStorage.getItem("@langs");
 
-      axios.post(apiUrl+'SaveBookShow',{CustomerID:state})
+      axios.post(apiUrl+'SaveBookShow',{CustomerID:state},{ headers: {
+        lang: lang
+      }})
       .then(function (response) {
         const message = response.data;
         const result = response.data.result;
@@ -80,9 +106,12 @@ export const truncate = (str, len) => {
                 <Text style={styles(theme).bookWriter}>
                 {truncate(item.item.Writer,20)}
                 </Text>
+                {item.item.Publisher?
                 <Text style={styles(theme).bookWriter}>
-                {truncate("ناشر :"+item.item.Publisher,30)}
+                {truncate(getTranslation("ناشر :")+item.item.Publisher,30)}
                 </Text>
+                :
+                null}
                 <View style={{display:'flex',flexDirection:'row-reverse'}}>
                 {[...new Array(5)].map((index)=>{
                         return(
@@ -97,23 +126,26 @@ index+1>item.item.Rate?
                 </View>
             </View>
             <View style={{display:"flex",flexDirection:'column',alignContent:'flex-end',justifyContent:'space-between'}}>
-                <View style={styles(theme).headphone}>
+                {/* <View style={styles(theme).headphone}>
                 <Icon name={'headset'} color={'#111'} size={22}/>
-                </View>
+                </View> */}
+                  <TouchableOpacity onPress={()=>mutDel(item.item.BookID)}>
+       <Image source={require('@assets/images/delete.png')} style={styles(theme).deleteImg}/>
+       </TouchableOpacity>
                 <View>
                 {
           item.item.SpecialCost?
 <>
       <Text style={styles(theme).priceRed}>
-      {item.item.SpecialCost}ت
+      {item.item.SpecialCost} sek
     </Text>
     <Text style={styles(theme).priceStroke}>
-    {item.item.Cost}ت
+    {item.item.Cost} sek
     </Text>
     </>
           :
 <Text style={styles(theme).bookName}>
-      {item.item.Cost}ت
+      {item.item.Cost} sek
       </Text>
         }
                 </View>
@@ -135,7 +167,7 @@ return (
     <View style={styles(theme).topBar}>
 
     <View style={{flex : 2,textAlign:"right"}}>
-          <Text style={styles(theme).menuTitle}>کتاب های ذخیره شده</Text>
+          <Text style={styles(theme).menuTitle}>{getTranslation('کتاب های ذخیره شده')}</Text>
           </View>
     
         
@@ -304,6 +336,10 @@ color:'#111',
 textDecorationLine: 'line-through',
 marginTop:responsiveHeight(0.5),
 marginRight:4,
+},deleteImg:{
+  width:responsiveWidth(7),
+  resizeMode:'contain',
+  height:35,
 },
 });
 

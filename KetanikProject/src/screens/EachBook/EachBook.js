@@ -1,6 +1,6 @@
 import React, { useState,useEffect ,useContext} from 'react';
 import { myFontStyle } from "@assets/Constance";
-import { View, Text , StyleSheet,Image, TouchableOpacity,Button,ScrollView,FlatList} from 'react-native';
+import { View, Text , StyleSheet,Image, TouchableOpacity,Button,ScrollView,FlatList,Alert} from 'react-native';
 import { TabView, SceneMap,TabBar } from 'react-native-tab-view';
 import { responsiveFontSize, responsiveHeight, responsiveScreenWidth, responsiveWidth } from 'react-native-responsive-dimensions';
 import { Colors} from "@assets/Colors";
@@ -17,6 +17,7 @@ import AsyncStorage from  '@react-native-async-storage/async-storage';
 // const onClick = () => setShowBox(true);
 import { ThemeContext } from '../../../theme/theme-context';
 import TrackPlayer, { usePlaybackState } from "react-native-track-player";
+import { getTranslation } from '@i18n/i18n';
 
 export const truncate = (str, len) => {
   if (str.length > len && str.length > 0) {
@@ -79,27 +80,97 @@ export const truncate = (str, len) => {
   const [writer, setWriter] = useState();
   const [grid, setGrid] = useState();
   const [lib, setlib] = useState();
-
+  const [newID, setNewID] = useState();
+  const refs = React.useRef();
+  const [book,setBook]=useState(null);
+    const [bookID,setBookID]=useState();
+    const [episode,setEpisode]=useState();
+    const [cart,setCart]=useState([]);
+    const [isplay, setPlay] = useState(false);
+    const [track,setTrack]=useState([]);
+    const  setNull=async()=> {
+      const books = await AsyncStorage.removeItem("@bookid");
+      const episode = await AsyncStorage.removeItem("@epid");
+  setBook()
+    
+  console.log(books)
+  console.log(episode)
+  
+      };
   useEffect(() => {
 
-    mutLogin();
+mutLogin(id)
+
 
 
 }, [like]);
 const keyExtractor = item => {
   return item.id;
 };
+async function TogglePlayback() {
+  const currentTrack = await TrackPlayer.getPosition();
+  const currentTrack2 = await TrackPlayer.getDuration();
+  console.log(444)
+  
+  // console.log(num)
+  // console.log(currentTrack.toFixed(1))
+  // console.log(currentTrack2)
+  if (currentTrack.toFixed(1) == currentTrack2.toFixed(1)) {
+    console.log(775)
+    
+    // setPlay(true)
+    await TrackPlayer.reset();
+    await TrackPlayer.add(track);
+        TrackPlayer.updateOptions({
+        stopWithApp: true,
+        capabilities: [
+          Capability.Play,
+          Capability.Pause,
+          // Capability.SkipToNext,
+          // Capability.SkipToPrevious,
+          Capability.Stop,
+        ],
+        compactCapabilities: [
+          Capability.Play,
+          Capability.Pause,
+          // Capability.SkipToNext,
+          // Capability.SkipToPrevious,
+        ],
+    });
+
+    await TrackPlayer.play();
+    setPlay(true)
+  }
+  else{
+
+    if(isplay)
+   { await TrackPlayer.pause()
+setPlay(false)}
+else{
+
+await TrackPlayer.play()
+setPlay(true)
+}
+  }
+  
+
+
+  // }
+}
 // const data=[1,2,3,4,5]
 const _render = (item, index) => {
   return (
-    <TouchableOpacity onPress={()=>navigation.navigate("EachBook",{id:item.item.BookID})} style={styles(theme).cardBox}>
+    <TouchableOpacity onPress={()=>{mutLogin(item.item.BookID);    refs.current?.scrollTo({
+      y: 0,
+      animated: true,
+    });}} style={styles(theme).cardBox}>
     <Image source={{uri:apiAsset+item.item.Pic}} style={styles(theme).bookImg}/>
     <Text style={styles(theme).bookName}>
     {truncate(item.item.BookName,20)}
     </Text>
-    <View style={{alignItems:'flex-end',flexDirection:'row-reverse',justifyContent:'space-between'}}>
-    <Text style={styles(theme).bookName}>
-    {item.item.Cost}ت
+    <View style={{display:'flex',flexDirection:'row-reverse',justifyContent:'space-between'}}>
+    <Text style={styles(theme).bookCost}>
+    {item.item.Cost}sek
     </Text>
     <View style={{display:'flex',flexDirection:'row-reverse',alignItems:'center'}}>
     <Text style={styles(theme).bookName}>
@@ -113,12 +184,18 @@ const _render = (item, index) => {
 };
 const {id} = route?.params ?? {};
 
-  const  mutLogin=async()=> {
+  const  mutLogin=async(mm)=> {
     // await TrackPlayer.destroy()
-
+ 
+      
+      setNewID(id)
+    
     const state = await AsyncStorage.getItem("@user");
+    const lang = await AsyncStorage.getItem("@langs");
 
-    axios.post(apiUrl+'SingleBook',{BookID:id,CustomerID:state})
+    axios.post(apiUrl+'SingleBook',{BookID:mm,CustomerID:state},{ headers: {
+      lang: lang
+    }})
     .then(function (response) {
       const message = response.data;
       const result = response.data.result;
@@ -137,7 +214,9 @@ const {id} = route?.params ?? {};
         setlib(response.data.LibData)
         console.log(896);
         console.log(response.data.LibData);
-        axios.post(apiUrl+'LastRelatedBook',{GroupID:response.data.GroupData.GroupID})
+        axios.post(apiUrl+'LastRelatedBook',{GroupID:response.data.GroupData.GroupID},{ headers: {
+          lang: lang
+        }})
         .then(function (response2) {
   
     
@@ -154,7 +233,9 @@ const {id} = route?.params ?? {};
         });
         console.log(response.data.GroupData.Writer);
 
-        axios.post(apiUrl+'LastWriterBook',{Writer:response.data.GroupData.Writer})
+        axios.post(apiUrl+'LastWriterBook',{Writer:response.data.GroupData.Writer},{ headers: {
+          lang: lang
+        }})
         .then(function (response3) {
           const message = response3.data;
           const result = response3.data.result;
@@ -171,7 +252,9 @@ const {id} = route?.params ?? {};
         .catch(function (error) {
           console.log(error);
         });
-        axios.post(apiUrl+'LastTranslatorBook',{Translator:response.data.GroupData.Translator})
+        axios.post(apiUrl+'LastTranslatorBook',{Translator:response.data.GroupData.Translator},{ headers: {
+          lang: lang
+        }})
         .then(function (response4) {
           const message = response4.data;
           const result = response4.data.result;
@@ -188,7 +271,9 @@ const {id} = route?.params ?? {};
         .catch(function (error) {
           console.log(error);
         });
-        axios.post(apiUrl+'LastPublisherBook',{Publisher:response.data.GroupData.Publisher})
+        axios.post(apiUrl+'LastPublisherBook',{Publisher:response.data.GroupData.Publisher},{ headers: {
+          lang: lang
+        }})
         .then(function (response5) {
           const message = response5.data;
           const result = response5.data.result;
@@ -213,32 +298,92 @@ const {id} = route?.params ?? {};
       console.log(error);
     });
 
-    
+    const books = await AsyncStorage.getItem("@bookid");
+    const episode = await AsyncStorage.getItem("@epid");
+
+    axios.post(apiUrl+'SingleBook',{CustomerID:state,BookID:books})
+    .then(function (response) {
+      const message = response.data;
+      const result = response.data.result;
+      console.log(message);
+
+      if(result == "true"){
+        setBook(response.data.GroupData)
+        setEpisode(episode)
+        setBookID(books)
+
+
+        // navigation.navigate("ChangePass",{mobile:user,verify:response.data.Data})
+                        }else{
+
+      }
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+ 
+    axios.post(apiUrl+'SubBookShow',{BookID:books,CustomerID:state})
+    .then(function (response) {
+      const message = response.data;
+      const result = response.data.result;
+      console.log(777);
+      console.log(message);
+  
+      if(result == "true"){
+        var ss=[]
+        response.data.GroupData.map((item,ii)=>{
+          ii>=episode?
+          ss.push({
+            id: "local-track",
+            url: apiAsset+item?.Link,
+            title: "Ketanic",
+            artwork: "https://i.picsum.photos/id/500/200/200.jpg",
+          })
+          :
+          null
+        })
+        setTrack(ss)
+        // togglePlayback()
+        // navigation.navigate("ChangePass",{mobile:user,verify:response.data.Data})
+                        }else{
+  
+      }
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
     };
 
     const  gotoExample=async()=> {
       await TrackPlayer.stop();
       await TrackPlayer.destroy();
-      navigation.navigate("ListenBook",{id:data.BookID,link:data.Link,image:data?.Pic,BookName:data.BookName,writer:data.Writer,SpecialCost:data.SpecialCost,Cost:data.Cost})
+   
+   
+   //   navigation.navigate("ListenBook",{id:data.BookID,link:data.Link,image:data?.Pic,BookName:data.BookName,writer:data.Writer,SpecialCost:data.SpecialCost,Cost:data.Cost})
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'ListenBook',params:{id:data.BookID,link:data.Link,image:data?.Pic,BookName:data.BookName,writer:data.Writer,SpecialCost:data.SpecialCost,Cost:data.Cost} }]
+   })
+    
     }
   const  mutComment=async()=> {
     const state = await AsyncStorage.getItem("@user");
 if( rate==""|| income==""){
-  alert("موارد را وارد نمایید")
+    Alert.alert("",getTranslation("موارد را وارد نمایید"))
 
 }
 if(state==""){
-  alert("لطفا وارد شوید")
+    Alert.alert("",getTranslation("لطفا وارد شوید"))
 
 }
-    axios.post(apiUrl+'InsertComment',{BookID:id,CustomerID:state,Rate:rateNum,Text:income})
+    axios.post(apiUrl+'InsertComment',{BookID:newID,CustomerID:state,Rate:rateNum,Text:income})
     .then(function (response) {
       const message = response.data;
       const result = response.data.result;
       
       
       if(result == "true"){
-        alert("با موفقیت اضافه شد")
+          Alert.alert("",getTranslation("با موفقیت اضافه شد"))
         setModalVisibleCom(false)
         // navigation.navigate("ChangePass",{mobile:user,verify:response.data.Data})
                         }else{
@@ -256,10 +401,10 @@ if(state==""){
     const state = await AsyncStorage.getItem("@user");
 
 if(state==""){
-  alert("لطفا وارد شوید")
+    Alert.alert("",getTranslation("لطفا وارد شوید"))
 
 }
-    axios.post(apiUrl+'SingleBookSave',{BookID:id,CustomerID:state})
+    axios.post(apiUrl+'SingleBookSave',{BookID:newID,CustomerID:state})
     .then(function (response) {
       const message = response.data;
       const result = response.data.result;
@@ -268,7 +413,7 @@ if(state==""){
       console.log(message);
       
       if(result == "true"){
-        alert("با موفقیت ذخیره شد")
+        Alert.alert("",getTranslation("با موفقیت ثبت شد"))
         setModalVisibleCom(false)
         // navigation.navigate("ChangePass",{mobile:user,verify:response.data.Data})
                         }else{
@@ -294,7 +439,7 @@ if(state==""){
       console.log(message);
       
       if(result == "true"){
-        alert("با موفقیت ذخیره شد")
+          Alert.alert("",getTranslation("با موفقیت ذخیره شد"))
                         }else{
 
       }
@@ -308,7 +453,7 @@ if(state==""){
     const  buy=async()=> {
       const state = await AsyncStorage.getItem("@user");
 
-      axios.post(apiUrl+'ShoppingBasketAdd',{CustomerID:state,BookID:id,Cost:data.SpecialCost?data.SpecialCost:data.Cost})
+      axios.post(apiUrl+'ShoppingBasketAdd',{CustomerID:state,BookID:newID,Cost:data.SpecialCost?data.SpecialCost:data.Cost})
       .then(function (response) {
         const message = response.data;
         const result = response.data.result;
@@ -317,12 +462,15 @@ if(state==""){
         console.log(message);
         
         if(result == "true"){
-          alert("با موفقیت به سبدخریداضافه شد")
+            Alert.alert("",getTranslation("با موفقیت به سبدخریداضافه شد"))
           navigation.reset({
             index: 0,
             routes: [{ name: 'TabBar' }]
-       })                          }else{
-  
+       })                
+                }
+       else{
+        Alert.alert("",getTranslation("قبلا به سبد خرید اضافه شده است"))
+
         }
       })
       .catch(function (error) {
@@ -408,7 +556,7 @@ index+1>rate[0]?.Average?
        <View style={{display:'flex',flexDirection:'row-reverse'}}>
          <Icon name={'person'} color={'#1a1a1a'} size={25}/>
          <Text style={styles(theme).eachBookDetail3}>
-           نظر ({comment.length})
+         {getTranslation('نظر')} ({comment.length})
          </Text>
        </View>
      </View>
@@ -490,7 +638,7 @@ index+1>item?.Rate?
           <View style={{display:'flex',flexDirection:'row-reverse',flex:0.5,alignItems:'center'}}>
             <Icon name={'fiber-manual-record'} color={Colors.darkGreen} size={10}/>
             <Text style={styles(theme).table1}>
-              نام کتاب
+            {getTranslation('نام کتاب')}
             </Text>
           </View>
           <View style={{flex:0.5}}>
@@ -502,7 +650,7 @@ index+1>item?.Rate?
           <View style={{display:'flex',flexDirection:'row-reverse',flex:0.5,alignItems:'center'}}>
             <Icon name={'fiber-manual-record'} color={Colors.darkGreen} size={10}/>
             <Text style={styles(theme).table1}>
-             نویسنده
+            {getTranslation('نویسنده')}
             </Text>
           </View>
           <View style={{flex:0.5}}>
@@ -514,7 +662,7 @@ index+1>item?.Rate?
           <View style={{display:'flex',flexDirection:'row-reverse',flex:0.5,alignItems:'center'}}>
             <Icon name={'fiber-manual-record'} color={Colors.darkGreen} size={10}/>
             <Text style={styles(theme).table1}>
-             مترجم
+            {getTranslation('مترجم')}
             </Text>
           </View>
           <View style={{flex:0.5}}>
@@ -526,7 +674,7 @@ index+1>item?.Rate?
           <View style={{display:'flex',flexDirection:'row-reverse',flex:0.5,alignItems:'center'}}>
             <Icon name={'fiber-manual-record'} color={Colors.darkGreen} size={10}/>
             <Text style={styles(theme).table1}>
-            ناشر
+            {getTranslation('ناشر')}
             </Text>
           </View>
           <View style={{flex:0.5}}>
@@ -538,7 +686,7 @@ index+1>item?.Rate?
           <View style={{display:'flex',flexDirection:'row-reverse',flex:0.5,alignItems:'center'}}>
             <Icon name={'fiber-manual-record'} color={Colors.darkGreen} size={10}/>
             <Text style={styles(theme).table1}>
-             دسته
+            {getTranslation('دسته')}
             </Text>
           </View>
           <View style={{flex:0.5}}>
@@ -551,7 +699,7 @@ index+1>item?.Rate?
           <View style={{display:'flex',flexDirection:'row-reverse',flex:0.5,alignItems:'center'}}>
             <Icon name={'fiber-manual-record'} color={Colors.darkGreen} size={10}/>
             <Text style={styles(theme).table1}>
-            تعداد صفحات
+            {getTranslation('تعداد صفحات')}
             </Text>
           </View>
           <View style={{flex:0.5}}>
@@ -564,7 +712,7 @@ index+1>item?.Rate?
           <View style={{display:'flex',flexDirection:'row-reverse',flex:0.5,alignItems:'center'}}>
             <Icon name={'fiber-manual-record'} color={Colors.darkGreen} size={10}/>
             <Text style={styles(theme).table1}>
-           زبان
+            {getTranslation('زبان')}
             </Text>
           </View>
           <View style={{flex:0.5}}>
@@ -577,7 +725,7 @@ index+1>item?.Rate?
           <View style={{display:'flex',flexDirection:'row-reverse',flex:0.5,alignItems:'center'}}>
             <Icon name={'fiber-manual-record'} color={Colors.darkGreen} size={10}/>
             <Text style={styles(theme).table1}>
-            سایز
+            {getTranslation('سایز')}
             </Text>
           </View>
           <View style={{flex:0.5}}>
@@ -590,7 +738,7 @@ index+1>item?.Rate?
           <View style={{display:'flex',flexDirection:'row-reverse',flex:0.5,alignItems:'center'}}>
             <Icon name={'fiber-manual-record'} color={Colors.darkGreen} size={10}/>
             <Text style={styles(theme).table1}>
-            تاریخ انتشار
+            {getTranslation('تاریخ انتشار')}
             </Text>
           </View>
           <View style={{flex:0.5}}>
@@ -603,7 +751,7 @@ index+1>item?.Rate?
           <View style={{display:'flex',flexDirection:'row-reverse',flex:0.5,alignItems:'center'}}>
             <Icon name={'fiber-manual-record'} color={Colors.darkGreen} size={10}/>
             <Text style={styles(theme).table1}>
-             شابک
+            {getTranslation('شابک')}
             </Text>
           </View>
           <View style={{flex:0.5}}>
@@ -615,7 +763,7 @@ index+1>item?.Rate?
           <View style={{display:'flex',flexDirection:'row-reverse',flex:0.5,alignItems:'center'}}>
             <Icon name={'fiber-manual-record'} color={Colors.darkGreen} size={10}/>
             <Text style={styles(theme).table1}>
-            راوی
+            {getTranslation('راوی')}
             </Text>
           </View>
           <View style={{flex:0.5}}>
@@ -644,13 +792,13 @@ index+1>item?.Rate?
   };
 return (
  
-<ScrollView style={{ flex: 1,padding:0,backgroundColor:theme.backgroundColor}}>
+<ScrollView ref={refs} style={{ flex: 1,padding:0,backgroundColor:theme.backgroundColor}}>
     <View style={styles(theme).greenBack}>
     <View style={styles(theme).topBar}>
 
 
     {/* <View style={styles(theme).rightCol}>
-    <TouchableOpacity onPress={()=>alert(55)}>
+    <TouchableOpacity onPress={()=>  Alert.alert("",55)}>
     <Image source={require('@assets/images/save.png')} style={styles(theme).saveBtn}/>
       </TouchableOpacity>
       
@@ -674,7 +822,7 @@ return (
 <Image source={{uri:apiAsset+data?.Pic}} style={styles(theme).bookImg2}/>
 <Text style={styles(theme).eachBookName}>{data.BookName}</Text>
 <Text style={styles(theme).eachBookDetail}>{data.Writer}</Text>
-<Text style={styles(theme).eachBookDetail}>{data.Cost} تومان</Text>
+<Text style={styles(theme).eachBookDetailCost}>{data.Cost} {getTranslation('sek')}</Text>
 <View style={styles(theme).rateRow}>
 <Text style={styles(theme).eachBookDetail2}>{rate[0]?.Average}</Text>
 <Icon name={'star'} color={'#ffc93d'} size={20}/>
@@ -684,7 +832,7 @@ return (
   lib==true?
 <View style={styles(theme).btnRow}>
 <TouchableOpacity onPress={()=>navigation.navigate("EpisodesList",{id:data.BookID})} style={[styles(theme).loginBtn,{marginLeft:5}]}>
-       <Text style={styles(theme).btnText}>مطالعه</Text>
+       <Text style={styles(theme).btnText}>{getTranslation('مطالعه')}</Text>
      </TouchableOpacity>
      {/* <TouchableOpacity onPress={()=>navigation.navigate("ListenBook",{id:data.BookID,link:data.Link,image:data?.Pic,BookName:data.BookName,writer:data.Writer})} style={styles(theme).whiteBtn}>
        <Text style={styles(theme).btnText2}>نسخه نمونه</Text>
@@ -696,10 +844,10 @@ return (
   :
 <View style={styles(theme).btnRow}>
 <TouchableOpacity onPress={()=>buy()} style={styles(theme).loginBtn}>
-       <Text style={styles(theme).btnText}>خرید</Text>
+       <Text style={styles(theme).btnText}>{getTranslation('خرید')}</Text>
      </TouchableOpacity>
      <TouchableOpacity onPress={()=>gotoExample()} style={styles(theme).whiteBtn}>
-       <Text style={styles(theme).btnText2}>نسخه نمونه</Text>
+       <Text style={styles(theme).btnText2}>{getTranslation('نسخه نمونه')}</Text>
      </TouchableOpacity>
      <TouchableOpacity style={styles(theme).greenBtn2} onPress={toggleModal}>
       <Icon name={'keyboard-control'} size={30} color={'#fff'}/>
@@ -708,7 +856,7 @@ return (
 }
 <View>
 <TouchableOpacity onPress={()=>setModalVisibleCom(true)} style={styles(theme).comBtn}>
-       <Text style={styles(theme).btnText}>نظر دهید</Text>
+       <Text style={styles(theme).btnText}>{getTranslation('نظر دهید')}</Text>
      </TouchableOpacity>
 
 </View>
@@ -731,7 +879,7 @@ return (
 <TouchableOpacity onPress={()=>navigation.navigate("Rosters",{id:data.BookID})} style={{borderTopWidth:0.5,borderTopColor:'#c1c1c1',display:'flex',justifyContent:'space-between',alignItems:'center',flexDirection:'row-reverse',paddingTop:responsiveHeight(2),paddingBottom:responsiveHeight(2)}}>
 <View>
 <Text style={styles(theme).eachBookDetail3}>
-     فهرست کتاب
+{getTranslation('فهرست کتاب')}
     </Text>
 </View>
 <View>
@@ -751,7 +899,7 @@ return (
 <TouchableOpacity onPress={()=>mutSave()} style={{borderTopWidth:0.5,borderTopColor:'#c1c1c1',display:'flex',justifyContent:'space-between',alignItems:'center',flexDirection:'row-reverse',paddingTop:responsiveHeight(2),paddingBottom:responsiveHeight(2)}}>
 <View>
 <Text style={styles(theme).eachBookDetail3}>
-    افزودن به کتاب های دلخواه
+{getTranslation('افزودن به کتاب های دلخواه')}
     </Text>
 </View>
 <View>
@@ -761,7 +909,7 @@ return (
 <TouchableOpacity style={{borderTopWidth:0.5,borderTopColor:'#c1c1c1',display:'flex',justifyContent:'space-between',alignItems:'center',flexDirection:'row-reverse',paddingTop:responsiveHeight(2),paddingBottom:responsiveHeight(2)}}>
 <View>
 <Text style={styles(theme).eachBookDetail3}>
-     اشتراک گذاری
+{getTranslation('اشتراک گذاری')}
     </Text>
 </View>
 <View>
@@ -782,17 +930,17 @@ return (
       <View style={styles(theme).viwTab}>
       <TouchableOpacity onPress={()=>setPage(2)} style={page==2?styles(theme).tab:styles(theme).tabINActive}>
         <Text style={styles(theme).tabBarText}>
-         نظرات
+        {getTranslation('نظرات')}
         </Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={()=>setPage(1)} style={page==1?styles(theme).tab:styles(theme).tabINActive}>
         <Text style={styles(theme).tabBarText}>
-        جزییات
+        {getTranslation('جزییات')}
         </Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={()=>setPage(0)} style={page==0?styles(theme).tab:styles(theme).tabINActive}>
         <Text style={styles(theme).tabBarText}>
-        معرفی کتاب
+        {getTranslation('معرفی کتاب')}
         </Text>
       </TouchableOpacity>
           </View>
@@ -830,7 +978,7 @@ return (
 
 </View>
 <TouchableOpacity onPress={()=>mutComment()} style={styles(theme).comBtn}>
-       <Text style={styles(theme).btnText}>ثبت</Text>
+       <Text style={styles(theme).btnText}>{getTranslation('ثبت')}</Text>
      </TouchableOpacity>
  </View>
  </Modal>
@@ -839,13 +987,13 @@ return (
  <View style={{display:'flex',flexDirection:'row-reverse',justifyContent:'space-between',marginBottom:responsiveHeight(5),marginTop:responsiveHeight(5)}}>
      <View >
      <Text style={styles(theme).rowTitle}>
-         کتاب های مرتبط
+     {getTranslation('کتاب های مرتبط')}
       </Text>
      </View>
       <View style={{flex:1}}>
       <TouchableOpacity onPress={()=>navigation.navigate('SelectedNews',{type:"group",GroupID:grid,GroupName:data.Title})}>
       <Text style={styles(theme).seeAll}>
-         مشاهده همه
+      {getTranslation('مشاهده همه')}
       </Text>
       </TouchableOpacity>
       </View>
@@ -863,13 +1011,13 @@ return (
  <View style={{display:'flex',flexDirection:'row-reverse',justifyContent:'space-between',marginBottom:responsiveHeight(5),marginTop:responsiveHeight(5)}}>
      <View >
      <Text style={styles(theme).rowTitle}>
-         دیگر کتاب های {data.Writer}
+     {getTranslation('دیگر کتاب های')} {data.Writer}
       </Text>
      </View>
       <View style={{flex:1}}>
       <TouchableOpacity onPress={()=>navigation.navigate("SelectedNews",{type:"writer",writer:writer})}>
       <Text style={styles(theme).seeAll}>
-         مشاهده همه
+      {getTranslation('مشاهده همه')}
       </Text>
       </TouchableOpacity>
       </View>
@@ -885,19 +1033,20 @@ return (
         />
    </View>
 
-
+{
+  data.Publisher?
+<>
  <View style={{display:'flex',flexDirection:'row-reverse',justifyContent:'space-between',marginBottom:responsiveHeight(5),marginTop:responsiveHeight(5)}}>
      <View >
      <Text style={styles(theme).rowTitle}>
-         دیگر کتاب های {data.Publisher}
+         {getTranslation('دیگر کتاب های')} {data.Publisher}
       </Text>
      </View>
       <View style={{flex:1}}>
       <TouchableOpacity onPress={()=>navigation.navigate("SelectedNews",{type:"publisher",publisher:pub})}>
       <Text style={styles(theme).seeAll}>
 
-         مشاهده همه
-      </Text>
+      {getTranslation('مشاهده همه')}      </Text>
       </TouchableOpacity>
       </View>
       </View>
@@ -911,19 +1060,24 @@ return (
           
         />
    </View>
+   </>
+  :
+  null
+}
 
-
+{
+  relTran.length!=0?
+<>
  <View style={{display:'flex',flexDirection:'row-reverse',justifyContent:'space-between',marginBottom:responsiveHeight(5),marginTop:responsiveHeight(5)}}>
      <View style={{flex:1}}>
      <Text style={styles(theme).rowTitle}>
-         دیگر کتاب های مترجم
+         {getTranslation('دیگر کتاب های')} {getTranslation('مترجم')}
       </Text>
      </View>
       <View>
       <TouchableOpacity onPress={()=>navigation.navigate("SelectedNews",{type:"translator",translator:trans})}>
       <Text style={styles(theme).seeAll}>
-         مشاهده همه
-      </Text>
+      {getTranslation('مشاهده همه')}      </Text>
       </TouchableOpacity>
       </View>
       </View>
@@ -937,8 +1091,45 @@ return (
           
         />
    </View>
+   </>
+  :
+null
+}
    </View>
+   <View >
+    {
+      book?
   
+    <TouchableOpacity onPress={()=>navigation.navigate("ListenBookMain",{id:bookID,num:episode})} style={{borderRadius:10,backgroundColor:Colors.lightGreen,flexDirection:'row-reverse',height:responsiveHeight(6),justifyContent:'space-between'}}>
+        {
+        isplay?
+        // <TouchableOpacity onPress={stop} style={{borderRadius:50,backgroundColor:Colors.white}}>
+        <TouchableOpacity onPress={TogglePlayback} >
+
+<Icon name={"pause-circle-filled"} size={50} color={Colors.darkGreen}/>
+</TouchableOpacity>
+:
+<TouchableOpacity onPress={TogglePlayback}>
+
+<Icon name={"play-circle-filled"} size={50} color={Colors.darkGreen}/>
+</TouchableOpacity>
+    }
+    
+    <Image source={{uri:apiAsset+book.Pic}} style={styles(theme).imageBook}/>
+    <View>
+
+      <Text style={styles(theme).miniText}>{book.BookName}</Text>
+      <Text style={styles(theme).miniText}>درحال مطالعه</Text>
+      </View>
+      <TouchableOpacity onPress={()=>setNull()}> 
+      <Icon name={"close"} color={'#111'} style={{marginRight:responsiveWidth(30)}} size={30}/>
+</TouchableOpacity>
+      {/* <Text style={styles(theme).miniText}>درحال مطالعه</Text> */}
+    </TouchableOpacity>
+      :
+      null
+    }
+  </View>
   </ScrollView>
 
     
@@ -1005,7 +1196,7 @@ indicatorStyle:{
   marginLeft:'auto'
 },
 greenBack:{
-  backgroundColor:theme.cardBack,
+  backgroundColor:theme.darkGreen,
    flexDirection:"row-reverse",
   justifyContent:'flex-start',
     position:"absolute",
@@ -1035,7 +1226,7 @@ greenBack:{
     resizeMode:'contain',
   marginLeft:responsiveWidth(5),
 },bookImg2:{
-  width:responsiveWidth(40),
+  width:responsiveWidth(48),
   height:responsiveHeight(25),
   zIndex:2000,
 marginRight:'auto',
@@ -1051,13 +1242,22 @@ marginTop:responsiveHeight(10),
 },bookDetailBox:{
  
   textAlign:'center',
-},eachBookDetail:{
+},
+eachBookDetail:{
   ...myFontStyle.bookWriter3,
   color:theme.textTitle,
   textAlign:'center',
   
   
-},eachBookDetail2:{
+},
+eachBookDetailCost:{
+  color:theme.textTitle,
+  textAlign:'center',
+  
+  
+},
+
+eachBookDetail2:{
   ...myFontStyle.UltraBold,
   color:theme.textTitle,
   textAlign:'center',
@@ -1134,12 +1334,19 @@ cardBox:{
   marginLeft:'auto',
   marginTop:responsiveHeight(-4),
   borderRadius:10,
-},bookName:{
+}
+,bookName:{
   color:'#111',
   ...myFontStyle.normalRegular,
   alignSelf:"flex-end",
   marginTop:responsiveHeight(0.5),
-},priceRed:{
+}
+,bookCost:{
+  color:'#111',
+  marginTop:responsiveHeight(0.5), 
+}
+,
+priceRed:{
   color:'#dc3545',
   ...myFontStyle.normalRegular,
   marginTop:responsiveHeight(0.5),
@@ -1209,8 +1416,7 @@ height: "100%",
   paddingTop:responsiveHeight(1),
   borderRadius:10,
 },bookDescription:{
-  color:'#111',
-  alignSelf:"flex-end",
+  color:theme.textTitle,
   ...myFontStyle.bookWriter3,
   marginTop:responsiveHeight(2),
   
@@ -1323,10 +1529,21 @@ height: "100%",
   },
   viwTab:{flexDirection:'row',alignItems:'center',justifyContent:"center"},
   tab:{borderBottomWidth:1,width:responsiveWidth(30),alignItems:'center',
-justifyContent:"center",paddingBottom:responsiveHeight(3)}
+justifyContent:"center",paddingBottom:responsiveHeight(3),borderBottomColor:theme.darkGreen}
  ,
   tabINActive:{borderBottomWidth:1,width:responsiveWidth(30),alignItems:'center',
-justifyContent:"center",paddingBottom:responsiveHeight(3),borderBottomColor:"#f1f1f1"}
+justifyContent:"center",paddingBottom:responsiveHeight(3),borderBottomColor:"#f1f1f1"},
+imageBook:{
+  width:responsiveWidth(15),
+  height:"100%",
+  resizeMode:'cover',
+  borderRadius:10,
+  marginLeft:10
+  
+},miniText:{
+  ...myFontStyle.mediumRegular,
+  color:'#111'
+},
 
 });
 

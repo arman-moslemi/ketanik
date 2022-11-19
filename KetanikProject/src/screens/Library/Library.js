@@ -19,6 +19,7 @@ import {
 } from "react-native-chart-kit";
 import { ThemeContext } from '../../../theme/theme-context';
 import TrackPlayer, { Capability  } from "react-native-track-player";
+import { getTranslation } from '@i18n/i18n';
 
 const chartConfig = {
   backgroundGradientFrom: "#F4F4F4",
@@ -96,7 +97,7 @@ console.log(episode)
            {dataShow?.NumberGroupData}
          </Text>
          <Text style={styles(theme).miniText}>
-           ژانر خوانده شده
+         {getTranslation('ژانر خوانده شده')}
          </Text>
          
       </View>
@@ -109,7 +110,7 @@ console.log(episode)
 
          </Text>
          <Text style={styles(theme).miniText}>
-           ساعت  خوانده شده
+         {getTranslation('ساعت  خوانده شده')}
          </Text>
   </View>
   <View style={styles(theme).lightGreenBack}>
@@ -122,19 +123,19 @@ console.log(episode)
 
          </Text>
          <Text style={styles(theme).miniText}>
-           کتاب خوانده شده
+         {getTranslation('کتاب خوانده شده')}
          </Text>
   </View>
   
     </View>
     <View style={{marginTop:30,alignItems:'center'}}>
       <View style={{marginBottom:10,flexDirection:'row'}}>
-      <TouchableOpacity onPress={()=>setDate(parseInt(date)>1?parseInt(date)<11?"0"+(parseInt(date)-1):parseInt(date)-1:null)}>
+      <TouchableOpacity onPress={()=>parseInt(date)>1 ?setDate(parseInt(date)<11?"0"+(parseInt(date)-1):parseInt(date)-1):null}>
 
       <Icon name={"keyboard-arrow-left"} color={'#111'} size={30}/>
       </TouchableOpacity>
         <Text style={styles(theme).largeText}>{month[date-1]}</Text>
-        <TouchableOpacity onPress={()=>setDate(parseInt(date)<12?parseInt(date)<9?"0"+(parseInt(date)+1):parseInt(date)+1:null)}>
+        <TouchableOpacity onPress={()=>parseInt(date)<12 ?setDate(parseInt(date)<9?"0"+(parseInt(date)+1):parseInt(date)+1):null}>
 
         <Icon name={"keyboard-arrow-right"} color={'#111'} size={30}/>
         </TouchableOpacity>
@@ -179,7 +180,7 @@ console.log(episode)
     <View>
 
       <Text style={styles(theme).miniText}>{book.BookName}</Text>
-      <Text style={styles(theme).miniText}>درحال مطالعه</Text>
+      <Text style={styles(theme).miniText}>{getTranslation('درحال مطالعه')}</Text>
       </View>
       <TouchableOpacity onPress={()=>setNull()}> 
       <Icon name={"close"} color={'#111'} style={{marginRight:responsiveWidth(30)}} size={30}/>
@@ -200,7 +201,9 @@ const keyExtractor = item => {
 };
 
 
-const SecondRoute = ({show,setShow,data,setRole,roleName,setRoleName,navigation,theme}) => {
+const SecondRoute = ({show,setShow,data,setRole,roleName,setRoleName,navigation}) => {
+  const {  theme } = useContext(ThemeContext);
+
   const _render = ({item}) => {
     console.log(item.BookName)
   
@@ -233,22 +236,22 @@ return(
      show?
     
      <View style={styles(theme).greenBox}>
-       <TouchableOpacity onPress={()=>{setRole(1);setRoleName("در حال مطالعه");setShow(false)}} style={styles(theme).greenBoxBtn}>
+       <TouchableOpacity onPress={()=>{setRole(1);setRoleName(getTranslation("در حال مطالعه"));setShow(false)}} style={styles(theme).greenBoxBtn}>
          <Text style={styles(theme).greenBoxText}>
            در حال مطالعه
          </Text>
        </TouchableOpacity>
-       <TouchableOpacity onPress={()=>{setRole(2);setRoleName("خوانده نشده ها");setShow(false)}} style={styles(theme).greenBoxBtn}>
+       <TouchableOpacity onPress={()=>{setRole(2);setRoleName(getTranslation("خوانده نشده ها"));setShow(false)}} style={styles(theme).greenBoxBtn}>
          <Text style={styles(theme).greenBoxText}>
          خوانده نشده ها
          </Text>
        </TouchableOpacity>
-       <TouchableOpacity onPress={()=>{setRole(3);setRoleName("خوانده شده ها");setShow(false)}} style={styles(theme).greenBoxBtn}>
+       <TouchableOpacity onPress={()=>{setRole(3);setRoleName(getTranslation("خوانده شده ها"));setShow(false)}} style={styles(theme).greenBoxBtn}>
          <Text style={styles(theme).greenBoxText}>
            خوانده شده ها
          </Text>
        </TouchableOpacity>
-       <TouchableOpacity onPress={()=>{setRole();setRoleName("همه کتاب ها");setShow(false)}} style={styles(theme).greenBoxBtn}>
+       <TouchableOpacity onPress={()=>{setRole();setRoleName(getTranslation("همه کتاب ها"));setShow(false)}} style={styles(theme).greenBoxBtn}>
          <Text style={styles(theme).greenBoxText}>
           همه کتاب ها
          </Text>
@@ -282,7 +285,7 @@ return(
  const Library = ({navigation }) => {
   const {  theme } = useContext(ThemeContext);
   const [show,setShow]=useState(false);
-  const [roleName,setRoleName]=useState("همه کتاب ها");
+  const [roleName,setRoleName]=useState(getTranslation("همه کتاب ها"));
 
   const [index, setIndex] = React.useState(0);
   const renderScene = ({ route }) => {
@@ -297,8 +300,8 @@ return(
     }
     };;
   const [routes] = React.useState([
-    { key: 'status', title: 'وضعیت' },
-    { key: 'library', title: 'کتابخانه' },
+    { key: 'status', title: getTranslation('وضعیت') },
+    { key: 'library', title: getTranslation('کتابخانه') },
     
   ]);
   const renderTabBar = props => (
@@ -330,18 +333,26 @@ return(
   useEffect(() => {
 
     mutLogin();
-    mutShow();
     GetBook();
 
-}, [role,date]);
+}, [role,]);
+  useEffect(() => {
+
+    mutShow();
+
+}, []);
 
   const  mutLogin=async()=> {
     const state = await AsyncStorage.getItem("@user");
+    const lang = await AsyncStorage.getItem("@langs");
 
-    axios.post(apiUrl+'Library',{CustomerID:state,RoleID:role})
+    axios.post(apiUrl+'Library',{CustomerID:state,RoleID:role},{ headers: {
+      lang: lang
+    }})
     .then(function (response) {
       const message = response.data;
       const result = response.data.result;
+      console.log(147852);
       console.log(message);
 
       if(result == "true"){
@@ -363,8 +374,11 @@ return(
     const state = await AsyncStorage.getItem("@user");
     const books = await AsyncStorage.getItem("@bookid");
     const episode = await AsyncStorage.getItem("@epid");
+    const lang = await AsyncStorage.getItem("@langs");
 
-    axios.post(apiUrl+'SingleBook',{CustomerID:state,BookID:books})
+    axios.post(apiUrl+'SingleBook',{CustomerID:state,BookID:books},{ headers: {
+      lang: lang
+    }})
     .then(function (response) {
       const message = response.data;
       const result = response.data.result;
@@ -395,7 +409,11 @@ return(
       }
     const  mutShow=async()=> {
       const state = await AsyncStorage.getItem("@user");
-      axios.post(apiUrl+'ReadCustomer',{CustomerID:state,Month:date?date:null})
+      const lang = await AsyncStorage.getItem("@langs");
+
+      axios.post(apiUrl+'ReadCustomer',{CustomerID:state,Month:date?date:null},{ headers: {
+        lang: lang
+      }})
       .then(function (response) {
         const message = response.data;
         const result = response.data.result;
@@ -419,7 +437,8 @@ return(
       .catch(function (error) {
         console.log(error);
       });
-  
+      const books = await AsyncStorage.getItem("@bookid");
+
   
 
       axios.post(apiUrl+'SubBookShow',{BookID:books,CustomerID:state})
@@ -570,11 +589,11 @@ tabBar:{
   borderBottomWidth:2
 },
 tabBarText:{
-  color: "#000",
+  color: theme.textTitle,
   ...myFontStyle.mediumBold
 },
 tabBarText2:{
-  color: "#000",
+  color: theme.textTitle,
   ...myFontStyle.mediumRegular
 },
 indicatorStyle:{
@@ -639,7 +658,7 @@ libraryBox:{
   // alignItems:'center',
   marginTop:responsiveHeight(5),
 },pageTitleText:{
-  color:'#343434',
+  color:theme.textTitle,
   ...myFontStyle.largeRegular,
   marginRight:responsiveWidth(2)
 },littleBtn:{
@@ -690,7 +709,7 @@ libraryBox:{
   width:'100%',
 },greenBoxText:{
   ...myFontStyle.normalRegular,
-  color:'#111',
+  color:'#000',
 },lightGreenBack:{
   backgroundColor:'#E5EBDF',
   borderRadius:15,
@@ -720,13 +739,13 @@ libraryBox:{
     resizeMode:'contain' 
 },largeText:{
   ...myFontStyle.textOnImg,
-  color:'#111',
+  color:theme.textTitle,
 },miniText:{
   ...myFontStyle.mediumRegular,
   color:'#111'
 },
 moreText:{
-  color:'#000',
+  color:Colors.darkGreen,
   ...myFontStyle.normalRegular,
 },
   });

@@ -13,6 +13,7 @@ import { isMessageIgnored } from 'react-native/Libraries/LogBox/Data/LogBoxData'
 import { ThemeContext } from '../../../theme/theme-context';
 import AsyncStorage from  '@react-native-async-storage/async-storage';
 import TrackPlayer, { Capability  } from "react-native-track-player";
+import { getTranslation } from '@i18n/i18n';
 
 // create a component
 
@@ -55,7 +56,11 @@ console.log(episode)
 
 }, []);
   const  mutLogin=async()=> {
-    axios.get(apiUrl+'AllGroup')
+    const lang = await AsyncStorage.getItem("@langs");
+
+    axios.get(apiUrl+'AllGroup',{ headers: {
+      lang: lang
+    }})
     .then(function (response) {
       const message = response.data;
       const result = response.data.result;
@@ -204,8 +209,9 @@ return (
     
         </View>
     <View style={styles(theme).topBar}>
-    <View style={{flex : 1}}>
-          <Text style={styles(theme).menuTitle}>دسته بندی</Text>
+
+    <View style={{flex : 2,textAlign:"right"}}>
+          <Text style={styles(theme).menuTitle}>{getTranslation('دسته بندی')}</Text>
           </View>
 
         <View style={{flex :3}}>
@@ -269,7 +275,7 @@ return (
     <View>
 
       <Text style={styles(theme).miniText}>{book.BookName}</Text>
-      <Text style={styles(theme).miniText}>درحال مطالعه</Text>
+      <Text style={styles(theme).miniText}>{getTranslation('درحال مطالعه')}</Text>
       </View>
       <TouchableOpacity onPress={()=>setNull()}> 
       <Icon name={"close"} color={'#111'} style={{marginRight:responsiveWidth(30)}} size={30}/>
@@ -350,6 +356,8 @@ color:theme.menuTitle,
       flexDirection:'row-reverse',
       alignContent:'center',
       alignItems:'center',
+      padding:5
+
   },categoryBox2:{
     height:responsiveHeight(10),
       // flex:0.5,
@@ -361,6 +369,8 @@ color:theme.menuTitle,
     flexDirection:'row-reverse',
     alignContent:'center',
     alignItems:'center',
+    padding:5
+
   },categoryBox3:{
     height:responsiveHeight(10),
       // flex:0.5,
@@ -372,6 +382,8 @@ color:theme.menuTitle,
     flexDirection:'row-reverse',
     alignContent:'center',
     alignItems:'center',
+    padding:5
+
   },categoryBox4:{
     height:responsiveHeight(10),
       // flex:0.5,
@@ -383,6 +395,8 @@ color:theme.menuTitle,
     flexDirection:'row-reverse',
     alignContent:'center',
     alignItems:'center',
+    padding:5
+
   },
   categoryBox5:{
     height:responsiveHeight(10),
@@ -408,6 +422,8 @@ color:theme.menuTitle,
     flexDirection:'row-reverse',
     alignContent:'center',
     alignItems:'center',
+    padding:5
+
   },
   categoryBox7:{
     height:responsiveHeight(10),
@@ -420,6 +436,8 @@ color:theme.menuTitle,
     flexDirection:'row-reverse',
     alignContent:'center',
     alignItems:'center',
+    padding:5
+
   },
   categoryBox8:{
     height:responsiveHeight(10),
@@ -432,6 +450,8 @@ color:theme.menuTitle,
     flexDirection:'row-reverse',
     alignContent:'center',
     alignItems:'center',
+    padding:5
+
   },
   categoryBox9:{
     height:responsiveHeight(10),
@@ -444,6 +464,8 @@ color:theme.menuTitle,
     flexDirection:'row-reverse',
     alignContent:'center',
     alignItems:'center',
+    padding:5
+
   },
   categoryBox10:{
     height:responsiveHeight(10),
@@ -456,6 +478,8 @@ color:theme.menuTitle,
     flexDirection:'row-reverse',
     alignContent:'center',
     alignItems:'center',
+    padding:5
+
   },
   categoryBox11:{
     height:responsiveHeight(10),
@@ -468,6 +492,8 @@ color:theme.menuTitle,
     flexDirection:'row-reverse',
     alignContent:'center',
     alignItems:'center',
+    padding:5
+
   },
   categoryBox12:{
     height:responsiveHeight(10),
@@ -480,6 +506,8 @@ color:theme.menuTitle,
     flexDirection:'row-reverse',
     alignContent:'center',
     alignItems:'center',
+    padding:5
+
   },
   categoryBox13:{
     height:responsiveHeight(10),
@@ -492,6 +520,8 @@ color:theme.menuTitle,
     flexDirection:'row-reverse',
     alignContent:'center',
     alignItems:'center',
+    padding:5
+
   },
   categoryBox14:{
     height:responsiveHeight(10),
@@ -504,6 +534,8 @@ color:theme.menuTitle,
     flexDirection:'row-reverse',
     alignContent:'center',
     alignItems:'center',
+    padding:5
+
   },
   bookImg:{
       width:50,
@@ -511,11 +543,10 @@ color:theme.menuTitle,
       height:responsiveHeight(13),
       marginTop:responsiveHeight(-5),
       transform: [{rotate: '20deg'}],
-   
   },cateTitle:{
     color:'#fff',
     ...myFontStyle.normalBold,
-    marginLeft:responsiveWidth(5),
+    marginRight:responsiveWidth(3),
     width:responsiveWidth(30),
   },imageBook:{
     width:responsiveWidth(15),

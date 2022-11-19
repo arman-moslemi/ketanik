@@ -15,6 +15,7 @@ import { apiUrl ,apiAsset} from "@commons/inFormTypes";
 import { ThemeContext } from '../../../theme/theme-context';
 import AsyncStorage from  '@react-native-async-storage/async-storage';
 import TrackPlayer, { Capability  } from "react-native-track-player";
+import { getTranslation } from '@i18n/i18n';
 
 // create a component
 
@@ -60,7 +61,12 @@ console.log(episode)
 
 }, []);
   const  mutLogin=async()=> {
-    axios.get(apiUrl+'MainSlider')
+    const lang = await AsyncStorage.getItem("@langs");
+console.log(222222)
+console.log(lang)
+    axios.get(apiUrl+'MainSlider',{ headers: {
+      lang: lang
+    }})
     .then(function (response) {
       const message = response.data;
       const result = response.data.result;
@@ -176,15 +182,15 @@ console.log(episode)
           item.item.SpecialCost?
 <>
       <Text style={styles(theme).priceRed}>
-      {item.item.SpecialCost}ت
+      {item.item.SpecialCost} sek
     </Text>
     <Text style={styles(theme).priceStroke}>
-    {item.item.Cost}ت
+    {item.item.Cost==100?"100":100} sek
     </Text>
     </>
           :
-<Text style={styles(theme).bookName}>
-      {item.item.Cost}ت
+<Text style={styles(theme).bookCost}>
+      {item.item.Cost} sek
       </Text>
         }
   <View style={{flexDirection:'row-reverse',alignItems:'center',width:"10%"}}>
@@ -290,7 +296,7 @@ return (
           </TouchableOpacity>
           </View>
     </View>
-     <ViewSlider
+     {/* <ViewSlider
         renderSlides = {
           <>
             <TouchableOpacity onPress={()=>Linking.openURL(slider?.LinkSlider1)} style={styles(theme).viewBox}>
@@ -314,24 +320,21 @@ return (
       dotInactiveColor = '#fff'    // Pagination do inactive color
       dotsContainerStyle={styles(theme).dotContainer}     // Container style of the pagination dots
       autoSlide = {true}    //The views will slide automatically
-      slideInterval = {5000}    //In Miliseconds
-     /> 
+      slideInterval = {5000}    
+     />  */}
      
        <ScrollView >
   <View style={styles(theme).container}>
-  <View style={{flexDirection:'row-reverse',justifyContent:'space-between',marginBottom:responsiveHeight(5)}}>
-     <View >
+  <View style={{display:'flex',flexDirection:'row-reverse',justifyContent:'space-between',marginBottom:responsiveHeight(5)}}>
+      <TouchableOpacity style={{flex:1,flexDirection:'row-reverse',justifyContent:'space-between'}} onPress={()=>navigation.navigate("SelectedNews")}>
      <Text style={styles(theme).rowTitle}>
-          تازه های برگزیده
+     {getTranslation('تازه های برگزیده')}
       </Text>
-     </View>
-      <View style={{flex:1}}>
-      <TouchableOpacity onPress={()=>navigation.navigate("SelectedNews")}>
+  
       <Text style={styles(theme).seeAll}>
-         مشاهده همه
+      {getTranslation('مشاهده همه')}
       </Text>
       </TouchableOpacity>
-      </View>
       </View>
 
               <FlatList
@@ -347,19 +350,16 @@ return (
         
    
   
-   <View style={{display:'flex',flexDirection:'row-reverse',justifyContent:'space-between',marginBottom:responsiveHeight(5),marginTop:responsiveHeight(5)}}>
-     <View >
+   <View style={{flexDirection:'row',alignItems:'flex-start',justifyContent:'space-between',marginBottom:responsiveHeight(5),marginTop:responsiveHeight(5)}}>
+      <TouchableOpacity style={{flex:1,flexDirection:'row-reverse',justifyContent:'space-between'}} onPress={()=>navigation.navigate("SelectedNews",{type:"best"})}>
+ 
      <Text style={styles(theme).rowTitle}>
-         پر فروش ترین ها
+     {getTranslation('پر فروش ترین ها')}
       </Text>
-     </View>
-      <View style={{flex:1}}>
-      <TouchableOpacity onPress={()=>navigation.navigate("SelectedNews",{type:"best"})}>
       <Text style={styles(theme).seeAll}>
-         مشاهده همه
+      {getTranslation('مشاهده همه')}
       </Text>
       </TouchableOpacity>
-      </View>
       </View>
    <View style={{display:'flex',flexDirection:'row-reverse'}}>
    <FlatList
@@ -423,7 +423,7 @@ const styles =(theme) =>  StyleSheet.create({
         paddingLeft:responsiveWidth(5),
         paddingBottom:responsiveHeight(2),
         alignItems:"flex-end",
-        marginTop:responsiveHeight(5),
+        marginTop:responsiveHeight(8),
     },
 
     menuTitle:{
@@ -521,16 +521,23 @@ const styles =(theme) =>  StyleSheet.create({
     marginLeft:'auto',
     marginTop:responsiveHeight(-4),
     borderRadius:10,
-},bookName:{
+},
+bookName:{
     color:'#111',
     ...myFontStyle.mediumRegular,
     marginTop:responsiveHeight(0.5),
-},priceRed:{
+},
+bookCost:{
+    color:'#111',
+    marginTop:responsiveHeight(0.5),
+},
+
+priceRed:{
     color:'#dc3545',
-    ...myFontStyle.normalRegular,
+    // ...myFontStyle.normalRegular,
     marginTop:responsiveHeight(0.5),
 },priceStroke:{
-...myFontStyle.normalRegular,
+// ...myFontStyle.normalRegular,
 color:'#111',
 textDecorationLine: 'line-through',
 marginTop:responsiveHeight(0.5),
@@ -538,9 +545,12 @@ marginRight:4,
 },rowTitle:{
     ...myFontStyle.largBold,
     color:theme.textTitle,
+    // marginLeft:responsiveWidth(30)
 },seeAll:{
     ...myFontStyle.largeRegular,
     color:theme.textTitle,
+    // marginRight:responsiveWidth(10)
+
 },
 dotContainer: {
   backgroundColor: 'transparent',

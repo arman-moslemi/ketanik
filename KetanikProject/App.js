@@ -31,10 +31,12 @@ import Rosters from '@screens/Rosters/Rosters';
 import ListenBook from '@screens/ListenBook/ListenBook';
 import ListenBookMain from '@screens/ListenBook/ListenBookMain';
 import Wallet from '@screens/Wallet/Wallet';
+import Dargah from '@screens/Wallet/Dargah';
 import Factor from '@screens/Factor/Factor';
 import Search from "@screens/Search/Search";
 import { ThemeProvider} from './theme/theme-context';
 import { myFontStyle } from './src/assets/Constance';
+import { getTranslation } from '@i18n/i18n';
 
 const Stack = createNativeStackNavigator();
 const Tab = createMaterialBottomTabNavigator();
@@ -43,37 +45,72 @@ const TabStack= () => {
 
   return (
 
+//    <Tab.Navigator 
+   
+//    barStyle={{ backgroundColor: Colors.white,paddingRight:5 ,height:responsiveHeight(8)}}
+// initialRouteName={"StackNavigatorsHome"}
+// shifting={false}
+// activeColor={Colors.darkGreen}
+
+// >
+//   <Tab.Screen
+//     name={"StackNavigatorsHome"}
+//     component={StackNavigatorsHome}
+//     options={{          tabBarLabel:<Text style={{...myFontStyle.menu,marginTop:10,textAlign:'center'}}>{getTranslation("خانه")}</Text>,  tabBarIcon: ({ color }) => (            <Icon name="home" color={Colors.darkGreen}  size={25} />          ),        }}      />
+// <Tab.Screen
+//    name="Library" component={StackNavigatorsLibrary}
+//    options={{          tabBarLabel:<Text style={{...myFontStyle.menu}}>{getTranslation("کتابخانه")}</Text>,    tabBarIcon: ({ color }) => (    <Icon name="library-books" color={Colors.darkGreen} size={25} />         ),           }}      />
+// <Tab.Screen
+//    name="Searchs" component={StackNavigatorsSearch}
+//    options={{          tabBarLabel: <Text style={{...myFontStyle.menu}}>{getTranslation("جستجو")}</Text>, tabBarIcon: ({ color }) => (    <Icon name="search" color={Colors.darkGreen} size={25} />         ),           }}      />
+
+  
+// <Tab.Screen
+//        // name="home"
+//        name={"Categorys"}
+//        component={StackNavigatorsCat}
+
+//        options={{          tabBarLabel:<Text style={{...myFontStyle.menu}}>{getTranslation("دسته بندی")} </Text>,          tabBarIcon: ({ color }) => (            <Icon name="apps" color={Colors.darkGreen} size={25} />          ),        }}      />
+// <Tab.Screen
+//    name="Profile" component={StackNavigatorsProfile}
+//    style={{...myFontStyle.UltraBold}}
+//    options={{          tabBarLabel: <Text style={{...myFontStyle.menu}}>{getTranslation("حساب کاربری")}</Text>,    tabBarIcon: ({ color }) => (    <Icon name="person-outline" color={Colors.darkGreen} size={25} />         ),           }}      />
+
+// </Tab.Navigator>
    <Tab.Navigator 
    
    barStyle={{ backgroundColor: Colors.white,paddingRight:5 ,height:responsiveHeight(8)}}
 initialRouteName={"StackNavigatorsHome"}
 shifting={false}
 activeColor={Colors.darkGreen}
-// tabBar={props => <TabBar {...props} />}
+
 >
   <Tab.Screen
-    // name="home"
     name={"StackNavigatorsHome"}
     component={StackNavigatorsHome}
-    options={{          tabBarLabel:<Text style={{...myFontStyle.menu,marginTop:10,textAlign:'center'}}>خانه</Text>,  tabBarIcon: ({ color }) => (            <Icon name="home" color={Colors.darkGreen}  size={25} />          ),        }}      />
-<Tab.Screen
-   name="Library" component={StackNavigatorsLibrary}
-   options={{          tabBarLabel:<Text style={{...myFontStyle.menu}}>کتابخانه</Text>,    tabBarIcon: ({ color }) => (    <Icon name="library-books" color={Colors.darkGreen} size={25} />         ),           }}      />
-<Tab.Screen
-   name="Searchs" component={StackNavigatorsSearch}
-   options={{          tabBarLabel: <Text style={{...myFontStyle.menu}}>جستجو</Text>, tabBarIcon: ({ color }) => (    <Icon name="search" color={Colors.darkGreen} size={25} />         ),           }}      />
-
-  
-<Tab.Screen
+    options={{         
+      //  tabBarLabel:<Text style={{...myFontStyle.menu,marginTop:10,textAlign:'center'}}>Home</Text>, 
+       tabBarLabel:"", 
+        tabBarIcon: ({ color }) => (            <Icon name="home" color={Colors.darkGreen} style={{height:responsiveHeight(10),width:responsiveWidth(8)}} size={35} />          ),        }}      />
+ 
+ <Tab.Screen
        // name="home"
        name={"Categorys"}
        component={StackNavigatorsCat}
 
-       options={{          tabBarLabel:<Text style={{...myFontStyle.menu}}>دسته بندی</Text>,          tabBarIcon: ({ color }) => (            <Icon name="apps" color={Colors.darkGreen} size={25} />          ),        }}      />
+       options={{          tabBarLabel:"",          tabBarIcon: ({ color }) => (            <Icon name="apps" style={{height:responsiveHeight(10),width:responsiveWidth(8)}}color={Colors.darkGreen} size={35} />          ),        }}      />
+
 <Tab.Screen
+   name="Searchs" component={StackNavigatorsSearch}
+   options={{          tabBarLabel:"", tabBarIcon: ({ color }) => (    <Icon name="search"style={{height:responsiveHeight(10),width:responsiveWidth(8)}} color={Colors.darkGreen} size={35} />         ),           }}      />
+<Tab.Screen
+   name="Library" component={StackNavigatorsLibrary}
+   options={{          tabBarLabel:"",    tabBarIcon: ({ color }) => (    <Icon name="library-books" style={{height:responsiveHeight(10),width:responsiveWidth(8)}}color={Colors.darkGreen} size={35} />         ),           }}      />
+
+ <Tab.Screen
    name="Profile" component={StackNavigatorsProfile}
    style={{...myFontStyle.UltraBold}}
-   options={{          tabBarLabel: <Text style={{...myFontStyle.menu}}>حساب کاربری</Text>,    tabBarIcon: ({ color }) => (    <Icon name="person-outline" color={Colors.darkGreen} size={25} />         ),           }}      />
+   options={{          tabBarLabel: "",    tabBarIcon: ({ color }) => (    <Icon name="person-outline" style={{height:responsiveHeight(10),width:responsiveWidth(8)}}color={Colors.darkGreen} size={35} />         ),           }}      />
 
 </Tab.Navigator>
   );
@@ -96,6 +133,8 @@ const StackNavigatorsHome = () => {
         <Stack.Screen name="ListenBookMain" component={ListenBookMain} />
         <Stack.Screen name="Wallet" component={Wallet} /> 
         <Stack.Screen name="Factor" component={Factor} /> 
+        <Stack.Screen name="Dargah" component={Dargah} /> 
+
     </Stack.Navigator>
   );
  }
@@ -159,6 +198,7 @@ const StackNavigatorsProfile = () => {
         <Stack.Screen name="EditPassword" component={EditPassword} /> 
         <Stack.Screen name="Wallet" component={Wallet} /> 
         <Stack.Screen name="Factor" component={Factor} /> 
+        <Stack.Screen name="Dargah" component={Dargah} /> 
     </Stack.Navigator>
   );
  }
